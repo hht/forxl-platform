@@ -1,0 +1,9 @@
+{
+  "tabs": {
+    "home": "Dashboard",
+    "trade": "Trade",
+    "positions": "Positions",
+    "partner": "Partner",
+    "wallet": "Wallet"
+  }
+}

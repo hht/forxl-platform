@@ -7,7 +7,7 @@ type IconType = keyof typeof icons
 
 type Props = {
   name: IconType
-} & SvgProps
+} & SvgProps & { accent?: string }
 
 const Icon: FC<Props> = (props: Props) => {
   const { name, ...rest } = props

@@ -1,2 +1,5 @@
 export { Icon, IconType } from "./icon"
 export { XStack, YStack } from "tamagui"
+export { Image } from "./image"
+export { Text } from "./text"
+export { Button } from "./button"

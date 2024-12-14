@@ -3,6 +3,6 @@
   // language - current active spelling language
   "language": "en",
   // words - list of words to be always considered correct
-  "words": ["tamagui", "froxl", "tama"],
+  "words": ["tamagui", "froxl", "tama", "blurhash"],
   "ignorePaths": ["node_modules", "dist", "build", ".git", "package-lock.json"]
 }

@@ -39140,6 +39140,62 @@
           "name": "c-yellow12Dark",
           "val": "hsl(53, 100%, 91.0%)",
           "variable": ""
+        },
+        "primary": {
+          "isVar": true,
+          "key": "$primary",
+          "name": "c-primary",
+          "val": "#10F48A",
+          "variable": ""
+        },
+        "destructive": {
+          "isVar": true,
+          "key": "$destructive",
+          "name": "c-destructive",
+          "val": "#F66754",
+          "variable": ""
+        },
+        "warning": {
+          "isVar": true,
+          "key": "$warning",
+          "name": "c-warning",
+          "val": "#E39D35",
+          "variable": ""
+        },
+        "background": {
+          "isVar": true,
+          "key": "$background",
+          "name": "c-background",
+          "val": "#000000",
+          "variable": ""
+        },
+        "card": {
+          "isVar": true,
+          "key": "$card",
+          "name": "c-card",
+          "val": "#121212",
+          "variable": ""
+        },
+        "text": {
+          "isVar": true,
+          "key": "$text",
+          "name": "c-text",
+          "val": "#ffffff",
+          "variable": ""
+        },
+        "secondary": {
+          "isVar": true,
+          "key": "$secondary",
+          "name": "c-secondary",
+          "val": "#919FA6",
+          "variable": ""
+        },
+        "tertiary": {
+          "isVar": true,
+          "key": "$tertiary",
+          "name": "c-tertiary",
+          "val": "#545D61",
+          "variable": ""
         }
       },
       "radius": {
@@ -39881,7 +39937,7 @@
           "isVar": true,
           "key": "$true",
           "name": "t-size-true",
-          "val": 44,
+          "val": 13,
           "variable": ""
         },
         "4.5": {
@@ -39889,6 +39945,34 @@
           "key": "$4.5",
           "name": "t-size-4--5",
           "val": 48,
+          "variable": ""
+        },
+        "xs": {
+          "isVar": true,
+          "key": "$xs",
+          "name": "t-size-xs",
+          "val": 11,
+          "variable": ""
+        },
+        "sm": {
+          "isVar": true,
+          "key": "$sm",
+          "name": "t-size-sm",
+          "val": 13,
+          "variable": ""
+        },
+        "md": {
+          "isVar": true,
+          "key": "$md",
+          "name": "t-size-md",
+          "val": 15,
+          "variable": ""
+        },
+        "lg": {
+          "isVar": true,
+          "key": "$lg",
+          "name": "t-size-lg",
+          "val": 17,
           "variable": ""
         }
       }
@@ -41568,6 +41652,62 @@
         "val": "hsl(53, 100%, 91.0%)",
         "variable": ""
       },
+      "$color.primary": {
+        "isVar": true,
+        "key": "$primary",
+        "name": "c-primary",
+        "val": "#10F48A",
+        "variable": ""
+      },
+      "$color.destructive": {
+        "isVar": true,
+        "key": "$destructive",
+        "name": "c-destructive",
+        "val": "#F66754",
+        "variable": ""
+      },
+      "$color.warning": {
+        "isVar": true,
+        "key": "$warning",
+        "name": "c-warning",
+        "val": "#E39D35",
+        "variable": ""
+      },
+      "$color.background": {
+        "isVar": true,
+        "key": "$background",
+        "name": "c-background",
+        "val": "#000000",
+        "variable": ""
+      },
+      "$color.card": {
+        "isVar": true,
+        "key": "$card",
+        "name": "c-card",
+        "val": "#121212",
+        "variable": ""
+      },
+      "$color.text": {
+        "isVar": true,
+        "key": "$text",
+        "name": "c-text",
+        "val": "#ffffff",
+        "variable": ""
+      },
+      "$color.secondary": {
+        "isVar": true,
+        "key": "$secondary",
+        "name": "c-secondary",
+        "val": "#919FA6",
+        "variable": ""
+      },
+      "$color.tertiary": {
+        "isVar": true,
+        "key": "$tertiary",
+        "name": "c-tertiary",
+        "val": "#545D61",
+        "variable": ""
+      },
       "$radius.0": {
         "isVar": true,
         "key": "$0",
@@ -42300,7 +42440,7 @@
         "isVar": true,
         "key": "$true",
         "name": "t-size-true",
-        "val": 44,
+        "val": 13,
         "variable": ""
       },
       "$size.4.5": {
@@ -42308,6 +42448,34 @@
         "key": "$4.5",
         "name": "t-size-4--5",
         "val": 48,
+        "variable": ""
+      },
+      "$size.xs": {
+        "isVar": true,
+        "key": "$xs",
+        "name": "t-size-xs",
+        "val": 11,
+        "variable": ""
+      },
+      "$size.sm": {
+        "isVar": true,
+        "key": "$sm",
+        "name": "t-size-sm",
+        "val": 13,
+        "variable": ""
+      },
+      "$size.md": {
+        "isVar": true,
+        "key": "$md",
+        "name": "t-size-md",
+        "val": 15,
+        "variable": ""
+      },
+      "$size.lg": {
+        "isVar": true,
+        "key": "$lg",
+        "name": "t-size-lg",
+        "val": 17,
         "variable": ""
       }
     },

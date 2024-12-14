@@ -1,0 +1,9 @@
+{
+  "tabs": {
+    "home": "首页",
+    "trade": "交易",
+    "positions": "订单",
+    "partner": "合作伙伴",
+    "wallet": "钱包"
+  }
+}

@@ -5,12 +5,13 @@ import {
   TabTrigger,
   TabTriggerSlotProps,
 } from "expo-router/ui"
-import { FC, forwardRef, Ref } from "react"
-import { View, ViewProps } from "react-native"
-import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context"
-import { styled, Text, XStackProps } from "tamagui"
+import { forwardRef, Ref } from "react"
+import { useTranslation } from "react-i18next"
+import { StyleSheet, View } from "react-native"
+import { useSafeAreaInsets } from "react-native-safe-area-context"
 
-import { Icon, IconType, YStack } from "~/components"
+import { Icon, IconType, Text, YStack } from "~/components"
+import { COLORS } from "~/constants"
 
 type TabButtonProps = TabTriggerSlotProps & {
   icon?: IconType
@@ -30,18 +31,21 @@ export const TabButton = forwardRef(
     return (
       <YStack
         ref={ref}
-        p="$3"
+        f={1}
         jc="space-between"
         ai="center"
+        py={6}
         mb={bottom}
         onPress={onPress}
       >
-        <Icon name={icon!} />
-        <Text
-          color={isFocused ? "$red10" : "white"}
-          fontSize="sm"
-          fontWeight="bold"
-        >
+        <Icon
+          name={icon!}
+          width={25}
+          height={24}
+          color={isFocused ? COLORS.primary : COLORS.secondary}
+          accent={COLORS.primary}
+        />
+        <Text fos={10} color={isFocused ? "$primary" : "$secondary"}>
           {children}
         </Text>
       </YStack>
@@ -50,10 +54,11 @@ export const TabButton = forwardRef(
 )
 // Defining the layout of the custom tab navigator
 export default function Layout() {
+  const { t } = useTranslation()
   return (
     <Tabs>
       <TabSlot />
-      <TabList style={{ backgroundColor: "black" }}>
+      <TabList style={styles.tabbar}>
         {Routes.map((route) => (
           <TabTrigger
             key={route.name}
@@ -61,10 +66,16 @@ export default function Layout() {
             href={route.href}
             asChild
           >
-            <TabButton icon={route.icon}>{route.name}</TabButton>
+            <TabButton icon={route.icon}>{t(`tabs.${route.name}`)}</TabButton>
           </TabTrigger>
         ))}
       </TabList>
     </Tabs>
   )
 }
+
+const styles = StyleSheet.create({
+  tabbar: {
+    backgroundColor: COLORS.background,
+  },
+})
