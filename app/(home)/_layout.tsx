@@ -1,20 +1,21 @@
-import { NativeStackNavigationOptions } from '@react-navigation/native-stack'
-import { Stack } from 'expo-router/stack'
-import 'react-native-reanimated'
+import { Stack } from "expo-router/stack"
+import "react-native-reanimated"
 
-import colors from '~/theme/colors'
-import { HeaderLeft } from '~/widgets/navigation'
+import colors from "~/theme/colors"
+import {
+  DefaultScreenOptions,
+  NativeStackNavigationOptions,
+} from "~/widgets/header"
 
 export const unstable_settings = {
-  initialRouteName: "/(home)/tabs/",
+  initialRouteName: "/(home)/tabs",
 }
 const ScreenOptions: NativeStackNavigationOptions = {
+  ...DefaultScreenOptions,
   headerShown: true,
-  headerLeft: () => <HeaderLeft />,
   headerStyle: { backgroundColor: colors.background },
-  headerTitleStyle: { color: colors.text },
 }
 
 export default function Layout() {
-  return <Stack screenOptions={ScreenOptions}></Stack>
+  return <Stack screenOptions={ScreenOptions} />
 }

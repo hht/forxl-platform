@@ -1,17 +1,17 @@
-import { DarkTheme, ThemeProvider } from '@react-navigation/native'
-import { useFonts } from 'expo-font'
-import { Stack } from 'expo-router/stack'
-import * as SplashScreen from 'expo-splash-screen'
-import { StatusBar } from 'expo-status-bar'
-import { useEffect } from 'react'
-import { GestureHandlerRootView } from 'react-native-gesture-handler'
-import 'react-native-reanimated'
-import { enableFreeze, enableScreens } from 'react-native-screens'
-import { TamaguiProvider } from 'tamagui'
+import { DarkTheme, ThemeProvider } from "@react-navigation/native"
+import { useFonts } from "expo-font"
+import { Stack } from "expo-router/stack"
+import * as SplashScreen from "expo-splash-screen"
+import { StatusBar } from "expo-status-bar"
+import { useEffect } from "react"
+import { GestureHandlerRootView } from "react-native-gesture-handler"
+import "react-native-reanimated"
+import { enableFreeze, enableScreens } from "react-native-screens"
+import { TamaguiProvider } from "tamagui"
 
-import { Toaster } from '~/components'
-import config from '~/theme/tamagui.config'
-import { initI18Next } from '~/utils'
+import { Toaster } from "~/components"
+import { initI18Next } from "~/lib/utils"
+import config from "~/theme/tamagui.config"
 
 enableScreens(true)
 enableFreeze(true)
@@ -19,7 +19,7 @@ enableFreeze(true)
 export { ErrorBoundary } from "expo-router"
 
 export const unstable_settings = {
-  initialRouteName: "(home)",
+  initialRouteName: "(anon)",
 }
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
@@ -41,9 +41,9 @@ export default function RootLayout() {
       <TamaguiProvider config={config}>
         <ThemeProvider value={DarkTheme}>
           <Stack
-            initialRouteName="(home)"
+            initialRouteName="(anon)"
             screenOptions={{ headerShown: false }}
-          ></Stack>
+          />
         </ThemeProvider>
         <StatusBar style="light" translucent />
         <Toaster />

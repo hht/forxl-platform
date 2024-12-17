@@ -1,11 +1,20 @@
-import BottomSheetBase from '@gorhom/bottom-sheet'
-import { Link } from 'expo-router'
-import { Fragment, useRef, useState } from 'react'
-import { Defs, Ellipse, RadialGradient, Stop, Svg } from 'react-native-svg'
-import { XStack, YStack } from 'tamagui'
+import BottomSheetBase from "@gorhom/bottom-sheet"
+import { Link } from "expo-router"
+import { Fragment, useRef, useState } from "react"
+import { Defs, Ellipse, RadialGradient, Stop, Svg } from "react-native-svg"
+import { XStack, YStack } from "tamagui"
 
-import { BottomSheet, Button, Card, Input, Popup, ScrollView, Text, toast } from '~/components'
-import colors from '~/theme/colors'
+import {
+  BottomSheet,
+  Button,
+  Card,
+  Input,
+  Popup,
+  ScrollView,
+  Text,
+  toast,
+} from "~/components"
+import colors from "~/theme/colors"
 
 export default function Page() {
   const [visible, setVisible] = useState(false)

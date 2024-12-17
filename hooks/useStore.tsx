@@ -1,0 +1,338 @@
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import { produce } from 'immer'
+import { createJSONStorage, persist } from 'zustand/middleware'
+import { createWithEqualityFn } from 'zustand/traditional'
+
+import { getPartnerConfig } from '~/api/partner'
+import { getFutureCategories } from '~/api/trade'
+import { dayjs } from '~/lib/utils'
+
+interface Store {
+  account?: Account
+  userNumber?: string
+  timezone: number
+  language: string
+}
+
+const getCurrentFuturePrice = (params: {
+  futureCode: string
+  action: "buy" | "sell"
+  volatility?: number
+  clazzSpread?: number
+  buyPrice?: string | number
+  sellPrice?: string | number
+  Ask?: number
+  Bid?: number
+}) => {
+  const { Ask, Bid, action, volatility, clazzSpread, buyPrice, sellPrice } =
+    params
+  const diff = ((volatility ?? 0) * (clazzSpread ?? 0)) / 2
+  const price =
+    action === "buy"
+      ? (Ask ?? Number(buyPrice)) + diff
+      : (Bid ?? Number(sellPrice)) - diff
+  return price
+}
+
+export const useFroxlStore = createWithEqualityFn<Store>()(
+  persist(
+    (set) => ({
+      timezone: dayjs().utcOffset(),
+      language: "en",
+    }),
+    {
+      name: "froxl",
+      storage: createJSONStorage(() => AsyncStorage),
+    }
+  )
+)
+
+interface Order {
+  position?: number
+  price?: number
+  openSafe?: number
+  stopLossPrice?: number
+  stopProfitPrice?: number
+}
+interface QuotesStore {
+  quotes: Record<
+    string,
+    Quotes & {
+      AskDiff: number
+      BidDiff: number
+      LastUpdated: number
+    }
+  >
+  futures: Record<string, FuturesDetail>
+  currentFuture?: Future
+  action: "buy" | "sell"
+  order?: Partial<Order>
+  updateQuotes: (quotes: Quotes) => void
+  updateOrder: (data: Partial<Order>) => void
+  cancelOrder: () => void
+  enablePending?: boolean
+  enableCloseProfit?: boolean
+  enableCloseLoss?: boolean
+  currentFutureDetail?: FuturesDetail
+  getCurrentPrice: () => number
+  getOrderPrice: (ratio: number) => number
+}
+
+export const useQuotesStore = createWithEqualityFn<QuotesStore>((set, get) => ({
+  action: "buy" as const,
+  quotes: {},
+  futures: {},
+  order: {
+    position: 0.01,
+  },
+  getCurrentPrice: () => {
+    const { currentFuture, action, quotes } = get()
+    const currentQuote = quotes[currentFuture?.futuresShow!]
+    return getCurrentFuturePrice({
+      futureCode: currentFuture?.futuresShow!,
+      action,
+      volatility: currentFuture?.volatility,
+      clazzSpread: currentFuture?.clazzSpread,
+      buyPrice: currentFuture?.buyPrice,
+      sellPrice: currentFuture?.sellPrice,
+      Ask: currentQuote?.Ask,
+      Bid: currentQuote?.Bid,
+    })
+  },
+  getOrderPrice: (ratio) => {
+    const { order, action, currentFuture, enablePending } = get()
+    const price = enablePending ? (order?.price ?? 0) : get().getCurrentPrice()
+    const localRatio = action === "buy" ? 1 : -1
+    const finalDiff =
+      (currentFuture?.volatility ?? 0) * 100 * ratio * localRatio
+    return Math.max(price + finalDiff, 0)
+  },
+  updateQuotes: (quotes) =>
+    set(
+      produce((state: QuotesStore) => {
+        const previous = get().quotes[quotes.Symbol]
+        const LastUpdated = Date.now()
+        if (LastUpdated - previous?.LastUpdated < 500) {
+          return
+        }
+
+        state.quotes[quotes.Symbol] = {
+          ...quotes,
+          LastUpdated: Date.now(),
+          AskDiff: quotes.Ask - (previous?.Ask ?? quotes.Ask),
+          BidDiff: quotes.Bid - (previous?.Bid ?? quotes.Bid),
+        }
+      })
+    ),
+  updateOrder: (data) => {
+    set(
+      produce((state: QuotesStore) => {
+        state.order = { ...state.order, ...data }
+      })
+    )
+  },
+  cancelOrder: () => {
+    set(
+      produce((state: QuotesStore) => {
+        state.order = undefined
+      })
+    )
+  },
+}))
+
+export const OPTIONS = [
+  "today",
+  "lastWeek",
+  "lastMonth",
+  "last3Months",
+  "last6Months",
+  "lastYear",
+  "customPeriod",
+] as const
+
+export const useOrderStore = createWithEqualityFn<{
+  current: "open" | "orders" | "closed"
+  filterVisible: boolean
+  options?: (typeof OPTIONS)[number]
+  from?: number
+  to?: number
+  willClosePosition?: Position
+  willChangePosition?: Position
+  pendingOrders?: Position[]
+  totalProfit?: number
+  orders?: Position[]
+  reloadKey?: string
+  wallet?: Wallet["forexAccount"]
+  summary: {
+    totalMoney: number
+    available: number
+    freezeMoney: number
+    supFreezeMoney: number
+    profit: number
+  }
+}>((set) => ({
+  current: "open",
+  filterVisible: false,
+  options: undefined,
+  summary: {
+    totalMoney: 0,
+    available: 0,
+    freezeMoney: 0,
+    supFreezeMoney: 0,
+    profit: 0,
+  },
+}))
+
+export const useSymbolStore = createWithEqualityFn<{
+  index: number
+  codeOrName: string
+  currentFuture?: Awaited<ReturnType<typeof getFutureCategories>>[number]
+  mutationFuture?: {
+    futuresId: number
+    selected: 0 | 1
+  }
+}>((set) => ({
+  index: 0,
+  codeOrName: "",
+}))
+
+export const usePartnerStore = createWithEqualityFn<{
+  activeIndex: number
+  partnerLevel: number
+  currentLevel: number
+  config?: Awaited<ReturnType<typeof getPartnerConfig>>
+}>((set) => ({
+  activeIndex: 0,
+  partnerLevel: 0,
+  currentLevel: 0,
+}))
+
+export type DepositResult =
+  | {
+      currency: string
+      exchangeRate: string
+      isNew: 0 | 1
+      orderNo: string
+      payAccount: string
+      payBank: string
+      payChannel: number
+      payName: string
+      recordId: string
+      transferAmount: string
+      trc20: null
+      usdAmount: string
+      payType: 3
+    }
+  | {
+      address: string
+      price: number
+      payType: 0
+    }
+  | {
+      address: string
+      price: number
+      payType: 1
+    }
+
+export const useWalletStore = createWithEqualityFn<{
+  depositResult?: DepositResult
+  image?: string
+  depositRequest?: {
+    payBank: string
+    payName: string
+    payAccount: string
+  }
+}>((set) => ({}))
+
+export const computeProfit = (
+  futures: Pick<
+    Position,
+    | "linkFuturesCode"
+    | "openSafe"
+    | "clazzSpread"
+    | "volatility"
+    | "tradingFee"
+    | "overNightFee"
+    | "multiplier"
+    | "position"
+    | "price"
+    | "futuresCode"
+    | "overPrice"
+    | "computeType"
+    | "positionsProfit"
+  >,
+  currentQuotes?: Pick<Quotes, "Ask" | "Bid">
+) => {
+  const quotes =
+    currentQuotes ?? useQuotesStore.getState().quotes[futures.futuresCode!]
+  if (!quotes) {
+    return futures.positionsProfit ?? 0
+  }
+  const linkedRate =
+    (futures.linkFuturesCode
+      ? futures.openSafe === 0
+        ? useQuotesStore.getState().quotes[futures.linkFuturesCode]?.Ask
+        : useQuotesStore.getState().quotes[futures.linkFuturesCode]?.Bid
+      : 1) ?? 1
+  const classSpread = futures.clazzSpread || 0
+  const volatility = futures.volatility || 0
+  const tradingFee = futures.tradingFee || 0
+  const overNightFee = futures.overNightFee || 0
+  const diff = (classSpread * volatility) / 2
+  const multiplier = futures.multiplier || 0
+  const position = futures.position || 0
+  const price = futures.price || 0
+
+  const profit =
+    futures.openSafe === 0
+      ? (quotes?.Bid ?? futures.overPrice) - price - diff
+      : price - (quotes?.Ask ?? futures.overPrice) - diff
+
+  switch (futures.computeType) {
+    case 0:
+      return (
+        (profit /
+          (futures.openSafe === 0 ? quotes.Bid - diff : quotes.Ask - diff)) *
+          multiplier *
+          position -
+        tradingFee -
+        overNightFee
+      )
+    case 1:
+      return profit * multiplier * position - tradingFee - overNightFee
+    case 2:
+      if (futures.linkFuturesCode?.startsWith("USD")) {
+        return (
+          profit * multiplier * position * linkedRate -
+          tradingFee -
+          overNightFee
+        )
+      } else {
+        return (
+          (profit * multiplier * position) / linkedRate -
+          tradingFee -
+          overNightFee
+        )
+      }
+    case 3:
+    case 4:
+    case 6:
+    case 8:
+    case 12:
+      return (
+        profit * multiplier * position * linkedRate - tradingFee - overNightFee
+      )
+    case 5:
+    case 7:
+    case 9:
+    case 10:
+    case 11:
+      return (
+        (profit * multiplier * position) / linkedRate -
+        tradingFee -
+        overNightFee
+      )
+    default:
+      return 0
+  }
+}

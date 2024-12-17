@@ -1,4 +1,4 @@
-import { resources } from "~/utils"
+import { resources } from '~/lib/utils'
 
 declare module "i18next" {
   interface CustomTypeOptions {

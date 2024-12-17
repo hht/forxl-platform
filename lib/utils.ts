@@ -1,13 +1,25 @@
 import dayjs from 'dayjs'
 import 'dayjs/locale/en'
 import 'dayjs/locale/zh'
+import isToday from 'dayjs/plugin/isToday'
+import isYesterday from 'dayjs/plugin/isYesterday'
+import localeData from 'dayjs/plugin/localeData'
+import relativeTime from 'dayjs/plugin/relativeTime'
+import utc from 'dayjs/plugin/utc'
 import * as Localization from 'expo-localization'
 import i18n from 'i18next'
+import _ from 'lodash'
 import { initReactI18next } from 'react-i18next'
 import { LayoutAnimation } from 'react-native'
 
 import en from '~/locales/en-US/translation.json'
 import zh from '~/locales/zh-CN/translation.json'
+
+dayjs.extend(localeData)
+dayjs.extend(utc)
+dayjs.extend(relativeTime)
+dayjs.extend(isToday)
+dayjs.extend(isYesterday)
 
 export { dayjs }
 
@@ -38,6 +50,10 @@ i18n.use(initReactI18next).init({
   },
 })
 
+export { i18n }
+
+export const t = i18n.t.bind(i18n)
+
 export const initI18Next = async () => {
   const locale = Localization.getLocales()[0].languageCode
   i18n.use(initReactI18next).init({
@@ -62,4 +78,40 @@ export const animateOnNextFrame = () => {
       type: LayoutAnimation.Types.easeInEaseOut,
     },
   })
+}
+
+export const getLocaleLanguage = (locale: string) => {
+  switch (locale) {
+    case "zh":
+      return "zh-hans"
+    case "zh-TW":
+      return "zh-hant"
+    default:
+      return locale
+  }
+}
+
+export const waitFor = (ms = 200) =>
+  new Promise((resolve) => setTimeout(resolve, ms))
+
+export const uuid = () =>
+  "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (c) => {
+    const r = (Math.random() * 16) | 0,
+      v = c === "x" ? r : (r & 0x3) | 0x8
+    return v.toString(16)
+  })
+
+export const formatCurrency = (value?: number | string) => {
+  return new Intl.NumberFormat("en", {
+    style: "currency",
+  }).format(_.isNaN(Number(value)) ? 0 : Number(value))
+}
+
+export const formatDecimal = (value: string | number, fraction = 0.01) => {
+  const precision = fraction.toString().split(".")[1]?.length ?? 0
+  return new Intl.NumberFormat(i18n.resolvedLanguage, {
+    style: "decimal",
+    minimumFractionDigits: precision,
+    maximumFractionDigits: precision,
+  }).format(_.isNaN(Number(value)) ? 0 : Number(value))
 }

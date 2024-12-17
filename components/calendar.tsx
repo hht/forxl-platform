@@ -7,8 +7,8 @@ import { XStack, YStack } from 'tamagui'
 import { Icon } from './icon'
 import { Text } from './text'
 
+import { dayjs } from '~/lib/utils'
 import colors from '~/theme/colors'
-import { dayjs } from '~/utils'
 
 const ACCENT_COLOR = "#13261E"
 

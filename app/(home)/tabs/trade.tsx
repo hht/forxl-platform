@@ -4,7 +4,6 @@ import { useState } from 'react'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 import { Calendar, YStack } from '~/components'
-import { animateOnNextFrame } from '~/utils'
 
 const getCalendarDayFormat = (date: Date) => date.getDate().toString()
 const getCalendarWeekDayFormat = (date: Date) =>
@@ -24,7 +23,6 @@ export default function Page() {
         calendarActiveDateRanges={calendarActiveDateRanges}
         calendarMonthId={date}
         onCalendarMonthChange={(v) => {
-          animateOnNextFrame()
           setDate(toDateId(dayjs(date).add(v, "month").toDate()))
         }}
         calendarRowVerticalSpacing={6}

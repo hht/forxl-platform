@@ -11,7 +11,9 @@
     "moti",
     "gorhom",
     "quidone",
-    "marceloterreiro"
+    "marceloterreiro",
+    "clazz",
+    "ahooks"
   ],
   "ignorePaths": ["node_modules", "dist", "build", ".git", "package-lock.json"]
 }
