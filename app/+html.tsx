@@ -1,4 +1,4 @@
-import { ScrollViewStyleReset } from "expo-router/html"
+import { ScrollViewStyleReset } from 'expo-router/html'
 
 // This file is web-only and used to configure the root HTML for every
 // web page during static rendering.
@@ -38,4 +38,11 @@ body {
   body {
     background-color: #000;
   }
-}`
+}
+textarea:focus, input:focus{
+    outline: none;
+}
+a{
+  text-decoration: none;
+}
+`

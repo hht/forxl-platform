@@ -1,13 +1,17 @@
-import { useFonts } from "expo-font"
-import { Slot, Stack } from "expo-router"
-import * as SplashScreen from "expo-splash-screen"
-import { useEffect } from "react"
-import "react-native-reanimated"
-import { enableFreeze, enableScreens } from "react-native-screens"
-import { TamaguiProvider, YStack } from "tamagui"
+import { DarkTheme, ThemeProvider } from '@react-navigation/native'
+import { useFonts } from 'expo-font'
+import { Stack } from 'expo-router/stack'
+import * as SplashScreen from 'expo-splash-screen'
+import { StatusBar } from 'expo-status-bar'
+import { useEffect } from 'react'
+import { GestureHandlerRootView } from 'react-native-gesture-handler'
+import 'react-native-reanimated'
+import { enableFreeze, enableScreens } from 'react-native-screens'
+import { TamaguiProvider } from 'tamagui'
 
-import config from "~/theme/tamagui.config"
-import { initI18Next } from "~/utils"
+import { Toaster } from '~/components'
+import config from '~/theme/tamagui.config'
+import { initI18Next } from '~/utils'
 
 enableScreens(true)
 enableFreeze(true)
@@ -33,10 +37,17 @@ export default function RootLayout() {
     }
   }, [loaded])
   return (
-    <TamaguiProvider config={config} defaultTheme="dark">
-      <Stack>
-        <Stack.Screen name="(home)" options={{ headerShown: false }} />
-      </Stack>
-    </TamaguiProvider>
+    <GestureHandlerRootView>
+      <TamaguiProvider config={config}>
+        <ThemeProvider value={DarkTheme}>
+          <Stack
+            initialRouteName="(home)"
+            screenOptions={{ headerShown: false }}
+          ></Stack>
+        </ThemeProvider>
+        <StatusBar style="light" translucent />
+        <Toaster />
+      </TamaguiProvider>
+    </GestureHandlerRootView>
   )
 }

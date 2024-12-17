@@ -1,18 +1,17 @@
-import _ from "lodash"
-import { FC, memo } from "react"
-import {
-  Button as TamaButton,
-  ButtonProps,
-  Spinner,
-  StackProps,
-  XStack,
-} from "tamagui"
-import { shallow } from "zustand/shallow"
+import _ from 'lodash'
+import { forwardRef, Ref } from 'react'
+import { View } from 'react-native'
+import { Button as TamaButton, ButtonProps, Spinner } from 'tamagui'
 
-import { Image } from "./image"
-import { Text } from "./text"
+import { Text } from './text'
 
-export type ButtonType = "primary" | "ghost" | "destructive" | "secondary"
+export type ButtonType =
+  | "primary"
+  | "ghost"
+  | "destructive"
+  | "accent"
+  | "warning"
+  | "icon"
 
 const getButtonStyle = ({
   type = "primary",
@@ -20,61 +19,76 @@ const getButtonStyle = ({
   type?: ButtonType
   disabled?: boolean
 }): ButtonProps => {
+  const color = `$${type}`
   switch (type) {
     case "primary":
-      return {
-        bc: "$primary",
-        borderColor: "$primary",
-        color: "$background",
-        pressStyle: {
-          bc: "$primary",
-          borderColor: "$primary",
-          scale: 0.99,
-          opacity: 0.8,
-        },
-      }
     case "destructive":
+    case "warning":
       return {
-        bc: "$destructive",
-        borderColor: "$destructive",
+        bc: color,
+        boc: color,
         color: "$background",
         pressStyle: {
-          bc: "$destructive",
-          borderColor: "$destructive",
-          scale: 0.99,
+          bc: color,
+          boc: color,
           opacity: 0.8,
         },
+        hoverStyle: {
+          bc: color,
+          boc: color,
+        },
       }
-    case "secondary":
+    case "accent":
       return {
-        bc: "$card",
-        borderColor: "$card",
+        bc: "$accent",
+        boc: "$accent",
         color: "$text",
         pressStyle: {
-          bc: "$card",
-          borderColor: "$card",
-          scale: 0.99,
+          bc: "$accent",
+          boc: "$accent",
           opacity: 0.8,
+        },
+        hoverStyle: {
+          bc: "$accent",
+          boc: "$accent",
         },
       }
     case "ghost":
       return {
-        bc: "$transparent",
-        borderColor: "$primary",
-        color: "$background",
+        bc: "transparent",
+        boc: "$destructive",
+        color: "$destructive",
         pressStyle: {
-          bc: "$transparent",
-          borderColor: "$primary",
-          scale: 0.99,
+          bc: "transparent",
+          boc: "$destructive",
           opacity: 0.8,
+        },
+        hoverStyle: {
+          bc: "transparent",
+          boc: "$destructive",
+        },
+      }
+    case "icon":
+      return {
+        bc: "transparent",
+        boc: "transparent",
+        color: "$destructive",
+        pressStyle: {
+          bc: "transparent",
+          boc: "transparent",
+          opacity: 0.8,
+        },
+        hoverStyle: {
+          bc: "transparent",
+          boc: "transparent",
         },
       }
     default:
       return {
-        borderColor: "$primary",
+        boc: "$primary",
         bw: 1,
         px: 10,
-        height: 40,
+        height: 48,
         color: "$background",
       }
   }
@@ -84,10 +98,8 @@ const getHeight = (size?: "$sm" | "$lg") => {
   switch (size) {
     case "$sm":
       return 32
-    case "$lg":
-      return 44
     default:
-      return 40
+      return 48
   }
 }
 /**
@@ -97,35 +109,63 @@ const getHeight = (size?: "$sm" | "$lg") => {
  *
  * 按钮高度: sm:32, md:40,默认44
  */
-export const Button: FC<
-  {
-    isLoading?: boolean
-    type?: ButtonType
-    size?: "$sm" | "$lg"
-  } & ButtonProps
-> = memo(
-  ({
-    disabled,
-    isLoading,
-    children,
-    icon,
-    size,
-    type = "primary",
-    ...rest
-  }) => {
+export const Button = forwardRef(
+  (
+    {
+      disabled,
+      isLoading,
+      children,
+      icon,
+      size,
+      type = "primary",
+      ...rest
+    }: {
+      isLoading?: boolean
+      type?: ButtonType
+      size?: "$sm" | "$lg" | "$icon"
+    } & ButtonProps,
+    ref: Ref<View>
+  ) => {
     const isDisabled = disabled ?? isLoading
     const styles = getButtonStyle({ type, disabled: isDisabled })
+    if (size === "$icon") {
+      return (
+        <TamaButton
+          boc="$primary"
+          bw={1}
+          px={0}
+          py={0}
+          hitSlop={10}
+          ref={ref}
+          color={rest.color ?? styles.color}
+          o={disabled || isLoading ? 0.6 : 1}
+          {...styles}
+          h={40}
+          w={40}
+          {...rest}
+          disabled={isDisabled}
+        >
+          {isLoading ? (
+            <Spinner size="small" />
+          ) : _.isString(children) ? (
+            <Text fos={16} fow="600" col={rest.color ?? styles.color}>
+              {children}
+            </Text>
+          ) : (
+            children
+          )}
+        </TamaButton>
+      )
+    }
     return (
       <TamaButton
-        borderColor="$primary"
+        boc="$primary"
         bw={1}
-        fontWeight="500"
-        px={10}
-        py={0}
         ai="center"
         jc="center"
         br={6}
-        color="$ButtonText"
+        ref={ref}
+        color="$background"
         {...styles}
         o={disabled || isLoading ? 0.5 : 1}
         {...rest}
@@ -134,7 +174,7 @@ export const Button: FC<
         icon={isLoading ? <Spinner size="small" /> : icon}
       >
         {_.isString(children) ? (
-          <Text fos={16} fow="500" col={styles.color}>
+          <Text fos={16} lh={20} fow="600" col={styles.color}>
             {children}
           </Text>
         ) : (
@@ -144,3 +184,5 @@ export const Button: FC<
     )
   }
 )
+
+Button.displayName = "Button"

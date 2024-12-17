@@ -1,9 +1,15 @@
-import * as Localization from "expo-localization"
-import i18n from "i18next"
-import { initReactI18next } from "react-i18next"
+import dayjs from 'dayjs'
+import 'dayjs/locale/en'
+import 'dayjs/locale/zh'
+import * as Localization from 'expo-localization'
+import i18n from 'i18next'
+import { initReactI18next } from 'react-i18next'
+import { LayoutAnimation } from 'react-native'
 
-import en from "~/locales/en-US/translation.json"
-import zh from "~/locales/zh-CN/translation.json"
+import en from '~/locales/en-US/translation.json'
+import zh from '~/locales/zh-CN/translation.json'
+
+export { dayjs }
 
 export const resources = {
   en: {
@@ -41,6 +47,19 @@ export const initI18Next = async () => {
     defaultNS: "translation",
     interpolation: {
       escapeValue: false,
+    },
+  })
+}
+
+export const animateOnNextFrame = () => {
+  LayoutAnimation.configureNext({
+    duration: 300,
+    create: {
+      type: LayoutAnimation.Types.easeInEaseOut,
+      property: LayoutAnimation.Properties.opacity,
+    },
+    update: {
+      type: LayoutAnimation.Types.easeInEaseOut,
     },
   })
 }

@@ -3,7 +3,7 @@ import { styled, Text as TamaText } from "tamagui"
 /**
  * 默认字体组件
  *
- * 字体大小定义: 默认14
+ * 字体大小定义: 默认13
  *
  * 行高定义根据字体大小按照设计图比例设定
  */
