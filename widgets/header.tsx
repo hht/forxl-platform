@@ -1,19 +1,17 @@
-import { NativeStackNavigationOptions } from "@react-navigation/native-stack"
-import { router } from "expo-router"
-import { FC } from "react"
-import { useTranslation } from "react-i18next"
-import { Platform } from "react-native"
+import { NativeStackNavigationOptions } from '@react-navigation/native-stack'
+import { router } from 'expo-router'
+import { FC } from 'react'
+import { useTranslation } from 'react-i18next'
+import { Platform } from 'react-native'
 
-import { getNewMessageCount } from "~/api/notifications"
-import { Figure, Icon, Text, XStack } from "~/components"
-import { useRequest } from "~/hooks/useRequest"
-import colors from "~/theme/colors"
-
-const px = Platform.OS === "web" ? 12 : 12
+import { getNewMessageCount } from '~/api/notifications'
+import { Figure, Icon, Text, XStack } from '~/components'
+import { useRequest } from '~/hooks/useRequest'
+import colors from '~/theme/colors'
 
 export const HeaderLeft: FC<{ onPress?: () => void }> = ({ onPress }) => {
   return (
-    <XStack px={px} py={12} hitSlop={10} onPress={onPress ?? router.back}>
+    <XStack px={12} py={12} hitSlop={10} onPress={onPress ?? router.back}>
       <Icon name="arrowLeft" size={20} />
     </XStack>
   )
@@ -32,7 +30,7 @@ export const BrandTitle: FC = () => {
 export const BreadCrumb: FC = () => {
   return (
     <XStack
-      px={px}
+      px={12}
       py={12}
       hitSlop={10}
       onPress={() => {
@@ -81,12 +79,7 @@ export const CustomerService: FC = () => {
 export const LiveSupport: FC = () => {
   const { t } = useTranslation()
   return (
-    <XStack
-      gap="$xs"
-      hitSlop={10}
-      ai="center"
-      px={Platform.OS === "web" ? "$md" : 0}
-    >
+    <XStack gap="$xs" hitSlop={10} ai="center" px={12}>
       <Icon name="bubble" size={18} />
       <Text>{t("anon.liveSupport")}</Text>
     </XStack>

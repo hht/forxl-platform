@@ -69,5 +69,12 @@
         "More"
       ]
     }
+  },
+  "notifications": {
+    "title": "System Notifications",
+    "allRead": "All Read",
+    "empty": "No System Notification",
+    "today": "Today",
+    "yesterday": "Yesterday"
   }
 }

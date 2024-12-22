@@ -1,27 +1,23 @@
-import { useIsFocused } from "@react-navigation/native"
-import { FlashList } from "@shopify/flash-list"
-import { useInfiniteScroll } from "ahooks"
-import dayjs from "dayjs"
-import { router, Stack } from "expo-router"
-import { Fragment, useCallback } from "react"
-import { useTranslation } from "react-i18next"
-import { ActivityIndicator } from "react-native"
-import { Defs, Ellipse, RadialGradient, Stop, Svg } from "react-native-svg"
-import { XStack, YStack } from "tamagui"
+import { useIsFocused } from '@react-navigation/native'
+import { FlashList } from '@shopify/flash-list'
+import { useInfiniteScroll } from 'ahooks'
+import dayjs from 'dayjs'
+import { router, Stack } from 'expo-router'
+import { Fragment, useCallback } from 'react'
+import { useTranslation } from 'react-i18next'
+import { ActivityIndicator } from 'react-native'
+import { Defs, Ellipse, RadialGradient, Stop, Svg } from 'react-native-svg'
+import { XStack, YStack } from 'tamagui'
 
-import { getNews } from "~/api/dashboard"
-import { Figure, Icon, Image, Screen, Text } from "~/components"
-import { useWebViewStore } from "~/hooks/useStore"
-import colors, { toRGBA } from "~/theme/colors"
-import { AssetCard, Banners, Shortcuts } from "~/widgets/dashboard"
+import { getNews } from '~/api/dashboard'
+import { Figure, Icon, Image, Screen, Text } from '~/components'
+import { useWebViewStore } from '~/hooks/useStore'
+import colors, { toRGBA } from '~/theme/colors'
+import { AssetCard, Banners, Shortcuts } from '~/widgets/dashboard'
 import {
-  BrandTitle,
-  BreadCrumb,
-  CustomerService,
-  DefaultScreenOptions,
-  NativeStackNavigationOptions,
-  Notifier,
-} from "~/widgets/header"
+    BrandTitle, BreadCrumb, CustomerService, DefaultScreenOptions, NativeStackNavigationOptions,
+    Notifier
+} from '~/widgets/header'
 
 const ScreenOptions: NativeStackNavigationOptions = {
   ...DefaultScreenOptions,
@@ -164,7 +160,7 @@ export default function Page() {
         return Promise.resolve({ list: d?.list ?? [], nextId: d?.nextId ?? 1 })
       return getNews({
         page: d?.nextId ?? 1,
-        date: dayjs().subtract(3, "day").format("YYYY-MM-DD"),
+        date: dayjs().format("YYYY-MM-DD"),
       })
     },
     {
@@ -173,6 +169,7 @@ export default function Page() {
     }
   )
   const ListFooterComponent = useCallback(() => {
+    if (!data?.list.length) return null
     return (
       <XStack
         gap="$md"
@@ -204,7 +201,7 @@ export default function Page() {
         </Text>
       </XStack>
     )
-  }, [loading, loadingMore, t])
+  }, [loading, loadingMore, t, data?.list.length])
   return (
     <Screen pb={0} gap={0}>
       <Stack.Screen options={ScreenOptions} />

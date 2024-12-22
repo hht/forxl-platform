@@ -1,14 +1,14 @@
-import { useUnmount } from "ahooks"
-import { Link, Stack } from "expo-router"
-import { useMemo } from "react"
-import { useTranslation } from "react-i18next"
-import { z } from "zod"
-import { createWithEqualityFn } from "zustand/traditional"
+import { useUnmount } from 'ahooks'
+import { Link, Stack } from 'expo-router'
+import { useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
+import { z } from 'zod'
+import { createWithEqualityFn } from 'zustand/traditional'
 
-import { signIn } from "~/api/account"
-import { Button, Input, Screen, Text, XStack, YStack } from "~/components"
-import { useRequest } from "~/hooks/useRequest"
-import { LiveSupport, NativeStackNavigationOptions } from "~/widgets/header"
+import { signIn } from '~/api/account'
+import { Button, Input, Screen, Text, XStack, YStack } from '~/components'
+import { useRequest } from '~/hooks/useRequest'
+import { LiveSupport, NativeStackNavigationOptions } from '~/widgets/header'
 
 const ScreenOptions: NativeStackNavigationOptions = {
   title: "",
@@ -40,7 +40,8 @@ export default function Page() {
   const scheme = useMemo(
     () =>
       z.object({
-        email: z.string().email(matches.email),
+        email: z.string(),
+        // email: z.string().email(matches.email),
         password: z.string(),
         // .min(8, matches.length)
         // .max(12, matches.length)
