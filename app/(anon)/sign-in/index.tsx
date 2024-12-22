@@ -1,32 +1,112 @@
-import { Stack, useRouter } from 'expo-router'
-import { YStack } from 'tamagui'
+import { useUnmount } from "ahooks"
+import { Link, Stack } from "expo-router"
+import { useMemo } from "react"
+import { useTranslation } from "react-i18next"
+import { z } from "zod"
+import { createWithEqualityFn } from "zustand/traditional"
 
-import { Button } from '~/components'
-import { NativeStackNavigationOptions } from '~/widgets/header'
+import { signIn } from "~/api/account"
+import { Button, Input, Screen, Text, XStack, YStack } from "~/components"
+import { useRequest } from "~/hooks/useRequest"
+import { LiveSupport, NativeStackNavigationOptions } from "~/widgets/header"
 
 const ScreenOptions: NativeStackNavigationOptions = {
   title: "",
+  headerRight: () => <LiveSupport />,
 }
 
+interface Store {
+  email: string
+  password: string
+  confirm: string
+  inviteCode: string
+}
+
+const INITIAL = {
+  email: "",
+  password: "",
+  confirm: "",
+  inviteCode: "",
+}
+
+const useStore = createWithEqualityFn<Store>()((set) => INITIAL)
+
 export default function Page() {
-  const router = useRouter()
+  const { email, password } = useStore()
+  const { t } = useTranslation("translation")
+  const matches = t("anon.matches", {
+    returnObjects: true,
+  })
+  const scheme = useMemo(
+    () =>
+      z.object({
+        email: z.string().email(matches.email),
+        password: z.string(),
+        // .min(8, matches.length)
+        // .max(12, matches.length)
+        // .regex(/[A-Za-z]/, matches.containsLetter)
+        // .regex(/[!@#$%^&*_\-]/, matches.containsSpecial)
+        // .regex(/[0-9]/, matches.containsNumber),
+      }),
+    [matches]
+  )
+
+  const { success, error } = scheme.safeParse({
+    email,
+    password,
+  })
+  const errors = error?.formErrors?.fieldErrors
+
+  const { run, loading } = useRequest(() => signIn({ email, password }), {
+    manual: true,
+  })
+
+  useUnmount(() => {
+    useStore.setState(INITIAL)
+  })
   return (
-    <YStack f={1} bc="$background" ai="center" jc="center" gap={16}>
+    <Screen gap={32}>
       <Stack.Screen options={ScreenOptions} />
-      <Button
-        onPress={() => {
-          router.replace("/(anon)/sign-up")
-        }}
-      >
-        注册
+      <YStack gap={12}>
+        <Text subject>{t("anon.welcome")}</Text>
+        <Text col="$secondary">{t("anon.welcomeDesc")}</Text>
+      </YStack>
+      <YStack gap="$md" f={1}>
+        <Input
+          label={t("anon.email")}
+          value={email}
+          status={errors?.email ? "error" : "success"}
+          onChangeText={(email) => useStore.setState({ email })}
+          message={errors?.email?.[0]}
+        />
+        <Input.Password
+          label={t("anon.password")}
+          value={password}
+          status={errors?.password ? "error" : "success"}
+          onChangeText={(password) => useStore.setState({ password })}
+          message={errors?.password?.[0]}
+        />
+      </YStack>
+      <Button disabled={!success} isLoading={loading} onPress={run}>
+        {t("anon.login")}
       </Button>
-      <Button
-        onPress={() => {
-          router.back()
-        }}
-      >
-        返回
-      </Button>
-    </YStack>
+      <YStack gap="$md" ai="center" pb={32}>
+        <Link href="/(anon)/forgot-password" asChild>
+          <Text col="$primary" fow="700" textDecorationLine="underline">
+            {t("anon.forgotPassword")}
+          </Text>
+        </Link>
+        <XStack ai="center" gap={2}>
+          <Text col="$secondary" fow="700">
+            {t("anon.noAccount")}
+          </Text>
+          <Link href="/(anon)/sign-up" replace asChild>
+            <Text col="$primary" fow="700" textDecorationLine="underline">
+              {t("anon.signUp")}
+            </Text>
+          </Link>
+        </XStack>
+      </YStack>
+    </Screen>
   )
 }

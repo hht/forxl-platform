@@ -68,5 +68,13 @@
 	<string>Automatic</string>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+  <key>LSApplicationQueriesSchemes</key>
+  <array>
+      <string>message</string>
+      <string>inbox</string>
+      <string>gmail</string>
+      <string>email</string>
+      <string>mailto</string>
+  </array>
 </dict>
 </plist>

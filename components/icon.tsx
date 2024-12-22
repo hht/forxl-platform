@@ -1,9 +1,9 @@
-import { FC } from 'react'
-import { SvgProps } from 'react-native-svg'
+import { FC } from "react"
+import { SvgProps } from "react-native-svg"
 
-import * as icons from './assets'
+import * as icons from "./assets"
 
-import colors from '~/theme/colors'
+import colors from "~/theme/colors"
 
 type IconType = keyof typeof icons
 
@@ -26,6 +26,15 @@ const Icon: FC<Props> = (props: Props) => {
       {...rest}
     />
   )
+}
+
+export const Figure: FC<SvgProps & { name: IconType }> = ({
+  name,
+  ...rest
+}) => {
+  // eslint-disable-next-line import/namespace
+  const IconComponent = icons[name]
+  return <IconComponent {...rest} />
 }
 
 Icon.displayName = "Icon"

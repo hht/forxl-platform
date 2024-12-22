@@ -1,6 +1,6 @@
-import { request } from '~/hooks/useRequest'
-import { useFroxlStore } from '~/hooks/useStore'
-import { i18n, t } from '~/lib/utils'
+import { request } from "~/hooks/useRequest"
+import { useFroxlStore } from "~/hooks/useStore"
+import { i18n, t } from "~/lib/utils"
 
 type SignUpParams = {
   /**

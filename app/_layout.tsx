@@ -3,7 +3,7 @@ import { useFonts } from "expo-font"
 import { Stack } from "expo-router/stack"
 import * as SplashScreen from "expo-splash-screen"
 import { StatusBar } from "expo-status-bar"
-import { useEffect } from "react"
+import { Fragment, useEffect } from "react"
 import { GestureHandlerRootView } from "react-native-gesture-handler"
 import "react-native-reanimated"
 import { enableFreeze, enableScreens } from "react-native-screens"
@@ -12,6 +12,7 @@ import { TamaguiProvider } from "tamagui"
 import { Toaster } from "~/components"
 import { initI18Next } from "~/lib/utils"
 import config from "~/theme/tamagui.config"
+import { AccountDetector } from "~/widgets/detector"
 
 enableScreens(true)
 enableFreeze(true)
@@ -37,17 +38,20 @@ export default function RootLayout() {
     }
   }, [loaded])
   return (
-    <GestureHandlerRootView>
-      <TamaguiProvider config={config}>
-        <ThemeProvider value={DarkTheme}>
-          <Stack
-            initialRouteName="(anon)"
-            screenOptions={{ headerShown: false }}
-          />
-        </ThemeProvider>
-        <StatusBar style="light" translucent />
-        <Toaster />
-      </TamaguiProvider>
-    </GestureHandlerRootView>
+    <Fragment>
+      <AccountDetector />
+      <GestureHandlerRootView>
+        <TamaguiProvider config={config}>
+          <ThemeProvider value={DarkTheme}>
+            <Stack
+              initialRouteName="(anon)"
+              screenOptions={{ headerShown: false }}
+            />
+          </ThemeProvider>
+          <StatusBar style="light" translucent />
+          <Toaster />
+        </TamaguiProvider>
+      </GestureHandlerRootView>
+    </Fragment>
   )
 }

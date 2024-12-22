@@ -41,6 +41,17 @@ export const useWebSocket = () => {
   const messageQueue = useRef<any[]>([])
   const websocketRef = useRef<WebSocket | null>(null)
   const lastMessageTimeRef = useRef<number>(Date.now())
+  const sendMessage = useCallback(async (message: any) => {
+    try {
+      if (websocketRef.current?.readyState !== WebSocket.OPEN) {
+        throw new Error("Websocket is not open")
+      }
+      websocketRef.current?.send(JSON.stringify(message))
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    } catch (e) {
+      messageQueue.current.push(message)
+    }
+  }, [])
   const connect = useCallback(async () => {
     if (websocketRef.current) {
       websocketRef.current.close()
@@ -73,7 +84,7 @@ export const useWebSocket = () => {
           lastMessageTimeRef.current = Date.now()
       }
     }
-  }, [])
+  }, [quotes, sendMessage])
 
   const disconnect = useCallback(() => {
     websocketRef?.current?.close()
@@ -84,22 +95,11 @@ export const useWebSocket = () => {
     return disconnect
   }, [connect, disconnect])
 
-  const sendMessage = useCallback(async (message: any) => {
-    try {
-      if (websocketRef.current?.readyState !== WebSocket.OPEN) {
-        throw new Error("Websocket is not open")
-      }
-      websocketRef.current?.send(JSON.stringify(message))
-    } catch (e) {
-      messageQueue.current.push(message)
-    }
-  }, [])
-
   useEffect(() => {
     if (quotes.length) {
       sendMessage({ type: "symbol", data: quotes })
     }
-  }, [quotes])
+  }, [quotes, sendMessage])
 
   useInterval(() => {
     if (websocketRef.current?.readyState === ReadyState.Open) {

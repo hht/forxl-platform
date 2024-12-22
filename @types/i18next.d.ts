@@ -1,7 +1,7 @@
-import { resources } from '~/lib/utils'
+import { resources } from "~/lib/utils"
 
 declare module "i18next" {
   interface CustomTypeOptions {
-    resources: (typeof resources)["en"]
+    resources: (typeof resources)["zh"]
   }
 }

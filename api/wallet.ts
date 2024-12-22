@@ -1,8 +1,8 @@
-import axios from 'axios'
+import axios from "axios"
 
-import { BASE_URL, request } from '~/hooks/useRequest'
-import { DepositResult, useFroxlStore } from '~/hooks/useStore'
-import { i18n } from '~/lib/utils'
+import { BASE_URL, request } from "~/hooks/useRequest"
+import { DepositResult, useFroxlStore } from "~/hooks/useStore"
+import { i18n } from "~/lib/utils"
 
 export const getPaymentMethods = async () => {
   return await request<PaymentMethod[], undefined>(

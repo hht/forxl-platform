@@ -11,13 +11,13 @@ PODS:
   - EXJSONUtils (0.14.0)
   - EXManifests (0.15.4):
     - ExpoModulesCore
-  - Expo (52.0.18):
+  - Expo (52.0.19):
     - ExpoModulesCore
   - ExpoAsset (11.0.1):
     - ExpoModulesCore
   - ExpoClipboard (7.0.0):
     - ExpoModulesCore
-  - ExpoFileSystem (18.0.5):
+  - ExpoFileSystem (18.0.6):
     - ExpoModulesCore
   - ExpoFont (13.0.1):
     - ExpoModulesCore
@@ -41,7 +41,7 @@ PODS:
     - ExpoModulesCore
   - ExpoLocalization (16.0.0):
     - ExpoModulesCore
-  - ExpoModulesCore (2.1.1):
+  - ExpoModulesCore (2.1.2):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -1347,27 +1347,6 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - react-native-keyboard-controller (1.15.0):
-    - DoubleConversion
-    - glog
-    - hermes-engine
-    - RCT-Folly (= 2024.01.01.00)
-    - RCTRequired
-    - RCTTypeSafety
-    - React-Core
-    - React-debug
-    - React-Fabric
-    - React-featureflags
-    - React-graphics
-    - React-ImageManager
-    - React-NativeModulesApple
-    - React-RCTFabric
-    - React-rendererdebug
-    - React-utils
-    - ReactCodegen
-    - ReactCommon/turbomodule/bridging
-    - ReactCommon/turbomodule/core
-    - Yoga
   - react-native-safe-area-context (4.12.0):
     - DoubleConversion
     - glog
@@ -1426,6 +1405,27 @@ PODS:
     - React-graphics
     - React-ImageManager
     - react-native-safe-area-context/common
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-rendererdebug
+    - React-utils
+    - ReactCodegen
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - Yoga
+  - react-native-webview (13.12.5):
+    - DoubleConversion
+    - glog
+    - hermes-engine
+    - RCT-Folly (= 2024.01.01.00)
+    - RCTRequired
+    - RCTTypeSafety
+    - React-Core
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-ImageManager
     - React-NativeModulesApple
     - React-RCTFabric
     - React-rendererdebug
@@ -1701,6 +1701,27 @@ PODS:
     - React-logger (= 0.76.5)
     - React-perflogger (= 0.76.5)
     - React-utils (= 0.76.5)
+  - ReactNativeAvoidSoftinput (7.0.0):
+    - DoubleConversion
+    - glog
+    - hermes-engine
+    - RCT-Folly (= 2024.01.01.00)
+    - RCTRequired
+    - RCTTypeSafety
+    - React-Core
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-ImageManager
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-rendererdebug
+    - React-utils
+    - ReactCodegen
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - Yoga
   - RNCAsyncStorage (1.23.1):
     - DoubleConversion
     - glog
@@ -2013,8 +2034,8 @@ DEPENDENCIES:
   - React-logger (from `../node_modules/react-native/ReactCommon/logger`)
   - React-Mapbuffer (from `../node_modules/react-native/ReactCommon`)
   - React-microtasksnativemodule (from `../node_modules/react-native/ReactCommon/react/nativemodule/microtasks`)
-  - react-native-keyboard-controller (from `../node_modules/react-native-keyboard-controller`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
+  - react-native-webview (from `../node_modules/react-native-webview`)
   - React-nativeconfig (from `../node_modules/react-native/ReactCommon`)
   - React-NativeModulesApple (from `../node_modules/react-native/ReactCommon/react/nativemodule/core/platform/ios`)
   - React-perflogger (from `../node_modules/react-native/ReactCommon/reactperflogger`)
@@ -2042,6 +2063,7 @@ DEPENDENCIES:
   - React-utils (from `../node_modules/react-native/ReactCommon/react/utils`)
   - ReactCodegen (from `build/generated/ios`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
+  - ReactNativeAvoidSoftinput (from `../node_modules/react-native-avoid-softinput`)
   - "RNCAsyncStorage (from `../node_modules/@react-native-async-storage/async-storage`)"
   - "RNFlashList (from `../node_modules/@shopify/flash-list`)"
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
@@ -2182,10 +2204,10 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon"
   React-microtasksnativemodule:
     :path: "../node_modules/react-native/ReactCommon/react/nativemodule/microtasks"
-  react-native-keyboard-controller:
-    :path: "../node_modules/react-native-keyboard-controller"
   react-native-safe-area-context:
     :path: "../node_modules/react-native-safe-area-context"
+  react-native-webview:
+    :path: "../node_modules/react-native-webview"
   React-nativeconfig:
     :path: "../node_modules/react-native/ReactCommon"
   React-NativeModulesApple:
@@ -2240,6 +2262,8 @@ EXTERNAL SOURCES:
     :path: build/generated/ios
   ReactCommon:
     :path: "../node_modules/react-native/ReactCommon"
+  ReactNativeAvoidSoftinput:
+    :path: "../node_modules/react-native-avoid-softinput"
   RNCAsyncStorage:
     :path: "../node_modules/@react-native-async-storage/async-storage"
   RNFlashList:
@@ -2263,10 +2287,10 @@ SPEC CHECKSUMS:
   EXImageLoader: 759063a65ab016b836f73972d3bb25404888713d
   EXJSONUtils: 01fc7492b66c234e395dcffdd5f53439c5c29c93
   EXManifests: f30a0c5d3d6cad8db9c01bab579e0aa0df5d3cb2
-  Expo: dc7907584c3517c592315a59719180037703ff33
+  Expo: d901db29ffb24ccad280920f3c6de69febb89935
   ExpoAsset: 8138f2a9ec55ae1ad7c3871448379f7d97692d15
   ExpoClipboard: 166ca8c13ca1041f5ba619a211f59427ab5da8a7
-  ExpoFileSystem: 2161e16165279fb46e138d8ea8795c71cc6718be
+  ExpoFileSystem: 179a0661fd6d3c4e5d7e500a99a9cd8b295d9566
   ExpoFont: 7522d869d84ee2ee8093ee997fef5b86f85d856b
   ExpoHaptics: e636188d1d5f7ccb79f3c1bfab47aaf5a1768c73
   ExpoHead: c2695f9e8d685d6fa76e7a42006b0b3420cf2d50
@@ -2276,7 +2300,7 @@ SPEC CHECKSUMS:
   ExpoLinearGradient: 7ca3b1d1625a1ab85c129abce4a3cdc78a9500a3
   ExpoLinking: a8332a219379ba80f8e612d5a5de4a3da446886e
   ExpoLocalization: 8e37268a715b82b36fbb5e361efd5fe65a39c208
-  ExpoModulesCore: f7db8b4faee7e5b94ad55f2bf781781a0bcf934d
+  ExpoModulesCore: 41844ce131433b266261b44012d5b41ac0513999
   ExpoSplashScreen: 5818efe67bdbcc862b97fef589571c5b4d53fa7d
   ExpoSystemUI: 2d729aea8219f03af1b1996c1d14488a01fea94a
   ExpoWebBrowser: f08aaf1c8a02af8a768d83793186cb6d2c69f529
@@ -2319,8 +2343,8 @@ SPEC CHECKSUMS:
   React-logger: 697873f06b8ba436e3cddf28018ab4741e8071b6
   React-Mapbuffer: c174e11bdea12dce07df8669d6c0dc97eb0c7706
   React-microtasksnativemodule: 8a80099ad7391f4e13a48b12796d96680f120dc6
-  react-native-keyboard-controller: 3428e4761623fd6a242d9bf3573112f8ebe92238
   react-native-safe-area-context: 458f6b948437afcb59198016b26bbd02ff9c3b47
+  react-native-webview: 40b8823be3fac70f0404016e6aed754ef4307517
   React-nativeconfig: f7ab6c152e780b99a8c17448f2d99cf5f69a2311
   React-NativeModulesApple: 70600f7edfc2c2a01e39ab13a20fd59f4c60df0b
   React-perflogger: ceb97dd4e5ca6ff20eebb5a6f9e00312dcdea872
@@ -2348,6 +2372,7 @@ SPEC CHECKSUMS:
   React-utils: 541c6cca08f32597d4183f00e83eef2ed20d4c54
   ReactCodegen: daa13d9e48c9bdb1daac4bd694b9dd54e06681df
   ReactCommon: a6b87a7591591f7a52d9c0fec3aa05e0620d5dd3
+  ReactNativeAvoidSoftinput: d2d04f5c52cae0cdd9103357db0c540f17826ffa
   RNCAsyncStorage: a927b768986f83467b635cf6d7559e6edb46db7a
   RNFlashList: 6f169ad83e52579b7754cbbcec1b004c27d82c93
   RNGestureHandler: fc5ce5bf284640d3af6431c3a5c3bc121e98d045

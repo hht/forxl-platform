@@ -9,24 +9,31 @@ import { styled, Text as TamaText } from "tamagui"
  */
 export const Text = styled(TamaText, {
   name: "Text",
-  color: "$text",
-  fontWeight: "400",
-  fontFamily: "Inter",
-  fontSize: 13,
-  lineHeight: 16,
+  col: "$text",
+  fow: "400",
+  ff: "Inter",
+  fos: 13,
+  lh: 16,
   variants: {
+    subject: {
+      true: {
+        fos: 20,
+        lh: 24,
+        fow: "900",
+      },
+    },
     head: {
       true: {
-        fontSize: 15,
-        lineHeight: 17,
-        fontWeight: "400",
+        fos: 15,
+        lh: 17,
+        fow: "900",
       },
     },
     caption: {
       true: {
-        fontSize: 11,
-        lineHeight: 14,
-        fontWeight: "400",
+        fos: 11,
+        lg: 14,
+        fow: "400",
       },
     },
   } as const,

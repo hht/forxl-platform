@@ -1,3 +1,4 @@
+// 图标
 export { default as home } from "~/assets/images/icon/home.svg"
 export { default as partner } from "~/assets/images/icon/partner.svg"
 export { default as positions } from "~/assets/images/icon/positions.svg"
@@ -7,3 +8,10 @@ export { default as close } from "~/assets/images/icon/close.svg"
 export { default as arrowLeft } from "~/assets/images/icon/arrow-left.svg"
 export { default as chevronLeft } from "~/assets/images/icon/chevron-left.svg"
 export { default as chevronRight } from "~/assets/images/icon/chevron-right.svg"
+export { default as bubble } from "~/assets/images/icon/bubble.svg"
+export { default as eye } from "~/assets/images/icon/eye.svg"
+export { default as eyeOff } from "~/assets/images/icon/eye-off.svg"
+export { default as circleChecked } from "~/assets/images/icon/circle-checked.svg"
+// 图片
+export { default as logo } from "~/assets/images/widgets/logo.svg"
+export { default as verifyEmail } from "~/assets/images/widgets/verify-email.svg"

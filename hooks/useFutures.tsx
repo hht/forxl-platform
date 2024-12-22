@@ -1,7 +1,7 @@
-import { useEffect } from 'react'
-import { shallow } from 'zustand/shallow'
+import { useEffect } from "react"
+import { shallow } from "zustand/shallow"
 
-import { useQuotesStore, useSymbolStore } from './useStore'
+import { useQuotesStore, useSymbolStore } from "./useStore"
 
 export const useFutureMutation = (
   mutate: (v: { futuresId: number; selected: 0 | 1 }) => void
@@ -22,7 +22,7 @@ export const useFutureMutation = (
         })
       }
     }
-  }, [mutationFuture])
+  }, [mutationFuture, mutate])
 }
 
 export const onToggleFavorite = (futuresId: number, selected: 0 | 1) => {

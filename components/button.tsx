@@ -1,9 +1,9 @@
-import _ from 'lodash'
-import { forwardRef, Ref } from 'react'
-import { View } from 'react-native'
-import { Button as TamaButton, ButtonProps, Spinner } from 'tamagui'
+import _ from "lodash"
+import { forwardRef, Ref } from "react"
+import { View } from "react-native"
+import { Button as TamaButton, ButtonProps, Spinner } from "tamagui"
 
-import { Text } from './text'
+import { Text } from "./text"
 
 export type ButtonType =
   | "primary"
@@ -31,7 +31,7 @@ const getButtonStyle = ({
         pressStyle: {
           bc: color,
           boc: color,
-          opacity: 0.8,
+          opacity: 0.9,
         },
         hoverStyle: {
           bc: color,
@@ -46,7 +46,7 @@ const getButtonStyle = ({
         pressStyle: {
           bc: "$accent",
           boc: "$accent",
-          opacity: 0.8,
+          opacity: 0.9,
         },
         hoverStyle: {
           bc: "$accent",
@@ -61,7 +61,7 @@ const getButtonStyle = ({
         pressStyle: {
           bc: "transparent",
           boc: "$destructive",
-          opacity: 0.8,
+          opacity: 0.9,
         },
         hoverStyle: {
           bc: "transparent",
@@ -76,7 +76,7 @@ const getButtonStyle = ({
         pressStyle: {
           bc: "transparent",
           boc: "transparent",
-          opacity: 0.8,
+          opacity: 0.9,
         },
         hoverStyle: {
           bc: "transparent",
@@ -87,9 +87,13 @@ const getButtonStyle = ({
       return {
         boc: "$primary",
         bw: 1,
-        px: 10,
         height: 48,
         color: "$background",
+        pressStyle: {
+          bc: color,
+          boc: color,
+          opacity: 0.9,
+        },
       }
   }
 }

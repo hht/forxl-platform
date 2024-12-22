@@ -1,11 +1,11 @@
-import AsyncStorage from '@react-native-async-storage/async-storage'
-import { produce } from 'immer'
-import { createJSONStorage, persist } from 'zustand/middleware'
-import { createWithEqualityFn } from 'zustand/traditional'
+import AsyncStorage from "@react-native-async-storage/async-storage"
+import { produce } from "immer"
+import { createJSONStorage, persist } from "zustand/middleware"
+import { createWithEqualityFn } from "zustand/traditional"
 
-import { getPartnerConfig } from '~/api/partner'
-import { getFutureCategories } from '~/api/trade'
-import { dayjs } from '~/lib/utils'
+import { getPartnerConfig } from "~/api/partner"
+import { getFutureCategories } from "~/api/trade"
+import { dayjs } from "~/lib/utils"
 
 interface Store {
   account?: Account
@@ -47,6 +47,10 @@ export const useFroxlStore = createWithEqualityFn<Store>()(
   )
 )
 
+export const useWebViewStore = createWithEqualityFn<{
+  title?: string
+  uri?: string
+}>(() => ({}))
 interface Order {
   position?: number
   price?: number
