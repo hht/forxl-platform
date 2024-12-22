@@ -24,7 +24,6 @@ export const WebLink: FC<{ href: string } & TextProps> = ({
       hitSlop={10}
       {...rest}
     >
-      {" "}
       {children}
     </Text>
   )

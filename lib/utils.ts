@@ -102,12 +102,6 @@ export const uuid = () =>
     return v.toString(16)
   })
 
-export const formatCurrency = (value?: number | string) => {
-  return new Intl.NumberFormat("en", {
-    style: "currency",
-  }).format(_.isNaN(Number(value)) ? 0 : Number(value))
-}
-
 export const formatDecimal = (value: string | number, fraction = 0.01) => {
   const precision = fraction.toString().split(".")[1]?.length ?? 0
   return new Intl.NumberFormat(i18n.resolvedLanguage, {

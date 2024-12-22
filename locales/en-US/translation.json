@@ -44,5 +44,27 @@
       "title": "Your Password Must contain: ",
       "inviteCode": "Invalid referral code"
     }
+  },
+  "home": {
+    "wallet": "Wallet",
+    "news": "Market News",
+    "shortcuts": {
+      "title": "Shortcuts",
+      "children": [
+        "Add Funds",
+        "Withdraw",
+        "KYC",
+        "Card",
+        "Referral",
+        "Statements",
+        "Support",
+        "Community",
+        "Security",
+        "WebSite",
+        "Calendar",
+        "News",
+        "More"
+      ]
+    }
   }
 }

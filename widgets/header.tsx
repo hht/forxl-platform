@@ -3,12 +3,13 @@ import { router } from "expo-router"
 import { FC } from "react"
 import { useTranslation } from "react-i18next"
 import { Platform } from "react-native"
-import { useSafeAreaInsets } from "react-native-safe-area-context"
 
+import { getNewMessageCount } from "~/api/notifications"
 import { Figure, Icon, Text, XStack } from "~/components"
+import { useRequest } from "~/hooks/useRequest"
 import colors from "~/theme/colors"
 
-const px = Platform.OS === "web" ? 12 : 0
+const px = Platform.OS === "web" ? 12 : 12
 
 export const HeaderLeft: FC<{ onPress?: () => void }> = ({ onPress }) => {
   return (
@@ -20,11 +21,59 @@ export const HeaderLeft: FC<{ onPress?: () => void }> = ({ onPress }) => {
 
 export const BrandTitle: FC = () => {
   const { t } = useTranslation()
-  const { top } = useSafeAreaInsets()
   return (
-    <XStack p="$md" pt={top + 16} ai="center" jc="center" gap="$sm">
+    <XStack ai="center" jc="center" gap="$sm">
       <Figure name="logo" width={24} height={24} />
       <Text head>{t("anon.title")}</Text>
+    </XStack>
+  )
+}
+
+export const BreadCrumb: FC = () => {
+  return (
+    <XStack
+      px={px}
+      py={12}
+      hitSlop={10}
+      onPress={() => {
+        router.push("/(home)/settings")
+      }}
+    >
+      <Icon name="menu" size={20} />
+    </XStack>
+  )
+}
+
+export const Notifier: FC = () => {
+  const { data: count } = useRequest(getNewMessageCount)
+  return (
+    <XStack onPress={() => router.push("/(home)/notifications")}>
+      <Icon name="email" size={20} />
+      {count ? (
+        <XStack
+          pos="absolute"
+          top={-12}
+          right={-16}
+          ai="center"
+          jc="center"
+          bc="$primary"
+          br={999}
+          py={2}
+          px={6}
+        >
+          <Text col="$background" fos={10} fow="900">
+            {count > 9 ? "9+" : count}
+          </Text>
+        </XStack>
+      ) : null}
+    </XStack>
+  )
+}
+
+export const CustomerService: FC = () => {
+  return (
+    <XStack onPress={() => router.push("/(home)/customer-service")}>
+      <Icon name="service" size={20} />
     </XStack>
   )
 }

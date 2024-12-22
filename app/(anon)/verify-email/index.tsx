@@ -7,7 +7,8 @@ import { t } from "~/lib/utils"
 import { BrandTitle, NativeStackNavigationOptions } from "~/widgets/header"
 
 const ScreenOptions: NativeStackNavigationOptions = {
-  header: () => <BrandTitle />,
+  headerTitle: () => <BrandTitle />,
+  headerLeft: () => null,
 }
 
 const openInbox = async () => {

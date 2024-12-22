@@ -1,9 +1,10 @@
-import { request } from '~/hooks/useRequest'
-import { getLocaleLanguage, i18n } from '~/lib/utils'
+import { request } from "~/hooks/useRequest"
+import { useFroxlStore } from "~/hooks/useStore"
+import { getLocaleLanguage, i18n } from "~/lib/utils"
 
 export const getBanners = async () => {
   return request<Banner[], undefined>(
-    `/banner/v3/list?language=${i18n.language}&position=0`,
+    `/banner/v3/list?language=${i18n.resolvedLanguage}&position=0`,
     "GET"
   )
 }
@@ -23,7 +24,7 @@ export const getNews = async (params: {
   }[]
 }> => {
   return await fetch(
-    `https://news.usd.lt/get_news.php?date=${params.date}&page=${params.page}&limit=${10}&lang=${getLocaleLanguage(localStorage.getItem("i18nextLng") || "en")}`
+    `https://news.usd.lt/get_news.php?date=${params.date}&page=${params.page}&limit=${10}&lang=${getLocaleLanguage(useFroxlStore.getState().language || "en")}`
   )
     .then((res) => res.json())
     .then((res) => {

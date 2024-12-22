@@ -44,8 +44,16 @@ export const request = async <T, U>(
         "Access-Control-Allow-Origin": "*",
         language: i18n.resolvedLanguage,
       },
-      data: { ...body, userNumber: useFroxlStore.getState().userNumber },
-      params: method === "GET" ? body : undefined,
+      ...(method === "GET"
+        ? {
+            params: {
+              ...body,
+              userNumber: useFroxlStore.getState().userNumber,
+            },
+          }
+        : {
+            data: { ...body, userNumber: useFroxlStore.getState().userNumber },
+          }),
     })
     .then((res) => res.data)
     .then((res) => {
@@ -69,6 +77,7 @@ export const request = async <T, U>(
       return res as T
     })
     .catch((error) => {
+      console.log(error)
       // console.log("🚀", url)
       // console.log("👜", body)
       // console.log("🚫", error.message ?? error)

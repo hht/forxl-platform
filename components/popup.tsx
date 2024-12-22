@@ -1,7 +1,7 @@
 import { MotiView } from "moti"
 import { AnimatePresence } from "moti/build/core"
 import { ReactNode, useCallback, useEffect } from "react"
-import { BackHandler, Platform, StyleSheet } from "react-native"
+import { BackHandler, Platform, StyleSheet, ViewStyle } from "react-native"
 import { Portal } from "tamagui"
 
 interface PopupProps {
@@ -10,6 +10,7 @@ interface PopupProps {
   children: ReactNode
   position?: "center" | "bottom"
   closeOnTouchOutside?: boolean
+  style?: ViewStyle
 }
 
 export const Popup = ({
@@ -18,6 +19,7 @@ export const Popup = ({
   children,
   position = "center",
   closeOnTouchOutside = false,
+  style,
 }: PopupProps) => {
   // 处理返回按钮
   const handleBackButton = useCallback(() => {
@@ -80,6 +82,7 @@ export const Popup = ({
               style={[
                 styles.content,
                 position === "bottom" && styles.bottomContent,
+                style,
               ]}
               onTouchEnd={(e) => e.stopPropagation()}
             >

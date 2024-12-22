@@ -1,11 +1,10 @@
 import { MotiView } from "moti"
 import { FC } from "react"
+import { Platform } from "react-native"
 import {
-  Keyboard,
-  KeyboardAvoidingView,
-  Platform,
-  TouchableWithoutFeedback,
-} from "react-native"
+  AvoidSoftInputView,
+  AvoidSoftInputViewProps,
+} from "react-native-avoid-softinput"
 import { useSafeAreaInsets } from "react-native-safe-area-context"
 import { styled, YStack, YStackProps } from "tamagui"
 
@@ -28,20 +27,39 @@ export const Card = styled(View, {
   name: "Card",
   p: 16,
   br: 8,
-  bc: "$card",
+  bc: "$card/60",
+  bw: 1,
+  boc: "$border",
 })
 
 export const Screen: FC<YStackProps> = ({ children, ...rest }) => {
   const { bottom } = useSafeAreaInsets()
   return (
-    <KeyboardAvoidingView
-      style={{ flex: 1 }}
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
+    <YStack f={1} bc="$background" p="$md" gap="$md" pb={bottom} {...rest}>
+      {children}
+    </YStack>
+  )
+}
+
+export const KeyboardAvoiding: FC<AvoidSoftInputViewProps> = ({
+  children,
+  style,
+  ...rest
+}) => {
+  return (
+    <AvoidSoftInputView
+      easing="easeIn"
+      enabled={true}
+      avoidOffset={Platform.OS === "ios" ? 16 : 32}
+      hideAnimationDelay={100}
+      hideAnimationDuration={300}
+      showAnimationDelay={100}
+      showAnimationDuration={300}
+      style={[{ flex: 1, width: "100%" }, style]}
+      {...rest}
     >
-      <YStack f={1} bc="$background" p="$md" gap="$md" pb={bottom} {...rest}>
-        {children}
-      </YStack>
-    </KeyboardAvoidingView>
+      {children}
+    </AvoidSoftInputView>
   )
 }
 

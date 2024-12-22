@@ -13,7 +13,11 @@
     "quidone",
     "marceloterreiro",
     "clazz",
-    "ahooks"
+    "ahooks",
+    "btlr",
+    "btrr",
+    "bblr",
+    "bbrr"
   ],
   "ignorePaths": ["node_modules", "dist", "build", ".git", "package-lock.json"]
 }

@@ -50,6 +50,7 @@ export const useFroxlStore = createWithEqualityFn<Store>()(
 export const useWebViewStore = createWithEqualityFn<{
   title?: string
   uri?: string
+  html?: string
 }>(() => ({}))
 interface Order {
   position?: number

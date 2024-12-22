@@ -4,6 +4,8 @@ import { Stack } from "expo-router/stack"
 import * as SplashScreen from "expo-splash-screen"
 import { StatusBar } from "expo-status-bar"
 import { Fragment, useEffect } from "react"
+import { Platform } from "react-native"
+import { AvoidSoftInput } from "react-native-avoid-softinput"
 import { GestureHandlerRootView } from "react-native-gesture-handler"
 import "react-native-reanimated"
 import { enableFreeze, enableScreens } from "react-native-screens"
@@ -25,6 +27,15 @@ export const unstable_settings = {
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync()
+
+AvoidSoftInput.setEnabled(true)
+AvoidSoftInput.setEasing("easeIn")
+AvoidSoftInput.setAvoidOffset(Platform.OS === "ios" ? 16 : 32)
+AvoidSoftInput.setHideAnimationDelay(100)
+AvoidSoftInput.setHideAnimationDuration(300)
+AvoidSoftInput.setShowAnimationDelay(100)
+AvoidSoftInput.setShowAnimationDuration(300)
+AvoidSoftInput.setAdjustResize()
 
 export default function RootLayout() {
   const [loaded] = useFonts({
