@@ -32,6 +32,16 @@ export const Card = styled(View, {
   boc: "$border",
 })
 
+export const Dialog = styled(View, {
+  bc: "$card",
+  boc: "$border",
+  bw: 1,
+  br: "$sm",
+  px: 24,
+  py: 32,
+  gap: 12,
+})
+
 export const Screen: FC<YStackProps> = ({ children, ...rest }) => {
   const { bottom } = useSafeAreaInsets()
   return (

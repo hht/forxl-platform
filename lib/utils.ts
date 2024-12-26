@@ -6,7 +6,6 @@ import isYesterday from "dayjs/plugin/isYesterday"
 import localeData from "dayjs/plugin/localeData"
 import relativeTime from "dayjs/plugin/relativeTime"
 import utc from "dayjs/plugin/utc"
-import * as Clipboard from "expo-clipboard"
 import * as Localization from "expo-localization"
 import { router } from "expo-router"
 import i18n from "i18next"
@@ -14,7 +13,6 @@ import _ from "lodash"
 import { initReactI18next } from "react-i18next"
 import { LayoutAnimation } from "react-native"
 
-import { toast } from "~/components"
 import en from "~/locales/en-US/translation.json"
 import zh from "~/locales/zh-CN/translation.json"
 
@@ -116,19 +114,5 @@ export const formatDecimal = (value: string | number, fraction = 0.01) => {
 export const popToTop = () => {
   while (router.canGoBack()) {
     router.back()
-  }
-}
-
-export const copyToClipboard = async (
-  text?: string | number
-): Promise<void> => {
-  try {
-    if (!text) {
-      throw new Error("No text to copy")
-    }
-    await Clipboard.setStringAsync(`${text}`)
-    toast.show(t("message.copiedSuccess"))
-  } catch (err) {
-    toast.show(t("message.copiedFailed"))
   }
 }

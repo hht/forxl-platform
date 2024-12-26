@@ -1,16 +1,11 @@
+import * as Clipboard from "expo-clipboard"
 import { FC } from "react"
-import {
-  styled,
-  Text as TamaText,
-  TextProps,
-  XStack,
-  XStackProps,
-} from "tamagui"
+import { styled, Text as TamaText, TextProps, XStack } from "tamagui"
 
-import { Button } from "./button"
 import { Icon } from "./icon"
+import { toast } from "./toast"
 
-import { copyToClipboard } from "~/lib/utils"
+import { t } from "~/lib/utils"
 
 /**
  * 默认字体组件
@@ -50,6 +45,20 @@ export const Text = styled(TamaText, {
     },
   } as const,
 })
+
+export const copyToClipboard = async (
+  text?: string | number
+): Promise<void> => {
+  try {
+    if (!text) {
+      throw new Error("No text to copy")
+    }
+    await Clipboard.setStringAsync(`${text}`)
+    toast.show(t("message.copiedSuccess"))
+  } catch (err) {
+    toast.show(t("message.copiedFailed"))
+  }
+}
 
 export const Copyable: FC<{ children?: string } & TextProps> = ({
   children,

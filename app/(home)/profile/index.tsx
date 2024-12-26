@@ -1,5 +1,5 @@
 import BottomSheetBase from "@gorhom/bottom-sheet"
-import { Stack } from "expo-router"
+import { router, Stack } from "expo-router"
 import { FC, Fragment, ReactNode, useRef, useState } from "react"
 import { useTranslation } from "react-i18next"
 import { useSafeAreaInsets } from "react-native-safe-area-context"
@@ -11,6 +11,7 @@ import {
   Button,
   Card,
   Copyable,
+  Dialog,
   Figure,
   Icon,
   IconType,
@@ -50,15 +51,7 @@ const SupportTip: FC<{ data: string }> = ({ data }) => {
   return (
     <Fragment>
       <Popup visible={visible} onClose={() => setVisible(false)}>
-        <YStack
-          bc="$card"
-          boc="$border"
-          bw={1}
-          br="$sm"
-          px={24}
-          py={32}
-          gap={12}
-        >
+        <Dialog>
           <Text fos={20} lh={20}>
             {dict.title}
           </Text>
@@ -88,7 +81,7 @@ const SupportTip: FC<{ data: string }> = ({ data }) => {
               </Text>
             </Button>
           </XStack>
-        </YStack>
+        </Dialog>
       </Popup>
       <XStack
         onPress={() => {
@@ -159,7 +152,13 @@ export default function Layout() {
         </Card>
       </XStack>
       <ScrollView f={1} p="$md">
-        <ListItem icon="gift" title={dict.referralProgram} />
+        <ListItem
+          icon="gift"
+          title={dict.referralProgram}
+          onPress={() => {
+            router.push("/referral-program")
+          }}
+        />
         <ListItem icon="identity" title={dict.identityVerification} />
         <ListItem icon="shield" title={dict.security} />
         <ListItem icon="settings" title={dict.settings} />

@@ -12,7 +12,10 @@
   },
   "action": {
     "ok": "OK",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "query": "Query",
+    "gotIt": "Got it",
+    "copy": "Copy"
   },
   "anon": {
     "title": "Froxl Markets",
@@ -112,6 +115,30 @@
         "status": "Certified"
       }
     ]
+  },
+  "referral": {
+    "title": "Referral Program",
+    "invite": "Invite your Friends.",
+    "bonus": "Earn up to <1>{{percent}}%</1>",
+    "bonusDesc": "Earn up to {{percent}}% commission every time your friends make a trade on XXXX.",
+    "earned": "You' ve Earned",
+    "spillover": "Bonus Spillover",
+    "spilloverDesc": "When the investment amount of the accounts you refer exceeds twice your own investment amount, you can only receive half of the bonus from those accounts.",
+    "activeUser": "Active User",
+    "activeUserDesc": "Users with account funds exceeding $100 are referred to as active users. However, you can still earn referral bonuses from trades made by accounts with less than ${{amount}} in funds.",
+    "useCode": "Use your referral code",
+    "share": "Share on social media",
+    "requirements": "Referral Requirements",
+    "requirementsDesc": "The funds in your account exceeding <1>${{amount}}</1>",
+    "accounts": "Direct Accounts",
+    "benefits": {
+      "refer": "Refer active user",
+      "earn": "Earn  Bonus",
+      "title": "Referral Benefits",
+      "generation": "From {{generation}} generation Account",
+      "perLot": "Earn ${{amount}} per lot",
+      "bonus": "Earn {{generation}} generation Bonus"
+    }
   },
   "settings": {
     "title": "Settings"

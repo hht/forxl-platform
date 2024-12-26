@@ -1,6 +1,6 @@
 import { MotiView } from "moti"
 import { AnimatePresence } from "moti/build/core"
-import { ReactNode, useCallback, useEffect } from "react"
+import { FC, ReactNode, useCallback, useEffect } from "react"
 import { BackHandler, Platform, StyleSheet, ViewStyle } from "react-native"
 import { Portal } from "tamagui"
 
