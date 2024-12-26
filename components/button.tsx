@@ -98,10 +98,12 @@ const getButtonStyle = ({
   }
 }
 
-const getHeight = (size?: "$sm" | "$lg") => {
+const getHeight = (size?: "$sm" | "$md") => {
   switch (size) {
     case "$sm":
       return 32
+    case "$md":
+      return 40
     default:
       return 48
   }
@@ -111,7 +113,7 @@ const getHeight = (size?: "$sm" | "$lg") => {
  *
  * 按钮类型: primary, ghost, flatten, 默认primary
  *
- * 按钮高度: sm:32, md:40,默认44
+ * 按钮高度: sm:32, md:40,默认40
  */
 export const Button = forwardRef(
   (
@@ -126,7 +128,7 @@ export const Button = forwardRef(
     }: {
       isLoading?: boolean
       type?: ButtonType
-      size?: "$sm" | "$lg" | "$icon"
+      size?: "$sm" | "$md" | "$icon"
     } & ButtonProps,
     ref: Ref<View>
   ) => {

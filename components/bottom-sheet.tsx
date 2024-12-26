@@ -1,13 +1,15 @@
 import BottomSheetBase, {
-    BottomSheetBackdrop, BottomSheetBackdropProps, BottomSheetView
-} from '@gorhom/bottom-sheet'
-import { forwardRef } from 'react'
-import { Dimensions, StyleSheet } from 'react-native'
-import { Portal, Text, XStack } from 'tamagui'
+  BottomSheetBackdrop,
+  BottomSheetBackdropProps,
+  BottomSheetView,
+} from "@gorhom/bottom-sheet"
+import { forwardRef } from "react"
+import { Dimensions, StyleSheet } from "react-native"
+import { Portal, Text, XStack } from "tamagui"
 
-import { Icon } from './icon'
+import { Icon } from "./icon"
 
-import colors from '~/theme/colors'
+import colors from "~/theme/colors"
 
 interface BottomSheetModalProps {
   title?: string
@@ -24,6 +26,7 @@ const renderBackdrop = (props: BottomSheetBackdropProps) => (
   />
 )
 const MAX_HEIGHT = Dimensions.get("window").height * 0.8
+
 export const BottomSheet = forwardRef<BottomSheetBase, BottomSheetModalProps>(
   ({ title, children, onClose }, ref) => {
     return (

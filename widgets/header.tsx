@@ -1,13 +1,12 @@
-import { NativeStackNavigationOptions } from '@react-navigation/native-stack'
-import { router } from 'expo-router'
-import { FC } from 'react'
-import { useTranslation } from 'react-i18next'
-import { Platform } from 'react-native'
+import { NativeStackNavigationOptions } from "@react-navigation/native-stack"
+import { router } from "expo-router"
+import { FC } from "react"
+import { useTranslation } from "react-i18next"
 
-import { getNewMessageCount } from '~/api/notifications'
-import { Figure, Icon, Text, XStack } from '~/components'
-import { useRequest } from '~/hooks/useRequest'
-import colors from '~/theme/colors'
+import { getNewMessageCount } from "~/api/notifications"
+import { Figure, Icon, Text, XStack } from "~/components"
+import { useRequest } from "~/hooks/useRequest"
+import colors from "~/theme/colors"
 
 export const HeaderLeft: FC<{ onPress?: () => void }> = ({ onPress }) => {
   return (
@@ -34,7 +33,7 @@ export const BreadCrumb: FC = () => {
       py={12}
       hitSlop={10}
       onPress={() => {
-        router.push("/(home)/settings")
+        router.push("/(home)/profile")
       }}
     >
       <Icon name="menu" size={20} />

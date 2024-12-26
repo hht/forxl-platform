@@ -1,5 +1,5 @@
 import BottomSheetBase from "@gorhom/bottom-sheet"
-import { useInfiniteScroll, useInterval } from "ahooks"
+import { useInterval } from "ahooks"
 import { Href, router } from "expo-router"
 import _ from "lodash"
 import { FC, Fragment, useMemo, useRef, useState } from "react"
@@ -8,7 +8,7 @@ import { Dimensions } from "react-native"
 import { useSafeAreaInsets } from "react-native-safe-area-context"
 import { XStack, YStack } from "tamagui"
 
-import { getBanners, getNews } from "~/api/dashboard"
+import { getBanners } from "~/api/dashboard"
 import { getAssets } from "~/api/wallet"
 import {
   BottomSheet,
@@ -19,7 +19,6 @@ import {
   ScrollView,
   Text,
 } from "~/components"
-import { getDate } from "~/hooks/useLocale"
 import { useRequest } from "~/hooks/useRequest"
 import { formatDecimal } from "~/lib/utils"
 import colors from "~/theme/colors"

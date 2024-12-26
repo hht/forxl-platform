@@ -1,4 +1,16 @@
-import { styled, Text as TamaText } from "tamagui"
+import { FC } from "react"
+import {
+  styled,
+  Text as TamaText,
+  TextProps,
+  XStack,
+  XStackProps,
+} from "tamagui"
+
+import { Button } from "./button"
+import { Icon } from "./icon"
+
+import { copyToClipboard } from "~/lib/utils"
 
 /**
  * 默认字体组件
@@ -38,3 +50,21 @@ export const Text = styled(TamaText, {
     },
   } as const,
 })
+
+export const Copyable: FC<{ children?: string } & TextProps> = ({
+  children,
+  ...rest
+}) => {
+  return (
+    <XStack
+      gap="$xs"
+      ai="center"
+      onPress={() => {
+        copyToClipboard(children)
+      }}
+    >
+      <Text {...rest}>{children}</Text>
+      <Icon name="copy" size={12}></Icon>
+    </XStack>
+  )
+}

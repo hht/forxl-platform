@@ -6,6 +6,14 @@
     "partner": "合作伙伴",
     "wallet": "钱包"
   },
+  "message": {
+    "copiedSuccess": "Copied successfully",
+    "copiedFailed": "Copy failed"
+  },
+  "action": {
+    "ok": "OK",
+    "cancel": "Cancel"
+  },
   "anon": {
     "title": "Froxl Markets",
     "desc": "Vitae donec tellus auctor sed tortor Suspendisse sed etiam arcu ut nibh est velit orci orci.",
@@ -69,6 +77,44 @@
         "More"
       ]
     }
+  },
+  "profile": {
+    "title": "My Profile",
+    "verificationLevel": "Verification Level",
+    "referralProgram": "Referral Program",
+    "identityVerification": "Identity Verification",
+    "security": "Security",
+    "settings": "Settings",
+    "documents": "Legal Documents",
+    "support": "Support",
+    "contact": "Contact Us 24/7",
+    "logout": "Logout",
+    "certified": "Certified",
+    "unCertified": "UnCertified",
+    "tips": {
+      "title": "TIPS",
+      "desc": "Please contact support to request the email change.",
+      "action": "Contact support"
+    },
+
+    "levels": [
+      {
+        "title": "Lv0 - Email Verification",
+        "desc": "Your account has been activated, and you can now access the basic features of the platform, such as viewing account information and the trading market, as well as inviting your partners to join the platform. However, you currently cannot make any deposits or participate in trading. To ensure the security of your account, you must complete further identity verification to unlock additional features."
+      },
+      {
+        "title": "Lv1 - Two-Factor Authentication (2FA)",
+        "desc": "After completing Two-Factor Authentication (2FA), you can make deposits using certain deposit channels and start trading, with the opportunity to earn platform bonuses. At this stage, the security of your account has been further enhanced. However, to ensure the safety of your funds, you are still unable to withdraw funds. You must complete the next step of identity verification (KYC) to unlock withdrawal functionality."
+      },
+      {
+        "title": "Lv2 - Identity Verification (KYC)",
+        "desc": "Upon completing Identity Verification (KYC), you have unlocked full access to all platform features and services. You can now make unlimited deposits and withdrawals, fully utilizing all the platform’s functionalities. ",
+        "status": "Certified"
+      }
+    ]
+  },
+  "settings": {
+    "title": "Settings"
   },
   "notifications": {
     "title": "System Notifications",

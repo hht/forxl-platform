@@ -5,7 +5,7 @@ import dayjs from 'dayjs'
 import { router, Stack } from 'expo-router'
 import { Fragment, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
-import { ActivityIndicator } from 'react-native'
+import { ActivityIndicator, Platform } from 'react-native'
 import { Defs, Ellipse, RadialGradient, Stop, Svg } from 'react-native-svg'
 import { XStack, YStack } from 'tamagui'
 
@@ -68,7 +68,7 @@ const ListItem = ({
     >
       {index === 0 ? (
         <Fragment>
-          <YStack btw={1} gap="$md" pt="$md">
+          <YStack gap="$md" pt="$md">
             <XStack ai="center" gap="$xs">
               <Icon name="hot" />
               <Text fow="900" fos={17} lh={20}>
@@ -82,10 +82,9 @@ const ListItem = ({
             />
             <Text fow="700">{dayjs(item.date).format("DD MMMM, YYYY")}</Text>
           </YStack>
-          <Figure
-            name="r"
-            style={{ position: "absolute", right: 0, top: 0, width: "100%" }}
-          />
+          <XStack pos="absolute" top={0} right={0} w="100%">
+            <Figure name="r" />
+          </XStack>
         </Fragment>
       ) : null}
       <YStack btw={1} gap="$sm" btc="$border" py="$md">
@@ -156,11 +155,12 @@ export default function Page() {
     nextId?: number
   }>(
     (d) => {
-      if (!isFocused)
+      if (!isFocused && Platform.OS === "web") {
         return Promise.resolve({ list: d?.list ?? [], nextId: d?.nextId ?? 1 })
+      }
       return getNews({
         page: d?.nextId ?? 1,
-        date: dayjs().format("YYYY-MM-DD"),
+        date: dayjs().subtract(3, "d").format("YYYY-MM-DD"),
       })
     },
     {
