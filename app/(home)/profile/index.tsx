@@ -42,7 +42,7 @@ const ListItem: FC<{
 
 const LEVEL_ICON = ["lv0", "lv1", "lv2"] as const
 
-const SupportTip: FC<{ data: string }> = ({ data }) => {
+const SupportTip: FC<{ children: ReactNode }> = ({ children }) => {
   const [visible, setVisible] = useState(false)
   const { t } = useTranslation()
   const dict = t("profile.tips", {
@@ -84,11 +84,12 @@ const SupportTip: FC<{ data: string }> = ({ data }) => {
         </Dialog>
       </Popup>
       <XStack
+        hitSlop={16}
         onPress={() => {
           setVisible(true)
         }}
       >
-        <Text col="$secondary">{data}</Text>
+        {children}
       </XStack>
     </Fragment>
   )
@@ -130,7 +131,9 @@ export default function Layout() {
                 <Copyable col="$primary">{`${account?.id}`}</Copyable>
               </XStack>
             </YStack>
-            <Icon name="chevronRight" size={16}></Icon>
+            <SupportTip>
+              <Icon name="chevronRight" size={16}></Icon>
+            </SupportTip>
           </XStack>
           <XStack p="$md" ai="center" jc="space-between" gap="$xs">
             <XStack ai="center" gap="$xs">
@@ -162,11 +165,20 @@ export default function Layout() {
         <ListItem icon="identity" title={dict.identityVerification} />
         <ListItem icon="shield" title={dict.security} />
         <ListItem icon="settings" title={dict.settings} />
-        <ListItem icon="document" title={dict.documents} />
+        <ListItem
+          icon="document"
+          title={dict.documents}
+          onPress={() => {
+            router.push("/documents")
+          }}
+        />
         <ListItem
           icon="earPhone"
           title={dict.support}
-          addonAfter={<SupportTip data={dict.contact} />}
+          addonAfter={<Text col="$secondary">{dict.contact}</Text>}
+          onPress={() => {
+            router.push("/support")
+          }}
         />
       </ScrollView>
       <YStack p="$md" pb={bottom + 16}>
@@ -182,7 +194,7 @@ export default function Layout() {
       <BottomSheet
         title={dict.verificationLevel}
         ref={bottomSheetRef}
-        onClose={bottomSheetRef.current?.close}
+        onClose={() => bottomSheetRef.current?.close()}
       >
         <ScrollView px="$md" gap="$md">
           {dict.levels.map((level, index) => (

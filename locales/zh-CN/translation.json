@@ -140,6 +140,28 @@
       "bonus": "Earn {{generation}} generation Bonus"
     }
   },
+  "documents": {
+    "title": "Legal Documents",
+    "children": [
+      "Terms and Conditions",
+      "Privacy Policy",
+      "Risk Warning",
+      "Client Agreement",
+      "Conflict Policy",
+      "Handling Policy"
+    ]
+  },
+  "support": {
+    "title": "Support",
+    "header": "24/7 Customer Support",
+    "desc": "Our agents are available 24 hours a day 365 days a year via email, chat and phone.",
+    "children": [
+      "Customer Support Page",
+      "hello@xxx.com",
+      "FAQS",
+      "Live Support"
+    ]
+  },
   "settings": {
     "title": "Settings"
   },

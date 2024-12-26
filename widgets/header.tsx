@@ -10,7 +10,7 @@ import colors from "~/theme/colors"
 
 export const HeaderLeft: FC<{ onPress?: () => void }> = ({ onPress }) => {
   return (
-    <XStack px={12} py={12} hitSlop={10} onPress={onPress ?? router.back}>
+    <XStack py={12} hitSlop={16} onPress={onPress ?? router.back}>
       <Icon name="arrowLeft" size={20} />
     </XStack>
   )
