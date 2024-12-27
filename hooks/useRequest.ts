@@ -1,11 +1,11 @@
-import { useRequest as useRequestBase } from "ahooks"
-import { Options, Plugin, Service } from "ahooks/lib/useRequest/src/types"
-import axios from "axios"
+import { useRequest as useRequestBase } from 'ahooks'
+import { Options, Plugin, Service } from 'ahooks/lib/useRequest/src/types'
+import axios from 'axios'
 
-import { useFroxlStore } from "./useStore"
+import { useFroxlStore } from './useStore'
 
-import { toast } from "~/components"
-import { i18n } from "~/lib/utils"
+import { toast } from '~/components'
+import { i18n } from '~/lib/utils'
 
 export const CACHE_KEY = {
   USER: "/user/getUser",
@@ -18,6 +18,7 @@ export const CACHE_KEY = {
   PENDING: "/order/v2/pendingPositionList",
   FUTURE: "/futures/detailByFuturesCode",
   FUTURE_CATEGORIES: "/futures/typeList",
+  CACHE_SIZE: "/other/v3/getCacheSize",
 }
 
 // @ts-ignore next-line

@@ -15,7 +15,8 @@
     "cancel": "Cancel",
     "query": "Query",
     "gotIt": "Got it",
-    "copy": "Copy"
+    "copy": "Copy",
+    "yes": "Yes"
   },
   "anon": {
     "title": "Froxl Markets",
@@ -162,8 +163,23 @@
       "Live Support"
     ]
   },
+  "security": {
+    "title": "Security",
+    "children": [
+      "Reset Password",
+      "Two-Factor Authentication",
+      "Account Deactivation"
+    ]
+  },
   "settings": {
-    "title": "Settings"
+    "title": "Settings",
+    "timeZone": "Time Zone",
+    "language": "Language",
+    "clearCache": "Clear Cache",
+    "clearCacheDesc": "Are you sure you want to clear the cache? Deletingit won't affect the normal use of the app.",
+    "about": "About Us",
+    "ver": "Version",
+    "clearCacheSuccess": "Cache Cleared Successfully"
   },
   "notifications": {
     "title": "System Notifications",

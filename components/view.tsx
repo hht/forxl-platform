@@ -1,12 +1,14 @@
-import { MotiView } from "moti"
-import { FC } from "react"
-import { Platform } from "react-native"
-import {
-  AvoidSoftInputView,
-  AvoidSoftInputViewProps,
-} from "react-native-avoid-softinput"
-import { useSafeAreaInsets } from "react-native-safe-area-context"
-import { styled, YStack, YStackProps } from "tamagui"
+import { ErrorBoundary } from 'expo-router'
+import { MotiView } from 'moti'
+import { FC, Fragment } from 'react'
+import { ActivityIndicator, Platform } from 'react-native'
+import { AvoidSoftInputView, AvoidSoftInputViewProps } from 'react-native-avoid-softinput'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { styled, YStack, YStackProps } from 'tamagui'
+
+import { Text } from './text'
+
+import colors from '~/theme/colors'
 
 export const View = styled(YStack, {
   name: "View",
@@ -48,6 +50,20 @@ export const Screen: FC<YStackProps> = ({ children, ...rest }) => {
     <YStack f={1} bc="$background" p="$md" gap="$md" pb={bottom} {...rest}>
       {children}
     </YStack>
+  )
+}
+
+export const Boundary: FC<
+  YStackProps & { isLoading?: boolean; error?: Error }
+> = ({ children, isLoading, error, ...rest }) => {
+  return isLoading ? (
+    <YStack f={1} bc="$background" ai="center" jc="center" gap="$md">
+      <ActivityIndicator color={colors.secondary} />
+    </YStack>
+  ) : error ? (
+    <Text>{error.message}</Text>
+  ) : (
+    children
   )
 }
 

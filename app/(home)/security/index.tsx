@@ -15,7 +15,7 @@ const LINKS = [
 
 export default function Layout() {
   const { t } = useTranslation()
-  const dict = t("documents", {
+  const dict = t("security", {
     returnObjects: true,
   })
   return (
@@ -23,7 +23,7 @@ export default function Layout() {
       <Stack.Screen options={{ title: dict.title }} />
       <ScrollView f={1} p="$md">
         {dict.children.map((it) => (
-          <ListItem title={it} />
+          <ListItem title={it} key={it} />
         ))}
       </ScrollView>
     </YStack>

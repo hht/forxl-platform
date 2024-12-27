@@ -41,7 +41,7 @@ export { default as info } from "~/assets/images/icon/info.svg"
 export { default as user } from "~/assets/images/icon/user.svg"
 export { default as pair } from "~/assets/images/icon/pair.svg"
 export { default as group } from "~/assets/images/icon/group.svg"
-
+export { default as checked } from "~/assets/images/icon/checked.svg"
 // 图片
 export { default as logo } from "~/assets/images/widgets/logo.svg"
 export { default as verifyEmail } from "~/assets/images/widgets/verify-email.svg"

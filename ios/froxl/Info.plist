@@ -2,6 +2,14 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Please provide us with your geolocation data to prove your current location</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Let us pick a photo</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Time to record a video</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Let us take a photo</string>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
 	<key>CFBundleDevelopmentRegion</key>
@@ -68,13 +76,13 @@
 	<string>Automatic</string>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-  <key>LSApplicationQueriesSchemes</key>
-  <array>
-      <string>message</string>
-      <string>inbox</string>
-      <string>gmail</string>
-      <string>email</string>
-      <string>mailto</string>
-  </array>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>message</string>
+		<string>inbox</string>
+		<string>gmail</string>
+		<string>email</string>
+		<string>mailto</string>
+	</array>
 </dict>
 </plist>

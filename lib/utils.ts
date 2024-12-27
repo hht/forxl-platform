@@ -1,20 +1,21 @@
-import dayjs from "dayjs"
-import "dayjs/locale/en"
-import "dayjs/locale/zh"
-import isToday from "dayjs/plugin/isToday"
-import isYesterday from "dayjs/plugin/isYesterday"
-import localeData from "dayjs/plugin/localeData"
-import relativeTime from "dayjs/plugin/relativeTime"
-import utc from "dayjs/plugin/utc"
-import * as Localization from "expo-localization"
-import { router } from "expo-router"
-import i18n from "i18next"
-import _ from "lodash"
-import { initReactI18next } from "react-i18next"
-import { LayoutAnimation } from "react-native"
+import dayjs from 'dayjs'
+import 'dayjs/locale/en'
+import 'dayjs/locale/zh'
+import isToday from 'dayjs/plugin/isToday'
+import isYesterday from 'dayjs/plugin/isYesterday'
+import localeData from 'dayjs/plugin/localeData'
+import relativeTime from 'dayjs/plugin/relativeTime'
+import utc from 'dayjs/plugin/utc'
+import * as FileSystem from 'expo-file-system'
+import * as Localization from 'expo-localization'
+import { router } from 'expo-router'
+import i18n from 'i18next'
+import _ from 'lodash'
+import { initReactI18next } from 'react-i18next'
+import { LayoutAnimation } from 'react-native'
 
-import en from "~/locales/en-US/translation.json"
-import zh from "~/locales/zh-CN/translation.json"
+import en from '~/locales/en-US/translation.json'
+import zh from '~/locales/zh-CN/translation.json'
 
 dayjs.extend(localeData)
 dayjs.extend(utc)
@@ -114,5 +115,52 @@ export const formatDecimal = (value: string | number, fraction = 0.01) => {
 export const popToTop = () => {
   while (router.canGoBack()) {
     router.back()
+  }
+}
+
+// 格式化文件大小
+const formatSize = (bytes: number): string => {
+  if (bytes < 1024) return bytes + "B"
+  if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(2) + "KB"
+  return (bytes / 1024 / 1024).toFixed(2) + "MB"
+}
+
+// 计算目录大小
+const calculateDirSize = async (dirUri: string): Promise<number> => {
+  try {
+    const contents = await FileSystem.readDirectoryAsync(dirUri)
+    let size = 0
+
+    for (const item of contents) {
+      const uri = `${dirUri}/${item}`
+      const info = await FileSystem.getInfoAsync(uri)
+      if (info.exists) {
+        if (info.isDirectory) {
+          size += await calculateDirSize(uri)
+        } else {
+          size += info.size || 0
+        }
+      }
+    }
+    return size
+  } catch (error) {
+    return 0
+  }
+}
+
+// 获取缓存大小
+export const getCacheSize = async (): Promise<string> => {
+  const size = await calculateDirSize(FileSystem.cacheDirectory!)
+  return formatSize(size)
+}
+
+// 清除缓存
+export const clearCache = async (): Promise<void> => {
+  try {
+    await FileSystem.deleteAsync(FileSystem.cacheDirectory!, {
+      idempotent: true,
+    })
+  } catch (error) {
+    throw error
   }
 }

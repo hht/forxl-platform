@@ -1,44 +1,17 @@
-import BottomSheetBase from "@gorhom/bottom-sheet"
-import { router, Stack } from "expo-router"
-import { FC, Fragment, ReactNode, useRef, useState } from "react"
-import { useTranslation } from "react-i18next"
-import { useSafeAreaInsets } from "react-native-safe-area-context"
-import { ScrollView, XStack, YStack } from "tamagui"
+import BottomSheetBase from '@gorhom/bottom-sheet'
+import { router, Stack } from 'expo-router'
+import { FC, Fragment, ReactNode, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { ScrollView, XStack, YStack } from 'tamagui'
 
-import { getAttestationFlag, getProfile } from "~/api/account"
+import { getAttestationFlag, getProfile } from '~/api/account'
 import {
-  BottomSheet,
-  Button,
-  Card,
-  Copyable,
-  Dialog,
-  Figure,
-  Icon,
-  IconType,
-  Image,
-  Popup,
-  Text,
-} from "~/components"
-import { CACHE_KEY, useRequest } from "~/hooks/useRequest"
-import { useFroxlStore } from "~/hooks/useStore"
-
-const ListItem: FC<{
-  title: string
-  icon: IconType
-  onPress?: () => void
-  addonAfter?: ReactNode
-}> = ({ title, icon, addonAfter, onPress }) => {
-  return (
-    <XStack gap="$xs" h={56} ai="center" onPress={onPress}>
-      <Icon name={icon} size={24} />
-      <Text f={1} fos={15} px="$sm">
-        {title}
-      </Text>
-      {addonAfter}
-      <Icon name="chevronRight" size={16}></Icon>
-    </XStack>
-  )
-}
+    BottomSheet, Boundary, Button, Card, Copyable, Dialog, Figure, Icon, Image, ListItem, Popup,
+    Text
+} from '~/components'
+import { CACHE_KEY, useRequest } from '~/hooks/useRequest'
+import { useFroxlStore } from '~/hooks/useStore'
 
 const LEVEL_ICON = ["lv0", "lv1", "lv2"] as const
 
@@ -103,12 +76,13 @@ export default function Layout() {
   const account = useFroxlStore((state) => state.account)
   const { bottom } = useSafeAreaInsets()
   const bottomSheetRef = useRef<BottomSheetBase>(null)
-  const { data: profile } = useRequest(getProfile, {
+  const { data: profile, loading: loadingProfile } = useRequest(getProfile, {
     cacheKey: CACHE_KEY.USER,
   })
-  const { data: attestation } = useRequest(getAttestationFlag, {
+  const { data: attestation, loading } = useRequest(getAttestationFlag, {
     cacheKey: CACHE_KEY.ATTESTATION,
   })
+  const isLoading = loading || loadingProfile
   const certificated = attestation?.kyc || profile?.realName?.status === "GREEN"
   const currentLevel = certificated ? 2 : attestation?.ga ? 1 : 0
   return (
@@ -163,8 +137,20 @@ export default function Layout() {
           }}
         />
         <ListItem icon="identity" title={dict.identityVerification} />
-        <ListItem icon="shield" title={dict.security} />
-        <ListItem icon="settings" title={dict.settings} />
+        <ListItem
+          icon="shield"
+          title={dict.security}
+          onPress={() => {
+            router.push("/security")
+          }}
+        />
+        <ListItem
+          icon="settings"
+          title={dict.settings}
+          onPress={() => {
+            router.push("/settings")
+          }}
+        />
         <ListItem
           icon="document"
           title={dict.documents}

@@ -3,8 +3,8 @@ import React, { memo } from 'react'
 import { Platform, StyleSheet, Text, View } from 'react-native'
 import { Gesture, GestureDetector } from 'react-native-gesture-handler'
 import Animated, {
-    Extrapolation, interpolate, runOnJS, SharedValue, useAnimatedStyle, useDerivedValue,
-    useSharedValue, withSpring
+    cancelAnimation, Extrapolation, interpolate, runOnJS, SharedValue, useAnimatedStyle,
+    useDerivedValue, useSharedValue, withSpring
 } from 'react-native-reanimated'
 
 import colors from '~/theme/colors'
@@ -69,8 +69,9 @@ export const Picker: React.FC<WheelPickerProps> = ({
   itemHeight = 50,
   visibleItems = 5,
 }) => {
-  const translateY = useSharedValue(0)
+  const translateY = useSharedValue(-1)
   const lastTranslateY = useSharedValue(0)
+
   useDerivedValue(() => {
     if (Platform.OS === "web") {
       return
@@ -82,6 +83,9 @@ export const Picker: React.FC<WheelPickerProps> = ({
     }
   })
   useDerivedValue(() => {
+    if (translateY.value !== -1) {
+      return
+    }
     const index = data.findIndex((item) => item.value === value) ?? 0
     const current =
       index < 0 ? 0 : index > data.length - 1 ? data.length - 1 : index
@@ -92,6 +96,9 @@ export const Picker: React.FC<WheelPickerProps> = ({
   })
 
   const gesture = Gesture.Pan()
+    .onBegin(() => {
+      cancelAnimation(translateY)
+    })
     .onChange((event) => {
       if (
         translateY.value > 0 ||
@@ -109,6 +116,7 @@ export const Picker: React.FC<WheelPickerProps> = ({
         -clampedIndex * itemHeight,
         {
           damping: 20,
+          mass: 2,
           stiffness: 90,
         },
         (finished) => {

@@ -19,6 +19,7 @@
     "@react-native-async-storage/async-storage": "1.23.1",
     "@react-navigation/native": "^7.0.0",
     "@shopify/flash-list": "1.7.1",
+    "@sumsub/react-native-mobilesdk-module": "^1.33.1",
     "@tamagui/animations-react-native": "^1.120.1",
     "@tamagui/config": "^1.120.1",
     "@tamagui/font-inter": "^1.120.1",
@@ -26,7 +27,9 @@
     "axios": "^1.7.9",
     "dayjs": "^1.11.13",
     "expo": "~52.0.18",
+    "expo-application": "~6.0.1",
     "expo-clipboard": "~7.0.0",
+    "expo-file-system": "~18.0.6",
     "expo-font": "~13.0.1",
     "expo-haptics": "~14.0.0",
     "expo-image": "~2.0.3",
@@ -60,9 +63,7 @@
     "react-native-webview": "13.12.5",
     "tamagui": "^1.120.1",
     "zod": "^3.24.1",
-    "zustand": "^5.0.2",
-    "expo-application": "~6.0.1",
-    "expo-file-system": "~18.0.6"
+    "zustand": "^5.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",

@@ -1,8 +1,8 @@
-import { Stack } from "expo-router"
-import { useTranslation } from "react-i18next"
-import { ScrollView, XStack, YStack } from "tamagui"
+import { Stack } from 'expo-router'
+import { useTranslation } from 'react-i18next'
+import { ScrollView, XStack, YStack } from 'tamagui'
 
-import { Figure, Icon, Text } from "~/components"
+import { Figure, ListItem, Text } from '~/components'
 
 export default function Layout() {
   const { t } = useTranslation()
@@ -23,10 +23,7 @@ export default function Layout() {
       </YStack>
       <YStack>
         {dict.children.map((item, index) => (
-          <XStack py="$md" ai="center" jc="space-between" key={index}>
-            <Text>{item}</Text>
-            <Icon name="chevronRight" size={16} />
-          </XStack>
+          <ListItem key={index} title={item} />
         ))}
       </YStack>
     </ScrollView>
