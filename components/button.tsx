@@ -1,9 +1,9 @@
-import _ from "lodash"
-import { forwardRef, Ref } from "react"
-import { View } from "react-native"
-import { Button as TamaButton, ButtonProps, Spinner } from "tamagui"
+import _ from 'lodash'
+import { forwardRef, Ref } from 'react'
+import { View } from 'react-native'
+import { Button as TamaButton, ButtonProps, Spinner } from 'tamagui'
 
-import { Text } from "./text"
+import { Text } from './text'
 
 export type ButtonType =
   | "primary"
@@ -174,8 +174,8 @@ export const Button = forwardRef(
         color="$background"
         {...styles}
         o={disabled || isLoading ? 0.5 : 1}
-        {...rest}
         height={getHeight(size)}
+        {...rest}
         disabled={isDisabled}
         icon={isLoading ? <Spinner size="small" /> : icon}
       >

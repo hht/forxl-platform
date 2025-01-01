@@ -4,7 +4,7 @@ import { FC, Fragment } from 'react'
 import { ActivityIndicator, Platform } from 'react-native'
 import { AvoidSoftInputView, AvoidSoftInputViewProps } from 'react-native-avoid-softinput'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import { styled, YStack, YStackProps } from 'tamagui'
+import { styled, XStack, YStack, YStackProps } from 'tamagui'
 
 import { Text } from './text'
 
@@ -32,6 +32,16 @@ export const Card = styled(View, {
   bc: "$card/60",
   bw: 1,
   boc: "$border",
+})
+
+export const Justified = styled(XStack, {
+  ai: "center",
+  jc: "space-between",
+  fw: "wrap",
+})
+
+export const Row = styled(XStack, {
+  ai: "center",
 })
 
 export const Dialog = styled(View, {

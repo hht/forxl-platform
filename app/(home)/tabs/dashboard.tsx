@@ -1,23 +1,27 @@
-import { useIsFocused } from '@react-navigation/native'
-import { FlashList } from '@shopify/flash-list'
-import { useInfiniteScroll } from 'ahooks'
-import dayjs from 'dayjs'
-import { router, Stack } from 'expo-router'
-import { Fragment, useCallback } from 'react'
-import { useTranslation } from 'react-i18next'
-import { ActivityIndicator, Platform } from 'react-native'
-import { Defs, Ellipse, RadialGradient, Stop, Svg } from 'react-native-svg'
-import { XStack, YStack } from 'tamagui'
+import { useIsFocused } from "@react-navigation/native"
+import { FlashList } from "@shopify/flash-list"
+import { useInfiniteScroll } from "ahooks"
+import dayjs from "dayjs"
+import { router, Stack } from "expo-router"
+import { Fragment, useCallback } from "react"
+import { useTranslation } from "react-i18next"
+import { ActivityIndicator, Platform } from "react-native"
+import { XStack, YStack } from "tamagui"
 
-import { getNews } from '~/api/dashboard'
-import { Figure, Icon, Image, Screen, Text } from '~/components'
-import { useWebViewStore } from '~/hooks/useStore'
-import colors, { toRGBA } from '~/theme/colors'
-import { AssetCard, Banners, Shortcuts } from '~/widgets/dashboard'
+import { getNews } from "~/api/dashboard"
+import { Figure, Icon, Image, Screen, Text } from "~/components"
+import { useWebViewStore } from "~/hooks/useStore"
+import colors, { toRGBA } from "~/theme/colors"
+import { AssetCard, Banners, Shortcuts } from "~/widgets/dashboard"
 import {
-    BrandTitle, BreadCrumb, CustomerService, DefaultScreenOptions, NativeStackNavigationOptions,
-    Notifier
-} from '~/widgets/header'
+  BrandTitle,
+  BreadCrumb,
+  CustomerService,
+  DefaultScreenOptions,
+  NativeStackNavigationOptions,
+  Notifier,
+} from "~/widgets/header"
+import { Gradient } from "~/widgets/tabs"
 
 const ScreenOptions: NativeStackNavigationOptions = {
   ...DefaultScreenOptions,
@@ -205,28 +209,7 @@ export default function Page() {
   return (
     <Screen pb={0} gap={0}>
       <Stack.Screen options={ScreenOptions} />
-      <Svg
-        height="300"
-        width="100%"
-        style={{ position: "absolute", top: -150 }}
-      >
-        <Defs>
-          <RadialGradient
-            id="grad"
-            cx="50%"
-            cy="50%"
-            r="50%"
-            fx="50%"
-            fy="50%"
-            gradientUnits="userSpaceOnUse"
-          >
-            <Stop offset="0%" stopColor="#062E11" stopOpacity="1" />
-            <Stop offset="60%" stopColor="#062E11" stopOpacity="0.6" />
-            <Stop offset="100%" stopColor="#062E11" stopOpacity="0" />
-          </RadialGradient>
-        </Defs>
-        <Ellipse cx="50%" cy="50%" rx="50%" ry="50%" fill="url(#grad)" />
-      </Svg>
+      <Gradient />
       <AssetCard />
       <FlashList
         data={data?.list}

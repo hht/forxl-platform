@@ -1,22 +1,24 @@
 {
-  "tabs": {
-    "home": "首页",
-    "trade": "交易",
-    "positions": "订单",
-    "partner": "合作伙伴",
-    "wallet": "钱包"
-  },
-  "message": {
-    "copiedSuccess": "Copied successfully",
-    "copiedFailed": "Copy failed"
-  },
   "action": {
     "ok": "OK",
     "cancel": "Cancel",
     "query": "Query",
     "gotIt": "Got it",
     "copy": "Copy",
-    "yes": "Yes"
+    "yes": "Yes",
+    "close": "Close",
+    "share": "Share"
+  },
+  "message": {
+    "copiedSuccess": "Copied successfully",
+    "copiedFailed": "Copy failed"
+  },
+  "tabs": {
+    "home": "首页",
+    "trade": "交易",
+    "positions": "订单",
+    "partner": "合作伙伴",
+    "wallet": "钱包"
   },
   "anon": {
     "title": "Froxl Markets",
@@ -81,6 +83,53 @@
         "More"
       ]
     }
+  },
+  "partner": {
+    "level": "Your Level",
+    "children": [
+      "Bronze",
+      "Silver",
+      "Gold",
+      "Platinum",
+      "Diamond",
+      "Emerald",
+      "Ruby",
+      "Sapphire",
+      "Crown"
+    ],
+    "bonusDesc": {
+      "title": "Cascades allocation rules",
+      "description": [
+        "In our bonus distribution system, bonuses generated from client transactions are allocated according to a cascading tier system. First, direct promoters who meet the distribution criteria receive their entitled bonuses. Then, any remaining bonuses are distributed to the upline members involved in the promotion, according to a predetermined percentage. This cascading tier mechanism ensures that not only the direct contributors are rewarded, but also the upline members benefit from the overall performance of their team. This structure aims to encourage and reward teamwork and performance improvement, thereby driving overall business growth.",
+        "In situations where an upline member and a downline member are at the same level, the upline member will receive 10% of the downline member's bonus earnings. If multiple members are at the same level, the level matching bonus is only awarded once."
+      ]
+    },
+    "directAccounts": "Direct Accounts",
+    "directAccountsDesc": "Users with account funds exceeding $100 are referred to as active users. However, you can still earn referral bonuses from trades made by accounts with less than $100 in funds.",
+    "earnBonuses": "Earn Bonuses",
+    "size": "Team Size",
+    "volume": "Team Volume",
+    "updated": "Last Updated",
+    "earned": "You' ve Earned",
+    "currentRank": "CURRENT RANK",
+    "benefits": "Benefits",
+    "tradingBonus": "Team Trading Volume Bonus",
+    "minBonus": "Expected minimum bonus",
+    "perLotMoney": "${{money}} per Lot",
+    "perDayMoney": "${{money}} per day",
+    "requirements": "Requirements",
+    "balance": "Account Balance",
+    "teamStructure": "Team Structure",
+    "andAboveMoney": "${{money}} and above",
+    "levenNumber": "At least {{number}} Level",
+    "partnerList": "Partner List",
+    "accountId": "Account ID",
+    "accountLevel": "Account Level",
+    "accountEmail": "Account Email",
+    "CertificationName": "Certification Name",
+    "fundsInvested": "Funds Invested",
+    "registerDate": "Register Date",
+    "personCount": "{{count}} Persons"
   },
   "profile": {
     "title": "My Profile",

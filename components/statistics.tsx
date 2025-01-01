@@ -1,13 +1,13 @@
-import _ from "lodash"
-import { FC, Fragment, HTMLAttributes, ReactNode, useState } from "react"
-import { useTranslation } from "react-i18next"
-import { XStack, XStackProps, YStack, YStackProps } from "tamagui"
+import _ from 'lodash'
+import { FC, Fragment, HTMLAttributes, ReactNode, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { XStack, XStackProps, YStack, YStackProps } from 'tamagui'
 
-import { Button } from "./button"
-import { Icon } from "./icon"
-import { Popup } from "./popup"
-import { Text } from "./text"
-import { Dialog } from "./view"
+import { Button } from './button'
+import { Icon } from './icon'
+import { Popup } from './popup'
+import { Text } from './text'
+import { Dialog } from './view'
 
 export const StatisticsInfo: FC<XStackProps> = ({ children, ...rest }) => {
   const [visible, setVisible] = useState(false)
@@ -34,9 +34,9 @@ const StatisticsBase: FC<
     label: string
     info?: ReactNode
   }
-> = ({ label, children, info }) => {
+> = ({ label, children, info, ...rest }) => {
   return (
-    <YStack gap="$sm">
+    <YStack gap="$sm" {...rest}>
       <XStack ai="center" gap="$xs">
         <Text col="$secondary">{label}</Text>
         {info ? <StatisticsInfo>{info}</StatisticsInfo> : null}

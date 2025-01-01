@@ -1,27 +1,21 @@
-import { Stack } from "expo-router"
-import { Trans, useTranslation } from "react-i18next"
-import { useSafeAreaInsets } from "react-native-safe-area-context"
-import { ScrollView, XStack, YStack } from "tamagui"
+import { Stack } from 'expo-router'
+import { Trans, useTranslation } from 'react-i18next'
+import { Dimensions } from 'react-native'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { ScrollView, XStack, YStack } from 'tamagui'
 
-import { getBonusConfig, getPartnerConfig, getPartnerInfo } from "~/api/partner"
+import { getBonusConfig, getPartnerConfig, getPartnerInfo } from '~/api/partner'
 import {
-  Button,
-  Card,
-  copyToClipboard,
-  Figure,
-  Icon,
-  IconType,
-  Image,
-  Statistics,
-  StatisticsInfo,
-  Text,
-} from "~/components"
-import { useRequest } from "~/hooks/useRequest"
-import { useFroxlStore, usePartnerStore } from "~/hooks/useStore"
-import { formatDecimal } from "~/lib/utils"
-import colors from "~/theme/colors"
+    Button, Card, copyToClipboard, Figure, Icon, IconType, Statistics, StatisticsInfo, Text
+} from '~/components'
+import { useRequest } from '~/hooks/useRequest'
+import { useFroxlStore, usePartnerStore } from '~/hooks/useStore'
+import { formatDecimal } from '~/lib/utils'
+import colors from '~/theme/colors'
 
 const LEVEL_ICON: IconType[] = ["user", "pair", "group"]
+
+const DEVICE_WIDTH = Dimensions.get("window").width
 
 export default function Layout() {
   const { t } = useTranslation()
@@ -33,7 +27,7 @@ export default function Layout() {
   const { partnerConfig } = usePartnerStore((state) => ({
     partnerConfig: state.config?.find((it) => it.level === state.partnerLevel),
   }))
-  const { data, loading } = useRequest(getPartnerInfo, {
+  const { data } = useRequest(getPartnerInfo, {
     onSuccess: (data) => {
       usePartnerStore.setState({
         currentLevel: data?.level,
@@ -51,10 +45,10 @@ export default function Layout() {
   })
   return (
     <YStack f={1}>
-      <Stack.Screen options={{ title: dict.title }} />
       <XStack pos="absolute" t={0} l={0} r={0}>
-        <Figure name="grid" width="100%" />
+        <Figure name="grid" width={DEVICE_WIDTH} height={DEVICE_WIDTH} />
       </XStack>
+      <Stack.Screen options={{ title: dict.title }} />
       <ScrollView f={1} px="$md" showsVerticalScrollIndicator={false}>
         <YStack py={24} ai="center" jc="center">
           <Figure name="giftBox" />

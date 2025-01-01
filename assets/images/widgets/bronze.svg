@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 56 56">
+  <path fill="url(#a)" stroke="#F7F7F6" stroke-width=".8" d="m29.4 5.336-.2.346.2-.346a2.53 2.53 0 0 0-2.533 0L9.024 15.637a2.53 2.53 0 0 0-1.267 2.194v20.604c0 .905.483 1.741 1.267 2.194L26.867 50.93c.784.453 1.75.453 2.533 0L47.243 40.63a2.53 2.53 0 0 0 1.267-2.194V17.83c0-.905-.483-1.741-1.267-2.193z"/>
+  <path fill="url(#b)" d="M27.067 9.151a2.13 2.13 0 0 1 2.133 0l14.84 8.568a2.13 2.13 0 0 1 1.067 1.848v17.136c0 .763-.406 1.467-1.066 1.848L29.2 47.119a2.13 2.13 0 0 1-2.133 0l-14.841-8.568a2.13 2.13 0 0 1-1.067-1.848V19.568c0-.762.407-1.467 1.067-1.848z"/>
+  <path stroke="url(#c)" stroke-opacity=".47" stroke-width=".267" d="M27.133 9.266a2 2 0 0 1 2 0l14.841 8.569a2 2 0 0 1 1 1.732v17.136a2 2 0 0 1-1 1.732l-14.84 8.569a2 2 0 0 1-2 0l-14.841-8.568a2 2 0 0 1-1-1.733V19.568a2 2 0 0 1 1-1.732z"/>
+  <path fill="url(#d)" d="M27.067 11.815a2.13 2.13 0 0 1 2.133 0l12.531 7.235a2.13 2.13 0 0 1 1.067 1.848v14.47c0 .762-.407 1.466-1.067 1.847L29.2 44.45a2.13 2.13 0 0 1-2.133 0l-12.532-7.235a2.13 2.13 0 0 1-1.066-1.848v-14.47c0-.762.406-1.466 1.066-1.847z"/>
+  <g filter="url(#e)">
+    <path stroke="url(#f)" stroke-width=".8" d="m13.867 19.2 14.666 8.4m0 0L42.4 19.2m-13.867 8.4v15.6"/>
+  </g>
+  <g filter="url(#g)">
+    <path stroke="url(#h)" stroke-width=".8" d="m8.8 17.066 19.467 11.067M47.733 39.2 28.267 28.133m0 0 19.466-11.067M28.267 28.133 8.8 39.2"/>
+  </g>
+  <path fill="url(#i)" fill-rule="evenodd" d="M19.577 26.688a.533.533 0 0 0 0 .754l1.062 1.062-1.062 1.063a.533.533 0 0 0 0 .754l8.446 8.446a.533.533 0 0 0 .754 0l8.446-8.446a.534.534 0 0 0 0-.755l-1.062-1.062 1.062-1.062a.533.533 0 0 0 0-.754l-8.446-8.446a.533.533 0 0 0-.754 0z" clip-rule="evenodd"/>
+  <path fill="#AA947D" d="m19.577 27.442-.377.377zm0-.754.377.377zm1.062 1.816.377.377.378-.377-.378-.377zm-1.062 1.063.377.377zm0 .754.377-.377zm8.446 8.446-.377.377zm.754 0 .377.377zm8.446-8.446.377.377zm0-.755-.377.378zm-1.062-1.062-.378-.377-.377.377.377.377zm1.062-1.062.377.377zm0-.754-.377.377zm-8.446-8.446.377-.377zm-.754 0 .377.377zm-8.069 8.823-.754-.754a1.067 1.067 0 0 0 0 1.508zm1.062 1.062-1.062-1.062-.754.754 1.062 1.063zm-1.062 1.817 1.062-1.062-.754-.755L19.2 29.19zm0 0-.754-.755a1.067 1.067 0 0 0 0 1.509zm8.446 8.445-8.446-8.445-.754.754 8.446 8.446zm0 0-.754.755a1.067 1.067 0 0 0 1.508 0zm8.446-8.445L28.4 38.389l.754.755 8.446-8.446zm0 0 .754.754a1.067 1.067 0 0 0 0-1.509zm-1.062-1.062 1.062 1.062.754-.755-1.062-1.062zm1.062-1.817-1.062 1.062.754.755 1.062-1.063zm0 0 .754.754a1.067 1.067 0 0 0 0-1.508zM28.4 18.619l8.446 8.446.754-.754-8.446-8.446zm0 0 .754-.754a1.067 1.067 0 0 0-1.508 0zm-8.446 8.446 8.446-8.446-.754-.754-8.446 8.446z"/>
+  <rect width="13.011" height="13.011" x="19.2" y="29.945" fill="#BAA78E" rx=".533" transform="rotate(-45 19.2 29.945)"/>
+  <rect width="12.744" height="12.744" x="19.389" y="27.066" fill="url(#j)" stroke="url(#k)" stroke-width=".267" rx=".4" transform="rotate(-45 19.389 27.066)"/>
+  <defs>
+    <radialGradient id="a" cx="0" cy="0" r="1" gradientTransform="rotate(-125.322 21.34 6.794)scale(24.6757)" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#E4E4E4"/>
+      <stop offset=".458" stop-color="#fff"/>
+      <stop offset="1" stop-color="#CCB6A0"/>
+    </radialGradient>
+    <radialGradient id="b" cx="0" cy="0" r="1" gradientTransform="rotate(90 -.001 28.134)scale(19.6)" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#E3D4BC"/>
+      <stop offset="1" stop-color="#7D7568"/>
+    </radialGradient>
+    <radialGradient id="d" cx="0" cy="0" r="1" gradientTransform="rotate(-135 19.893 8.24)scale(23.9473)" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#E4E4E4"/>
+      <stop offset="1" stop-color="#CCB6A0"/>
+    </radialGradient>
+    <radialGradient id="f" cx="0" cy="0" r="1" gradientTransform="matrix(0 12 -14.2667 0 28.133 31.2)" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#fff"/>
+      <stop offset="1" stop-color="#fff" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="h" cx="0" cy="0" r="1" gradientTransform="rotate(90 .067 28.2)scale(11.0667 19.4667)" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#fff"/>
+      <stop offset="1" stop-color="#fff" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="c" x1="28.133" x2="28.133" y1="8.535" y2="47.735" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#fff"/>
+      <stop offset=".489" stop-color="#fff" stop-opacity=".22"/>
+      <stop offset="1" stop-color="#fff"/>
+    </linearGradient>
+    <linearGradient id="i" x1="28.267" x2="28.267" y1="17.865" y2="35.332" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#E3D4BC"/>
+      <stop offset=".504" stop-color="#D4D0CA"/>
+      <stop offset="1" stop-color="#DDC9AE"/>
+    </linearGradient>
+    <linearGradient id="j" x1="32.116" x2="19.766" y1="26.972" y2="39.323" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#E3D4BC"/>
+      <stop offset=".504" stop-color="#D4D0CA"/>
+      <stop offset="1" stop-color="#DDC9AE"/>
+    </linearGradient>
+    <linearGradient id="k" x1="32.116" x2="19.106" y1="26.972" y2="39.983" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#fff"/>
+      <stop offset=".447" stop-color="#fff" stop-opacity=".19"/>
+      <stop offset="1" stop-color="#fff"/>
+    </linearGradient>
+    <filter id="e" width="31.073" height="26.481" x="12.601" y="17.785" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse">
+      <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+      <feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+      <feGaussianBlur result="effect1_foregroundBlur_1642_17026" stdDeviation=".533"/>
+    </filter>
+    <filter id="g" width="41.462" height="24.962" x="7.536" y="15.652" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse">
+      <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+      <feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+      <feGaussianBlur result="effect1_foregroundBlur_1642_17026" stdDeviation=".533"/>
+    </filter>
+  </defs>
+</svg>

@@ -22,8 +22,8 @@ export default function Layout() {
     <YStack f={1}>
       <Stack.Screen options={{ title: dict.title }} />
       <ScrollView f={1} p="$md">
-        {dict.children.map((it) => (
-          <ListItem title={it} />
+        {dict.children.map((it, index) => (
+          <ListItem title={it} key={index} />
         ))}
       </ScrollView>
     </YStack>

@@ -7,8 +7,7 @@ import { ScrollView, XStack, YStack } from 'tamagui'
 
 import { getAttestationFlag, getProfile } from '~/api/account'
 import {
-    BottomSheet, Boundary, Button, Card, Copyable, Dialog, Figure, Icon, Image, ListItem, Popup,
-    Text
+    BottomSheet, Button, Card, Copyable, Dialog, Figure, Icon, Image, ListItem, Popup, Text
 } from '~/components'
 import { CACHE_KEY, useRequest } from '~/hooks/useRequest'
 import { useFroxlStore } from '~/hooks/useStore'
@@ -76,13 +75,12 @@ export default function Layout() {
   const account = useFroxlStore((state) => state.account)
   const { bottom } = useSafeAreaInsets()
   const bottomSheetRef = useRef<BottomSheetBase>(null)
-  const { data: profile, loading: loadingProfile } = useRequest(getProfile, {
+  const { data: profile } = useRequest(getProfile, {
     cacheKey: CACHE_KEY.USER,
   })
-  const { data: attestation, loading } = useRequest(getAttestationFlag, {
+  const { data: attestation } = useRequest(getAttestationFlag, {
     cacheKey: CACHE_KEY.ATTESTATION,
   })
-  const isLoading = loading || loadingProfile
   const certificated = attestation?.kyc || profile?.realName?.status === "GREEN"
   const currentLevel = certificated ? 2 : attestation?.ga ? 1 : 0
   return (
