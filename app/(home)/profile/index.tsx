@@ -1,73 +1,29 @@
-import BottomSheetBase from '@gorhom/bottom-sheet'
-import { router, Stack } from 'expo-router'
-import { FC, Fragment, ReactNode, useRef, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import { ScrollView, XStack, YStack } from 'tamagui'
+import BottomSheetBase from "@gorhom/bottom-sheet"
+import { router, Stack } from "expo-router"
+import { useRef } from "react"
+import { useTranslation } from "react-i18next"
+import { useSafeAreaInsets } from "react-native-safe-area-context"
+import { ScrollView, XStack, YStack } from "tamagui"
 
-import { getAttestationFlag, getProfile } from '~/api/account'
+import { getAttestationFlag, getProfile } from "~/api/account"
 import {
-    BottomSheet, Button, Card, Copyable, Dialog, Figure, Icon, Image, ListItem, Popup, Text
-} from '~/components'
-import { CACHE_KEY, useRequest } from '~/hooks/useRequest'
-import { useFroxlStore } from '~/hooks/useStore'
+  BottomSheet,
+  Button,
+  Card,
+  Copyable,
+  Figure,
+  Icon,
+  Image,
+  ListItem,
+  Text,
+} from "~/components"
+import { CACHE_KEY, useRequest } from "~/hooks/useRequest"
+import { useFroxlStore } from "~/hooks/useStore"
+import { SupportTip } from "~/widgets/(home)/profile"
 
 const LEVEL_ICON = ["lv0", "lv1", "lv2"] as const
 
-const SupportTip: FC<{ children: ReactNode }> = ({ children }) => {
-  const [visible, setVisible] = useState(false)
-  const { t } = useTranslation()
-  const dict = t("profile.tips", {
-    returnObjects: true,
-  })
-  return (
-    <Fragment>
-      <Popup visible={visible} onClose={() => setVisible(false)}>
-        <Dialog>
-          <Text fos={20} lh={20}>
-            {dict.title}
-          </Text>
-          <Text col="$secondary">{dict.desc}</Text>
-          <XStack w="100%" gap={12} pt={12}>
-            <Button
-              f={1}
-              size="$md"
-              type="accent"
-              onPress={() => {
-                setVisible(false)
-              }}
-            >
-              <Text col="$text" fow="700">
-                {t("action.cancel")}
-              </Text>
-            </Button>
-            <Button
-              f={1}
-              size="$md"
-              onPress={() => {
-                setVisible(false)
-              }}
-            >
-              <Text col="$background" fow="700">
-                {dict.action}
-              </Text>
-            </Button>
-          </XStack>
-        </Dialog>
-      </Popup>
-      <XStack
-        hitSlop={16}
-        onPress={() => {
-          setVisible(true)
-        }}
-      >
-        {children}
-      </XStack>
-    </Fragment>
-  )
-}
-
-export default function Layout() {
+export default function Page() {
   const { t } = useTranslation()
   const dict = t("profile", {
     returnObjects: true,

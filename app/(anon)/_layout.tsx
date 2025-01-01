@@ -5,7 +5,7 @@ import colors from "~/theme/colors"
 import {
   DefaultScreenOptions,
   NativeStackNavigationOptions,
-} from "~/widgets/header"
+} from "~/widgets/shared/header"
 
 export const unstable_settings = {
   initialRouteName: "(anon)",

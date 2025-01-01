@@ -1,11 +1,12 @@
 import * as Clipboard from "expo-clipboard"
-import { FC } from "react"
+import _ from "lodash"
+import { FC, useMemo, useRef } from "react"
 import { styled, Text as TamaText, TextProps, XStack } from "tamagui"
 
 import { Icon } from "./icon"
 import { toast } from "./toast"
 
-import { t } from "~/lib/utils"
+import { formatDecimal, t } from "~/lib/utils"
 
 /**
  * 默认字体组件
@@ -74,6 +75,35 @@ export const Copyable: FC<{ children?: string } & TextProps> = ({
     >
       <Text {...rest}>{children}</Text>
       <Icon name="copy" size={12}></Icon>
+    </XStack>
+  )
+}
+
+export const AnimatedFlow = ({
+  value,
+  className,
+  fontSize = 13,
+  fraction = 0.01,
+  addonsBefore,
+  addonsAfter,
+}: {
+  value: number
+  fontSize?: number
+  fraction?: number
+  addonsBefore?: React.ReactNode
+  addonsAfter?: React.ReactNode
+  gradientClassName?: string
+} & TextProps) => {
+  const ref = useRef<HTMLDivElement>(null)
+  return (
+    <XStack ref={ref}>
+      <Text style={{ fontSize }}>
+        {addonsBefore}
+        {_.isNumber(value) && !_.isNaN(value)
+          ? `${formatDecimal(value, fraction)}`
+          : null}
+        {addonsAfter}
+      </Text>
     </XStack>
   )
 }

@@ -231,10 +231,17 @@
     "clearCacheSuccess": "Cache Cleared Successfully"
   },
   "notifications": {
-    "title": "System Notifications",
+    "system": "System Notifications",
+    "trade": "Trade Notifications",
     "allRead": "All Read",
     "empty": "No System Notification",
     "today": "Today",
     "yesterday": "Yesterday"
+  },
+  "trade": {
+    "balance": "Balance",
+    "equity": "Equity",
+    "margin": "Margin",
+    "freeMargin": "Free Margin"
   }
 }

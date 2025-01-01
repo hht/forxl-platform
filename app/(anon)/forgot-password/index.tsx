@@ -9,7 +9,10 @@ import { sendPasswordChangeEmail } from "~/api/account"
 import { Button, Input, Screen, Text, YStack } from "~/components"
 import { useRequest } from "~/hooks/useRequest"
 import { popToTop } from "~/lib/utils"
-import { LiveSupport, NativeStackNavigationOptions } from "~/widgets/header"
+import {
+  LiveSupport,
+  NativeStackNavigationOptions,
+} from "~/widgets/shared/header"
 
 const ScreenOptions: NativeStackNavigationOptions = {
   title: "",

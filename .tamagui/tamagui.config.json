@@ -27425,6 +27425,7 @@
         "text": "#ffffff",
         "secondary": "#919FA6",
         "tertiary": "#545D61",
+        "muted": "#212426",
         "id": "dark"
       },
       "light": {
@@ -27663,6 +27664,7 @@
         "text": "#ffffff",
         "secondary": "#919FA6",
         "tertiary": "#545D61",
+        "muted": "#212426",
         "id": "light"
       }
     },
@@ -29395,6 +29397,13 @@
           "key": "$tertiary",
           "name": "c-tertiary",
           "val": "#545D61",
+          "variable": ""
+        },
+        "muted": {
+          "isVar": true,
+          "key": "$muted",
+          "name": "c-muted",
+          "val": "#212426",
           "variable": ""
         }
       },
@@ -31985,6 +31994,13 @@
         "key": "$tertiary",
         "name": "c-tertiary",
         "val": "#545D61",
+        "variable": ""
+      },
+      "$color.muted": {
+        "isVar": true,
+        "key": "$muted",
+        "name": "c-muted",
+        "val": "#212426",
         "variable": ""
       },
       "$radius.0": {

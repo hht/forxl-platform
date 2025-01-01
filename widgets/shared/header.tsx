@@ -4,7 +4,7 @@ import { FC } from "react"
 import { useTranslation } from "react-i18next"
 
 import { getNewMessageCount } from "~/api/notifications"
-import { Figure, Icon, Text, XStack } from "~/components"
+import { Figure, Icon, IconType, Text, XStack } from "~/components"
 import { useRequest } from "~/hooks/useRequest"
 import colors from "~/theme/colors"
 
@@ -41,11 +41,14 @@ export const BreadCrumb: FC = () => {
   )
 }
 
-export const Notifier: FC = () => {
-  const { data: count } = useRequest(getNewMessageCount)
+export const Notifier: FC<{ icon?: IconType; type?: number }> = ({
+  icon = "email",
+  type = 0,
+}) => {
+  const { data: count } = useRequest(() => getNewMessageCount(type))
   return (
-    <XStack onPress={() => router.push("/(home)/notifications")}>
-      <Icon name="email" size={20} />
+    <XStack onPress={() => router.push(`/(home)/notifications/${type}`)}>
+      <Icon name={icon} size={20} />
       {count ? (
         <XStack
           pos="absolute"

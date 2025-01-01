@@ -1,22 +1,22 @@
-import { useInterval } from 'ahooks'
-import _ from 'lodash'
-import { useEffect } from 'react'
-import { shallow } from 'zustand/shallow'
+import { useInterval } from "ahooks"
+import _ from "lodash"
+import { useEffect } from "react"
+import { shallow } from "zustand/shallow"
 
-import { CACHE_KEY, useRequest } from './useRequest'
-import { computeProfit, useOrderStore } from './useStore'
-import { subscribeQuotes, useWebSocket } from './useWebsocket'
+import { CACHE_KEY, useRequest } from "./useRequest"
+import { computeProfit, useOrderStore } from "./useStore"
+import { subscribeQuotes, useWebSocket } from "./useWebsocket"
 
-import { getOpenPositions } from '~/api/trade'
+import { getOpenPositions } from "~/api/trade"
 
 export const useWallet = () => {
+  useWebSocket()
   const { wallet, orders } = useOrderStore((state) => {
     return {
       wallet: state.wallet,
       orders: state.orders,
     }
   }, shallow)
-  useWebSocket()
   useEffect(() => {
     if (orders?.length) {
       subscribeQuotes(

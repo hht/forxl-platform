@@ -1,11 +1,11 @@
-import { useUnmount } from 'ahooks'
-import { Stack } from 'expo-router'
-import { Platform } from 'react-native'
-import { WebView } from 'react-native-webview'
+import { useUnmount } from "ahooks"
+import { Stack } from "expo-router"
+import { Platform } from "react-native"
+import { WebView } from "react-native-webview"
 
-import { YStack } from '~/components'
-import { useWebViewStore } from '~/hooks/useStore'
-import { DefaultScreenOptions } from '~/widgets/header'
+import { YStack } from "~/components"
+import { useWebViewStore } from "~/hooks/useStore"
+import { DefaultScreenOptions } from "~/widgets/shared/header"
 
 export default function Page() {
   const { uri, title, html } = useWebViewStore()

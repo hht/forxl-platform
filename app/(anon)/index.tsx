@@ -8,7 +8,7 @@ import {
   DefaultScreenOptions,
   LiveSupport,
   NativeStackNavigationOptions,
-} from "~/widgets/header"
+} from "~/widgets/shared/header"
 
 const ScreenOption: NativeStackNavigationOptions = {
   ...DefaultScreenOptions,

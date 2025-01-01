@@ -4,7 +4,10 @@ import { useTranslation } from "react-i18next"
 
 import { Button, Figure, Screen, Text, toast, YStack } from "~/components"
 import { t } from "~/lib/utils"
-import { BrandTitle, NativeStackNavigationOptions } from "~/widgets/header"
+import {
+  BrandTitle,
+  NativeStackNavigationOptions,
+} from "~/widgets/shared/header"
 
 const ScreenOptions: NativeStackNavigationOptions = {
   headerTitle: () => <BrandTitle />,

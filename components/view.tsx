@@ -1,14 +1,17 @@
-import { ErrorBoundary } from 'expo-router'
-import { MotiView } from 'moti'
-import { FC, Fragment } from 'react'
-import { ActivityIndicator, Platform } from 'react-native'
-import { AvoidSoftInputView, AvoidSoftInputViewProps } from 'react-native-avoid-softinput'
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import { styled, XStack, YStack, YStackProps } from 'tamagui'
+import { ErrorBoundary } from "expo-router"
+import { MotiView } from "moti"
+import { FC, Fragment } from "react"
+import { ActivityIndicator, Platform } from "react-native"
+import {
+  AvoidSoftInputView,
+  AvoidSoftInputViewProps,
+} from "react-native-avoid-softinput"
+import { useSafeAreaInsets } from "react-native-safe-area-context"
+import { styled, XStack, XStackProps, YStack, YStackProps } from "tamagui"
 
-import { Text } from './text'
+import { Text } from "./text"
 
-import colors from '~/theme/colors'
+import colors from "~/theme/colors"
 
 export const View = styled(YStack, {
   name: "View",
@@ -99,4 +102,18 @@ export const KeyboardAvoiding: FC<AvoidSoftInputViewProps> = ({
   )
 }
 
-export const Moti = styled(MotiView)
+export const Moti = MotiView
+
+export const Separator: FC<{ orientation?: "vertical" } & XStackProps> = ({
+  orientation,
+  ...rest
+}) => {
+  return (
+    <XStack
+      h={orientation === "vertical" ? "100%" : 1}
+      w={orientation === "vertical" ? 1 : "100%"}
+      bc="$muted"
+      {...rest}
+    ></XStack>
+  )
+}

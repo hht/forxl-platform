@@ -8,8 +8,11 @@ import { resetPassword } from "~/api/account"
 import { Button, Input, Screen, Text, YStack } from "~/components"
 import { useRequest } from "~/hooks/useRequest"
 import { popToTop } from "~/lib/utils"
-import { LiveSupport, NativeStackNavigationOptions } from "~/widgets/header"
-import { PasswordValidator } from "~/widgets/password-validator"
+import {
+  LiveSupport,
+  NativeStackNavigationOptions,
+} from "~/widgets/shared/header"
+import { PasswordValidator } from "~/widgets/shared/password-validator"
 
 const ScreenOptions: NativeStackNavigationOptions = {
   title: "",

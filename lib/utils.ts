@@ -1,21 +1,21 @@
-import dayjs from 'dayjs'
-import 'dayjs/locale/en'
-import 'dayjs/locale/zh'
-import isToday from 'dayjs/plugin/isToday'
-import isYesterday from 'dayjs/plugin/isYesterday'
-import localeData from 'dayjs/plugin/localeData'
-import relativeTime from 'dayjs/plugin/relativeTime'
-import utc from 'dayjs/plugin/utc'
-import * as FileSystem from 'expo-file-system'
-import * as Localization from 'expo-localization'
-import { router } from 'expo-router'
-import i18n from 'i18next'
-import _ from 'lodash'
-import { initReactI18next } from 'react-i18next'
-import { LayoutAnimation } from 'react-native'
+import dayjs from "dayjs"
+import "dayjs/locale/en"
+import "dayjs/locale/zh"
+import isToday from "dayjs/plugin/isToday"
+import isYesterday from "dayjs/plugin/isYesterday"
+import localeData from "dayjs/plugin/localeData"
+import relativeTime from "dayjs/plugin/relativeTime"
+import utc from "dayjs/plugin/utc"
+import * as FileSystem from "expo-file-system"
+import * as Localization from "expo-localization"
+import { router } from "expo-router"
+import i18n from "i18next"
+import _ from "lodash"
+import { initReactI18next } from "react-i18next"
+import { Dimensions, LayoutAnimation } from "react-native"
 
-import en from '~/locales/en-US/translation.json'
-import zh from '~/locales/zh-CN/translation.json'
+import en from "~/locales/en-US/translation.json"
+import zh from "~/locales/zh-CN/translation.json"
 
 dayjs.extend(localeData)
 dayjs.extend(utc)
@@ -164,3 +164,5 @@ export const clearCache = async (): Promise<void> => {
     throw error
   }
 }
+
+export const DEVICE_WIDTH = Dimensions.get("window").width

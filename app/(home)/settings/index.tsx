@@ -1,17 +1,14 @@
-import BottomSheetBase from '@gorhom/bottom-sheet'
-import { router, Stack } from 'expo-router'
-import _ from 'lodash'
-import { FC, Fragment, useMemo, useRef, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import { ActivityIndicator } from 'react-native'
-import { ScrollView, XStack } from 'tamagui'
-import { createWithEqualityFn } from 'zustand/traditional'
+import BottomSheetBase from "@gorhom/bottom-sheet"
+import { router, Stack } from "expo-router"
+import _ from "lodash"
+import { Fragment, useMemo, useRef } from "react"
+import { useTranslation } from "react-i18next"
+import { ScrollView } from "tamagui"
 
-import { BottomSheet, Button, Dialog, ListItem, Picker, Popup, Text, toast } from '~/components'
-import { CACHE_KEY, useRequest } from '~/hooks/useRequest'
-import { useFroxlStore } from '~/hooks/useStore'
-import { LANGUAGES, TIMEZONES } from '~/lib/constants'
-import { clearCache, getCacheSize } from '~/lib/utils'
+import { BottomSheet, ListItem, Picker, Text } from "~/components"
+import { useFroxlStore } from "~/hooks/useStore"
+import { LANGUAGES, TIMEZONES } from "~/lib/constants"
+import { ClearCacheItem } from "~/widgets/(home)/settings/clear-cache"
 
 const TIMEZONE_LIST = _.uniqBy(
   TIMEZONES.map((it) => ({
@@ -32,10 +29,6 @@ export default function Layout() {
     [timezone]
   )
   const timeSheetRef = useRef<BottomSheetBase>(null)
-  const [visible, setVisible] = useState(false)
-  const { data, refresh } = useRequest(getCacheSize, {
-    cacheKey: CACHE_KEY.CACHE_SIZE,
-  })
   return (
     <Fragment>
       <Stack.Screen options={{ title: dict.title }}></Stack.Screen>
@@ -58,11 +51,7 @@ export default function Layout() {
             router.push("/settings/language")
           }}
         />
-        <ListItem
-          title={dict.clearCache}
-          onPress={() => setVisible(true)}
-          addonAfter={<Text col="$secondary">{data ?? ""}</Text>}
-        />
+        <ClearCacheItem />
         <ListItem title={dict.about} />
         <ListItem
           title={dict.ver}
@@ -82,48 +71,6 @@ export default function Layout() {
           }}
         />
       </BottomSheet>
-      <Popup visible={visible} onClose={() => setVisible(false)}>
-        <Dialog ai="center" jc="center">
-          <Text fos={20} lh={20}>
-            {dict.clearCache}
-          </Text>
-          <Text col="$secondary" ta="center">
-            {dict.clearCacheDesc}
-          </Text>
-          <XStack w="100%" gap={12} pt={12}>
-            <Button
-              f={1}
-              size="$md"
-              type="accent"
-              onPress={() => {
-                setVisible(false)
-              }}
-            >
-              <Text col="$text" fow="700">
-                {t("action.cancel")}
-              </Text>
-            </Button>
-            <Button
-              f={1}
-              size="$md"
-              onPress={() => {
-                clearCache()
-                  .then(() => {
-                    refresh()
-                    toast.show(t("settings.clearCacheSuccess"))
-                  })
-                  .catch((error) => {
-                    toast.show(error)
-                  })
-              }}
-            >
-              <Text col="$background" fow="700">
-                {t("action.yes")}
-              </Text>
-            </Button>
-          </XStack>
-        </Dialog>
-      </Popup>
     </Fragment>
   )
 }

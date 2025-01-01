@@ -25,8 +25,7 @@ type FutureMessage =
     }
   | { type: "watchPositionChange" }
 
-// @ts-ignore next-line
-const WS_URL = import.meta.env.VITE_WS_URL
+const WS_URL = "wss://ws2.usd.lt/datafeed"
 
 type WebSocketState = {
   quotes: string[]

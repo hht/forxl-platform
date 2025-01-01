@@ -1,10 +1,10 @@
 import { request } from "~/hooks/useRequest"
 
-export const getNotifications = async (type = 0) => {
+export const getNotifications = async (type: string) => {
   return await request<PaginationResponse<Message>, { type: number }>(
     "/user/userMessage",
     "POST",
-    { type }
+    { type: parseInt(type) }
   )
 }
 
@@ -26,6 +26,6 @@ export const readNotification = async (messageId: number) => {
  * 获取新消息数量
  */
 
-export const getNewMessageCount = async () => {
+export const getNewMessageCount = async (type = 0) => {
   return await request<number, undefined>("/user/newMessageCount", "POST")
 }

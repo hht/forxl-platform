@@ -62,6 +62,13 @@ export const getBonusConfig = async () => {
   >("/bonus/referralBonusParams", "POST").then((res) => res.data)
 }
 
+export const getBonusInfo = async () => {
+  return await request<
+    { data: { earned: number; spillover: number } },
+    undefined
+  >("/bonus/info", "POST").then((res) => res.data)
+}
+
 export const getReferralList = async () => {
   return await request<
     {

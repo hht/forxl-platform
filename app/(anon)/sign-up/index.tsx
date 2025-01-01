@@ -6,8 +6,11 @@ import { z } from "zod"
 import { createWithEqualityFn } from "zustand/traditional"
 
 import { Button, Input, Screen, Text, YStack } from "~/components"
-import { LiveSupport, NativeStackNavigationOptions } from "~/widgets/header"
-import { WebLink } from "~/widgets/link"
+import {
+  LiveSupport,
+  NativeStackNavigationOptions,
+} from "~/widgets/shared/header"
+import { WebLink } from "~/widgets/shared/link"
 
 const ScreenOptions: NativeStackNavigationOptions = {
   title: "",

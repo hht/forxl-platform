@@ -14,7 +14,7 @@ import { TamaguiProvider } from "tamagui"
 import { Toaster } from "~/components"
 import { initI18Next } from "~/lib/utils"
 import config from "~/theme/tamagui.config"
-import { AccountDetector } from "~/widgets/detector"
+import { AccountDetector } from "~/widgets/shared/detector"
 
 enableScreens(true)
 enableFreeze(true)

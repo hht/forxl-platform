@@ -19,4 +19,5 @@ export default {
   text: "#ffffff",
   secondary: "#919FA6",
   tertiary: "#545D61",
+  muted: "#212426",
 }

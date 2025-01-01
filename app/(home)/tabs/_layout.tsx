@@ -6,11 +6,11 @@ import { Icon } from "~/components"
 import colors from "~/theme/colors"
 
 const Routes = [
-  { name: "home", href: "dashboard", icon: "home" },
-  { name: "trade", href: "trade", icon: "trade" },
-  { name: "positions", href: "positions", icon: "positions" },
-  { name: "partner", href: "partners", icon: "partner" },
-  { name: "wallet", href: "wallet", icon: "wallet" },
+  { name: "home", href: "dashboard/index", icon: "home" },
+  { name: "trade", href: "trade/index", icon: "trade" },
+  { name: "positions", href: "positions/index", icon: "positions" },
+  { name: "partner", href: "partner/index", icon: "partner" },
+  { name: "wallet", href: "wallet/index", icon: "wallet" },
 ] as const
 
 const ScreenOptions = {
