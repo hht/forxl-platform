@@ -7,7 +7,8 @@
     "copy": "Copy",
     "yes": "Yes",
     "close": "Close",
-    "share": "Share"
+    "share": "Share",
+    "apply": "Apply"
   },
   "message": {
     "copiedSuccess": "Copied successfully",
@@ -243,5 +244,30 @@
     "equity": "Equity",
     "margin": "Margin",
     "freeMargin": "Free Margin"
+  },
+  "positions": {
+    "title": "Positions",
+    "tabs": ["Open", "Orders", "Closed"],
+    "noOpenPositions": "You have no open positions",
+    "noOpenPositionsDesc": "Open new positions in the Trade tab or in the instrument chat",
+    "noPendingPositions": "You have no pending positions",
+    "noPendingPositionsDesc": "All pending orders, including limit, stop, and stop-limit orders, will be shown here.",
+    "noClosedPositions": "You have no closed positions",
+    "noClosedPositionsDesc": "All closed positions will be available here.",
+    "gotoTrade": "Go to Trade tab",
+    "filters": {
+      "title": "Filter",
+      "children": [
+        "Today",
+        "Last 7 Days",
+        "Last 3 months",
+        "Last 6 months",
+        "Last Year",
+        "All-time",
+        "Custom period"
+      ]
+    },
+
+    "clear": "clear filter"
   }
 }

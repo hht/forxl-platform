@@ -8,7 +8,6 @@ import { format, LEVEL_COLORS } from "./utils"
 
 import { BottomSheet, Card, Icon, Justified, Row, Text } from "~/components"
 import { usePartnerStore } from "~/hooks/useStore"
-import { formatDecimal } from "~/lib/utils"
 
 export const LevelInfo = () => {
   const { bottom } = useSafeAreaInsets()

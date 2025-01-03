@@ -1,17 +1,13 @@
-import { ErrorBoundary } from "expo-router"
-import { MotiView } from "moti"
-import { FC, Fragment } from "react"
-import { ActivityIndicator, Platform } from "react-native"
-import {
-  AvoidSoftInputView,
-  AvoidSoftInputViewProps,
-} from "react-native-avoid-softinput"
-import { useSafeAreaInsets } from "react-native-safe-area-context"
-import { styled, XStack, XStackProps, YStack, YStackProps } from "tamagui"
+import { MotiView } from 'moti'
+import { FC } from 'react'
+import { ActivityIndicator, Platform } from 'react-native'
+import { AvoidSoftInputView, AvoidSoftInputViewProps } from 'react-native-avoid-softinput'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { styled, XStack, XStackProps, YStack, YStackProps } from 'tamagui'
 
-import { Text } from "./text"
+import { Text } from './text'
 
-import colors from "~/theme/colors"
+import colors from '~/theme/colors'
 
 export const View = styled(YStack, {
   name: "View",
