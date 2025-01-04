@@ -1,11 +1,11 @@
-import dayjs from "dayjs"
-import { FC, useCallback } from "react"
-import { useTranslation } from "react-i18next"
-import { ActivityIndicator } from "react-native"
+import dayjs from 'dayjs'
+import { FC } from 'react'
+import { useTranslation } from 'react-i18next'
+import { ActivityIndicator } from 'react-native'
 
-import { Figure, Icon, Text, XStack, YStack } from "~/components"
-import { getDate } from "~/hooks/useLocale"
-import colors from "~/theme/colors"
+import { Figure, Icon, Text, XStack, YStack } from '~/components'
+import { getRecentDate } from '~/hooks/useLocale'
+import colors from '~/theme/colors'
 
 export const ListItem = ({
   item,
@@ -18,24 +18,11 @@ export const ListItem = ({
 }) => {
   const { title, content, createTime } = item
   const { t } = useTranslation()
-  const formatDate = useCallback(
-    (date?: number) => {
-      const dayjsDate = getDate(date)
-      if (dayjsDate.isToday()) {
-        return t("notifications.today")
-      } else if (dayjsDate.isYesterday()) {
-        return t("notifications.yesterday")
-      } else {
-        return dayjsDate.format("YYYY-MM-DD")
-      }
-    },
-    [t]
-  )
   return (
     <YStack p="$md" gap="$md" onPress={onPress}>
       {dateVisible && (
         <Text caption col="$secondary">
-          {formatDate(createTime)}
+          {getRecentDate(createTime)}
         </Text>
       )}
       <XStack gap={12}>
@@ -75,7 +62,10 @@ export const ListItem = ({
   )
 }
 
-export const ListEmptyComponent: FC<{ loading: boolean }> = ({ loading }) => {
+export const ListEmptyComponent: FC<{ loading: boolean; type: number }> = ({
+  loading,
+  type = 0,
+}) => {
   const { t } = useTranslation()
   if (loading) {
     return (
@@ -87,7 +77,11 @@ export const ListEmptyComponent: FC<{ loading: boolean }> = ({ loading }) => {
   return (
     <YStack ai="center" jc="center" h="100%" gap="$md">
       <Figure name="empty" width={90} height={90} />
-      <Text col="$secondary">{t("notifications.empty")}</Text>
+      <Text col="$secondary">
+        {t(
+          type === 0 ? "notifications.emptySystem" : "notifications.emptyTrade"
+        )}
+      </Text>
     </YStack>
   )
 }

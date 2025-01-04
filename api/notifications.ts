@@ -1,4 +1,4 @@
-import { request } from "~/hooks/useRequest"
+import { request } from '~/hooks/useRequest'
 
 export const getNotifications = async (type: string) => {
   return await request<PaginationResponse<Message>, { type: number }>(

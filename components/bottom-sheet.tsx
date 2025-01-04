@@ -1,15 +1,13 @@
 import BottomSheetBase, {
-  BottomSheetBackdrop,
-  BottomSheetBackdropProps,
-  BottomSheetView,
-} from "@gorhom/bottom-sheet"
-import { forwardRef } from "react"
-import { Dimensions, StyleSheet } from "react-native"
-import { Portal, Text, XStack } from "tamagui"
+    BottomSheetBackdrop, BottomSheetBackdropProps, BottomSheetView
+} from '@gorhom/bottom-sheet'
+import { forwardRef } from 'react'
+import { Dimensions, StyleSheet } from 'react-native'
+import { Portal, Text, XStack } from 'tamagui'
 
-import { Icon } from "./icon"
+import { Icon } from './icon'
 
-import colors from "~/theme/colors"
+import colors from '~/theme/colors'
 
 interface BottomSheetModalProps {
   title?: string
@@ -59,7 +57,7 @@ export const BottomSheet = forwardRef<BottomSheetBase, BottomSheetModalProps>(
                 }}
                 hitSlop={10}
               >
-                <Icon name="close" size={16} />
+                <Icon name="close" color={colors.text} size={16} />
               </XStack>
             </XStack>
             {children}

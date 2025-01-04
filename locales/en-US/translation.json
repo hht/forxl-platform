@@ -1,10 +1,25 @@
 {
+  "action": {
+    "ok": "OK",
+    "cancel": "Cancel",
+    "query": "Query",
+    "gotIt": "Got it",
+    "copy": "Copy",
+    "yes": "Yes",
+    "close": "Close",
+    "share": "Share",
+    "apply": "Apply"
+  },
+  "message": {
+    "copiedSuccess": "Copied successfully",
+    "copiedFailed": "Copy failed"
+  },
   "tabs": {
-    "home": "Dashboard",
-    "trade": "Trade",
-    "positions": "Positions",
-    "partner": "Partner",
-    "wallet": "Wallet"
+    "home": "首页",
+    "trade": "交易",
+    "positions": "订单",
+    "partner": "合作伙伴",
+    "wallet": "钱包"
   },
   "anon": {
     "title": "Froxl Markets",
@@ -48,6 +63,9 @@
   "home": {
     "wallet": "Wallet",
     "news": "Market News",
+    "readMore": "Read More",
+    "loading": "Loading...",
+    "loadingMore": "Loading More...",
     "shortcuts": {
       "title": "Shortcuts",
       "children": [
@@ -56,7 +74,7 @@
         "KYC",
         "Card",
         "Referral",
-        "Statements",
+        "Statement",
         "Support",
         "Community",
         "Security",
@@ -66,5 +84,198 @@
         "More"
       ]
     }
+  },
+  "partner": {
+    "level": "Your Level",
+    "children": [
+      "Bronze",
+      "Silver",
+      "Gold",
+      "Platinum",
+      "Diamond",
+      "Emerald",
+      "Ruby",
+      "Sapphire",
+      "Crown"
+    ],
+    "bonusDesc": {
+      "title": "Cascades allocation rules",
+      "description": [
+        "In our bonus distribution system, bonuses generated from client transactions are allocated according to a cascading tier system. First, direct promoters who meet the distribution criteria receive their entitled bonuses. Then, any remaining bonuses are distributed to the upline members involved in the promotion, according to a predetermined percentage. This cascading tier mechanism ensures that not only the direct contributors are rewarded, but also the upline members benefit from the overall performance of their team. This structure aims to encourage and reward teamwork and performance improvement, thereby driving overall business growth.",
+        "In situations where an upline member and a downline member are at the same level, the upline member will receive 10% of the downline member's bonus earnings. If multiple members are at the same level, the level matching bonus is only awarded once."
+      ]
+    },
+    "directAccounts": "Direct Accounts",
+    "directAccountsDesc": "Users with account funds exceeding $100 are referred to as active users. However, you can still earn referral bonuses from trades made by accounts with less than $100 in funds.",
+    "earnBonuses": "Earn Bonuses",
+    "size": "Team Size",
+    "volume": "Team Volume",
+    "updated": "Last Updated",
+    "earned": "You' ve Earned",
+    "currentRank": "CURRENT RANK",
+    "benefits": "Benefits",
+    "tradingBonus": "Team Trading Volume Bonus",
+    "minBonus": "Expected minimum bonus",
+    "perLotMoney": "${{money}} per Lot",
+    "perDayMoney": "${{money}} per day",
+    "requirements": "Requirements",
+    "balance": "Account Balance",
+    "teamStructure": "Team Structure",
+    "andAboveMoney": "${{money}} and above",
+    "levenNumber": "At least {{number}} Level",
+    "partnerList": "Partner List",
+    "accountId": "Account ID",
+    "accountLevel": "Account Level",
+    "accountEmail": "Account Email",
+    "CertificationName": "Certification Name",
+    "fundsInvested": "Funds Invested",
+    "registerDate": "Register Date",
+    "personCount": "{{count}} Persons"
+  },
+  "profile": {
+    "title": "My Profile",
+    "verificationLevel": "Verification Level",
+    "referralProgram": "Referral Program",
+    "identityVerification": "Identity Verification",
+    "security": "Security",
+    "settings": "Settings",
+    "documents": "Legal Documents",
+    "support": "Support",
+    "contact": "Contact Us 24/7",
+    "logout": "Logout",
+    "certified": "Certified",
+    "unCertified": "UnCertified",
+    "tips": {
+      "title": "TIPS",
+      "desc": "Please contact support to request the email change.",
+      "action": "Contact support"
+    },
+
+    "levels": [
+      {
+        "title": "Lv0 - Email Verification",
+        "desc": "Your account has been activated, and you can now access the basic features of the platform, such as viewing account information and the trading market, as well as inviting your partners to join the platform. However, you currently cannot make any deposits or participate in trading. To ensure the security of your account, you must complete further identity verification to unlock additional features."
+      },
+      {
+        "title": "Lv1 - Two-Factor Authentication (2FA)",
+        "desc": "After completing Two-Factor Authentication (2FA), you can make deposits using certain deposit channels and start trading, with the opportunity to earn platform bonuses. At this stage, the security of your account has been further enhanced. However, to ensure the safety of your funds, you are still unable to withdraw funds. You must complete the next step of identity verification (KYC) to unlock withdrawal functionality."
+      },
+      {
+        "title": "Lv2 - Identity Verification (KYC)",
+        "desc": "Upon completing Identity Verification (KYC), you have unlocked full access to all platform features and services. You can now make unlimited deposits and withdrawals, fully utilizing all the platform’s functionalities. ",
+        "status": "Certified"
+      }
+    ]
+  },
+  "referral": {
+    "title": "Referral Program",
+    "invite": "Invite your Friends.",
+    "bonus": "Earn up to <1>{{percent}}%</1>",
+    "bonusDesc": "Earn up to {{percent}}% commission every time your friends make a trade on XXXX.",
+    "earned": "You' ve Earned",
+    "spillover": "Bonus Spillover",
+    "spilloverDesc": "When the investment amount of the accounts you refer exceeds twice your own investment amount, you can only receive half of the bonus from those accounts.",
+    "activeUser": "Active User",
+    "activeUserDesc": "Users with account funds exceeding $100 are referred to as active users. However, you can still earn referral bonuses from trades made by accounts with less than ${{amount}} in funds.",
+    "useCode": "Use your referral code",
+    "share": "Share on social media",
+    "requirements": "Referral Requirements",
+    "requirementsDesc": "The funds in your account exceeding <1>${{amount}}</1>",
+    "accounts": "Direct Accounts",
+    "benefits": {
+      "refer": "Refer active user",
+      "earn": "Earn  Bonus",
+      "title": "Referral Benefits",
+      "generation": "From {{generation}} generation Account",
+      "perLot": "Earn ${{amount}} per lot",
+      "bonus": "Earn {{generation}} generation Bonus"
+    }
+  },
+  "documents": {
+    "title": "Legal Documents",
+    "children": [
+      "Terms and Conditions",
+      "Privacy Policy",
+      "Risk Warning",
+      "Client Agreement",
+      "Conflict Policy",
+      "Handling Policy"
+    ]
+  },
+  "support": {
+    "title": "Support",
+    "header": "24/7 Customer Support",
+    "desc": "Our agents are available 24 hours a day 365 days a year via email, chat and phone.",
+    "children": [
+      "Customer Support Page",
+      "hello@xxx.com",
+      "FAQS",
+      "Live Support"
+    ]
+  },
+  "security": {
+    "title": "Security",
+    "children": [
+      "Reset Password",
+      "Two-Factor Authentication",
+      "Account Deactivation"
+    ]
+  },
+  "settings": {
+    "title": "Settings",
+    "timeZone": "Time Zone",
+    "language": "Language",
+    "clearCache": "Clear Cache",
+    "clearCacheDesc": "Are you sure you want to clear the cache? Deletingit won't affect the normal use of the app.",
+    "about": "About Us",
+    "ver": "Version",
+    "clearCacheSuccess": "Cache Cleared Successfully"
+  },
+  "notifications": {
+    "system": "System Notifications",
+    "trade": "Trade Notifications",
+    "allRead": "All Read",
+    "emptySystem": "No System Notification",
+    "emptyTrade": "No Trade Notification",
+    "today": "Today",
+    "yesterday": "Yesterday"
+  },
+  "trade": {
+    "balance": "Balance",
+    "equity": "Equity",
+    "margin": "Margin",
+    "freeMargin": "Free Margin"
+  },
+  "positions": {
+    "title": "Positions",
+    "tabs": ["Open", "Orders", "Closed"],
+    "noOpenPositions": "You have no open positions",
+    "noOpenPositionsDesc": "Open new positions in the Trade tab or in the instrument chat",
+    "noPendingPositions": "You have no pending positions",
+    "noPendingPositionsDesc": "All pending orders, including limit, stop, and stop-limit orders, will be shown here.",
+    "noClosedPositions": "You have no closed positions",
+    "noClosedPositionsDesc": "All closed positions will be available here.",
+    "gotoTrade": "Go to Trade tab",
+    "buy": "Buy",
+    "sell": "Sell",
+    "lots": "lots",
+    "close": "Close {{code}} Position",
+    "volume": "Volume",
+    "currentPrice": "Current price",
+    "pl": "P&L (profit plus loss)",
+    "filters": {
+      "title": "Filter",
+      "children": [
+        "Today",
+        "Last 7 Days",
+        "Last 3 months",
+        "Last 6 months",
+        "Last Year",
+        "All-time",
+        "Custom period"
+      ]
+    },
+
+    "clear": "clear filter"
   }
 }

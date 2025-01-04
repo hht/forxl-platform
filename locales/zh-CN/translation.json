@@ -235,7 +235,8 @@
     "system": "System Notifications",
     "trade": "Trade Notifications",
     "allRead": "All Read",
-    "empty": "No System Notification",
+    "emptySystem": "No System Notification",
+    "emptyTrade": "No Trade Notification",
     "today": "Today",
     "yesterday": "Yesterday"
   },
@@ -255,6 +256,13 @@
     "noClosedPositions": "You have no closed positions",
     "noClosedPositionsDesc": "All closed positions will be available here.",
     "gotoTrade": "Go to Trade tab",
+    "buy": "Buy",
+    "sell": "Sell",
+    "lots": "lots",
+    "close": "Close {{code}} Position",
+    "volume": "Volume",
+    "currentPrice": "Current price",
+    "pl": "P&L (profit plus loss)",
     "filters": {
       "title": "Filter",
       "children": [
@@ -267,7 +275,7 @@
         "Custom period"
       ]
     },
-
+    "closePosition": "Close Position",
     "clear": "clear filter"
   }
 }

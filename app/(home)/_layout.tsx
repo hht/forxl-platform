@@ -1,12 +1,10 @@
-import { Stack } from "expo-router/stack"
-import "react-native-reanimated"
+import { Stack } from 'expo-router/stack'
+import { Fragment } from 'react'
+import 'react-native-reanimated'
 
-import { useWallet } from "~/hooks/useWallet"
-import colors from "~/theme/colors"
-import {
-  DefaultScreenOptions,
-  NativeStackNavigationOptions,
-} from "~/widgets/shared/header"
+import { useWallet } from '~/hooks/useWallet'
+import colors from '~/theme/colors'
+import { DefaultScreenOptions, NativeStackNavigationOptions } from '~/widgets/shared/header'
 
 export const unstable_settings = {
   initialRouteName: "/(home)/tabs",
@@ -17,7 +15,16 @@ const ScreenOptions: NativeStackNavigationOptions = {
   headerStyle: { backgroundColor: colors.background },
 }
 
-export default function Layout() {
+const SocketRunner = () => {
   useWallet()
-  return <Stack screenOptions={ScreenOptions} />
+  return null
+}
+
+export default function Layout() {
+  return (
+    <Fragment>
+      <Stack screenOptions={ScreenOptions} />
+      <SocketRunner />
+    </Fragment>
+  )
 }

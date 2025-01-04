@@ -1,11 +1,11 @@
-import { FC } from "react"
-import { useSafeAreaInsets } from "react-native-safe-area-context"
-import { Defs, Ellipse, RadialGradient, Stop, Svg } from "react-native-svg"
-import { LinearGradient } from "tamagui/linear-gradient"
-import { shallow } from "zustand/shallow"
+import { FC } from 'react'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { Defs, Ellipse, RadialGradient, Stop, Svg } from 'react-native-svg'
+import { LinearGradient } from 'tamagui/linear-gradient'
+import { shallow } from 'zustand/shallow'
 
-import { useOrderStore } from "~/hooks/useStore"
-import colors, { toRGBA } from "~/theme/colors"
+import { useOrderStore } from '~/hooks/useStore'
+import colors, { toRGBA } from '~/theme/colors'
 
 export const Gradient: FC = () => {
   return (

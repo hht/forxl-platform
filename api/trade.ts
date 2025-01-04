@@ -4,7 +4,7 @@ import _ from 'lodash'
 import { getDate } from '~/hooks/useLocale'
 import { BASE_URL, request } from '~/hooks/useRequest'
 import { useFroxlStore, useOrderStore, useQuotesStore } from '~/hooks/useStore'
-import { i18n, waitFor } from '~/lib/utils'
+import { i18n, toInfinite, waitFor } from '~/lib/utils'
 
 export const getFutures = async (params: GetFuturesParams) => {
   return await request<PaginationResponse<Future>, GetFuturesParams>(
@@ -131,7 +131,7 @@ export const getClosedPositions = async ({
     })
     .then((res) => {
       useOrderStore.setState({ totalProfit: Number(res.profit) })
-      return res
+      return toInfinite<Position>(res, currentPage)
     })
 }
 

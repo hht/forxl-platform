@@ -1,17 +1,17 @@
-import { NativeStackNavigationOptions } from "@react-navigation/native-stack"
-import { router } from "expo-router"
-import { FC } from "react"
-import { useTranslation } from "react-i18next"
+import { NativeStackNavigationOptions } from '@react-navigation/native-stack'
+import { router } from 'expo-router'
+import { FC } from 'react'
+import { useTranslation } from 'react-i18next'
 
-import { getNewMessageCount } from "~/api/notifications"
-import { Figure, Icon, IconType, Text, XStack } from "~/components"
-import { useRequest } from "~/hooks/useRequest"
-import colors from "~/theme/colors"
+import { getNewMessageCount } from '~/api/notifications'
+import { Figure, Icon, IconType, Text, XStack } from '~/components'
+import { useRequest } from '~/hooks/useRequest'
+import colors from '~/theme/colors'
 
 export const HeaderLeft: FC<{ onPress?: () => void }> = ({ onPress }) => {
   return (
     <XStack py={12} hitSlop={16} onPress={onPress ?? router.back}>
-      <Icon name="arrowLeft" size={20} />
+      <Icon name="arrowLeft" color={colors.text} size={20} />
     </XStack>
   )
 }
