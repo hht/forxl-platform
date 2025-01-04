@@ -341,6 +341,25 @@ export const PendingOrders = () => {
   )
 }
 
+const ListHeaderComponent = () => {
+  const profit = useOrderStore((state) => state.totalProfit ?? 0, shallow)
+  return (
+    <XStack p="$md" gap="$md" ai="center" jc="center">
+      <XStack
+        w="100%"
+        boc="$border"
+        bw={1}
+        br="$sm"
+        py={12}
+        bc="$card/60"
+        jc="center"
+      >
+        <AnimatedFlow value={profit} addonsBefore="$" fow="900"></AnimatedFlow>
+      </XStack>
+    </XStack>
+  )
+}
+
 export const ClosedOrders = () => {
   const isFocused = useIsFocused()
   const { t } = useTranslation()
@@ -420,6 +439,7 @@ export const ClosedOrders = () => {
           },
         }}
         onEndReached={loadMore}
+        ListHeaderComponent={ListHeaderComponent}
         ListEmptyComponent={() => (
           <ListEmptyComponent loading={loading} type="closed" />
         )}
