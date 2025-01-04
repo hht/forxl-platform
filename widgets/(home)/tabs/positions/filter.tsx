@@ -280,6 +280,9 @@ export const OrderFilter: FC = () => {
               <Button
                 f={1}
                 size="$md"
+                disabled={
+                  current === "customPeriod" && (!from || !to || from > to)
+                }
                 onPress={() => {
                   useOrderStore.setState({
                     ...getFilters({ options: current, from, to }),

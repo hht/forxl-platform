@@ -1,6 +1,7 @@
 import { useIsFocused } from '@react-navigation/native'
 import { FlashList } from '@shopify/flash-list'
 import { useInfiniteScroll } from 'ahooks'
+import { router } from 'expo-router'
 import { FC, Fragment, ReactNode, useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ActivityIndicator, Platform, RefreshControl } from 'react-native'
@@ -12,7 +13,7 @@ import { AnimatedFlow, Figure, Icon, Text, XStack, YStack } from '~/components'
 import { getRecentDate } from '~/hooks/useLocale'
 import { CACHE_KEY, useRequest } from '~/hooks/useRequest'
 import { computeProfit, useOrderStore, useQuotesStore } from '~/hooks/useStore'
-import { dayjs, DEVICE_WIDTH, formatDecimal } from '~/lib/utils'
+import { dayjs, DEVICE_WIDTH, formatDecimal, uuid } from '~/lib/utils'
 import colors, { toRGBA } from '~/theme/colors'
 
 export const PriceCell: FC<{ data: Position }> = ({ data }) => {
@@ -192,8 +193,15 @@ const renderItem = ({ item }: { item: Position }) => (
 
 const keyExtractor = (item: Position) => item.orderSn!.toString()
 
-const ListEmptyComponent: FC<{ loading: boolean }> = ({ loading }) => {
+const ListEmptyComponent: FC<{
+  loading: boolean
+  type: "open" | "orders" | "closed"
+}> = ({ loading, type }) => {
   const { t } = useTranslation()
+  const filtered = useOrderStore(
+    (state) => state.from || state.to || state.options,
+    shallow
+  )
   if (loading) {
     return (
       <YStack ai="center" jc="center" h="100%" gap="$md">
@@ -202,9 +210,67 @@ const ListEmptyComponent: FC<{ loading: boolean }> = ({ loading }) => {
     )
   }
   return (
-    <YStack ai="center" jc="center" h="100%" gap="$md">
+    <YStack ai="center" jc="center" h="100%" gap="$md" px={48}>
       <Figure name="empty" width={90} height={90} />
-      <Text col="$secondary">{t("notifications.emptySystem")}</Text>
+      <Text>
+        {t(
+          type === "open"
+            ? "positions.noOpenPositions"
+            : type === "orders"
+              ? "positions.noPendingPositions"
+              : "positions.noClosedPositions"
+        )}
+      </Text>
+      <Text fos={11} ta="center" col="$tertiary">
+        {t(
+          type === "open"
+            ? "positions.noOpenPositionsDesc"
+            : type === "orders"
+              ? "positions.noPendingPositionsDesc"
+              : "positions.noClosedPositionsDesc"
+        )}
+      </Text>
+      {type === "closed" && filtered ? (
+        <XStack
+          hitSlop={16}
+          onPress={() => {
+            useOrderStore.setState({
+              from: undefined,
+              to: undefined,
+              options: undefined,
+              reloadKey: uuid(),
+            })
+          }}
+        >
+          <Text
+            fos={11}
+            col="$warning"
+            textDecorationStyle="solid"
+            textDecorationLine="underline"
+            textDecorationColor={colors.warning}
+          >
+            {t("positions.clear")}
+          </Text>
+        </XStack>
+      ) : null}
+      {type !== "closed" ? (
+        <XStack
+          hitSlop={16}
+          onPress={() => {
+            router.push("/tabs/trade")
+          }}
+        >
+          <Text
+            fos={11}
+            col="$primary"
+            textDecorationStyle="solid"
+            textDecorationLine="underline"
+            textDecorationColor={colors.primary}
+          >
+            {t("positions.gotoTrade")}
+          </Text>
+        </XStack>
+      ) : null}
     </YStack>
   )
 }
@@ -234,7 +300,9 @@ export const OpenOrders = () => {
             onRefresh={refresh}
           />
         }
-        ListEmptyComponent={() => <ListEmptyComponent loading={loading} />}
+        ListEmptyComponent={() => (
+          <ListEmptyComponent loading={loading} type="open" />
+        )}
       ></FlashList>
     </YStack>
   )
@@ -265,7 +333,9 @@ export const PendingOrders = () => {
             onRefresh={refresh}
           />
         }
-        ListEmptyComponent={() => <ListEmptyComponent loading={loading} />}
+        ListEmptyComponent={() => (
+          <ListEmptyComponent loading={loading} type="orders" />
+        )}
       ></FlashList>
     </YStack>
   )
@@ -283,11 +353,6 @@ export const ClosedOrders = () => {
       if (!isFocused && Platform.OS === "web") {
         return Promise.resolve({ list: d?.list ?? [], nextId: d?.nextId ?? 1 })
       }
-      console.log({
-        currentPage: d?.nextId ?? 1,
-        startTime: useOrderStore.getState().from,
-        endTime: useOrderStore.getState().to,
-      })
 
       return getClosedPositions({
         currentPage: d?.nextId ?? 1,
@@ -355,7 +420,9 @@ export const ClosedOrders = () => {
           },
         }}
         onEndReached={loadMore}
-        ListEmptyComponent={() => <ListEmptyComponent loading={loading} />}
+        ListEmptyComponent={() => (
+          <ListEmptyComponent loading={loading} type="closed" />
+        )}
         ListFooterComponent={ListFooterComponent}
       ></FlashList>
     </YStack>

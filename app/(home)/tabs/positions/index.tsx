@@ -16,8 +16,8 @@ export default function Page() {
   const [activeIndex, setActiveIndex] = useState(0)
   const { pendingOrders, orders } = useOrderStore(
     (state) => ({
-      pendingOrders: state.pendingOrders,
-      orders: state.orders,
+      pendingOrders: state.pendingOrders?.length,
+      orders: state.orders?.length,
     }),
     shallow
   )
@@ -46,8 +46,8 @@ export default function Page() {
           <XStack px="$md" bbw={1} bbc="$border">
             <Tabs
               data={[
-                `${dict.tabs[0]} ${orders ? `(${orders.length})` : ""}`,
-                `${dict.tabs[1]} ${pendingOrders ? `(${pendingOrders.length})` : ""}`,
+                `${dict.tabs[0]} ${orders ? `(${orders})` : ""}`,
+                `${dict.tabs[1]} ${pendingOrders ? `(${pendingOrders})` : ""}`,
                 dict.tabs[2],
               ]}
               activeIndex={activeIndex}
