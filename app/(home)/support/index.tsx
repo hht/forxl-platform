@@ -1,8 +1,7 @@
 import { Stack } from 'expo-router'
 import { useTranslation } from 'react-i18next'
-import { ScrollView, XStack, YStack } from 'tamagui'
 
-import { Figure, ListItem, Text } from '~/components'
+import { Figure, ListItem, ScrollView, Text, XStack, YStack } from '~/components'
 
 export default function Layout() {
   const { t } = useTranslation()

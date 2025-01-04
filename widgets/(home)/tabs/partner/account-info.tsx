@@ -1,33 +1,19 @@
-import _ from "lodash"
-import { Fragment, useState } from "react"
-import { useTranslation } from "react-i18next"
-import { ScrollView, XStack, YStack } from "tamagui"
-import { shallow } from "zustand/shallow"
+import _ from 'lodash'
+import { Fragment, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { shallow } from 'zustand/shallow'
 
-import { LEVELS } from "./utils"
+import { LEVELS } from './utils'
 
+import { getPartnerConfig, getPartnerInfo, getReferralList } from '~/api/partner'
 import {
-  getPartnerConfig,
-  getPartnerInfo,
-  getReferralList,
-} from "~/api/partner"
-import {
-  Button,
-  Card,
-  copyToClipboard,
-  Dialog,
-  Figure,
-  Icon,
-  Justified,
-  Popup,
-  Row,
-  Statistics,
-  Text,
-} from "~/components"
-import { formatDate } from "~/hooks/useLocale"
-import { useRequest } from "~/hooks/useRequest"
-import { useFroxlStore, usePartnerStore } from "~/hooks/useStore"
-import { DEVICE_WIDTH, formatDecimal } from "~/lib/utils"
+    Button, Card, copyToClipboard, Dialog, Figure, Icon, Justified, Popup, Row, ScrollView,
+    Statistics, Text, XStack, YStack
+} from '~/components'
+import { formatDate } from '~/hooks/useLocale'
+import { useRequest } from '~/hooks/useRequest'
+import { useFroxlStore, usePartnerStore } from '~/hooks/useStore'
+import { DEVICE_WIDTH, formatDecimal } from '~/lib/utils'
 
 export const AccountInfo = () => {
   const { account } = useFroxlStore()

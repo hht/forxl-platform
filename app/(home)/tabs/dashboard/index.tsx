@@ -1,30 +1,22 @@
-import { useIsFocused } from "@react-navigation/native"
-import { FlashList } from "@shopify/flash-list"
-import { useInfiniteScroll } from "ahooks"
-import dayjs from "dayjs"
-import { Stack } from "expo-router"
-import { useCallback } from "react"
-import { useTranslation } from "react-i18next"
-import { ActivityIndicator, Platform } from "react-native"
-import { XStack } from "tamagui"
+import { useIsFocused } from '@react-navigation/native'
+import { FlashList } from '@shopify/flash-list'
+import { useInfiniteScroll } from 'ahooks'
+import dayjs from 'dayjs'
+import { Stack } from 'expo-router'
+import { useCallback } from 'react'
+import { useTranslation } from 'react-i18next'
+import { ActivityIndicator, Platform } from 'react-native'
 
-import { getNews } from "~/api/dashboard"
-import { Screen, Text } from "~/components"
-import colors from "~/theme/colors"
-import { AssetCard } from "~/widgets/(home)/tabs/dashboard/asset-card"
+import { getNews } from '~/api/dashboard'
+import { Screen, Text, XStack } from '~/components'
+import colors from '~/theme/colors'
+import { AssetCard } from '~/widgets/(home)/tabs/dashboard/asset-card'
+import { ListHeaderComponent, ListItem } from '~/widgets/(home)/tabs/dashboard/list'
 import {
-  ListHeaderComponent,
-  ListItem,
-} from "~/widgets/(home)/tabs/dashboard/list"
-import {
-  BrandTitle,
-  BreadCrumb,
-  CustomerService,
-  DefaultScreenOptions,
-  NativeStackNavigationOptions,
-  Notifier,
-} from "~/widgets/shared/header"
-import { Gradient } from "~/widgets/shared/shape"
+    BrandTitle, BreadCrumb, CustomerService, DefaultScreenOptions, NativeStackNavigationOptions,
+    Notifier
+} from '~/widgets/shared/header'
+import { Gradient } from '~/widgets/shared/shape'
 
 const ScreenOptions: NativeStackNavigationOptions = {
   ...DefaultScreenOptions,

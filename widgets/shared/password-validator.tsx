@@ -1,9 +1,9 @@
-import { FC, PropsWithChildren } from "react"
-import { useTranslation } from "react-i18next"
-import { YStack, YStackProps } from "tamagui"
+import { FC, PropsWithChildren } from 'react'
+import { useTranslation } from 'react-i18next'
+import { YStackProps } from 'tamagui'
 
-import { Icon, Text, XStack } from "~/components"
-import colors from "~/theme/colors"
+import { Icon, Text, XStack, YStack } from '~/components'
+import colors from '~/theme/colors'
 
 const Prompt: FC<PropsWithChildren & { checked?: boolean }> = ({
   checked,

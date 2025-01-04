@@ -4,11 +4,11 @@ import { useInfiniteScroll } from 'ahooks'
 import { FC, Fragment, ReactNode, useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ActivityIndicator, Platform, RefreshControl } from 'react-native'
-import { XStack, XStackProps, YStack } from 'tamagui'
+import { XStackProps } from 'tamagui'
 import { shallow } from 'zustand/shallow'
 
 import { getClosedPositions, getOpenPositions, getPendingPositions } from '~/api/trade'
-import { AnimatedFlow, Figure, Icon, Text } from '~/components'
+import { AnimatedFlow, Figure, Icon, Text, XStack, YStack } from '~/components'
 import { getRecentDate } from '~/hooks/useLocale'
 import { CACHE_KEY, useRequest } from '~/hooks/useRequest'
 import { computeProfit, useOrderStore, useQuotesStore } from '~/hooks/useStore'
@@ -211,7 +211,7 @@ const ListEmptyComponent: FC<{ loading: boolean }> = ({ loading }) => {
 
 export const OpenOrders = () => {
   const data = useOrderStore((state) => state.orders, shallow)
-  const { loading } = useRequest(getOpenPositions, {
+  const { loading, refresh } = useRequest(getOpenPositions, {
     cacheKey: CACHE_KEY.POSITIONS,
   })
   return (
@@ -226,6 +226,14 @@ export const OpenOrders = () => {
             flexGrow: 1,
           },
         }}
+        refreshing={loading}
+        refreshControl={
+          <RefreshControl
+            tintColor={colors.secondary}
+            refreshing={loading}
+            onRefresh={refresh}
+          />
+        }
         ListEmptyComponent={() => <ListEmptyComponent loading={loading} />}
       ></FlashList>
     </YStack>
@@ -234,7 +242,7 @@ export const OpenOrders = () => {
 
 export const PendingOrders = () => {
   const data = useOrderStore((state) => state.pendingOrders, shallow)
-  const { loading } = useRequest(getPendingPositions, {
+  const { loading, refresh } = useRequest(getPendingPositions, {
     cacheKey: CACHE_KEY.PENDING,
   })
   return (
@@ -249,6 +257,14 @@ export const PendingOrders = () => {
             flexGrow: 1,
           },
         }}
+        refreshing={loading}
+        refreshControl={
+          <RefreshControl
+            tintColor={colors.secondary}
+            refreshing={loading}
+            onRefresh={refresh}
+          />
+        }
         ListEmptyComponent={() => <ListEmptyComponent loading={loading} />}
       ></FlashList>
     </YStack>
@@ -258,7 +274,7 @@ export const PendingOrders = () => {
 export const ClosedOrders = () => {
   const isFocused = useIsFocused()
   const { t } = useTranslation()
-  const { reloadKey } = useOrderStore((state) => state, shallow)
+  const reloadKey = useOrderStore((state) => state.reloadKey, shallow)
   const { data, loading, loadMore, reload, loadingMore } = useInfiniteScroll<{
     list: Position[]
     nextId?: number
@@ -267,6 +283,12 @@ export const ClosedOrders = () => {
       if (!isFocused && Platform.OS === "web") {
         return Promise.resolve({ list: d?.list ?? [], nextId: d?.nextId ?? 1 })
       }
+      console.log({
+        currentPage: d?.nextId ?? 1,
+        startTime: useOrderStore.getState().from,
+        endTime: useOrderStore.getState().to,
+      })
+
       return getClosedPositions({
         currentPage: d?.nextId ?? 1,
         startTime: useOrderStore.getState().from,

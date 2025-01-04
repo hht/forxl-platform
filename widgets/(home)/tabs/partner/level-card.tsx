@@ -1,14 +1,13 @@
-import _ from "lodash"
-import { FC } from "react"
-import { useTranslation } from "react-i18next"
-import { XStack, YStack } from "tamagui"
-import { LinearGradient } from "tamagui/linear-gradient"
-import { shallow } from "zustand/shallow"
+import _ from 'lodash'
+import { FC } from 'react'
+import { useTranslation } from 'react-i18next'
+import { LinearGradient } from 'tamagui/linear-gradient'
+import { shallow } from 'zustand/shallow'
 
-import { format, GRADIENT_COLORS, Level, LEVEL_COLORS, LEVELS } from "./utils"
+import { format, GRADIENT_COLORS, Level, LEVEL_COLORS, LEVELS } from './utils'
 
-import { Figure, Icon, Text } from "~/components"
-import { usePartnerStore } from "~/hooks/useStore"
+import { Figure, Icon, Text, XStack, YStack } from '~/components'
+import { usePartnerStore } from '~/hooks/useStore'
 
 export const LevelCard: FC<{
   level: Level

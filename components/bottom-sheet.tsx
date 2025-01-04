@@ -1,5 +1,5 @@
 import BottomSheetBase, {
-    BottomSheetBackdrop, BottomSheetBackdropProps, BottomSheetView
+    BottomSheetBackdrop, BottomSheetBackdropProps, BottomSheetProps, BottomSheetView
 } from '@gorhom/bottom-sheet'
 import { forwardRef } from 'react'
 import { Dimensions, StyleSheet } from 'react-native'
@@ -25,48 +25,50 @@ const renderBackdrop = (props: BottomSheetBackdropProps) => (
 )
 const MAX_HEIGHT = Dimensions.get("window").height * 0.8
 
-export const BottomSheet = forwardRef<BottomSheetBase, BottomSheetModalProps>(
-  ({ title, children, onClose }, ref) => {
-    return (
-      <Portal>
-        <BottomSheetBase
-          ref={ref}
-          index={-1}
-          backgroundStyle={styles.container}
-          backdropComponent={renderBackdrop}
-          handleComponent={null}
-          enableDynamicSizing
-          maxDynamicContentSize={MAX_HEIGHT}
-          enablePanDownToClose
-          onClose={onClose}
-        >
-          <BottomSheetView>
+export const BottomSheet = forwardRef<
+  BottomSheetBase,
+  BottomSheetModalProps & BottomSheetProps
+>(({ title, children, onClose, ...rest }, ref) => {
+  return (
+    <Portal>
+      <BottomSheetBase
+        ref={ref}
+        index={-1}
+        backgroundStyle={styles.container}
+        backdropComponent={renderBackdrop}
+        handleComponent={null}
+        enableDynamicSizing
+        maxDynamicContentSize={MAX_HEIGHT}
+        enablePanDownToClose
+        onClose={onClose}
+        {...rest}
+      >
+        <BottomSheetView>
+          <XStack
+            px="$md"
+            py={title ? "$lg" : "$md"}
+            jc="space-between"
+            ai="center"
+          >
+            <Text fos={20} lh={24} col="$text">
+              {title}
+            </Text>
             <XStack
-              px="$md"
-              py={title ? "$lg" : "$md"}
-              jc="space-between"
-              ai="center"
+              onPress={onClose}
+              pressStyle={{
+                scale: 0.95,
+              }}
+              hitSlop={10}
             >
-              <Text fos={20} lh={24} col="$text">
-                {title}
-              </Text>
-              <XStack
-                onPress={onClose}
-                pressStyle={{
-                  scale: 0.95,
-                }}
-                hitSlop={10}
-              >
-                <Icon name="close" color={colors.text} size={16} />
-              </XStack>
+              <Icon name="close" color={colors.text} size={16} />
             </XStack>
-            {children}
-          </BottomSheetView>
-        </BottomSheetBase>
-      </Portal>
-    )
-  }
-)
+          </XStack>
+          {children}
+        </BottomSheetView>
+      </BottomSheetBase>
+    </Portal>
+  )
+})
 
 BottomSheet.displayName = "BottomSheet"
 

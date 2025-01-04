@@ -1,8 +1,7 @@
-import { FC, Fragment, ReactNode, useState } from "react"
-import { useTranslation } from "react-i18next"
-import { XStack } from "tamagui"
+import { FC, Fragment, ReactNode, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
-import { Button, Dialog, Popup, Text } from "~/components"
+import { Button, Dialog, Popup, Text, XStack } from '~/components'
 
 export const SupportTip: FC<{ children: ReactNode }> = ({ children }) => {
   const [visible, setVisible] = useState(false)

@@ -1,19 +1,13 @@
-import { Fragment } from "react"
-import { Trans, useTranslation } from "react-i18next"
-import { XStack, YStack } from "tamagui"
+import { Fragment } from 'react'
+import { Trans, useTranslation } from 'react-i18next'
 
-import { getBonusInfo, getPartnerInfo } from "~/api/partner"
+import { getBonusInfo, getPartnerInfo } from '~/api/partner'
 import {
-  Button,
-  Card,
-  copyToClipboard,
-  Figure,
-  Statistics,
-  Text,
-} from "~/components"
-import { useRequest } from "~/hooks/useRequest"
-import { useFroxlStore, usePartnerStore } from "~/hooks/useStore"
-import { formatDecimal } from "~/lib/utils"
+    Button, Card, copyToClipboard, Figure, Statistics, Text, XStack, YStack
+} from '~/components'
+import { useRequest } from '~/hooks/useRequest'
+import { useFroxlStore, usePartnerStore } from '~/hooks/useStore'
+import { formatDecimal } from '~/lib/utils'
 
 export const ReferralInfo = () => {
   const { t } = useTranslation()

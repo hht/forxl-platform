@@ -1,11 +1,10 @@
-import { Fragment } from "react"
-import { Trans, useTranslation } from "react-i18next"
-import { XStack, YStack } from "tamagui"
+import { Fragment } from 'react'
+import { Trans, useTranslation } from 'react-i18next'
 
-import { Icon, IconType, StatisticsInfo, Text } from "~/components"
-import { usePartnerStore } from "~/hooks/useStore"
-import { formatDecimal } from "~/lib/utils"
-import colors from "~/theme/colors"
+import { Icon, IconType, StatisticsInfo, Text, XStack, YStack } from '~/components'
+import { usePartnerStore } from '~/hooks/useStore'
+import { formatDecimal } from '~/lib/utils'
+import colors from '~/theme/colors'
 
 const LEVEL_ICON: IconType[] = ["user", "pair", "group"]
 

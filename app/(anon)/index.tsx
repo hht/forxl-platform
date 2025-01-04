@@ -1,14 +1,11 @@
-import { router } from "expo-router"
-import { Stack } from "expo-router/stack"
-import { useTranslation } from "react-i18next"
-import { YStack } from "tamagui"
+import { router } from 'expo-router'
+import { Stack } from 'expo-router/stack'
+import { useTranslation } from 'react-i18next'
 
-import { Button, Figure, Screen, Text } from "~/components"
+import { Button, Figure, Screen, Text, YStack } from '~/components'
 import {
-  DefaultScreenOptions,
-  LiveSupport,
-  NativeStackNavigationOptions,
-} from "~/widgets/shared/header"
+    DefaultScreenOptions, LiveSupport, NativeStackNavigationOptions
+} from '~/widgets/shared/header'
 
 const ScreenOption: NativeStackNavigationOptions = {
   ...DefaultScreenOptions,

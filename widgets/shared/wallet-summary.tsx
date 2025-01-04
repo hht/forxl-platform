@@ -1,27 +1,28 @@
-import { AnimatePresence, useAnimationState } from "moti"
-import { FC, Fragment, useEffect, useState } from "react"
-import { useTranslation } from "react-i18next"
-import { useSafeAreaInsets } from "react-native-safe-area-context"
-import { shallow } from "zustand/shallow"
+import BottomSheetBase from '@gorhom/bottom-sheet'
+import { useIsFocused } from '@react-navigation/native'
+import { AnimatePresence, useAnimationState } from 'moti'
+import { FC, Fragment, useEffect, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { shallow } from 'zustand/shallow'
+import { createWithEqualityFn } from 'zustand/traditional'
 
-import { Notifier } from "./header"
+import { Notifier } from './header'
 
 import {
-  AnimatedFlow,
-  Icon,
-  Moti,
-  Separator,
-  Text,
-  XStack,
-  YStack,
-} from "~/components"
-import { useOrderStore } from "~/hooks/useStore"
-import { formatDecimal } from "~/lib/utils"
-import colors, { toRGBA } from "~/theme/colors"
+    AnimatedFlow, BottomSheet, Button, Icon, Moti, Separator, Text, XStack, YStack
+} from '~/components'
+import { useOrderStore } from '~/hooks/useStore'
+import { formatDecimal, t } from '~/lib/utils'
+import colors, { toRGBA } from '~/theme/colors'
 
-const ListItem: FC<{ label: string; value: number }> = ({ label, value }) => {
+const ListItem: FC<{ label: string; value: number; onPress: () => void }> = ({
+  label,
+  value,
+  onPress,
+}) => {
   return (
-    <YStack gap="$xs" f={1} ai="center" jc="center" h="100%">
+    <YStack gap="$xs" f={1} ai="center" jc="center" h="100%" onPress={onPress}>
       <XStack pb="$xs" ov="hidden">
         <Text fos={11} col="$secondary">
           {label}
@@ -41,6 +42,12 @@ const ListItem: FC<{ label: string; value: number }> = ({ label, value }) => {
   )
 }
 
+const useStore = createWithEqualityFn<{
+  current?: "balance" | "equity" | "margin" | "freeMargin"
+  title?: string
+  desc?: string[]
+}>()((set) => ({}))
+
 const Summary: FC = () => {
   const { t } = useTranslation()
   const { available, totalMoney, freezeMoney, supFreezeMoney } = useOrderStore(
@@ -49,32 +56,108 @@ const Summary: FC = () => {
   )
   return (
     <XStack fd="row" h="100%" w="100%" ai="center">
-      <ListItem label={t("trade.balance")} value={available} />
+      <ListItem
+        label={t("trade.balance")}
+        value={available}
+        onPress={() => {
+          useStore.setState({
+            current: "balance",
+            title: t("trade.balance"),
+            desc: t("trade.balanceDesc", {
+              returnObjects: true,
+            }),
+          })
+        }}
+      />
       <Separator orientation="vertical" h="50%" />
-      <ListItem label={t("trade.equity")} value={totalMoney} />
+      <ListItem
+        label={t("trade.equity")}
+        value={totalMoney}
+        onPress={() => {
+          useStore.setState({
+            current: "equity",
+            title: t("trade.equity"),
+            desc: t("trade.equityDesc", {
+              returnObjects: true,
+            }),
+          })
+        }}
+      />
       <Separator orientation="vertical" h="50%" />
-      <ListItem label={t("trade.margin")} value={freezeMoney} />
+      <ListItem
+        label={t("trade.margin")}
+        value={freezeMoney}
+        onPress={() => {
+          useStore.setState({
+            current: "margin",
+            title: t("trade.margin"),
+            desc: t("trade.marginDesc", {
+              returnObjects: true,
+            }),
+          })
+        }}
+      />
       <Separator orientation="vertical" h="50%" />
-      <ListItem label={t("trade.freeMargin")} value={supFreezeMoney} />
+      <ListItem
+        label={t("trade.freeMargin")}
+        value={supFreezeMoney}
+        onPress={() => {
+          useStore.setState({
+            current: "freeMargin",
+            title: t("trade.freeMargin"),
+            desc: t("trade.freeMarginDesc", {
+              returnObjects: true,
+            }),
+          })
+        }}
+      />
     </XStack>
   )
 }
 
 export const WalletStatistics: FC = () => {
-  const [visible, setVisible] = useState(false)
-  const { top } = useSafeAreaInsets()
+  const { top, bottom } = useSafeAreaInsets()
   const profit = useOrderStore((state) => state.summary.profit, shallow)
-  const state = useAnimationState({
-    from: {
-      rotate: "90deg",
+  const { current, title, desc } = useStore((state) => state)
+  const it = useOrderStore((state) => {
+    switch (current) {
+      case "balance":
+        return state.summary.available
+      case "equity":
+        return state.summary.totalMoney
+      case "margin":
+        return state.summary.freezeMoney
+      case "freeMargin":
+        return state.summary.supFreezeMoney
+      default:
+        return 0
+    }
+  }, shallow)
+  const ref = useRef<BottomSheetBase>(null)
+  const [visible, setVisible] = useState(false)
+  const state = useAnimationState(
+    {
+      from: {
+        rotate: "90deg",
+      },
+      collapse: {
+        rotate: "90deg",
+      },
+      expand: {
+        rotate: "-90deg",
+      },
     },
-    collapse: {
-      rotate: "90deg",
-    },
-    expand: {
-      rotate: "-90deg",
-    },
-  })
+    {
+      from: visible ? "expand" : "collapse",
+    }
+  )
+  const color = profit > 0 ? colors.primary : colors.destructive
+  useEffect(() => {
+    if (current) {
+      ref.current?.expand()
+    }
+  }, [current])
+  const isFocused = useIsFocused()
   useEffect(() => {
     if (visible) {
       state.transitionTo("expand")
@@ -82,7 +165,11 @@ export const WalletStatistics: FC = () => {
       state.transitionTo("collapse")
     }
   }, [visible, state])
-  const color = profit > 0 ? colors.primary : colors.destructive
+  useEffect(() => {
+    if (isFocused && visible) {
+      state.transitionTo("expand")
+    }
+  }, [isFocused, visible, state])
   return (
     <Fragment>
       <YStack pt={top} ov="hidden">
@@ -95,7 +182,9 @@ export const WalletStatistics: FC = () => {
             gap="$xs"
             px="$md"
             py={6}
-            onPress={() => setVisible((v) => !v)}
+            onPress={() => {
+              setVisible((v) => !v)
+            }}
           >
             <Text col={color} fow="900">
               {`$${formatDecimal(profit)}`}
@@ -121,6 +210,36 @@ export const WalletStatistics: FC = () => {
           ) : null}
         </AnimatePresence>
       </YStack>
+      <BottomSheet
+        ref={ref}
+        title={title}
+        onClose={ref.current?.close}
+        onChange={(index) => {
+          if (index === -1) {
+            useStore.setState({ current: undefined })
+          }
+        }}
+      >
+        <YStack gap="$lg" px="$md" pb={bottom + 16}>
+          {desc?.map((item, index) => (
+            <Text key={index} col="$text" fos={15} lh={20}>
+              {item}
+            </Text>
+          ))}
+          <YStack ai="center">
+            <AnimatedFlow
+              addonsBefore="$"
+              value={it}
+              fos={28}
+              lh={36}
+              col="$text"
+            ></AnimatedFlow>
+          </YStack>
+          {current === "balance" ? (
+            <Button>{t("wallet.addFunds")}</Button>
+          ) : null}
+        </YStack>
+      </BottomSheet>
     </Fragment>
   )
 }

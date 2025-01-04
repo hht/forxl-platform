@@ -21,6 +21,11 @@ const theme: CalendarTheme = {
   itemWeekName: {
     content: { color: colors.tertiary, fontSize: 13, fontWeight: 600 },
   },
+  rowWeek: {
+    container: {
+      height: 44,
+    },
+  },
   itemDay: {
     idle: ({ isPressed, isWeekend }) => ({
       container: {
@@ -78,8 +83,8 @@ export const Calendar: FC<
 > = ({ onCalendarMonthChange, ...props }) => {
   const { weekDaysList, weeksList } = useCalendar(props)
   return (
-    <XStack bc="$accent" py="$md" w="100%">
-      <YStack gap={props.calendarRowVerticalSpacing ?? 6} w="100%">
+    <XStack bc="$accent" py="$md" w="100%" br="$md" ov="hidden">
+      <YStack gap={props.calendarRowVerticalSpacing ?? 4} w="100%">
         {/* Replaces `Calendar.Row.Month` with a custom implementation */}
         <XStack px="$md" ai="center" jc="space-between" w="100%">
           <Text fos={17} lh={24} ff="Inter" fow={700}>
@@ -112,14 +117,14 @@ export const Calendar: FC<
               if (day.isDifferentMonth) {
                 return (
                   <CalendarBase.Item.Day.Container
-                    dayHeight={props.calendarDayHeight ?? 52}
-                    daySpacing={props.calendarRowHorizontalSpacing ?? 6}
+                    dayHeight={props.calendarDayHeight ?? 44}
+                    daySpacing={props.calendarRowHorizontalSpacing ?? 4}
                     isStartOfWeek={day.isStartOfWeek}
                     key={day.id}
                     theme={theme?.itemDayContainer}
                   >
                     <CalendarBase.Item.Empty
-                      height={props.calendarDayHeight ?? 52}
+                      height={props.calendarDayHeight ?? 44}
                       theme={theme?.itemEmpty}
                     />
                   </CalendarBase.Item.Day.Container>
@@ -127,7 +132,7 @@ export const Calendar: FC<
               }
               return (
                 <CalendarBase.Item.Day.Container
-                  dayHeight={props.calendarDayHeight ?? 52}
+                  dayHeight={props.calendarDayHeight ?? 44}
                   daySpacing={4}
                   isStartOfWeek={day.isStartOfWeek}
                   key={day.id}
@@ -137,7 +142,7 @@ export const Calendar: FC<
                   }
                 >
                   <CalendarBase.Item.Day
-                    height={props.calendarDayHeight ?? 52}
+                    height={props.calendarDayHeight ?? 44}
                     metadata={day}
                     onPress={props.onCalendarDayPress}
                     theme={theme.itemDay}

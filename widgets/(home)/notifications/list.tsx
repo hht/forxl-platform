@@ -76,7 +76,7 @@ export const ListEmptyComponent: FC<{ loading: boolean; type: number }> = ({
   }
   return (
     <YStack ai="center" jc="center" h="100%" gap="$md">
-      <Figure name="empty" width={90} height={90} />
+      <Figure name="mailBox" width={90} height={90} />
       <Text col="$secondary">
         {t(
           type === 0 ? "notifications.emptySystem" : "notifications.emptyTrade"

@@ -1,13 +1,12 @@
-import { useInterval } from "ahooks"
-import _ from "lodash"
-import { useMemo, useRef, useState } from "react"
-import { Dimensions } from "react-native"
-import { XStack } from "tamagui"
+import { useInterval } from 'ahooks'
+import _ from 'lodash'
+import { useMemo, useRef, useState } from 'react'
+import { Dimensions } from 'react-native'
 
-import { getBanners } from "~/api/dashboard"
-import { Icon, Image, ScrollView } from "~/components"
-import { useRequest } from "~/hooks/useRequest"
-import colors from "~/theme/colors"
+import { getBanners } from '~/api/dashboard'
+import { Icon, Image, ScrollView, XStack } from '~/components'
+import { useRequest } from '~/hooks/useRequest'
+import colors from '~/theme/colors'
 
 const CAROUSEL_WIDTH = Dimensions.get("window").width - 32
 

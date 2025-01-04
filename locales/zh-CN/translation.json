@@ -244,7 +244,24 @@
     "balance": "Balance",
     "equity": "Equity",
     "margin": "Margin",
-    "freeMargin": "Free Margin"
+    "freeMargin": "Free Margin",
+    "balanceDesc": [
+      "Balance is the calculated total of all completed transactions on a trading account, including deposits and withdrawals. It can be the amount of funds you have before opening orders, or after you have closed all open orders; the balance does not change while orders are open."
+    ],
+    "equityDesc": [
+      "Equity = Balance + Floating P&L",
+      "Equity is the total value of the trading account, comprising of account balance and floating P&L."
+    ],
+    "marginDesc": [
+      "Margin is the funds used to open and maintain positions. If it drops too low, an alert, Margin call, is issued. Further decrease triggers Stop out, when losing positions are closed to save capital."
+    ],
+    "freeMarginDesc": [
+      "Free margin = Equity – Margin",
+      "Free margin is the funds available to open new positions after accounting for floating P&L and margin tied up in open positions."
+    ]
+  },
+  "wallet": {
+    "addFunds": "Add Funds"
   },
   "positions": {
     "title": "Positions",
@@ -263,6 +280,14 @@
     "volume": "Volume",
     "currentPrice": "Current price",
     "pl": "P&L (profit plus loss)",
+    "today": "Today",
+    "lastWeek": "Last Week",
+    "lastMonth": "Last Month",
+    "last3Months": "Last 3 Months",
+    "last6Months": "Last 6 Months",
+    "lastYear": "Last Year",
+    "customPeriod": "Custom Period",
+    "yesterday": "Yesterday",
     "filters": {
       "title": "Filter",
       "children": [

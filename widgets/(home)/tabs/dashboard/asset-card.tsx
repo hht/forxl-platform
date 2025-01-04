@@ -1,11 +1,10 @@
-import { FC } from "react"
-import { useTranslation } from "react-i18next"
-import { XStack, YStack } from "tamagui"
+import { FC } from 'react'
+import { useTranslation } from 'react-i18next'
 
-import { getAssets } from "~/api/wallet"
-import { Card, Icon, Text } from "~/components"
-import { useRequest } from "~/hooks/useRequest"
-import { formatDecimal } from "~/lib/utils"
+import { getAssets } from '~/api/wallet'
+import { Card, Icon, Text, XStack, YStack } from '~/components'
+import { useRequest } from '~/hooks/useRequest'
+import { formatDecimal } from '~/lib/utils'
 
 export const AssetCard: FC = () => {
   const { data } = useRequest(getAssets)

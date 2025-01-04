@@ -1,8 +1,7 @@
 import { Stack } from 'expo-router'
 import { useTranslation } from 'react-i18next'
-import { ScrollView, YStack } from 'tamagui'
 
-import { ListItem } from '~/components'
+import { ListItem, ScrollView, YStack } from '~/components'
 
 const LINKS = [
   "http://www.163.com",

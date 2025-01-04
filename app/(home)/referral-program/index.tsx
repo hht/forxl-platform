@@ -1,15 +1,14 @@
-import { Stack } from "expo-router"
-import { useTranslation } from "react-i18next"
-import { useSafeAreaInsets } from "react-native-safe-area-context"
-import { ScrollView, XStack, YStack } from "tamagui"
+import { Stack } from 'expo-router'
+import { useTranslation } from 'react-i18next'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
-import { getBonusConfig, getPartnerConfig } from "~/api/partner"
-import { Figure, IconType, Text } from "~/components"
-import { useRequest } from "~/hooks/useRequest"
-import { usePartnerStore } from "~/hooks/useStore"
-import { DEVICE_WIDTH, formatDecimal } from "~/lib/utils"
-import { AccountInfo } from "~/widgets/(home)/referral-program/account-info"
-import { ReferralInfo } from "~/widgets/(home)/referral-program/referral-info"
+import { getBonusConfig, getPartnerConfig } from '~/api/partner'
+import { Figure, IconType, ScrollView, Text, XStack, YStack } from '~/components'
+import { useRequest } from '~/hooks/useRequest'
+import { usePartnerStore } from '~/hooks/useStore'
+import { DEVICE_WIDTH, formatDecimal } from '~/lib/utils'
+import { AccountInfo } from '~/widgets/(home)/referral-program/account-info'
+import { ReferralInfo } from '~/widgets/(home)/referral-program/referral-info'
 
 const LEVEL_ICON: IconType[] = ["user", "pair", "group"]
 

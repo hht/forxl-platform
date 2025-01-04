@@ -1,10 +1,9 @@
-import { Fragment, useState } from "react"
-import { useTranslation } from "react-i18next"
-import { XStack } from "tamagui"
+import { Fragment, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
-import { Button, Dialog, ListItem, Popup, Text, toast } from "~/components"
-import { CACHE_KEY, useRequest } from "~/hooks/useRequest"
-import { clearCache, getCacheSize } from "~/lib/utils"
+import { Button, Dialog, ListItem, Popup, Text, toast, XStack } from '~/components'
+import { CACHE_KEY, useRequest } from '~/hooks/useRequest'
+import { clearCache, getCacheSize } from '~/lib/utils'
 
 export const ClearCacheItem = () => {
   const { t } = useTranslation()

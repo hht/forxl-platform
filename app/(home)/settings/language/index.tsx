@@ -1,9 +1,8 @@
 import { Stack } from 'expo-router'
 import { Fragment } from 'react'
 import { useTranslation } from 'react-i18next'
-import { ScrollView } from 'tamagui'
 
-import { Icon, ListItem } from '~/components'
+import { Icon, ListItem, ScrollView } from '~/components'
 import { useFroxlStore } from '~/hooks/useStore'
 import { LANGUAGES } from '~/lib/constants'
 
