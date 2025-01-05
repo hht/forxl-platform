@@ -51,6 +51,8 @@ export { default as ring } from "~/assets/images/icon/ring.svg"
 export { default as search } from "~/assets/images/icon/search.svg"
 export { default as arrow } from "~/assets/images/icon/arrow.svg"
 export { default as filter } from "~/assets/images/icon/filter.svg"
+export { default as minus } from "~/assets/images/icon/minus.svg"
+export { default as plus } from "~/assets/images/icon/plus.svg"
 // 图片
 export { default as logo } from "~/assets/images/widgets/logo.svg"
 export { default as verifyEmail } from "~/assets/images/widgets/verify-email.svg"

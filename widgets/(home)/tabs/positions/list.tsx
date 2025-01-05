@@ -1,22 +1,31 @@
-import { useIsFocused } from '@react-navigation/native'
-import { FlashList } from '@shopify/flash-list'
-import { useInfiniteScroll } from 'ahooks'
-import { router } from 'expo-router'
-import { FC, Fragment, ReactNode, useCallback, useMemo } from 'react'
-import { useTranslation } from 'react-i18next'
-import { ActivityIndicator, Platform, RefreshControl } from 'react-native'
-import { XStackProps } from 'tamagui'
-import { shallow } from 'zustand/shallow'
+import { useIsFocused } from "@react-navigation/native"
+import { FlashList } from "@shopify/flash-list"
+import { useInfiniteScroll } from "ahooks"
+import { router } from "expo-router"
+import _ from "lodash"
+import { FC, Fragment, ReactNode, useCallback, useMemo } from "react"
+import { useTranslation } from "react-i18next"
+import { ActivityIndicator, Platform, RefreshControl } from "react-native"
+import { TextProps, XStackProps } from "tamagui"
+import { shallow } from "zustand/shallow"
 
-import { getClosedPositions, getOpenPositions, getPendingPositions } from '~/api/trade'
-import { AnimatedFlow, Figure, Icon, Text, XStack, YStack } from '~/components'
-import { getRecentDate } from '~/hooks/useLocale'
-import { CACHE_KEY, useRequest } from '~/hooks/useRequest'
-import { computeProfit, useOrderStore, useQuotesStore } from '~/hooks/useStore'
-import { dayjs, DEVICE_WIDTH, formatDecimal, uuid } from '~/lib/utils'
-import colors, { toRGBA } from '~/theme/colors'
+import {
+  getClosedPositions,
+  getOpenPositions,
+  getPendingPositions,
+} from "~/api/trade"
+import { AnimatedFlow, Figure, Icon, Text, XStack, YStack } from "~/components"
+import { getRecentDate } from "~/hooks/useLocale"
+import { CACHE_KEY, useRequest } from "~/hooks/useRequest"
+import { computeProfit, useOrderStore, useQuotesStore } from "~/hooks/useStore"
+import { subscribeQuotes } from "~/hooks/useWebsocket"
+import { dayjs, DEVICE_WIDTH, formatDecimal, uuid } from "~/lib/utils"
+import colors, { toRGBA } from "~/theme/colors"
 
-export const PriceCell: FC<{ data: Position }> = ({ data }) => {
+export const PriceCell: FC<{ data: Position } & TextProps> = ({
+  data,
+  ...rest
+}) => {
   const quotes = useQuotesStore(
     (state) => state.quotes[data.futuresCode!],
     shallow
@@ -34,18 +43,28 @@ export const PriceCell: FC<{ data: Position }> = ({ data }) => {
           data.price) - (data.openSafe! === 0 ? diff : -diff)
       }
       fraction={data.volatility}
+      {...rest}
     ></AnimatedFlow>
   )
 }
 
-export const ProfitCell: FC<{ data: Position }> = ({ data }) => {
+export const ProfitCell: FC<{ data: Position } & TextProps> = ({
+  data,
+  ...rest
+}) => {
   // @ts-ignore next-line
   const quotes = useQuotesStore(
     (state) => state.quotes[data.futuresCode!],
     shallow
   )
   const profit = computeProfit(data)
-  return <AnimatedFlow value={profit} addonsBefore="$"></AnimatedFlow>
+  return (
+    <AnimatedFlow
+      value={profit}
+      addonsBefore={`$${profit > 0 ? "+" : ""}`}
+      {...rest}
+    ></AnimatedFlow>
+  )
 }
 
 const ListItem: FC<
@@ -60,7 +79,12 @@ const ListItem: FC<
       <XStack f={1} jc="flex-end">
         <XStack
           onPress={() => {
-            useOrderStore.setState({ currentPosition: data })
+            useOrderStore.setState({
+              currentPosition: data,
+              willChangePosition:
+                useOrderStore.getState().activeIndex !== 2 ? data : undefined,
+            })
+            router.push("/order")
           }}
           hitSlop={16}
         >
@@ -73,10 +97,6 @@ const ListItem: FC<
 
 const EditableListItem: FC<{ data: Position }> = ({ data }) => {
   const { t } = useTranslation()
-  const withTPSL = useMemo(
-    () => data.stopLossPrice && data.stopProfitPrice,
-    [data.stopLossPrice, data.stopProfitPrice]
-  )
   return (
     <ListItem data={data}>
       <XStack
@@ -121,25 +141,15 @@ const EditableListItem: FC<{ data: Position }> = ({ data }) => {
             </Text>
           ) : null}
         </XStack>
-        {withTPSL ? (
-          <XStack ai="center" gap="$xs" jc="center">
-            <Text col="$secondary">
-              {formatDecimal(
-                data.stopLossPrice ?? data.price!,
-                data.volatility
-              )}
-            </Text>
-            <XStack rotate="180deg">
-              <Icon name="arrowLeft" color={colors.secondary} size={12} />
-            </XStack>
-            <Text col="$secondary">
-              {formatDecimal(
-                data.stopProfitPrice ?? data.price!,
-                data.volatility
-              )}
-            </Text>
+        <XStack ai="center" gap="$xs" jc="center">
+          <Text col="$secondary" ff="$mono">
+            {formatDecimal(data.price!, data.volatility)}
+          </Text>
+          <XStack rotate="180deg">
+            <Icon name="arrowLeft" color={colors.secondary} size={12} />
           </XStack>
-        ) : null}
+          <PriceCell col="$secondary" data={data} />
+        </XStack>
       </YStack>
     </ListItem>
   )
@@ -187,10 +197,6 @@ const ArchivedListItem: FC<{ data: Position; dateVisible?: boolean }> = ({
   )
 }
 
-const renderItem = ({ item }: { item: Position }) => (
-  <EditableListItem data={item} />
-)
-
 const keyExtractor = (item: Position) => item.orderSn!.toString()
 
 const ListEmptyComponent: FC<{
@@ -205,7 +211,7 @@ const ListEmptyComponent: FC<{
   if (loading) {
     return (
       <YStack ai="center" jc="center" h="100%" gap="$md">
-        <ActivityIndicator color={colors.tertiary} />
+        <Text>{t("home.loading")}</Text>
       </YStack>
     )
   }
@@ -275,11 +281,18 @@ const ListEmptyComponent: FC<{
   )
 }
 
+const renderItem = ({ item }: { item: Position }) => (
+  <EditableListItem data={item} />
+)
 export const OpenOrders = () => {
   const data = useOrderStore((state) => state.orders, shallow)
   const { loading, refresh } = useRequest(getOpenPositions, {
     cacheKey: CACHE_KEY.POSITIONS,
+    onSuccess: (orders) => {
+      subscribeQuotes(orders.map((o) => o.futuresCode!))
+    },
   })
+
   return (
     <YStack f={1} w={DEVICE_WIDTH}>
       <FlashList
@@ -312,7 +325,11 @@ export const PendingOrders = () => {
   const data = useOrderStore((state) => state.pendingOrders, shallow)
   const { loading, refresh } = useRequest(getPendingPositions, {
     cacheKey: CACHE_KEY.PENDING,
+    onSuccess: (orders) => {
+      subscribeQuotes(orders.map((o) => o.futuresCode!))
+    },
   })
+
   return (
     <YStack f={1} w={DEVICE_WIDTH}>
       <FlashList
@@ -341,8 +358,9 @@ export const PendingOrders = () => {
   )
 }
 
-const ListHeaderComponent = () => {
+const ListHeaderComponent: FC<{ isEmpty?: boolean }> = ({ isEmpty }) => {
   const profit = useOrderStore((state) => state.totalProfit ?? 0, shallow)
+  if (isEmpty) return null
   return (
     <XStack p="$md" gap="$md" ai="center" jc="center">
       <XStack
@@ -417,8 +435,9 @@ export const ClosedOrders = () => {
           <ArchivedListItem
             data={item}
             dateVisible={
+              index === 0 ||
               dayjs(item.createTime).format("YYYY-MM-DD") !==
-              dayjs(data?.list?.[index - 1]?.createTime).format("YYYY-MM-DD")
+                dayjs(data?.list?.[index - 1]?.createTime).format("YYYY-MM-DD")
             }
           />
         )}
@@ -439,7 +458,9 @@ export const ClosedOrders = () => {
           },
         }}
         onEndReached={loadMore}
-        ListHeaderComponent={ListHeaderComponent}
+        ListHeaderComponent={() => (
+          <ListHeaderComponent isEmpty={!data?.list.length} />
+        )}
         ListEmptyComponent={() => (
           <ListEmptyComponent loading={loading} type="closed" />
         )}

@@ -1,23 +1,31 @@
-import { Fragment, useEffect, useRef, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import { shallow } from 'zustand/shallow'
+import { Fragment, useEffect, useRef } from "react"
+import { useTranslation } from "react-i18next"
+import { shallow } from "zustand/shallow"
 
-import { ScrollView, Tabs, Text, XStack, YStack } from '~/components'
-import { useOrderStore } from '~/hooks/useStore'
-import { DEVICE_WIDTH } from '~/lib/utils'
-import { ClosePosition } from '~/widgets/(home)/tabs/positions/close-position'
-import { OrderFilter } from '~/widgets/(home)/tabs/positions/filter'
-import { ClosedOrders, OpenOrders, PendingOrders } from '~/widgets/(home)/tabs/positions/list'
-import { Linear } from '~/widgets/shared/shape'
-import { WalletStatistics } from '~/widgets/shared/wallet-summary'
+import { ScrollView, Tabs, Text, XStack, YStack } from "~/components"
+import { useOrderStore } from "~/hooks/useStore"
+import { DEVICE_WIDTH } from "~/lib/utils"
+import { ClosePosition } from "~/widgets/(home)/tabs/positions/close-position"
+import { OrderFilter } from "~/widgets/(home)/tabs/positions/filter"
+import {
+  ClosedOrders,
+  OpenOrders,
+  PendingOrders,
+} from "~/widgets/(home)/tabs/positions/list"
+import { Linear } from "~/widgets/shared/shape"
+import { WalletStatistics } from "~/widgets/shared/wallet-summary"
 
 export default function Page() {
   const { t } = useTranslation()
-  const [activeIndex, setActiveIndex] = useState(0)
-  const { pendingOrders, orders } = useOrderStore(
+  const {
+    pendingOrders,
+    orders,
+    activeIndex = 0,
+  } = useOrderStore(
     (state) => ({
       pendingOrders: state.pendingOrders?.length,
       orders: state.orders?.length,
+      activeIndex: state.activeIndex,
     }),
     shallow
   )
@@ -51,7 +59,9 @@ export default function Page() {
                 dict.tabs[2],
               ]}
               activeIndex={activeIndex}
-              onChange={setActiveIndex}
+              onChange={(index) =>
+                useOrderStore.setState({ activeIndex: index as 0 | 1 | 2 })
+              }
             ></Tabs>
           </XStack>
           <ScrollView

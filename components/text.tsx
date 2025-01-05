@@ -1,12 +1,12 @@
-import * as Clipboard from 'expo-clipboard'
-import _ from 'lodash'
-import { FC, useMemo, useRef } from 'react'
-import { styled, Text as TamaText, TextProps, XStack } from 'tamagui'
+import * as Clipboard from "expo-clipboard"
+import _ from "lodash"
+import { FC, useMemo, useRef } from "react"
+import { styled, Text as TamaText, TextProps, XStack } from "tamagui"
 
-import { Icon } from './icon'
-import { toast } from './toast'
+import { Icon } from "./icon"
+import { toast } from "./toast"
 
-import { formatDecimal, t } from '~/lib/utils'
+import { formatDecimal, t } from "~/lib/utils"
 
 /**
  * 默认字体组件
@@ -87,7 +87,6 @@ export const AnimatedFlow = ({
   ...rest
 }: {
   value: number
-  fontSize?: number
   fraction?: number
   addonsBefore?: React.ReactNode
   addonsAfter?: React.ReactNode
@@ -96,7 +95,12 @@ export const AnimatedFlow = ({
   const ref = useRef<HTMLDivElement>(null)
   return (
     <XStack ref={ref}>
-      <Text fos={13} col={value > 0 ? "$primary" : "$destructive"} {...rest}>
+      <Text
+        fos={13}
+        col={value > 0 ? "$primary" : "$destructive"}
+        {...rest}
+        ff="$mono"
+      >
         {addonsBefore}
         {_.isNumber(value) && !_.isNaN(value)
           ? `${formatDecimal(value, fraction)}`

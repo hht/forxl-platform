@@ -1,10 +1,10 @@
-import axios from 'axios'
-import _ from 'lodash'
+import axios from "axios"
+import _ from "lodash"
 
-import { getDate } from '~/hooks/useLocale'
-import { BASE_URL, request } from '~/hooks/useRequest'
-import { useFroxlStore, useOrderStore, useQuotesStore } from '~/hooks/useStore'
-import { i18n, toInfinite, waitFor } from '~/lib/utils'
+import { getDate } from "~/hooks/useLocale"
+import { BASE_URL, request } from "~/hooks/useRequest"
+import { useFroxlStore, useOrderStore, useQuotesStore } from "~/hooks/useStore"
+import { i18n, toInfinite, waitFor } from "~/lib/utils"
 
 export const getFutures = async (params: GetFuturesParams) => {
   return await request<PaginationResponse<Future>, GetFuturesParams>(
@@ -42,6 +42,19 @@ export const getFuture = async (code: string) => {
   )
 }
 
+const updateOrderStore = (positions: Position[]) => {
+  const currentPosition = positions.find(
+    (it) => it.id === useOrderStore.getState().currentPosition?.id
+  )
+  if (currentPosition) {
+    useOrderStore.setState({ currentPosition })
+  }
+  if (currentPosition) {
+    return true
+  }
+  return false
+}
+
 export const getPendingPositions = async (currentPage = 1) => {
   return await request<
     {
@@ -59,6 +72,7 @@ export const getPendingPositions = async (currentPage = 1) => {
       useOrderStore.setState({
         pendingOrders: res?.resultList ?? [],
       })
+      updateOrderStore(res?.resultList ?? [])
       return res?.resultList ?? []
     })
     .catch((e) => {
@@ -82,6 +96,7 @@ export const getOpenPositions = async (currentPage = 1) => {
         wallet: res?.wallet,
         orders: res?.onwPositionList ?? [],
       })
+      updateOrderStore(res?.onwPositionList ?? [])
       return res?.onwPositionList ?? []
     })
     .catch((e) => {
@@ -98,6 +113,7 @@ export const getClosedPositions = async ({
   startTime?: number
   endTime?: number
 }) => {
+  console.log("getClosedPositions", currentPage, startTime, endTime)
   return await request<
     | (PaginationResponse<Position> & {
         contratprofits: string
@@ -130,7 +146,12 @@ export const getClosedPositions = async ({
       }
     })
     .then((res) => {
-      useOrderStore.setState({ totalProfit: Number(res.profit) })
+      const found = updateOrderStore(res.resultList)
+      console.log(found)
+      useOrderStore.setState({
+        totalProfit: Number(res.profit),
+        activeIndex: found ? 2 : useOrderStore.getState().activeIndex,
+      })
       return toInfinite<Position>(res, currentPage)
     })
 }
@@ -165,7 +186,7 @@ export const exportClosedPositions = async ({
 
 export const proceedOrder = async (params: OrderParams) => {
   const response = await request("/order/userNewOrder", "POST", params)
-  if (params.byOrSell === 7 && useOrderStore.getState().current === "orders") {
+  if (params.byOrSell === 7 && useOrderStore.getState().activeIndex === 1) {
     waitFor(500).then(() => getPendingPositions())
   } else {
     waitFor(500).then(() => getOpenPositions())
@@ -188,10 +209,10 @@ export const updateOrder = async (params: {
   stopProfitPrice: number
 }) => {
   const response = await request("/order/updateLimitPrice", "POST", params)
-  if (useOrderStore.getState().current === "orders") {
+  if (useOrderStore.getState().activeIndex === 1) {
     waitFor(500).then(() => getPendingPositions())
   }
-  if (useOrderStore.getState().current === "open") {
+  if (useOrderStore.getState().activeIndex === 0) {
     waitFor(500).then(() => getOpenPositions())
   }
   return response

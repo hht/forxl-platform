@@ -1,17 +1,24 @@
-import { useBoolean } from 'ahooks'
-import { MotiText as AnimatedText, MotiView as AnimatedView } from 'moti'
-import React, { FC, useCallback, useEffect, useRef, useState } from 'react'
-import { StyleSheet, TextInput, TextInputProps } from 'react-native'
+import { useBoolean } from "ahooks"
+import _ from "lodash"
+import { MotiText as AnimatedText, MotiView as AnimatedView } from "moti"
+import React, { FC, useCallback, useEffect, useRef, useState } from "react"
+import { StyleSheet, TextInput, TextInputProps } from "react-native"
 import Animated, {
-    useAnimatedStyle, useSharedValue, withRepeat, withSequence, withTiming
-} from 'react-native-reanimated'
-import { XStack, YStack } from 'tamagui'
+  useAnimatedStyle,
+  useSharedValue,
+  withRepeat,
+  withSequence,
+  withTiming,
+} from "react-native-reanimated"
+import { XStack, YStack } from "tamagui"
 
-import { Button } from './button'
-import { Icon } from './icon'
-import { Text } from './text'
+import { Button } from "./button"
+import { Icon } from "./icon"
+import { Text } from "./text"
+import { toast } from "./toast"
 
-import colors from '~/theme/colors'
+import { t } from "~/lib/utils"
+import colors from "~/theme/colors"
 
 interface InputProps extends TextInputProps {
   addonAfter?: React.ReactNode
@@ -247,9 +254,99 @@ export const OTP = ({
   )
 }
 
+const Digit: FC<
+  Omit<InputProps, "onChange" | "value"> & {
+    value?: number
+    onChange: (v?: number) => void
+    step?: number
+    min?: number
+    max?: number
+    precision?: number
+  }
+> = ({
+  className,
+  value,
+  min = 0,
+  max = 999999999,
+  step = 0.01,
+  precision = 2,
+  onChange,
+  ...props
+}) => {
+  const onSubmit = (value?: number) => {
+    if (_.isUndefined(value)) {
+      onChange(undefined)
+      return
+    }
+
+    if (value < min) {
+      toast.show(t("message.minReached"))
+      onChange(_.round(min, precision))
+      return
+    }
+    if (max && value > max) {
+      onChange(_.round(max, precision))
+      toast.show(t("message.maxReached"))
+      return
+    }
+    onChange(_.round(value, precision))
+  }
+  const regex = new RegExp(`^\\d*\\.?\\d{0,${precision}}$`)
+
+  return (
+    <XStack h={56} boc="$border" br="$md" bw={1}>
+      <Button
+        type="icon"
+        onPress={() => {
+          onSubmit((value ?? 0) - (step ?? 0))
+        }}
+      >
+        <Icon name="minus" className="w-5 h-5" />
+      </Button>
+      <TextInput
+        placeholderTextColor="transparent"
+        underlineColorAndroid={undefined}
+        keyboardType="numeric"
+        textAlign="center"
+        value={`${!_.isUndefined(value ?? min) ? _.round(value ?? min ?? 0, precision) : ""}`}
+        onChangeText={(e) => {
+          if (!e) {
+            onSubmit(undefined)
+            return
+          }
+          // 验证输入格式
+          if (!regex.test(e)) {
+            return
+          }
+          if (max && parseFloat(e) > parseFloat(`${max}`)) {
+            onSubmit(parseFloat(`${max}`))
+            toast.show(t("message.maxReached"))
+            return
+          }
+          const v = parseFloat(e)
+          if (_.isNumber(v) && !_.isNaN(v)) {
+            onSubmit(v)
+          }
+        }}
+        keyboardAppearance="dark"
+        style={[styles.container, styles.digit]}
+      />
+      <Button
+        type="icon"
+        onPress={() => {
+          onSubmit((value ?? 0) + (step ?? 0))
+        }}
+      >
+        <Icon name="plus" />
+      </Button>
+    </XStack>
+  )
+}
+
 export const Input = Object.assign(InputBase, {
   Password,
   OTP,
+  Digit,
 })
 
 Password.displayName = "PasswordInput"
@@ -262,6 +359,11 @@ const styles = StyleSheet.create({
     fontSize: 15,
     borderWidth: 0,
     borderColor: "transparent",
+  },
+  digit: {
+    fontWeight: "900",
+    color: colors.text,
+    fontSize: 20,
   },
   cursor: {
     position: "absolute",

@@ -4,7 +4,7 @@ import { Stack } from "expo-router/stack"
 import * as SplashScreen from "expo-splash-screen"
 import { StatusBar } from "expo-status-bar"
 import { Fragment, useEffect } from "react"
-import { Platform } from "react-native"
+import { Platform, UIManager } from "react-native"
 import { AvoidSoftInput } from "react-native-avoid-softinput"
 import { GestureHandlerRootView } from "react-native-gesture-handler"
 import "react-native-reanimated"
@@ -29,13 +29,19 @@ export const unstable_settings = {
 SplashScreen.preventAutoHideAsync()
 
 AvoidSoftInput.setEnabled(true)
-AvoidSoftInput.setEasing("easeIn")
-AvoidSoftInput.setAvoidOffset(Platform.OS === "ios" ? 16 : 32)
-AvoidSoftInput.setHideAnimationDelay(100)
-AvoidSoftInput.setHideAnimationDuration(300)
-AvoidSoftInput.setShowAnimationDelay(100)
-AvoidSoftInput.setShowAnimationDuration(300)
-AvoidSoftInput.setAdjustResize()
+// AvoidSoftInput.setEasing("easeIn")
+// AvoidSoftInput.setAvoidOffset(Platform.OS === "ios" ? 16 : 32)
+// AvoidSoftInput.setHideAnimationDelay(100)
+// AvoidSoftInput.setHideAnimationDuration(300)
+// AvoidSoftInput.setShowAnimationDelay(100)
+// AvoidSoftInput.setShowAnimationDuration(200)
+// AvoidSoftInput.setAdjustResize()
+
+if (Platform.OS === "android") {
+  if (UIManager.setLayoutAnimationEnabledExperimental) {
+    UIManager.setLayoutAnimationEnabledExperimental(true)
+  }
+}
 
 export default function RootLayout() {
   const [loaded] = useFonts({

@@ -1,9 +1,13 @@
-import React, { FC } from 'react'
-import { StyleSheet } from 'react-native'
-import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated'
-import { XStack } from 'tamagui'
+import React, { FC, useEffect } from "react"
+import { StyleSheet } from "react-native"
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from "react-native-reanimated"
+import { XStack } from "tamagui"
 
-import colors from '~/theme/colors'
+import colors from "~/theme/colors"
 
 interface SwitchProps {
   checked?: boolean
@@ -20,7 +24,12 @@ export const Switch: FC<SwitchProps> = ({
   const backgroundColor = useSharedValue(
     checked ? colors.primary : colors.tertiary
   )
-
+  useEffect(() => {
+    offset.value = withTiming(checked ? 20 : 0)
+    backgroundColor.value = withTiming(
+      checked ? colors.primary : colors.tertiary
+    )
+  }, [checked, backgroundColor, offset])
   const toggleSwitch = () => {
     if (disabled) return
 

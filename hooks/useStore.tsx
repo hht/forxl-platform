@@ -1,11 +1,11 @@
-import AsyncStorage from '@react-native-async-storage/async-storage'
-import { produce } from 'immer'
-import { createJSONStorage, persist } from 'zustand/middleware'
-import { createWithEqualityFn } from 'zustand/traditional'
+import AsyncStorage from "@react-native-async-storage/async-storage"
+import { produce } from "immer"
+import { createJSONStorage, persist } from "zustand/middleware"
+import { createWithEqualityFn } from "zustand/traditional"
 
-import { getPartnerConfig } from '~/api/partner'
-import { getFutureCategories } from '~/api/trade'
-import { dayjs } from '~/lib/utils'
+import { getPartnerConfig } from "~/api/partner"
+import { getFutureCategories } from "~/api/trade"
+import { dayjs } from "~/lib/utils"
 
 interface Store {
   account?: Account
@@ -156,14 +156,12 @@ export const OPTIONS = [
 ] as const
 
 export const useOrderStore = createWithEqualityFn<{
-  current: "open" | "orders" | "closed"
-  filterVisible: boolean
+  activeIndex: 0 | 1 | 2
   options?: (typeof OPTIONS)[number]
   from?: number
   to?: number
   currentPosition?: Position
   willClosePosition?: Position
-  willChangePosition?: Position
   pendingOrders?: Position[]
   totalProfit?: number
   orders?: Position[]
@@ -177,8 +175,7 @@ export const useOrderStore = createWithEqualityFn<{
     profit: number
   }
 }>((set) => ({
-  current: "open",
-  filterVisible: false,
+  activeIndex: 0,
   options: undefined,
   summary: {
     totalMoney: 0,

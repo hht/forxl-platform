@@ -12,7 +12,14 @@
   },
   "message": {
     "copiedSuccess": "Copied successfully",
-    "copiedFailed": "Copy failed"
+    "copiedFailed": "Copy failed",
+    "minReached": "Minimum amount reached",
+    "minProfitReached": "Minimum profit amount reached",
+    "minLossReached": "Minimum loss amount reached",
+    "maxReached": "Maximum amount reached",
+    "maxProfitReached": "Maximum  profit amount reached",
+    "maxLossReached": "Maximum loss amount reached",
+    "changePositionSuccess": "Position changed successfully"
   },
   "tabs": {
     "home": "首页",
@@ -244,7 +251,12 @@
     "balance": "Balance",
     "equity": "Equity",
     "margin": "Margin",
+    "profit": "Profit",
     "freeMargin": "Free Margin",
+    "closeProfit": "Close at Profit",
+    "closeLoss": "Close at Loss",
+    "closeProfitDesc": "Also known as Take Profit, this feature enables automatic close of a position once the asset's price reaches the set level. This is done to lock in profits and exit the trade with a positive return.",
+    "closeLossDesc": "Also known as Stop Loss, this feature enables automatic close of a position once the asset's price reaches the set level. This is a risk management tool used to protect capital from further loss.",
     "balanceDesc": [
       "Balance is the calculated total of all completed transactions on a trading account, including deposits and withdrawals. It can be the amount of funds you have before opening orders, or after you have closed all open orders; the balance does not change while orders are open."
     ],
@@ -302,5 +314,20 @@
     },
     "closePosition": "Close Position",
     "clear": "clear filter"
+  },
+  "order": {
+    "title": "Details",
+    "volume": "Volume",
+    "price": "Price",
+    "margin": "Margin",
+    "ratio": "P/L Ratio",
+    "commission": "Commission",
+    "swap": "Swap",
+    "openTime": "Open Time",
+    "closeTime": "Close Time",
+    "id": "Position ID",
+    "profit": "Profit",
+    "close": "Close Position",
+    "apply": "Apply Changes"
   }
 }

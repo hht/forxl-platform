@@ -1,17 +1,27 @@
-import BottomSheetBase from '@gorhom/bottom-sheet'
-import { router, Stack } from 'expo-router'
-import { useRef } from 'react'
-import { useTranslation } from 'react-i18next'
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import BottomSheetBase from "@gorhom/bottom-sheet"
+import { router, Stack } from "expo-router"
+import { useRef } from "react"
+import { useTranslation } from "react-i18next"
+import { useSafeAreaInsets } from "react-native-safe-area-context"
 
-import { getAttestationFlag, getProfile } from '~/api/account'
+import { getAttestationFlag, getProfile } from "~/api/account"
 import {
-    BottomSheet, Button, Card, Copyable, Figure, Icon, Image, ListItem, ScrollView, Text, XStack,
-    YStack
-} from '~/components'
-import { CACHE_KEY, useRequest } from '~/hooks/useRequest'
-import { useFroxlStore } from '~/hooks/useStore'
-import { SupportTip } from '~/widgets/(home)/profile'
+  BottomSheet,
+  Button,
+  Card,
+  Copyable,
+  Figure,
+  Icon,
+  Image,
+  ListItem,
+  ScrollView,
+  Text,
+  XStack,
+  YStack,
+} from "~/components"
+import { CACHE_KEY, useRequest } from "~/hooks/useRequest"
+import { useFroxlStore } from "~/hooks/useStore"
+import { SupportTip } from "~/widgets/(home)/profile"
 
 const LEVEL_ICON = ["lv0", "lv1", "lv2"] as const
 
@@ -123,11 +133,7 @@ export default function Page() {
           {dict.logout}
         </Button>
       </YStack>
-      <BottomSheet
-        title={dict.verificationLevel}
-        ref={bottomSheetRef}
-        onClose={bottomSheetRef.current?.close}
-      >
+      <BottomSheet title={dict.verificationLevel} ref={bottomSheetRef}>
         <ScrollView px="$md" gap="$md">
           {dict.levels.map((level, index) => (
             <YStack key={index} gap={12} py="$md">

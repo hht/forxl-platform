@@ -1,20 +1,28 @@
-import BottomSheetBase from '@gorhom/bottom-sheet'
-import { useIsFocused } from '@react-navigation/native'
-import { AnimatePresence, useAnimationState } from 'moti'
-import { FC, Fragment, useEffect, useRef, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import { shallow } from 'zustand/shallow'
-import { createWithEqualityFn } from 'zustand/traditional'
+import BottomSheetBase from "@gorhom/bottom-sheet"
+import { useIsFocused } from "@react-navigation/native"
+import { AnimatePresence, useAnimationState } from "moti"
+import { FC, Fragment, useEffect, useRef, useState } from "react"
+import { useTranslation } from "react-i18next"
+import { useSafeAreaInsets } from "react-native-safe-area-context"
+import { shallow } from "zustand/shallow"
+import { createWithEqualityFn } from "zustand/traditional"
 
-import { Notifier } from './header'
+import { Notifier } from "./header"
 
 import {
-    AnimatedFlow, BottomSheet, Button, Icon, Moti, Separator, Text, XStack, YStack
-} from '~/components'
-import { useOrderStore } from '~/hooks/useStore'
-import { formatDecimal, t } from '~/lib/utils'
-import colors, { toRGBA } from '~/theme/colors'
+  AnimatedFlow,
+  BottomSheet,
+  Button,
+  Icon,
+  Moti,
+  Separator,
+  Text,
+  XStack,
+  YStack,
+} from "~/components"
+import { useOrderStore } from "~/hooks/useStore"
+import { formatDecimal, t, uuid } from "~/lib/utils"
+import colors, { toRGBA } from "~/theme/colors"
 
 const ListItem: FC<{ label: string; value: number; onPress: () => void }> = ({
   label,
@@ -46,6 +54,7 @@ const useStore = createWithEqualityFn<{
   current?: "balance" | "equity" | "margin" | "freeMargin"
   title?: string
   desc?: string[]
+  reloadKey?: string
 }>()((set) => ({}))
 
 const Summary: FC = () => {
@@ -66,6 +75,7 @@ const Summary: FC = () => {
             desc: t("trade.balanceDesc", {
               returnObjects: true,
             }),
+            reloadKey: uuid(),
           })
         }}
       />
@@ -80,6 +90,7 @@ const Summary: FC = () => {
             desc: t("trade.equityDesc", {
               returnObjects: true,
             }),
+            reloadKey: uuid(),
           })
         }}
       />
@@ -94,6 +105,7 @@ const Summary: FC = () => {
             desc: t("trade.marginDesc", {
               returnObjects: true,
             }),
+            reloadKey: uuid(),
           })
         }}
       />
@@ -108,6 +120,7 @@ const Summary: FC = () => {
             desc: t("trade.freeMarginDesc", {
               returnObjects: true,
             }),
+            reloadKey: uuid(),
           })
         }}
       />
@@ -118,7 +131,7 @@ const Summary: FC = () => {
 export const WalletStatistics: FC = () => {
   const { top, bottom } = useSafeAreaInsets()
   const profit = useOrderStore((state) => state.summary.profit, shallow)
-  const { current, title, desc } = useStore((state) => state)
+  const { current, title, desc, reloadKey } = useStore((state) => state)
   const it = useOrderStore((state) => {
     switch (current) {
       case "balance":
@@ -153,10 +166,10 @@ export const WalletStatistics: FC = () => {
   )
   const color = profit > 0 ? colors.primary : colors.destructive
   useEffect(() => {
-    if (current) {
+    if (reloadKey && current) {
       ref.current?.expand()
     }
-  }, [current])
+  }, [reloadKey, current])
   const isFocused = useIsFocused()
   useEffect(() => {
     if (visible) {
@@ -210,36 +223,29 @@ export const WalletStatistics: FC = () => {
           ) : null}
         </AnimatePresence>
       </YStack>
-      <BottomSheet
-        ref={ref}
-        title={title}
-        onClose={ref.current?.close}
-        onChange={(index) => {
-          if (index === -1) {
-            useStore.setState({ current: undefined })
-          }
-        }}
-      >
-        <YStack gap="$lg" px="$md" pb={bottom + 16}>
-          {desc?.map((item, index) => (
-            <Text key={index} col="$text" fos={15} lh={20}>
-              {item}
-            </Text>
-          ))}
-          <YStack ai="center">
-            <AnimatedFlow
-              addonsBefore="$"
-              value={it}
-              fos={28}
-              lh={36}
-              col="$text"
-            ></AnimatedFlow>
+      {current ? (
+        <BottomSheet ref={ref} index={0} title={title}>
+          <YStack gap="$lg" px="$md" pb={bottom + 16}>
+            {desc?.map((item, index) => (
+              <Text key={index} col="$text" fos={15} lh={20}>
+                {item}
+              </Text>
+            ))}
+            <YStack ai="center">
+              <AnimatedFlow
+                addonsBefore="$"
+                value={it}
+                fos={28}
+                lh={36}
+                col="$text"
+              ></AnimatedFlow>
+            </YStack>
+            {current === "balance" ? (
+              <Button>{t("wallet.addFunds")}</Button>
+            ) : null}
           </YStack>
-          {current === "balance" ? (
-            <Button>{t("wallet.addFunds")}</Button>
-          ) : null}
-        </YStack>
-      </BottomSheet>
+        </BottomSheet>
+      ) : null}
     </Fragment>
   )
 }

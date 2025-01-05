@@ -1,12 +1,21 @@
-import BottomSheetBase from '@gorhom/bottom-sheet'
-import { Fragment, useRef } from 'react'
-import { useTranslation } from 'react-i18next'
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import BottomSheetBase from "@gorhom/bottom-sheet"
+import { Fragment, useRef } from "react"
+import { useTranslation } from "react-i18next"
+import { useSafeAreaInsets } from "react-native-safe-area-context"
 
-import { format, LEVEL_COLORS } from './utils'
+import { format, LEVEL_COLORS } from "./utils"
 
-import { BottomSheet, Card, Icon, Justified, Row, Text, XStack, YStack } from '~/components'
-import { usePartnerStore } from '~/hooks/useStore'
+import {
+  BottomSheet,
+  Card,
+  Icon,
+  Justified,
+  Row,
+  Text,
+  XStack,
+  YStack,
+} from "~/components"
+import { usePartnerStore } from "~/hooks/useStore"
 
 export const LevelInfo = () => {
   const { bottom } = useSafeAreaInsets()
@@ -88,13 +97,7 @@ export const LevelInfo = () => {
           </Justified>
         ) : null}
       </Card>
-      <BottomSheet
-        ref={bonusSheetRef}
-        title={dict.bonusDesc.title}
-        onClose={() => {
-          bonusSheetRef.current?.close()
-        }}
-      >
+      <BottomSheet ref={bonusSheetRef} title={dict.bonusDesc.title}>
         <YStack px="$md" gap="$md" pb={bottom + 16}>
           {dict.bonusDesc.description.map((it, index) => (
             <Text key={index}>{it}</Text>

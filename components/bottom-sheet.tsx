@@ -1,13 +1,16 @@
 import BottomSheetBase, {
-    BottomSheetBackdrop, BottomSheetBackdropProps, BottomSheetProps, BottomSheetView
-} from '@gorhom/bottom-sheet'
-import { forwardRef } from 'react'
-import { Dimensions, StyleSheet } from 'react-native'
-import { Portal, Text, XStack } from 'tamagui'
+  BottomSheetBackdrop,
+  BottomSheetBackdropProps,
+  BottomSheetProps,
+  BottomSheetView,
+} from "@gorhom/bottom-sheet"
+import { forwardRef } from "react"
+import { Dimensions, StyleSheet } from "react-native"
+import { Portal, Text, XStack } from "tamagui"
 
-import { Icon } from './icon'
+import { Icon } from "./icon"
 
-import colors from '~/theme/colors'
+import colors from "~/theme/colors"
 
 interface BottomSheetModalProps {
   title?: string
@@ -54,7 +57,14 @@ export const BottomSheet = forwardRef<
               {title}
             </Text>
             <XStack
-              onPress={onClose}
+              onPress={() => {
+                const r = ref as any
+                if (onClose) {
+                  onClose()
+                } else {
+                  r?.current?.close()
+                }
+              }}
               pressStyle={{
                 scale: 0.95,
               }}
