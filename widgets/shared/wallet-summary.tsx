@@ -20,7 +20,7 @@ import {
   XStack,
   YStack,
 } from "~/components"
-import { useOrderStore } from "~/hooks/useStore"
+import { useStatisticsStore } from "~/hooks/useStore"
 import { formatDecimal, t, uuid } from "~/lib/utils"
 import colors, { toRGBA } from "~/theme/colors"
 
@@ -59,10 +59,8 @@ const useStore = createWithEqualityFn<{
 
 const Summary: FC = () => {
   const { t } = useTranslation()
-  const { available, totalMoney, freezeMoney, supFreezeMoney } = useOrderStore(
-    (state) => state.summary,
-    shallow
-  )
+  const { available, totalMoney, freezeMoney, supFreezeMoney } =
+    useStatisticsStore((state) => state, shallow)
   return (
     <XStack fd="row" h="100%" w="100%" ai="center">
       <ListItem
@@ -130,18 +128,18 @@ const Summary: FC = () => {
 
 export const WalletStatistics: FC = () => {
   const { top, bottom } = useSafeAreaInsets()
-  const profit = useOrderStore((state) => state.summary.profit, shallow)
+  const profit = useStatisticsStore((state) => state.profit, shallow)
   const { current, title, desc, reloadKey } = useStore((state) => state)
-  const it = useOrderStore((state) => {
+  const it = useStatisticsStore((state) => {
     switch (current) {
       case "balance":
-        return state.summary.available
+        return state.available
       case "equity":
-        return state.summary.totalMoney
+        return state.totalMoney
       case "margin":
-        return state.summary.freezeMoney
+        return state.freezeMoney
       case "freeMargin":
-        return state.summary.supFreezeMoney
+        return state.supFreezeMoney
       default:
         return 0
     }
@@ -224,7 +222,18 @@ export const WalletStatistics: FC = () => {
         </AnimatePresence>
       </YStack>
       {current ? (
-        <BottomSheet ref={ref} index={0} title={title}>
+        <BottomSheet
+          ref={ref}
+          index={0}
+          title={title}
+          onChange={(index) => {
+            if (index === -1) {
+              {
+                useStore.setState({ current: undefined })
+              }
+            }
+          }}
+        >
           <YStack gap="$lg" px="$md" pb={bottom + 16}>
             {desc?.map((item, index) => (
               <Text key={index} col="$text" fos={15} lh={20}>

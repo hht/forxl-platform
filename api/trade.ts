@@ -113,7 +113,6 @@ export const getClosedPositions = async ({
   startTime?: number
   endTime?: number
 }) => {
-  console.log("getClosedPositions", currentPage, startTime, endTime)
   return await request<
     | (PaginationResponse<Position> & {
         contratprofits: string
@@ -147,7 +146,6 @@ export const getClosedPositions = async ({
     })
     .then((res) => {
       const found = updateOrderStore(res.resultList)
-      console.log(found)
       useOrderStore.setState({
         totalProfit: Number(res.profit),
         activeIndex: found ? 2 : useOrderStore.getState().activeIndex,

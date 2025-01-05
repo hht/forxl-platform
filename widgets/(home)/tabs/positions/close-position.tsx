@@ -62,6 +62,7 @@ export const ClosePosition: FC<{ activeIndex: number }> = ({ activeIndex }) => {
       ref.current?.close()
     }
   }, [position])
+  if (!position) return null
   return (
     <BottomSheet
       ref={ref}

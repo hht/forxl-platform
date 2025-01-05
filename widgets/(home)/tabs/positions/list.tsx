@@ -2,7 +2,6 @@ import { useIsFocused } from "@react-navigation/native"
 import { FlashList } from "@shopify/flash-list"
 import { useInfiniteScroll } from "ahooks"
 import { router } from "expo-router"
-import _ from "lodash"
 import { FC, Fragment, ReactNode, useCallback, useMemo } from "react"
 import { useTranslation } from "react-i18next"
 import { ActivityIndicator, Platform, RefreshControl } from "react-native"
@@ -81,8 +80,6 @@ const ListItem: FC<
           onPress={() => {
             useOrderStore.setState({
               currentPosition: data,
-              willChangePosition:
-                useOrderStore.getState().activeIndex !== 2 ? data : undefined,
             })
             router.push("/order")
           }}

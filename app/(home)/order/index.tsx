@@ -54,7 +54,7 @@ export default function Layout() {
 
       {activeIndex === 2 ? null : <OrderActions />}
       {desc ? (
-        <BottomSheet title={title} ref={ref} index={0} onChange={console.log}>
+        <BottomSheet title={title} ref={ref} index={0}>
           <YStack px="$md" pb={bottom + 16}>
             {desc ? (
               <Text fos={15} lh={20}>

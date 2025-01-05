@@ -167,23 +167,23 @@ export const useOrderStore = createWithEqualityFn<{
   orders?: Position[]
   reloadKey?: string
   wallet?: Wallet["forexAccount"]
-  summary: {
-    totalMoney: number
-    available: number
-    freezeMoney: number
-    supFreezeMoney: number
-    profit: number
-  }
 }>((set) => ({
   activeIndex: 0,
   options: undefined,
-  summary: {
-    totalMoney: 0,
-    available: 0,
-    freezeMoney: 0,
-    supFreezeMoney: 0,
-    profit: 0,
-  },
+}))
+
+export const useStatisticsStore = createWithEqualityFn<{
+  totalMoney: number
+  available: number
+  freezeMoney: number
+  supFreezeMoney: number
+  profit: number
+}>()((set) => ({
+  totalMoney: 0,
+  available: 0,
+  freezeMoney: 0,
+  supFreezeMoney: 0,
+  profit: 0,
 }))
 
 export const useSymbolStore = createWithEqualityFn<{
