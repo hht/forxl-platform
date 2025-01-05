@@ -1,11 +1,16 @@
-import React, { useCallback, useState } from 'react'
-import { LayoutRectangle, StyleSheet } from 'react-native'
-import Animated, { useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated'
-import { XStack } from 'tamagui'
+import { useIsFocused } from "@react-navigation/native"
+import React, { useCallback, useState } from "react"
+import { LayoutRectangle, StyleSheet } from "react-native"
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+  withSpring,
+} from "react-native-reanimated"
+import { XStack } from "tamagui"
 
-import { Text } from './text'
+import { Text } from "./text"
 
-import colors from '~/theme/colors'
+import colors from "~/theme/colors"
 
 interface TabsProps {
   data: string[]
@@ -34,12 +39,13 @@ export const Tabs: React.FC<TabsProps> = ({ data, activeIndex, onChange }) => {
     }
   }, [activeIndex, tabLayouts, translateX, width])
 
+  const isFocused = useIsFocused()
   const indicatorStyle = useAnimatedStyle(() => {
     return {
       transform: [{ translateX: translateX.value }],
       width: width.value,
     }
-  })
+  }, [isFocused])
 
   return (
     <XStack w="100%" pb="$sm">
@@ -69,9 +75,10 @@ export const Tabs: React.FC<TabsProps> = ({ data, activeIndex, onChange }) => {
 const styles = StyleSheet.create({
   indicator: {
     position: "absolute",
-    bottom: 0,
+    bottom: 2,
     height: 2,
     backgroundColor: colors.primary,
     borderRadius: 2,
+    width: 200,
   },
 })

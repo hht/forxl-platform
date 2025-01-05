@@ -68,6 +68,7 @@ export default function Page() {
             ref={ref}
             horizontal
             f={1}
+            showsHorizontalScrollIndicator={false}
             pagingEnabled
             scrollEnabled={false}
           >

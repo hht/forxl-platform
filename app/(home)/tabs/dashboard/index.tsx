@@ -1,22 +1,28 @@
-import { useIsFocused } from '@react-navigation/native'
-import { FlashList } from '@shopify/flash-list'
-import { useInfiniteScroll } from 'ahooks'
-import dayjs from 'dayjs'
-import { Stack } from 'expo-router'
-import { useCallback } from 'react'
-import { useTranslation } from 'react-i18next'
-import { ActivityIndicator, Platform } from 'react-native'
+import { useIsFocused } from "@react-navigation/native"
+import { useInfiniteScroll } from "ahooks"
+import dayjs from "dayjs"
+import { Stack } from "expo-router"
+import { useCallback } from "react"
+import { useTranslation } from "react-i18next"
+import { ActivityIndicator, FlatList, Platform } from "react-native"
 
-import { getNews } from '~/api/dashboard'
-import { Screen, Text, XStack } from '~/components'
-import colors from '~/theme/colors'
-import { AssetCard } from '~/widgets/(home)/tabs/dashboard/asset-card'
-import { ListHeaderComponent, ListItem } from '~/widgets/(home)/tabs/dashboard/list'
+import { getNews } from "~/api/dashboard"
+import { Screen, Text, XStack } from "~/components"
+import colors from "~/theme/colors"
+import { AssetCard } from "~/widgets/(home)/tabs/dashboard/asset-card"
 import {
-    BrandTitle, BreadCrumb, CustomerService, DefaultScreenOptions, NativeStackNavigationOptions,
-    Notifier
-} from '~/widgets/shared/header'
-import { Gradient } from '~/widgets/shared/shape'
+  ListHeaderComponent,
+  ListItem,
+} from "~/widgets/(home)/tabs/dashboard/list"
+import {
+  BrandTitle,
+  BreadCrumb,
+  CustomerService,
+  DefaultScreenOptions,
+  NativeStackNavigationOptions,
+  Notifier,
+} from "~/widgets/shared/header"
+import { Gradient } from "~/widgets/shared/shape"
 
 const ScreenOptions: NativeStackNavigationOptions = {
   ...DefaultScreenOptions,
@@ -105,16 +111,15 @@ export default function Page() {
       <Stack.Screen options={ScreenOptions} />
       <Gradient />
       <AssetCard />
-      <FlashList
+      <FlatList
         data={data?.list}
         renderItem={renderItem}
-        estimatedItemSize={168}
         keyExtractor={(item) => `${item.id}`}
         onEndReached={loadMore}
         showsVerticalScrollIndicator={false}
         ListHeaderComponent={ListHeaderComponent}
         ListFooterComponent={ListFooterComponent}
-      ></FlashList>
+      ></FlatList>
     </Screen>
   )
 }

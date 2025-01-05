@@ -84,7 +84,7 @@ export default function Page() {
           </XStack>
         </Card>
       </XStack>
-      <ScrollView f={1} p="$md">
+      <ScrollView f={1} p="$md" showsVerticalScrollIndicator={false}>
         <ListItem
           icon="gift"
           title={dict.referralProgram}
@@ -134,7 +134,7 @@ export default function Page() {
         </Button>
       </YStack>
       <BottomSheet title={dict.verificationLevel} ref={bottomSheetRef}>
-        <ScrollView px="$md" gap="$md">
+        <ScrollView px="$md" gap="$md" showsVerticalScrollIndicator={false}>
           {dict.levels.map((level, index) => (
             <YStack key={index} gap={12} py="$md">
               <XStack ai="center" gap="$sm">

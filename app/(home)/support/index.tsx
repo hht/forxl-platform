@@ -1,7 +1,14 @@
-import { Stack } from 'expo-router'
-import { useTranslation } from 'react-i18next'
+import { Stack } from "expo-router"
+import { useTranslation } from "react-i18next"
 
-import { Figure, ListItem, ScrollView, Text, XStack, YStack } from '~/components'
+import {
+  Figure,
+  ListItem,
+  ScrollView,
+  Text,
+  XStack,
+  YStack,
+} from "~/components"
 
 export default function Layout() {
   const { t } = useTranslation()
@@ -9,7 +16,7 @@ export default function Layout() {
     returnObjects: true,
   })
   return (
-    <ScrollView f={1} p="$md">
+    <ScrollView f={1} p="$md" showsVerticalScrollIndicator={false}>
       <Stack.Screen options={{ title: dict.title }} />
       <XStack ai="center" jc="center" p="$md">
         <Figure name="supportBanner" />

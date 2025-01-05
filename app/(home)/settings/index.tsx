@@ -31,7 +31,7 @@ export default function Layout() {
   return (
     <Fragment>
       <Stack.Screen options={{ title: dict.title }}></Stack.Screen>
-      <ScrollView f={1} px="$md">
+      <ScrollView f={1} px="$md" showsVerticalScrollIndicator={false}>
         <ListItem
           title={dict.timeZone}
           addonAfter={<Text col="$primary">{utfOffset}</Text>}

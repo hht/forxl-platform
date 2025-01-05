@@ -57,7 +57,33 @@ const useStore = createWithEqualityFn<{
   reloadKey?: string
 }>()((set) => ({}))
 
-const Summary: FC = () => {
+const AnimatedDescription: FC<{ current: string }> = ({ current }) => {
+  const it = useStatisticsStore((state) => {
+    switch (current) {
+      case "balance":
+        return state.available
+      case "equity":
+        return state.totalMoney
+      case "margin":
+        return state.freezeMoney
+      case "freeMargin":
+        return state.supFreezeMoney
+      default:
+        return 0
+    }
+  }, shallow)
+  return (
+    <AnimatedFlow
+      addonsBefore="$"
+      value={it}
+      fos={28}
+      lh={36}
+      col="$text"
+    ></AnimatedFlow>
+  )
+}
+
+const Summary: FC<{ onPress: (v: string) => void }> = ({ onPress }) => {
   const { t } = useTranslation()
   const { available, totalMoney, freezeMoney, supFreezeMoney } =
     useStatisticsStore((state) => state, shallow)
@@ -67,6 +93,7 @@ const Summary: FC = () => {
         label={t("trade.balance")}
         value={available}
         onPress={() => {
+          onPress("balance")
           useStore.setState({
             current: "balance",
             title: t("trade.balance"),
@@ -82,6 +109,7 @@ const Summary: FC = () => {
         label={t("trade.equity")}
         value={totalMoney}
         onPress={() => {
+          onPress("equity")
           useStore.setState({
             current: "equity",
             title: t("trade.equity"),
@@ -97,6 +125,7 @@ const Summary: FC = () => {
         label={t("trade.margin")}
         value={freezeMoney}
         onPress={() => {
+          onPress("margin")
           useStore.setState({
             current: "margin",
             title: t("trade.margin"),
@@ -112,6 +141,7 @@ const Summary: FC = () => {
         label={t("trade.freeMargin")}
         value={supFreezeMoney}
         onPress={() => {
+          onPress("freeMargin")
           useStore.setState({
             current: "freeMargin",
             title: t("trade.freeMargin"),
@@ -129,21 +159,8 @@ const Summary: FC = () => {
 export const WalletStatistics: FC = () => {
   const { top, bottom } = useSafeAreaInsets()
   const profit = useStatisticsStore((state) => state.profit, shallow)
-  const { current, title, desc, reloadKey } = useStore((state) => state)
-  const it = useStatisticsStore((state) => {
-    switch (current) {
-      case "balance":
-        return state.available
-      case "equity":
-        return state.totalMoney
-      case "margin":
-        return state.freezeMoney
-      case "freeMargin":
-        return state.supFreezeMoney
-      default:
-        return 0
-    }
-  }, shallow)
+  const { title, desc, reloadKey } = useStore((state) => state)
+  const [current, setCurrent] = useState<string | undefined>(undefined)
   const ref = useRef<BottomSheetBase>(null)
   const [visible, setVisible] = useState(false)
   const state = useAnimationState(
@@ -163,12 +180,13 @@ export const WalletStatistics: FC = () => {
     }
   )
   const color = profit > 0 ? colors.primary : colors.destructive
+  const isFocused = useIsFocused()
   useEffect(() => {
-    if (reloadKey && current) {
+    if (reloadKey && current && isFocused) {
       ref.current?.expand()
     }
-  }, [reloadKey, current])
-  const isFocused = useIsFocused()
+  }, [reloadKey, current, isFocused])
+
   useEffect(() => {
     if (visible) {
       state.transitionTo("expand")
@@ -216,7 +234,7 @@ export const WalletStatistics: FC = () => {
               exit={{ opacity: 0, translateY: -20, height: 0 }}
               transition={{ type: "timing", duration: 200 }}
             >
-              <Summary />
+              <Summary onPress={(v: string) => setCurrent(v)} />
             </Moti>
           ) : null}
         </AnimatePresence>
@@ -229,7 +247,7 @@ export const WalletStatistics: FC = () => {
           onChange={(index) => {
             if (index === -1) {
               {
-                useStore.setState({ current: undefined })
+                setCurrent(undefined)
               }
             }
           }}
@@ -241,13 +259,7 @@ export const WalletStatistics: FC = () => {
               </Text>
             ))}
             <YStack ai="center">
-              <AnimatedFlow
-                addonsBefore="$"
-                value={it}
-                fos={28}
-                lh={36}
-                col="$text"
-              ></AnimatedFlow>
+              {current ? <AnimatedDescription current={current} /> : null}
             </YStack>
             {current === "balance" ? (
               <Button>{t("wallet.addFunds")}</Button>

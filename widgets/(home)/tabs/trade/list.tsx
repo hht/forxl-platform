@@ -1,8 +1,13 @@
-import { FlashList } from "@shopify/flash-list"
+import { useIsFocused } from "@react-navigation/native"
 import { useInfiniteScroll } from "ahooks"
-import { FC, useCallback, useMemo } from "react"
+import { FC, useCallback, useEffect, useMemo } from "react"
 import { useTranslation } from "react-i18next"
-import { ActivityIndicator, RefreshControl } from "react-native"
+import {
+  ActivityIndicator,
+  FlatList,
+  Platform,
+  RefreshControl,
+} from "react-native"
 import { shallow } from "zustand/shallow"
 
 import { getFutures } from "~/api/trade"
@@ -25,8 +30,7 @@ const INITIAL = {
 const Momentum: FC<{
   data?: Future
   quotes: Pick<Quotes, "Bid"> & { BidDiff: number }
-  className?: string
-}> = ({ data, quotes, className }) => {
+}> = ({ data, quotes }) => {
   if (!data || !data.isDeal || !data.lastClosePrice || !quotes?.Bid) {
     return (
       <XStack className="text-base font-semibold text-secondary">
@@ -95,6 +99,7 @@ const ListItem: FC<{ data: Future }> = ({ data }) => {
         ai="center"
         jc="center"
         w={88}
+        h={44}
         boc="$border"
         br="$sm"
         bw={1}
@@ -130,7 +135,7 @@ const ListItem: FC<{ data: Future }> = ({ data }) => {
         ai="center"
         jc="center"
         w={88}
-        h="100%"
+        h={40}
         boc="$border"
         br="$sm"
         bw={1}
@@ -164,7 +169,11 @@ const ListItem: FC<{ data: Future }> = ({ data }) => {
           if (data.isDeal || quotes) {
             useQuotesStore.setState({
               currentFuture: data,
+              action: "sell",
               order: { position: 0.01, price: sellPrice },
+            })
+            useSymbolStore.setState({
+              index: 1,
             })
           }
         }}
@@ -176,8 +185,9 @@ const ListItem: FC<{ data: Future }> = ({ data }) => {
 }
 
 const keyExtractor = (
-  item: Awaited<ReturnType<typeof getFutures>>["list"][number]
-) => item.futuresCode!.toString()
+  item: Awaited<ReturnType<typeof getFutures>>["list"][number],
+  index: number
+) => `${item.futuresName!.toString()}${index}`
 
 const ListEmptyComponent: FC<{
   loading: boolean
@@ -186,14 +196,14 @@ const ListEmptyComponent: FC<{
   if (loading) {
     return (
       <YStack ai="center" jc="center" h="100%" gap="$md">
-        <Text>{t("home.loading")}</Text>
+        <Text col="$tertiary">{t("home.loading")}</Text>
       </YStack>
     )
   }
   return (
     <YStack ai="center" jc="center" h="100%" gap="$md" px={48}>
       <Figure name="empty" width={90} height={90} />
-      <Text></Text>
+      <Text col="$tertiary"></Text>
     </YStack>
   )
 }
@@ -206,34 +216,73 @@ const renderItem = ({
 
 export const FutureList = () => {
   const { t } = useTranslation()
-  const currentFuture = useSymbolStore((state) => state.currentFuture, shallow)
-  const { data, loading, loadingMore, loadMore, reload } = useInfiniteScroll<{
-    list: Awaited<ReturnType<typeof getFutures>>["list"]
-    nextId?: number
-  }>(
-    (d) => {
-      return getFutures({
-        currentPage: d?.nextId ?? 1,
-        pageSize: 10,
-        codeOrName: "",
-        type: currentFuture?.type || undefined,
-        isBest: currentFuture?.isBest || undefined,
-      }).then((res) => {
-        if (res.list?.length) {
-          subscribeQuotes(
-            res.list
-              .map((it) => it.futuresCode)
-              .concat(res.list.map((it) => it.linkFuturesCode))
-          )
+  const isFocused = useIsFocused()
+  const { currentFuture, mutationFuture } = useSymbolStore(
+    (state) => ({
+      currentFuture: state.currentFuture,
+      mutationFuture: state.mutationFuture,
+    }),
+    shallow
+  )
+  const { data, loading, loadingMore, loadMore, reload, mutate } =
+    useInfiniteScroll<{
+      list: Awaited<ReturnType<typeof getFutures>>["list"]
+      nextId?: number
+    }>(
+      (d) => {
+        if (!isFocused && Platform.OS === "web") {
+          return Promise.resolve({
+            list: d?.list ?? [],
+            nextId: d?.nextId ?? 1,
+          })
         }
-        return res
+        return getFutures({
+          currentPage: d?.nextId ?? 1,
+          pageSize: 10,
+          codeOrName: "",
+          type: currentFuture?.type || undefined,
+          isBest: currentFuture?.isBest || undefined,
+          isSelect: currentFuture?.isSelect || undefined,
+        }).then((res) => {
+          if (res.list?.length) {
+            subscribeQuotes(
+              res.list
+                .map((it) => it.futuresCode)
+                .concat(res.list.map((it) => it.linkFuturesCode))
+            )
+          }
+          return res
+        })
+      },
+      {
+        isNoMore: (d) => d?.nextId === undefined,
+        reloadDeps: [currentFuture],
+      }
+    )
+
+  const onToggle = useCallback(
+    (params: { futuresId: number; selected: 0 | 1 }) => {
+      mutate({
+        ...data,
+        list:
+          data?.list?.map((it) =>
+            it.futuresId === params.futuresId
+              ? { ...it, selected: params.selected }
+              : it
+          ) ?? [],
+      })
+      useSymbolStore.setState({
+        mutationFuture: undefined,
       })
     },
-    {
-      isNoMore: (d) => d?.nextId === undefined,
-      reloadDeps: [currentFuture],
-    }
+    [data, mutate]
   )
+
+  useEffect(() => {
+    if (mutationFuture) {
+      onToggle(mutationFuture)
+    }
+  }, [mutationFuture, onToggle])
 
   const ListFooterComponent = useCallback(() => {
     if (!data?.list.length) return null
@@ -262,16 +311,13 @@ export const FutureList = () => {
 
   return (
     <YStack f={1} w={DEVICE_WIDTH}>
-      <FlashList
+      <FlatList
         data={data?.list}
         renderItem={renderItem}
-        estimatedItemSize={72}
         keyExtractor={keyExtractor}
         showsVerticalScrollIndicator={false}
-        overrideProps={{
-          contentContainerStyle: {
-            flexGrow: 1,
-          },
+        contentContainerStyle={{
+          flexGrow: 1,
         }}
         refreshing={loading}
         refreshControl={
@@ -284,7 +330,7 @@ export const FutureList = () => {
         ListEmptyComponent={() => <ListEmptyComponent loading={loading} />}
         onEndReached={loadMore}
         ListFooterComponent={ListFooterComponent}
-      ></FlashList>
+      ></FlatList>
     </YStack>
   )
 }

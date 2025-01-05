@@ -19,7 +19,8 @@
     "maxReached": "Maximum amount reached",
     "maxProfitReached": "Maximum  profit amount reached",
     "maxLossReached": "Maximum loss amount reached",
-    "changePositionSuccess": "Position changed successfully"
+    "changePositionSuccess": "Position changed successfully",
+    "orderSuccess": "Order placed successfully"
   },
   "tabs": {
     "home": "首页",

@@ -1,9 +1,9 @@
-import { Stack, Tabs } from 'expo-router'
-import { Fragment } from 'react'
-import { useTranslation } from 'react-i18next'
+import { Stack, Tabs } from "expo-router"
+import { Fragment } from "react"
+import { useTranslation } from "react-i18next"
 
-import { Icon } from '~/components'
-import colors from '~/theme/colors'
+import { Icon } from "~/components"
+import colors from "~/theme/colors"
 
 const Routes = [
   { name: "home", href: "dashboard/index", icon: "home" },
@@ -29,6 +29,7 @@ export default function Layout() {
             key={name}
             name={href}
             options={{
+              lazy: true,
               tabBarIcon: ({ color, focused }) => (
                 <Icon
                   name={icon!}

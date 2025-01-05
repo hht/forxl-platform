@@ -1,14 +1,20 @@
-import { FlashList } from '@shopify/flash-list'
-import dayjs from 'dayjs'
-import { Stack, useLocalSearchParams } from 'expo-router'
-import { useTranslation } from 'react-i18next'
-import { ActivityIndicator } from 'react-native'
+import dayjs from "dayjs"
+import { Stack, useLocalSearchParams } from "expo-router"
+import { useTranslation } from "react-i18next"
+import { ActivityIndicator, FlatList } from "react-native"
 
-import { getNotifications, readAllNotifications, readNotification } from '~/api/notifications'
-import { Screen, Text, XStack } from '~/components'
-import { useRequest } from '~/hooks/useRequest'
-import colors from '~/theme/colors'
-import { ListEmptyComponent, ListItem } from '~/widgets/(home)/notifications/list'
+import {
+  getNotifications,
+  readAllNotifications,
+  readNotification,
+} from "~/api/notifications"
+import { Screen, Text, XStack } from "~/components"
+import { useRequest } from "~/hooks/useRequest"
+import colors from "~/theme/colors"
+import {
+  ListEmptyComponent,
+  ListItem,
+} from "~/widgets/(home)/notifications/list"
 
 export default function Page() {
   const { t, i18n } = useTranslation()
@@ -50,18 +56,15 @@ export default function Page() {
             ) : null,
         }}
       />
-      <FlashList
+      <FlatList
         data={data?.resultList}
-        estimatedItemSize={100}
         showsVerticalScrollIndicator={false}
         keyExtractor={(item) => item.id!.toString()}
         ListEmptyComponent={() => (
           <ListEmptyComponent loading={loading} type={Number(type)} />
         )}
-        overrideProps={{
-          contentContainerStyle: {
-            flexGrow: 1,
-          },
+        contentContainerStyle={{
+          flexGrow: 1,
         }}
         renderItem={({ item, index }) => (
           <ListItem

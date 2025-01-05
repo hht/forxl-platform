@@ -1,10 +1,14 @@
 import { useIsFocused } from "@react-navigation/native"
-import { FlashList } from "@shopify/flash-list"
 import { useInfiniteScroll } from "ahooks"
 import { router } from "expo-router"
 import { FC, Fragment, ReactNode, useCallback } from "react"
 import { useTranslation } from "react-i18next"
-import { ActivityIndicator, Platform, RefreshControl } from "react-native"
+import {
+  ActivityIndicator,
+  FlatList,
+  Platform,
+  RefreshControl,
+} from "react-native"
 import { XStackProps } from "tamagui"
 import { shallow } from "zustand/shallow"
 
@@ -164,7 +168,7 @@ const ListEmptyComponent: FC<{
   if (loading) {
     return (
       <YStack ai="center" jc="center" h="100%" gap="$md">
-        <Text>{t("home.loading")}</Text>
+        <Text col="$tertiary">{t("home.loading")}</Text>
       </YStack>
     )
   }
@@ -248,15 +252,12 @@ export const OpenOrders = () => {
 
   return (
     <YStack f={1} w={DEVICE_WIDTH}>
-      <FlashList
+      <FlatList
         data={data}
         renderItem={renderItem}
-        estimatedItemSize={72}
         keyExtractor={keyExtractor}
-        overrideProps={{
-          contentContainerStyle: {
-            flexGrow: 1,
-          },
+        contentContainerStyle={{
+          flexGrow: 1,
         }}
         refreshing={loading}
         refreshControl={
@@ -269,7 +270,7 @@ export const OpenOrders = () => {
         ListEmptyComponent={() => (
           <ListEmptyComponent loading={loading} type="open" />
         )}
-      ></FlashList>
+      ></FlatList>
     </YStack>
   )
 }
@@ -285,15 +286,12 @@ export const PendingOrders = () => {
 
   return (
     <YStack f={1} w={DEVICE_WIDTH}>
-      <FlashList
+      <FlatList
         data={data}
         renderItem={renderItem}
-        estimatedItemSize={72}
         keyExtractor={keyExtractor}
-        overrideProps={{
-          contentContainerStyle: {
-            flexGrow: 1,
-          },
+        contentContainerStyle={{
+          flexGrow: 1,
         }}
         refreshing={loading}
         refreshControl={
@@ -306,7 +304,7 @@ export const PendingOrders = () => {
         ListEmptyComponent={() => (
           <ListEmptyComponent loading={loading} type="orders" />
         )}
-      ></FlashList>
+      ></FlatList>
     </YStack>
   )
 }
@@ -382,7 +380,7 @@ export const ClosedOrders = () => {
 
   return (
     <YStack f={1} w={DEVICE_WIDTH}>
-      <FlashList
+      <FlatList
         data={data?.list}
         renderItem={({ item, index }) => (
           <ArchivedListItem
@@ -402,13 +400,10 @@ export const ClosedOrders = () => {
             onRefresh={reload}
           />
         }
-        estimatedItemSize={72}
         onRefresh={reload}
         keyExtractor={keyExtractor}
-        overrideProps={{
-          contentContainerStyle: {
-            flexGrow: 1,
-          },
+        contentContainerStyle={{
+          flexGrow: 1,
         }}
         onEndReached={loadMore}
         ListHeaderComponent={() => (
@@ -418,7 +413,7 @@ export const ClosedOrders = () => {
           <ListEmptyComponent loading={loading} type="closed" />
         )}
         ListFooterComponent={ListFooterComponent}
-      ></FlashList>
+      ></FlatList>
     </YStack>
   )
 }

@@ -1,10 +1,10 @@
-import { Stack } from 'expo-router'
-import { Fragment } from 'react'
-import { useTranslation } from 'react-i18next'
+import { Stack } from "expo-router"
+import { Fragment } from "react"
+import { useTranslation } from "react-i18next"
 
-import { Icon, ListItem, ScrollView } from '~/components'
-import { useFroxlStore } from '~/hooks/useStore'
-import { LANGUAGES } from '~/lib/constants'
+import { Icon, ListItem, ScrollView } from "~/components"
+import { useFroxlStore } from "~/hooks/useStore"
+import { LANGUAGES } from "~/lib/constants"
 
 export default function Layout() {
   const { t } = useTranslation()
@@ -12,7 +12,7 @@ export default function Layout() {
   return (
     <Fragment>
       <Stack.Screen options={{ title: t("settings.language") }}></Stack.Screen>
-      <ScrollView f={1} px="$md">
+      <ScrollView f={1} px="$md" showsVerticalScrollIndicator={false}>
         {LANGUAGES.map((it) => (
           <ListItem
             title={it.label as string}

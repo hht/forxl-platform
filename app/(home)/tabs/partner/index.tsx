@@ -1,16 +1,18 @@
-import { Stack } from 'expo-router'
-import { useTranslation } from 'react-i18next'
+import { Stack } from "expo-router"
+import { useTranslation } from "react-i18next"
 
-import { Figure, Screen, ScrollView, Text, XStack, YStack } from '~/components'
-import { usePartnerStore } from '~/hooks/useStore'
-import { AccountInfo } from '~/widgets/(home)/tabs/partner/account-info'
-import { LevelCard } from '~/widgets/(home)/tabs/partner/level-card'
-import { LevelInfo } from '~/widgets/(home)/tabs/partner/level-info'
-import { format, Level } from '~/widgets/(home)/tabs/partner/utils'
+import { Figure, Screen, ScrollView, Text, XStack, YStack } from "~/components"
+import { usePartnerStore } from "~/hooks/useStore"
+import { AccountInfo } from "~/widgets/(home)/tabs/partner/account-info"
+import { LevelCard } from "~/widgets/(home)/tabs/partner/level-card"
+import { LevelInfo } from "~/widgets/(home)/tabs/partner/level-info"
+import { format, Level } from "~/widgets/(home)/tabs/partner/utils"
 import {
-    BrandTitle, DefaultScreenOptions, NativeStackNavigationOptions
-} from '~/widgets/shared/header'
-import { Gradient } from '~/widgets/shared/shape'
+  BrandTitle,
+  DefaultScreenOptions,
+  NativeStackNavigationOptions,
+} from "~/widgets/shared/header"
+import { Gradient } from "~/widgets/shared/shape"
 
 const ScreenOptions: NativeStackNavigationOptions = {
   ...DefaultScreenOptions,
@@ -41,7 +43,7 @@ export default function Page() {
     <Screen px={0} gap={0} pb={0}>
       <Stack.Screen options={ScreenOptions} />
       <Gradient />
-      <ScrollView f={1} px="$md">
+      <ScrollView f={1} px="$md" showsVerticalScrollIndicator={false}>
         <AccountInfo />
         <YStack py="$md" gap={12}>
           <Text col="$secondary">{t("partner.level")}</Text>
