@@ -43,6 +43,7 @@ export const InputBase: FC<InputProps> = ({
   const [isFocused, setIsFocused] = useState(false)
   const isActive = isFocused || !!value
   const color =
+    // eslint-disable-next-line react-compiler/react-compiler
     !inputRef.current?.isFocused() && value
       ? status === "error"
         ? colors.destructive
@@ -294,7 +295,7 @@ const Digit: FC<
   const regex = new RegExp(`^\\d*\\.?\\d{0,${precision}}$`)
 
   return (
-    <XStack h={56} boc="$border" br="$sm" bw={1} ai="center">
+    <XStack h={56} boc="$border" w="100%" br="$sm" bw={1} ai="center">
       <Button
         type="icon"
         onPress={() => {

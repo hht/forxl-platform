@@ -2,4 +2,8 @@
 module.exports = {
   extends: ["expo"],
   ignorePatterns: ["/dist/*"],
+  plugins: ["eslint-plugin-react-compiler"],
+  rules: {
+    "react-compiler/react-compiler": "error",
+  },
 }

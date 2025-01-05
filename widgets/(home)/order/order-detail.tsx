@@ -163,8 +163,8 @@ export const OrderDetail = () => {
           : "-"}
       </ListItem>
       <ListItem label={t("trade.closeProfit")}>
-        {currentPosition.stopLossPrice
-          ? `$${formatDecimal(currentPosition.stopLossPrice, currentPosition.volatility)}`
+        {currentPosition.stopProfitPrice
+          ? `$${formatDecimal(currentPosition.stopProfitPrice, currentPosition.volatility)}`
           : "-"}
       </ListItem>
       <ListItem label={dict.id}>{`${currentPosition.orderSn}`}</ListItem>
