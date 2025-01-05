@@ -4,6 +4,7 @@ import _ from "lodash"
 import { getDate } from "~/hooks/useLocale"
 import { BASE_URL, request } from "~/hooks/useRequest"
 import { useFroxlStore, useOrderStore, useQuotesStore } from "~/hooks/useStore"
+import { subscribeQuotes } from "~/hooks/useWebsocket"
 import { i18n, toInfinite, waitFor } from "~/lib/utils"
 
 export const getFutures = async (params: GetFuturesParams) => {
@@ -28,7 +29,7 @@ export const getFutures = async (params: GetFuturesParams) => {
       }
     })
     .then((res) => {
-      return res
+      return toInfinite(res, params.currentPage)
     })
 }
 

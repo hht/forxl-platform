@@ -255,6 +255,9 @@
     "freeMargin": "Free Margin",
     "closeProfit": "Close at Profit",
     "closeLoss": "Close at Loss",
+    "categories": "Categories",
+    "sell": "Sell",
+    "buy": "Buy",
     "closeProfitDesc": "Also known as Take Profit, this feature enables automatic close of a position once the asset's price reaches the set level. This is done to lock in profits and exit the trade with a positive return.",
     "closeLossDesc": "Also known as Stop Loss, this feature enables automatic close of a position once the asset's price reaches the set level. This is a risk management tool used to protect capital from further loss.",
     "balanceDesc": [

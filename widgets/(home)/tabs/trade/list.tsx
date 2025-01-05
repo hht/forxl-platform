@@ -1,0 +1,290 @@
+import { FlashList } from "@shopify/flash-list"
+import { useInfiniteScroll } from "ahooks"
+import { FC, useCallback, useMemo } from "react"
+import { useTranslation } from "react-i18next"
+import { ActivityIndicator, RefreshControl } from "react-native"
+import { shallow } from "zustand/shallow"
+
+import { getFutures } from "~/api/trade"
+import { AnimatedFlow, Figure, Icon, Text, XStack, YStack } from "~/components"
+import { useQuotesStore, useSymbolStore } from "~/hooks/useStore"
+import { subscribeQuotes } from "~/hooks/useWebsocket"
+import { DEVICE_WIDTH, t } from "~/lib/utils"
+import colors from "~/theme/colors"
+
+const INITIAL = {
+  Ask: 0,
+  Bid: 0,
+  High: 0,
+  Low: 0,
+  AskDiff: 0,
+  BidDiff: 0,
+  LastUpdate: Date.now(),
+}
+
+const Momentum: FC<{
+  data?: Future
+  quotes: Pick<Quotes, "Bid"> & { BidDiff: number }
+  className?: string
+}> = ({ data, quotes, className }) => {
+  if (!data || !data.isDeal || !data.lastClosePrice || !quotes?.Bid) {
+    return (
+      <XStack className="text-base font-semibold text-secondary">
+        <Text col="$secondary" fow="bold">
+          -
+        </Text>
+      </XStack>
+    )
+  }
+  const momentum =
+    ((quotes.Bid - data.lastClosePrice) / data.lastClosePrice) * 100
+  return (
+    <XStack ai="center">
+      {momentum !== 0 ? (
+        <XStack rotate={momentum < 0 ? "180deg" : "0deg"}>
+          <Icon
+            name="trend"
+            size={12}
+            color={momentum > 0 ? colors.primary : colors.destructive}
+          />
+        </XStack>
+      ) : null}
+      <AnimatedFlow
+        value={momentum}
+        fraction={0.01}
+        addonsBefore={momentum > 0 ? "+" : ""}
+        addonsAfter="%"
+        fow="bold"
+        col={
+          momentum > 0
+            ? "$primary"
+            : momentum < 0
+              ? "$destructive"
+              : "$secondary"
+        }
+      />
+    </XStack>
+  )
+}
+
+const ListItem: FC<{ data: Future }> = ({ data }) => {
+  const quotes = useQuotesStore(
+    (state) => state.quotes[data.futuresCode!] ?? INITIAL,
+    shallow
+  )
+
+  const diff = useMemo(
+    () => ((data.volatility ?? 0) * (data.clazzSpread ?? 0)) / 2,
+    [data.volatility, data.clazzSpread]
+  )
+  const buyPrice = (quotes?.Ask ?? data.buyPrice) + diff
+  const sellPrice = (quotes?.Bid ?? data.sellPrice) - diff
+  const available = data.isDeal
+  return (
+    <XStack gap="$sm" p="$md" bbc="$border" bbw={1} ai="center">
+      <YStack f={1} gap="$sm">
+        <XStack gap="$sm" ai="center">
+          <Text>{data.futuresShow}</Text>
+          {data.selected ? <Icon name="starFilled" size={12} /> : null}
+          {!data.isDeal ? <Icon name="moon" size={12} /> : null}
+        </XStack>
+        <Momentum data={data} quotes={quotes} />
+      </YStack>
+      <YStack
+        p="$sm"
+        ai="center"
+        jc="center"
+        w={88}
+        boc="$border"
+        br="$sm"
+        bw={1}
+        onPress={() => {
+          if (available) {
+            useQuotesStore.setState({
+              currentFuture: data,
+              action: "sell",
+              order: {
+                position: 0.01,
+                price: sellPrice,
+              },
+            })
+          }
+        }}
+      >
+        <Text col={available ? "$text" : "$tertiary"}>{t("trade.sell")}</Text>
+        <AnimatedFlow
+          col={
+            quotes?.BidDiff > 0
+              ? "$primary"
+              : quotes?.BidDiff < 0
+                ? "$destructive"
+                : "$secondary"
+          }
+          fow="bold"
+          value={quotes.Bid ? sellPrice : Number(data.sellPrice)}
+          fraction={data.volatility}
+        />
+      </YStack>
+      <YStack
+        p="$sm"
+        ai="center"
+        jc="center"
+        w={88}
+        h="100%"
+        boc="$border"
+        br="$sm"
+        bw={1}
+        onPress={() => {
+          if (available) {
+            useQuotesStore.setState({
+              currentFuture: data,
+              action: "buy",
+              order: { position: 0.01, price: buyPrice },
+            })
+          }
+        }}
+      >
+        <Text col={available ? "$text" : "$tertiary"}>{t("trade.buy")}</Text>
+        <AnimatedFlow
+          value={quotes.Ask ? buyPrice : Number(data.buyPrice)}
+          fraction={data.volatility}
+          fow="bold"
+          col={
+            quotes?.AskDiff > 0
+              ? "$primary"
+              : quotes?.AskDiff < 0
+                ? "$destructive"
+                : "$secondary"
+          }
+        />
+      </YStack>
+      <XStack
+        disabled={!available}
+        onPress={() => {
+          if (data.isDeal || quotes) {
+            useQuotesStore.setState({
+              currentFuture: data,
+              order: { position: 0.01, price: sellPrice },
+            })
+          }
+        }}
+      >
+        <Icon name="chevronRight" size={16} />
+      </XStack>
+    </XStack>
+  )
+}
+
+const keyExtractor = (
+  item: Awaited<ReturnType<typeof getFutures>>["list"][number]
+) => item.futuresCode!.toString()
+
+const ListEmptyComponent: FC<{
+  loading: boolean
+}> = ({ loading }) => {
+  const { t } = useTranslation()
+  if (loading) {
+    return (
+      <YStack ai="center" jc="center" h="100%" gap="$md">
+        <Text>{t("home.loading")}</Text>
+      </YStack>
+    )
+  }
+  return (
+    <YStack ai="center" jc="center" h="100%" gap="$md" px={48}>
+      <Figure name="empty" width={90} height={90} />
+      <Text></Text>
+    </YStack>
+  )
+}
+
+const renderItem = ({
+  item,
+}: {
+  item: Awaited<ReturnType<typeof getFutures>>["list"][number]
+}) => <ListItem data={item} />
+
+export const FutureList = () => {
+  const { t } = useTranslation()
+  const currentFuture = useSymbolStore((state) => state.currentFuture, shallow)
+  const { data, loading, loadingMore, loadMore, reload } = useInfiniteScroll<{
+    list: Awaited<ReturnType<typeof getFutures>>["list"]
+    nextId?: number
+  }>(
+    (d) => {
+      return getFutures({
+        currentPage: d?.nextId ?? 1,
+        pageSize: 10,
+        codeOrName: "",
+        type: currentFuture?.type || undefined,
+        isBest: currentFuture?.isBest || undefined,
+      }).then((res) => {
+        if (res.list?.length) {
+          subscribeQuotes(
+            res.list
+              .map((it) => it.futuresCode)
+              .concat(res.list.map((it) => it.linkFuturesCode))
+          )
+        }
+        return res
+      })
+    },
+    {
+      isNoMore: (d) => d?.nextId === undefined,
+      reloadDeps: [currentFuture],
+    }
+  )
+
+  const ListFooterComponent = useCallback(() => {
+    if (!data?.list.length) return null
+    return (
+      <XStack
+        gap="$md"
+        p="$md"
+        ai="center"
+        w="100%"
+        jc="center"
+        pb={loading || loadingMore ? "$md" : 0}
+      >
+        {loading || loadingMore ? (
+          <ActivityIndicator color={colors.tertiary} />
+        ) : null}
+        <Text col="$tertiary" fow="700">
+          {loading
+            ? t("home.loading")
+            : loadingMore
+              ? t("home.loadingMore")
+              : ""}
+        </Text>
+      </XStack>
+    )
+  }, [loading, loadingMore, t, data?.list.length])
+
+  return (
+    <YStack f={1} w={DEVICE_WIDTH}>
+      <FlashList
+        data={data?.list}
+        renderItem={renderItem}
+        estimatedItemSize={72}
+        keyExtractor={keyExtractor}
+        showsVerticalScrollIndicator={false}
+        overrideProps={{
+          contentContainerStyle: {
+            flexGrow: 1,
+          },
+        }}
+        refreshing={loading}
+        refreshControl={
+          <RefreshControl
+            tintColor={colors.secondary}
+            refreshing={loading}
+            onRefresh={reload}
+          />
+        }
+        ListEmptyComponent={() => <ListEmptyComponent loading={loading} />}
+        onEndReached={loadMore}
+        ListFooterComponent={ListFooterComponent}
+      ></FlashList>
+    </YStack>
+  )
+}

@@ -36,6 +36,7 @@ interface GetFuturesParams {
     | "EU_EQUITY"
     | "AU_EQUITY"
     | "BASKETS"
+    | "COMMODITY"
     | ""
 }
 
@@ -118,6 +119,7 @@ interface Future {
    * volatility
    */
   volatility?: number
+  linkFuturesCode?: GetFuturesParams["type"]
 }
 
 interface Quotes {

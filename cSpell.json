@@ -17,7 +17,10 @@
     "btlr",
     "btrr",
     "bblr",
-    "bbrr"
+    "bbrr",
+    "forex",
+    "DIGICCY",
+    "OILFUT"
   ],
   "ignorePaths": ["node_modules", "dist", "build", ".git", "package-lock.json"]
 }
