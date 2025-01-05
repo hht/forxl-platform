@@ -2,8 +2,6 @@ import { Fragment } from "react"
 import { useTranslation } from "react-i18next"
 import { shallow } from "zustand/shallow"
 
-import { PriceCell, ProfitCell } from "../tabs/positions/list"
-
 import { getFuture } from "~/api/trade"
 import { Icon, Text, XStack } from "~/components"
 import { useRequest } from "~/hooks/useRequest"
@@ -11,6 +9,8 @@ import { useOrderStore } from "~/hooks/useStore"
 import { dayjs, formatDecimal } from "~/lib/utils"
 import colors from "~/theme/colors"
 import { ListItem } from "~/widgets/(home)/order/list-item"
+import { PriceCell } from "~/widgets/shared/price-cell"
+import { ProfitCell } from "~/widgets/shared/profit-cell"
 
 export const OrderDetail = () => {
   const { t } = useTranslation()

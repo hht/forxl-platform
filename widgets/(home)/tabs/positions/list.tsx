@@ -2,10 +2,10 @@ import { useIsFocused } from "@react-navigation/native"
 import { FlashList } from "@shopify/flash-list"
 import { useInfiniteScroll } from "ahooks"
 import { router } from "expo-router"
-import { FC, Fragment, ReactNode, useCallback, useMemo } from "react"
+import { FC, Fragment, ReactNode, useCallback } from "react"
 import { useTranslation } from "react-i18next"
 import { ActivityIndicator, Platform, RefreshControl } from "react-native"
-import { TextProps, XStackProps } from "tamagui"
+import { XStackProps } from "tamagui"
 import { shallow } from "zustand/shallow"
 
 import {
@@ -16,55 +16,11 @@ import {
 import { AnimatedFlow, Figure, Icon, Text, XStack, YStack } from "~/components"
 import { getRecentDate } from "~/hooks/useLocale"
 import { CACHE_KEY, useRequest } from "~/hooks/useRequest"
-import { computeProfit, useOrderStore, useQuotesStore } from "~/hooks/useStore"
+import { useOrderStore } from "~/hooks/useStore"
 import { subscribeQuotes } from "~/hooks/useWebsocket"
 import { dayjs, DEVICE_WIDTH, formatDecimal, uuid } from "~/lib/utils"
 import colors, { toRGBA } from "~/theme/colors"
-
-export const PriceCell: FC<{ data: Position } & TextProps> = ({
-  data,
-  ...rest
-}) => {
-  const quotes = useQuotesStore(
-    (state) => state.quotes[data.futuresCode!],
-    shallow
-  )
-  const diff = useMemo(
-    () => ((data.volatility ?? 0) * (data.clazzSpread ?? 0)) / 2,
-    [data.volatility, data.clazzSpread]
-  )
-  return (
-    <AnimatedFlow
-      value={
-        ((data.openSafe === 0 ? quotes?.Bid : quotes?.Ask) ??
-          data.overPrice ??
-          data.lastPrice ??
-          data.price) - (data.openSafe! === 0 ? diff : -diff)
-      }
-      fraction={data.volatility}
-      {...rest}
-    ></AnimatedFlow>
-  )
-}
-
-export const ProfitCell: FC<{ data: Position } & TextProps> = ({
-  data,
-  ...rest
-}) => {
-  // @ts-ignore next-line
-  const quotes = useQuotesStore(
-    (state) => state.quotes[data.futuresCode!],
-    shallow
-  )
-  const profit = computeProfit(data)
-  return (
-    <AnimatedFlow
-      value={profit}
-      addonsBefore={`$${profit > 0 ? "+" : ""}`}
-      {...rest}
-    ></AnimatedFlow>
-  )
-}
+import { PriceCell } from "~/widgets/shared/price-cell"
 
 const ListItem: FC<
   {

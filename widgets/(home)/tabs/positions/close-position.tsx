@@ -5,14 +5,14 @@ import { useTranslation } from "react-i18next"
 import { useSafeAreaInsets } from "react-native-safe-area-context"
 import { shallow } from "zustand/shallow"
 
-import { PriceCell, ProfitCell } from "./list"
-
 import { cancelOrder, proceedOrder } from "~/api/trade"
 import { BottomSheet, Button, Text, XStack, YStack } from "~/components"
 import { useRequest } from "~/hooks/useRequest"
 import { useOrderStore, useQuotesStore } from "~/hooks/useStore"
 import { subscribeQuotes } from "~/hooks/useWebsocket"
 import { uuid, waitFor } from "~/lib/utils"
+import { PriceCell } from "~/widgets/shared/price-cell"
+import { ProfitCell } from "~/widgets/shared/profit-cell"
 
 const updateOrderState = () => {
   if (useOrderStore.getState().activeIndex === 0) {
