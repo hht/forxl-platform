@@ -75,7 +75,7 @@ export const Tabs: React.FC<TabsProps> = ({ data, activeIndex, onChange }) => {
 const styles = StyleSheet.create({
   indicator: {
     position: "absolute",
-    bottom: 2,
+    bottom: 0,
     height: 2,
     backgroundColor: colors.primary,
     borderRadius: 2,

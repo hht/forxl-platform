@@ -6,12 +6,12 @@ import { ScrollView, Tabs, Text, XStack, YStack } from "~/components"
 import { useOrderStore } from "~/hooks/useStore"
 import { DEVICE_WIDTH } from "~/lib/utils"
 import { ClosePosition } from "~/widgets/(home)/tabs/positions/close-position"
-import { OrderFilter } from "~/widgets/(home)/tabs/positions/filter"
+import { OrderFilter } from "~/widgets/(home)/tabs/positions/order-filter"
 import {
   ClosedOrders,
   OpenOrders,
   PendingOrders,
-} from "~/widgets/(home)/tabs/positions/list"
+} from "~/widgets/(home)/tabs/positions/position-list"
 import { Linear } from "~/widgets/shared/shape"
 import { WalletStatistics } from "~/widgets/shared/wallet-summary"
 

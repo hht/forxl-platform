@@ -1,27 +1,34 @@
 import _ from "lodash"
 import { FC } from "react"
-import { XStack } from "tamagui"
+import { useTranslation } from "react-i18next"
+import { shallow } from "zustand/shallow"
 
-import { AnimatedFlow, Text } from "~/components"
-import { computeProfit } from "~/hooks/useStore"
-import { t } from "~/lib/utils"
+import { AnimatedFlow, Text, XStack } from "~/components"
+import { computeProfit, useQuotesStore } from "~/hooks/useStore"
 
 export const ProfitTracker: FC<{
   order: FuturesOrder
   current?: number
-}> = ({ current, order }) => {
+  enablePending?: boolean
+}> = ({ current, order, enablePending }) => {
+  const { t } = useTranslation()
+  const quotes = useQuotesStore(
+    (state) => state.quotes[order.futuresCode!],
+    shallow
+  )
   if (!current || !order) return null
+  const currentPrice = order.openSafe === 0 ? quotes?.Ask : quotes?.Bid
   const profit = computeProfit(
     {
       ...order,
       tradingFee: 0,
       overNightFee: 0,
-      price: current,
+      price: enablePending ? order.price : (currentPrice ?? order.price),
       overPrice: current,
     },
     {
-      Ask: order.price!,
-      Bid: order.price!,
+      Ask: current,
+      Bid: current,
     }
   )
   return (

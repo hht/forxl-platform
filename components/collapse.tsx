@@ -11,14 +11,19 @@ export const Collapse: FC<
     title: ReactNode
     children: ReactNode
     expended?: boolean
+    disabled?: boolean
     toggleExpended: (v: boolean) => void
   } & XStackProps
-> = ({ title, children, expended, toggleExpended, ...rest }) => {
+> = ({ title, children, expended, toggleExpended, disabled, ...rest }) => {
   return (
     <Card gap="$md" p="$md" {...rest}>
       <XStack ai="center" jc="space-between">
         {_.isString(title) ? <Text fow="900">{title}</Text> : title}
-        <Switch checked={expended ?? false} onCheckedChange={toggleExpended} />
+        <Switch
+          checked={expended ?? false}
+          disabled={disabled}
+          onCheckedChange={toggleExpended}
+        />
       </XStack>
       {expended && children}
     </Card>

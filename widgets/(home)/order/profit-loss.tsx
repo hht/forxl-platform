@@ -7,7 +7,7 @@ import { createWithEqualityFn } from "zustand/traditional"
 
 import { Collapse, Icon, Input, Text, XStack, YStack } from "~/components"
 import { useOrderStore } from "~/hooks/useStore"
-import { ProfitTracker } from "~/widgets/shared/profit-tracker"
+import { ProfitTracker } from "~/widgets/(home)/tabs/positions/profit-tracker"
 
 const useStore = createWithEqualityFn<{ title?: string; desc?: string }>()(
   (set) => ({})

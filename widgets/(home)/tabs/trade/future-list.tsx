@@ -10,6 +10,8 @@ import {
 } from "react-native"
 import { shallow } from "zustand/shallow"
 
+import { FutureCategories } from "./categories"
+
 import { getFutures } from "~/api/trade"
 import { AnimatedFlow, Figure, Icon, Text, XStack, YStack } from "~/components"
 import { useQuotesStore, useSymbolStore } from "~/hooks/useStore"
@@ -113,6 +115,9 @@ const ListItem: FC<{ data: Future }> = ({ data }) => {
                 price: sellPrice,
               },
             })
+            useSymbolStore.setState({
+              index: 1,
+            })
           }
         }}
       >
@@ -145,6 +150,9 @@ const ListItem: FC<{ data: Future }> = ({ data }) => {
               currentFuture: data,
               action: "buy",
               order: { position: 0.01, price: buyPrice },
+            })
+            useSymbolStore.setState({
+              index: 1,
             })
           }
         }}
@@ -311,6 +319,12 @@ export const FutureList = () => {
 
   return (
     <YStack f={1} w={DEVICE_WIDTH}>
+      <XStack p="$md" ai="center" jc="space-between">
+        <FutureCategories />
+        <XStack hitSlop={16} onPress={() => {}}>
+          <Icon name="search" size={20}></Icon>
+        </XStack>
+      </XStack>
       <FlatList
         data={data?.list}
         renderItem={renderItem}

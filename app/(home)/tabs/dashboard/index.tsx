@@ -13,7 +13,7 @@ import { AssetCard } from "~/widgets/(home)/tabs/dashboard/asset-card"
 import {
   ListHeaderComponent,
   ListItem,
-} from "~/widgets/(home)/tabs/dashboard/list"
+} from "~/widgets/(home)/tabs/dashboard/news-list"
 import {
   BrandTitle,
   BreadCrumb,

@@ -294,7 +294,7 @@ const Digit: FC<
   const regex = new RegExp(`^\\d*\\.?\\d{0,${precision}}$`)
 
   return (
-    <XStack h={56} boc="$border" br="$md" bw={1}>
+    <XStack h={56} boc="$border" br="$sm" bw={1} ai="center">
       <Button
         type="icon"
         onPress={() => {

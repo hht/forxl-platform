@@ -1,12 +1,11 @@
 import { useEffect, useRef } from "react"
 import { shallow } from "zustand/shallow"
 
-import { Icon, ScrollView, XStack, YStack } from "~/components"
+import { ScrollView, YStack } from "~/components"
 import { useSymbolStore } from "~/hooks/useStore"
 import { DEVICE_WIDTH } from "~/lib/utils"
-import { FutureCategories } from "~/widgets/(home)/tabs/trade/categories"
 import { FutureDetail } from "~/widgets/(home)/tabs/trade/future-detail"
-import { FutureList } from "~/widgets/(home)/tabs/trade/list"
+import { FutureList } from "~/widgets/(home)/tabs/trade/future-list"
 import { Linear } from "~/widgets/shared/shape"
 import { WalletStatistics } from "~/widgets/shared/wallet-summary"
 
@@ -21,12 +20,6 @@ export default function Page() {
       <Linear />
       <WalletStatistics />
       <YStack f={1}>
-        <XStack p="$md" ai="center" jc="space-between">
-          <FutureCategories />
-          <XStack hitSlop={16} onPress={() => {}}>
-            <Icon name="search" size={20}></Icon>
-          </XStack>
-        </XStack>
         <ScrollView
           ref={ref}
           f={1}

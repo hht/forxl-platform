@@ -1,52 +1,47 @@
 import { useRequest } from "ahooks"
-import { useMemo } from "react"
+import { useEffect, useMemo, useRef, useState } from "react"
 import { useTranslation } from "react-i18next"
 import { shallow } from "zustand/shallow"
 
-import { ToggleFavorite } from "./toggle-favorate"
+import { Action, CurrentPrice } from "./current-price"
+import { PendingCard } from "./pending"
+import { StopLossCard } from "./stop-loss"
+import { StopProfitCard } from "./stop-profit"
+import { ToggleFavorite } from "./toggle-favorite"
+import { TradeVolume } from "./volume"
 
-import { getFuture, proceedOrder } from "~/api/trade"
-import { Icon, Text, toast, XStack, YStack } from "~/components"
-import { CACHE_KEY } from "~/hooks/useRequest"
+import { getFuture } from "~/api/trade"
 import {
-  useQuotesStore,
-  useStatisticsStore,
-  useSymbolStore,
-} from "~/hooks/useStore"
+  Card,
+  Icon,
+  ScrollView,
+  Tabs,
+  Text,
+  XStack,
+  YStack,
+} from "~/components"
+import { CACHE_KEY } from "~/hooks/useRequest"
+import { useQuotesStore, useSymbolStore } from "~/hooks/useStore"
 import { subscribeQuotes } from "~/hooks/useWebsocket"
 import { DEVICE_WIDTH } from "~/lib/utils"
 import colors from "~/theme/colors"
 
 export const FutureDetail = () => {
   const { t } = useTranslation()
-  const {
-    action,
-    order,
-    enablePending,
-    enableCloseProfit,
-    enableCloseLoss,
-    currentFuture,
-    futureParams,
-  } = useQuotesStore(
+  const dict = t("trade", {
+    returnObjects: true,
+  })
+  const [activeIndex, setActiveIndex] = useState(0)
+  const { action, order, currentFuture, futureParams } = useQuotesStore(
     (state) => ({
       currentFuture: state.currentFuture,
       action: state.action,
       order: state.order,
-      enablePending: state.enablePending,
-      enableCloseProfit: state.enableCloseProfit,
-      enableCloseLoss: state.enableCloseLoss,
       futureParams: state.futures[state.currentFuture?.futuresShow!],
     }),
     shallow
   )
-  const available = useStatisticsStore((state) => state?.available, shallow)
-  const { loading, run } = useRequest(proceedOrder, {
-    manual: true,
-    onSuccess: () => {
-      useQuotesStore.setState({ order: { position: 0.01 } })
-      toast.show(t("message.orderSuccess"))
-    },
-  })
+
   const { data: future } = useRequest(
     () => getFuture(currentFuture?.futuresCode!),
     {
@@ -61,10 +56,6 @@ export const FutureDetail = () => {
       },
     }
   )
-
-  const requiredMargin = future
-    ? (order?.position ?? 0) * (future.futuresParam?.fixDepositRatio ?? 0)
-    : 0
 
   const futuresOrder: FuturesOrder = useMemo(
     () => ({
@@ -84,7 +75,10 @@ export const FutureDetail = () => {
     }),
     [future, order, action]
   )
-
+  const ref = useRef<ScrollView>(null)
+  useEffect(() => {
+    ref.current?.scrollTo({ x: activeIndex * DEVICE_WIDTH, animated: true })
+  }, [activeIndex])
   return (
     <YStack
       f={1}
@@ -94,9 +88,10 @@ export const FutureDetail = () => {
       bc="$card/60"
       boc="$border"
       bw={1}
-      p="$md"
+      py="$md"
+      mt="$md"
     >
-      <XStack>
+      <XStack px="$md">
         <XStack ai="center">
           <XStack
             hitSlop={16}
@@ -112,6 +107,42 @@ export const FutureDetail = () => {
         </Text>
         <ToggleFavorite />
       </XStack>
+      <XStack p="$md" pb={0} bbc="$border" bbw={1}>
+        <Tabs
+          data={[dict.new, dict.chart, dict.info]}
+          activeIndex={activeIndex}
+          onChange={setActiveIndex}
+        />
+      </XStack>
+
+      <ScrollView
+        ref={ref}
+        f={1}
+        horizontal
+        w={DEVICE_WIDTH}
+        showsHorizontalScrollIndicator={false}
+      >
+        <ScrollView f={1} w={DEVICE_WIDTH} showsVerticalScrollIndicator={false}>
+          <YStack p="$md" gap="$sm" w="100%">
+            <Card bw={0}>
+              <XStack ai="center" jc="space-between">
+                <CurrentPrice />
+                <Action />
+              </XStack>
+            </Card>
+            <TradeVolume future={future} />
+            <PendingCard />
+            <StopProfitCard futuresOrder={futuresOrder} />
+            <StopLossCard futuresOrder={futuresOrder} />
+          </YStack>
+        </ScrollView>
+        <ScrollView f={1} w={DEVICE_WIDTH} showsVerticalScrollIndicator={false}>
+          <YStack bc="$warning" p="$md" gap="$md" h={200} w="100%"></YStack>
+        </ScrollView>
+        <ScrollView f={1} w={DEVICE_WIDTH} showsVerticalScrollIndicator={false}>
+          <YStack bc="$primary" p="$md" gap="$md" h={200} w="100%"></YStack>
+        </ScrollView>
+      </ScrollView>
     </YStack>
   )
 }
