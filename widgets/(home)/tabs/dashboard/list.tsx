@@ -1,15 +1,15 @@
-import dayjs from 'dayjs'
-import { router } from 'expo-router'
-import { Fragment } from 'react'
-import { useTranslation } from 'react-i18next'
+import dayjs from "dayjs"
+import { router } from "expo-router"
+import { Fragment } from "react"
+import { useTranslation } from "react-i18next"
 
-import { Banners } from './banners'
-import { Shortcuts } from './short-cuts'
+import { Banners } from "./banners"
+import { Shortcuts } from "./short-cuts"
 
-import { getNews } from '~/api/dashboard'
-import { Figure, Icon, Image, Text, XStack, YStack } from '~/components'
-import { useWebViewStore } from '~/hooks/useStore'
-import colors, { toRGBA } from '~/theme/colors'
+import { getNews } from "~/api/dashboard"
+import { Figure, Icon, Image, Text, XStack, YStack } from "~/components"
+import { useWebViewStore } from "~/hooks/useStore"
+import colors, { toRGBA } from "~/theme/colors"
 
 export const ListItem = ({
   item,
@@ -36,6 +36,7 @@ export const ListItem = ({
       blc="$border"
       brc="$border"
       gap="$md"
+      ov="hidden"
       btc={isFirst ? "$border" : "transparent"}
       btlr={isFirst ? "$sm" : 0}
       btrr={isFirst ? "$sm" : 0}
