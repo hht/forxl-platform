@@ -74,7 +74,7 @@ export default function Page() {
                   bottomSheetRef.current?.expand()
                 }}
               >
-                <Icon name="info" size={12}></Icon>
+                <Icon name="info" size={16}></Icon>
               </XStack>
             </XStack>
             <XStack gap="$sm" ai="center">

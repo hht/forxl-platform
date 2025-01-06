@@ -1,19 +1,35 @@
-import _ from 'lodash'
-import { Fragment, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import { shallow } from 'zustand/shallow'
+import _ from "lodash"
+import { Fragment, useState } from "react"
+import { useTranslation } from "react-i18next"
+import { shallow } from "zustand/shallow"
 
-import { LEVELS } from './utils'
+import { LEVELS } from "./utils"
 
-import { getPartnerConfig, getPartnerInfo, getReferralList } from '~/api/partner'
 import {
-    Button, Card, copyToClipboard, Dialog, Figure, Icon, Justified, Popup, Row, ScrollView,
-    Statistics, Text, XStack, YStack
-} from '~/components'
-import { formatDate } from '~/hooks/useLocale'
-import { useRequest } from '~/hooks/useRequest'
-import { useFroxlStore, usePartnerStore } from '~/hooks/useStore'
-import { DEVICE_WIDTH, formatDecimal } from '~/lib/utils'
+  getPartnerConfig,
+  getPartnerInfo,
+  getReferralList,
+} from "~/api/partner"
+import {
+  Button,
+  Card,
+  copyToClipboard,
+  Dialog,
+  Figure,
+  Icon,
+  Justified,
+  Popup,
+  Row,
+  ScrollView,
+  Statistics,
+  Text,
+  XStack,
+  YStack,
+} from "~/components"
+import { formatDate } from "~/hooks/useLocale"
+import { useRequest } from "~/hooks/useRequest"
+import { useFroxlStore, usePartnerStore } from "~/hooks/useStore"
+import { DEVICE_WIDTH, formatDecimal } from "~/lib/utils"
 
 export const AccountInfo = () => {
   const { account } = useFroxlStore()
@@ -50,7 +66,7 @@ export const AccountInfo = () => {
             <XStack ai="center" gap="$sm">
               <Text subject>{_.upperCase(dict.children[currentLevel])}</Text>
               <XStack hitSlop={10} onPress={() => setVisible(true)}>
-                <Icon name="info" size={12} />
+                <Icon name="info" size={16} />
               </XStack>
             </XStack>
           </YStack>
@@ -62,7 +78,7 @@ export const AccountInfo = () => {
                 {`${data?.activeDirectNum ?? 0}/${data?.allDirectNum ?? 0}`}
               </Text>
               <XStack hitSlop={10} onPress={() => setVisible(true)}>
-                <Icon name="info" size={12} />
+                <Icon name="info" size={16} />
               </XStack>
             </Row>
           </Statistics>
@@ -119,6 +135,7 @@ export const AccountInfo = () => {
             h={212}
             mx={-16}
             pagingEnabled
+            centerContent
             showsHorizontalScrollIndicator={false}
             onMomentumScrollEnd={(event) => {
               setCurrentIndex(
@@ -126,61 +143,76 @@ export const AccountInfo = () => {
               )
             }}
           >
-            {referral?.map((item) => (
-              <YStack gap={12} w={DEVICE_WIDTH - 32} px="$md" key={item.userId}>
-                <Justified>
-                  <XStack gap="$xs" ai="center">
-                    <Text col="$secondary">{t("partner.accountId")}</Text>
-                  </XStack>
-                  <Text>{item.userId}</Text>
-                </Justified>
-                <Justified>
-                  <Text col="$secondary">{t("partner.accountLevel")}</Text>
-                  <XStack gap="$xs">
-                    <Figure name={LEVELS[item.level!]} width={20} height={20} />
-                    <Text>{dict.children[item.level!]}</Text>
-                  </XStack>
-                </Justified>
-                <Justified gap="$md" ai="flex-start">
-                  <Text col="$secondary">{dict.accountEmail}</Text>
-                  <Text f={1} ta="right" numberOfLines={1}>
-                    {item.email}
-                  </Text>
-                </Justified>
-                <Justified>
-                  <Text col="$secondary">{dict.CertificationName}</Text>
-                  <Text>
-                    {item.certificationName
-                      ?.split(" ")
-                      .map((it, index) =>
-                        index === 0
-                          ? _.padEnd(it.charAt(0), it.length, "*")
-                          : it
-                      )
-                      .join(" ")}
-                  </Text>
-                </Justified>
-                <Justified>
-                  <Text col="$secondary">{dict.size}</Text>
-                  <Text>
-                    {t("partner.personCount", { count: item.teamSize })}
-                  </Text>
-                </Justified>
-                <Justified>
-                  <Text col="$secondary">{t("partner.fundsInvested")}</Text>
-                  <Text>{`$${formatDecimal(`${item.invested}`)}`}</Text>
-                </Justified>
-                <Justified>
-                  <Text col="$secondary">{t("partner.registerDate")}</Text>
-                  <Text>
-                    {formatDate(item.registrationDate ?? Date.now(), {
-                      hour: undefined,
-                      minute: undefined,
-                    })}
-                  </Text>
-                </Justified>
+            {referral?.length ? (
+              referral?.map((item) => (
+                <YStack
+                  gap={12}
+                  w={DEVICE_WIDTH - 32}
+                  px="$md"
+                  key={item.userId}
+                >
+                  <Justified>
+                    <XStack gap="$xs" ai="center">
+                      <Text col="$secondary">{t("partner.accountId")}</Text>
+                    </XStack>
+                    <Text>{item.userId}</Text>
+                  </Justified>
+                  <Justified>
+                    <Text col="$secondary">{t("partner.accountLevel")}</Text>
+                    <XStack gap="$xs">
+                      <Figure
+                        name={LEVELS[item.level!]}
+                        width={20}
+                        height={20}
+                      />
+                      <Text>{dict.children[item.level!]}</Text>
+                    </XStack>
+                  </Justified>
+                  <Justified gap="$md" ai="flex-start">
+                    <Text col="$secondary">{dict.accountEmail}</Text>
+                    <Text f={1} ta="right" numberOfLines={1}>
+                      {item.email}
+                    </Text>
+                  </Justified>
+                  <Justified>
+                    <Text col="$secondary">{dict.CertificationName}</Text>
+                    <Text>
+                      {item.certificationName
+                        ?.split(" ")
+                        .map((it, index) =>
+                          index === 0
+                            ? _.padEnd(it.charAt(0), it.length, "*")
+                            : it
+                        )
+                        .join(" ")}
+                    </Text>
+                  </Justified>
+                  <Justified>
+                    <Text col="$secondary">{dict.size}</Text>
+                    <Text>
+                      {t("partner.personCount", { count: item.teamSize })}
+                    </Text>
+                  </Justified>
+                  <Justified>
+                    <Text col="$secondary">{t("partner.fundsInvested")}</Text>
+                    <Text>{`$${formatDecimal(`${item.invested}`)}`}</Text>
+                  </Justified>
+                  <Justified>
+                    <Text col="$secondary">{t("partner.registerDate")}</Text>
+                    <Text>
+                      {formatDate(item.registrationDate ?? Date.now(), {
+                        hour: undefined,
+                        minute: undefined,
+                      })}
+                    </Text>
+                  </Justified>
+                </YStack>
+              ))
+            ) : (
+              <YStack h="100%" ai="center" jc="center">
+                <Figure name="empty" width={120} height={120} />
               </YStack>
-            ))}
+            )}
           </ScrollView>
           <Button size="$md" type="accent" onPress={() => setVisible(false)}>
             {t("action.close")}

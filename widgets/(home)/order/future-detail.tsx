@@ -1,30 +1,25 @@
-import { useRequest } from "ahooks"
-import { useEffect, useMemo, useRef, useState } from "react"
-import { useTranslation } from "react-i18next"
-import { shallow } from "zustand/shallow"
+import { useRequest, useUnmount } from 'ahooks'
+import { router } from 'expo-router'
+import { useEffect, useMemo, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { shallow } from 'zustand/shallow'
 
-import { Action, CurrentPrice } from "./current-price"
-import { PendingCard } from "./pending"
-import { StopLossCard } from "./stop-loss"
-import { StopProfitCard } from "./stop-profit"
-import { ToggleFavorite } from "./toggle-favorite"
-import { TradeVolume } from "./volume"
+import { Action, CurrentPrice } from './current-price'
+import { FutureInfo } from './future-info'
+import { OrderActions } from './order-actions'
+import { PendingCard } from './pending'
+import { StopLossCard } from './stop-loss'
+import { StopProfitCard } from './stop-profit'
+import { ToggleFavorite } from './toggle-favorite'
+import { TradeVolume } from './volume'
 
-import { getFuture } from "~/api/trade"
-import {
-  Card,
-  Icon,
-  ScrollView,
-  Tabs,
-  Text,
-  XStack,
-  YStack,
-} from "~/components"
-import { CACHE_KEY } from "~/hooks/useRequest"
-import { useQuotesStore, useSymbolStore } from "~/hooks/useStore"
-import { subscribeQuotes } from "~/hooks/useWebsocket"
-import { DEVICE_WIDTH } from "~/lib/utils"
-import colors from "~/theme/colors"
+import { getFuture } from '~/api/trade'
+import { Card, Icon, ScrollView, Tabs, Text, XStack, YStack } from '~/components'
+import { CACHE_KEY } from '~/hooks/useRequest'
+import { useQuotesStore } from '~/hooks/useStore'
+import { subscribeQuotes } from '~/hooks/useWebsocket'
+import { DEVICE_WIDTH } from '~/lib/utils'
+import colors from '~/theme/colors'
 
 export const FutureDetail = () => {
   const { t } = useTranslation()
@@ -54,6 +49,7 @@ export const FutureDetail = () => {
           data.linkFuturesCode?.deposit,
         ])
       },
+      onError: (error) => {},
     }
   )
 
@@ -76,6 +72,15 @@ export const FutureDetail = () => {
     [future, order, action]
   )
   const ref = useRef<ScrollView>(null)
+  useUnmount(() => {
+    useQuotesStore.setState({
+      currentFuture: undefined,
+      enableCloseLoss: false,
+      enableCloseProfit: false,
+      enablePending: false,
+      order: { position: 0.01 },
+    })
+  })
   useEffect(() => {
     ref.current?.scrollTo({ x: activeIndex * DEVICE_WIDTH, animated: true })
   }, [activeIndex])
@@ -88,7 +93,7 @@ export const FutureDetail = () => {
       bc="$card/60"
       boc="$border"
       bw={1}
-      py="$md"
+      pt="$md"
       mt="$md"
     >
       <XStack px="$md">
@@ -96,7 +101,7 @@ export const FutureDetail = () => {
           <XStack
             hitSlop={16}
             onPress={() => {
-              useSymbolStore.setState({ index: 0 })
+              router.back()
             }}
           >
             <Icon name="arrowLeft" size={20} color={colors.text}></Icon>
@@ -131,16 +136,32 @@ export const FutureDetail = () => {
               </XStack>
             </Card>
             <TradeVolume future={future} />
-            <PendingCard />
+            <PendingCard
+              step={(futuresOrder.volatility ?? 0.01) * 100}
+              precision={
+                futuresOrder.volatility!.toString().split(".")[1]?.length
+              }
+            />
             <StopProfitCard futuresOrder={futuresOrder} />
             <StopLossCard futuresOrder={futuresOrder} />
+            <OrderActions />
           </YStack>
         </ScrollView>
         <ScrollView f={1} w={DEVICE_WIDTH} showsVerticalScrollIndicator={false}>
-          <YStack bc="$warning" p="$md" gap="$md" h={200} w="100%"></YStack>
+          <FutureInfo
+            future={future}
+            onPress={() => {
+              setActiveIndex(0)
+            }}
+          />
         </ScrollView>
         <ScrollView f={1} w={DEVICE_WIDTH} showsVerticalScrollIndicator={false}>
-          <YStack bc="$primary" p="$md" gap="$md" h={200} w="100%"></YStack>
+          <FutureInfo
+            future={future}
+            onPress={() => {
+              setActiveIndex(0)
+            }}
+          />
         </ScrollView>
       </ScrollView>
     </YStack>

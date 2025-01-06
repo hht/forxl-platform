@@ -1,11 +1,12 @@
-import { FC } from "react"
-import { useTranslation } from "react-i18next"
-import { shallow } from "zustand/shallow"
+import { FC } from 'react'
+import { useTranslation } from 'react-i18next'
+import { shallow } from 'zustand/shallow'
 
-import { ProfitTracker } from "./profit-tracker"
+import { ProfitTracker } from '../tabs/trade/profit-tracker'
 
-import { Collapse, Input } from "~/components"
-import { useQuotesStore } from "~/hooks/useStore"
+import { Collapse, Icon, Input, Text, XStack } from '~/components'
+import { usePromptStore, useQuotesStore } from '~/hooks/useStore'
+import { uuid } from '~/lib/utils'
 
 const toggleExpended = (enableCloseProfit: boolean) => {
   useQuotesStore.setState({ enableCloseProfit })
@@ -16,25 +17,46 @@ const toggleExpended = (enableCloseProfit: boolean) => {
   }
 }
 
+const Title: FC = () => {
+  const { t } = useTranslation()
+  return (
+    <XStack ai="center" gap="$sm">
+      <Text fow="bold">{t("trade.closeProfit")}</Text>
+      <XStack
+        hitSlop={16}
+        onPress={() => {
+          usePromptStore.setState({
+            title: t("trade.closeProfit"),
+            desc: t("trade.closeProfitDesc"),
+            reloadKey: uuid(),
+          })
+        }}
+      >
+        <Icon name="info" size={12} color="$secondary" />
+      </XStack>
+    </XStack>
+  )
+}
+
 export const StopProfitCard: FC<{ futuresOrder: FuturesOrder }> = ({
   futuresOrder,
 }) => {
-  const { t } = useTranslation()
-  const { enableCloseProfit, action, order, enablePending } = useQuotesStore(
+  const { enableCloseProfit, order, enablePending, disabled } = useQuotesStore(
     (s) => ({
       enableCloseProfit: s.enableCloseProfit,
       enablePending: s.enablePending,
-      action: s.action,
       order: s.order,
+      disabled:
+        !s.currentFuture?.isDeal || !s.quotes[s.currentFuture?.futuresShow!],
     }),
     shallow
   )
   return (
     <Collapse
-      title={t(action === "buy" ? "trade.buyWhen" : "trade.sellWhen")}
+      title={<Title />}
       expended={enableCloseProfit}
       toggleExpended={toggleExpended}
-      disabled={order?.position === 0}
+      disabled={order?.position === 0 || disabled}
     >
       <Input.Digit
         value={order?.stopProfitPrice}

@@ -1,16 +1,24 @@
-import _ from "lodash"
-import { FC } from "react"
-import { useTranslation } from "react-i18next"
-import { shallow } from "zustand/shallow"
+import _ from 'lodash'
+import { FC } from 'react'
+import { useTranslation } from 'react-i18next'
+import { shallow } from 'zustand/shallow'
 
-import { AnimatedFlow, Card, Input, Text, XStack, YStack } from "~/components"
-import { useQuotesStore, useStatisticsStore } from "~/hooks/useStore"
-import { formatDecimal } from "~/lib/utils"
+import { AnimatedFlow, Card, Input, Text, XStack, YStack } from '~/components'
+import { useQuotesStore, useStatisticsStore } from '~/hooks/useStore'
+import { formatDecimal } from '~/lib/utils'
 
 export const TradeVolume: FC<{ future?: FuturesDetail }> = ({ future }) => {
   const { t } = useTranslation()
   const available = useStatisticsStore((state) => state?.available, shallow)
-  const order = useQuotesStore((state) => state.order, shallow)
+  const { order, disabled } = useQuotesStore(
+    (state) => ({
+      order: state.order,
+      disabled:
+        !state.currentFuture?.isDeal ||
+        !state.quotes[state.currentFuture?.futuresShow!],
+    }),
+    shallow
+  )
   const requiredMargin = future
     ? (order?.position ?? 0) * (future.futuresParam?.fixDepositRatio ?? 0)
     : 0
@@ -43,6 +51,7 @@ export const TradeVolume: FC<{ future?: FuturesDetail }> = ({ future }) => {
         min={future?.futuresParam?.minVolume}
         max={future?.futuresParam?.maxVolume}
         step={0.01}
+        editable={!disabled}
         onChange={(v) => {
           useQuotesStore.getState().updateOrder({ position: v })
         }}

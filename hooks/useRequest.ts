@@ -95,6 +95,7 @@ export const useRequest = <TData, TParams extends any[]>(
     service,
     {
       onError: (error) => {
+        console.log("发生错误：", error)
         toast.show(error.message ?? error)
       },
       ...options,

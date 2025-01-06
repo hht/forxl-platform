@@ -1,11 +1,11 @@
-import AsyncStorage from "@react-native-async-storage/async-storage"
-import { produce } from "immer"
-import { createJSONStorage, persist } from "zustand/middleware"
-import { createWithEqualityFn } from "zustand/traditional"
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import { produce } from 'immer'
+import { createJSONStorage, persist } from 'zustand/middleware'
+import { createWithEqualityFn } from 'zustand/traditional'
 
-import { getPartnerConfig } from "~/api/partner"
-import { getFutureCategories } from "~/api/trade"
-import { dayjs } from "~/lib/utils"
+import { getPartnerConfig } from '~/api/partner'
+import { getFutureCategories } from '~/api/trade'
+import { dayjs } from '~/lib/utils'
 
 interface Store {
   account?: Account
@@ -79,7 +79,7 @@ interface QuotesStore {
   enableCloseProfit?: boolean
   enableCloseLoss?: boolean
   currentFutureDetail?: FuturesDetail
-  getCurrentPrice: () => number
+  getCurrentPrice: (c?: "buy" | "sell") => number
   getOrderPrice: (ratio: number) => number
 }
 
@@ -90,12 +90,12 @@ export const useQuotesStore = createWithEqualityFn<QuotesStore>((set, get) => ({
   order: {
     position: 0.01,
   },
-  getCurrentPrice: () => {
+  getCurrentPrice: (c?: "buy" | "sell") => {
     const { currentFuture, action, quotes } = get()
     const currentQuote = quotes[currentFuture?.futuresShow!]
     return getCurrentFuturePrice({
       futureCode: currentFuture?.futuresShow!,
-      action,
+      action: c ?? action,
       volatility: currentFuture?.volatility,
       clazzSpread: currentFuture?.clazzSpread,
       buyPrice: currentFuture?.buyPrice,
@@ -187,7 +187,6 @@ export const useStatisticsStore = createWithEqualityFn<{
 }))
 
 export const useSymbolStore = createWithEqualityFn<{
-  index: number
   codeOrName: string
   currentFuture?: Awaited<ReturnType<typeof getFutureCategories>>[number]
   mutationFuture?: {
@@ -195,7 +194,6 @@ export const useSymbolStore = createWithEqualityFn<{
     selected: 0 | 1
   }
 }>((set) => ({
-  index: 0,
   codeOrName: "",
 }))
 

@@ -1,50 +1,18 @@
-import BottomSheetBase from "@gorhom/bottom-sheet"
-import { useUnmount } from "ahooks"
 import { Stack } from "expo-router"
-import { useRef } from "react"
-import { useTranslation } from "react-i18next"
-import { shallow } from "zustand/shallow"
 
-import { Card, ScrollView, YStack } from "~/components"
-import { useOrderStore } from "~/hooks/useStore"
+import { YStack } from "~/components"
+import { FutureDetail } from "~/widgets/(home)/order/future-detail"
 import { OrderActions } from "~/widgets/(home)/order/order-actions"
-import { OrderDetail } from "~/widgets/(home)/order/order-detail"
-import { ProfitAndLoss } from "~/widgets/(home)/order/profit-loss"
+import { Linear } from "~/widgets/shared/shape"
+import { WalletStatistics } from "~/widgets/shared/wallet-summary"
 
-export default function Layout() {
-  const { t } = useTranslation()
-  const dict = t("order", {
-    returnObjects: true,
-  })
-  const { currentPosition, activeIndex } = useOrderStore(
-    (state) => ({
-      currentPosition: state.currentPosition,
-      activeIndex: state.activeIndex,
-    }),
-    shallow
-  )
-
-  const ref = useRef<BottomSheetBase>(null)
-
-  useUnmount(() => {
-    useOrderStore.setState({
-      currentPosition: undefined,
-    })
-  })
-  if (!currentPosition) return null
+export default function Page() {
   return (
     <YStack f={1}>
-      <Stack.Screen options={{ title: dict.title }} />
-      <ScrollView f={1} showsVerticalScrollIndicator={false}>
-        <YStack p="$md" gap="$sm">
-          <Card gap="$sm">
-            <OrderDetail />
-          </Card>
-          {activeIndex === 2 ? null : <ProfitAndLoss />}
-        </YStack>
-      </ScrollView>
-
-      {activeIndex === 2 ? null : <OrderActions />}
+      <Stack.Screen options={{ headerShown: false }} />
+      <Linear />
+      <WalletStatistics />
+      <FutureDetail />
     </YStack>
   )
 }

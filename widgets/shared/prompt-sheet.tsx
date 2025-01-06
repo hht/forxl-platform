@@ -15,7 +15,6 @@ export const PromptSheet: FC = () => {
       ref.current?.expand()
     }
   }, [reloadKey])
-  console.log(reloadKey)
   return reloadKey ? (
     <BottomSheet
       ref={ref}

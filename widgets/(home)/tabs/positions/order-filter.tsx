@@ -243,7 +243,8 @@ export const OrderFilter: FC = () => {
                       ? getDate(from ?? filters.current.from).format(
                           "MMM DD, YY"
                         )
-                      : useOrderStore.getState().from}
+                      : // eslint-disable-next-line react-compiler/react-compiler
+                        useOrderStore.getState().from}
                   </Text>
                 </XStack>
                 <XStack w={7} h={1} bc="$border" />

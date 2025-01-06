@@ -20,7 +20,9 @@
     "maxProfitReached": "Maximum  profit amount reached",
     "maxLossReached": "Maximum loss amount reached",
     "changePositionSuccess": "Position changed successfully",
-    "orderSuccess": "Order placed successfully"
+    "orderSuccess": "Order placed successfully",
+    "noQuotes": "No Quotes",
+    "notInTradeTime": "It is not a trading time right now"
   },
   "tabs": {
     "home": "首页",
@@ -266,6 +268,7 @@
     "requiredMargin": "Required Margin",
     "buyWhen": "Buy when rate is",
     "sellWhen": "Sell when rate is",
+    "rateDesc": "Also known as a Limit order, this feature enables automatic execution of a trade once the instrument’s price reaches the set level. This allows traders to enter the market at a predefined favorable price.",
     "fromRate": "From last rate",
     "currentPrice": "Current Price",
     "placeOrder": "Place Order",
@@ -284,7 +287,35 @@
     "freeMarginDesc": [
       "Free margin = Equity – Margin",
       "Free margin is the funds available to open new positions after accounting for floating P&L and margin tied up in open positions."
-    ]
+    ],
+    "contractSize": "Contract Size",
+    "contractSizeDesc": "Amount of asset in a single trading position.",
+    "executionType": "Execution type",
+    "market": "Market",
+    "executionTypeDesc": "Method of filling out trading positions.",
+    "minVolume": "Minimum volume(in lots)",
+    "maxVolume": "Maximum volume(in lots)",
+    "hedgedMargin": "Hedged margin",
+    "hedgedMarginDesc": " Margin size required for opposing positions to manage risks.",
+    "commissionDesc": "Charge for opening and closing trading positions.",
+    "long": "Swap long",
+    "longDesc": "Fee for holding a long (Buy) position overnight.",
+    "short": "Swap short",
+    "shortDesc": "Fee for holding a short (Sell) position overnight.",
+    "description": "Description",
+    "descriptionDesc": "Fee for holding a short (Sell) position overnight.Fee for holding a short (Sell) position overnight.Fee for holding a short (Sell) position overnight.Fee for holding a short (Sell) position overnight.Fee for holding a short (Sell) position overnight.Fee for holding a short (Sell) position overnight.",
+    "swapType": "Swap type",
+    "swapTypeDesc": " Way of calculating the fee for holding a position overnight.",
+    "highLow": "High/Low",
+    "currentSellPrice": "Current sell price: ${{amount}}",
+    "priceChange": "Price change",
+    "priceChangeDesc": "Compared to previous session",
+    "mins": "{{count}} min",
+    "hours": "{{count}} hour",
+    "days": "{{count}} day",
+    "lots": "{{amount}} lots",
+    "perLot": "{{amount}} USD per lot",
+    "openOn": "Market open on {{date}}"
   },
   "wallet": {
     "addFunds": "Add Funds"

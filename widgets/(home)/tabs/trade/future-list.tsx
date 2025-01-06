@@ -1,23 +1,19 @@
-import { useIsFocused } from "@react-navigation/native"
-import { useInfiniteScroll } from "ahooks"
-import { FC, useCallback, useEffect, useMemo } from "react"
-import { useTranslation } from "react-i18next"
-import {
-  ActivityIndicator,
-  FlatList,
-  Platform,
-  RefreshControl,
-} from "react-native"
-import { shallow } from "zustand/shallow"
+import { useIsFocused } from '@react-navigation/native'
+import { useInfiniteScroll } from 'ahooks'
+import { router } from 'expo-router'
+import { FC, useCallback, useEffect, useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
+import { ActivityIndicator, FlatList, Platform, RefreshControl } from 'react-native'
+import { shallow } from 'zustand/shallow'
 
-import { FutureCategories } from "./categories"
+import { FutureCategories } from './categories'
 
-import { getFutures } from "~/api/trade"
-import { AnimatedFlow, Figure, Icon, Text, XStack, YStack } from "~/components"
-import { useQuotesStore, useSymbolStore } from "~/hooks/useStore"
-import { subscribeQuotes } from "~/hooks/useWebsocket"
-import { DEVICE_WIDTH, t } from "~/lib/utils"
-import colors from "~/theme/colors"
+import { getFutures } from '~/api/trade'
+import { AnimatedFlow, Figure, Icon, Text, XStack, YStack } from '~/components'
+import { useQuotesStore, useSymbolStore } from '~/hooks/useStore'
+import { subscribeQuotes } from '~/hooks/useWebsocket'
+import { DEVICE_WIDTH, t } from '~/lib/utils'
+import colors from '~/theme/colors'
 
 const INITIAL = {
   Ask: 0,
@@ -115,9 +111,7 @@ const ListItem: FC<{ data: Future }> = ({ data }) => {
                 price: sellPrice,
               },
             })
-            useSymbolStore.setState({
-              index: 1,
-            })
+            router.push("/order")
           }
         }}
       >
@@ -151,9 +145,7 @@ const ListItem: FC<{ data: Future }> = ({ data }) => {
               action: "buy",
               order: { position: 0.01, price: buyPrice },
             })
-            useSymbolStore.setState({
-              index: 1,
-            })
+            router.push("/order")
           }
         }}
       >
@@ -172,18 +164,13 @@ const ListItem: FC<{ data: Future }> = ({ data }) => {
         />
       </YStack>
       <XStack
-        disabled={!available}
         onPress={() => {
-          if (data.isDeal || quotes) {
-            useQuotesStore.setState({
-              currentFuture: data,
-              action: "sell",
-              order: { position: 0.01, price: sellPrice },
-            })
-            useSymbolStore.setState({
-              index: 1,
-            })
-          }
+          useQuotesStore.setState({
+            currentFuture: data,
+            action: "buy",
+            order: { position: 0.01, price: sellPrice },
+          })
+          router.push("/order")
         }}
       >
         <Icon name="chevronRight" size={16} />

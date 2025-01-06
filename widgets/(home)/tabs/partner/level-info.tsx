@@ -39,7 +39,7 @@ export const LevelInfo = () => {
                 })
               }}
             >
-              <Icon name="info" size={12} />
+              <Icon name="info" size={16} />
             </XStack>
           </Row>
           <Text>

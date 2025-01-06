@@ -17,7 +17,6 @@ export const ListItem = ({
   onPress?: () => void
 }) => {
   const { title, content, createTime } = item
-  const { t } = useTranslation()
   return (
     <YStack p="$md" gap="$md" onPress={onPress}>
       {dateVisible && (

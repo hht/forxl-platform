@@ -1,13 +1,13 @@
-import _ from 'lodash'
-import { FC, Fragment, HTMLAttributes, ReactNode, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import { XStack, XStackProps, YStack, YStackProps } from 'tamagui'
+import _ from "lodash"
+import { FC, Fragment, ReactNode, useState } from "react"
+import { useTranslation } from "react-i18next"
+import { XStack, XStackProps, YStack, YStackProps } from "tamagui"
 
-import { Button } from './button'
-import { Icon } from './icon'
-import { Popup } from './popup'
-import { Text } from './text'
-import { Dialog } from './view'
+import { Button } from "./button"
+import { Icon } from "./icon"
+import { Popup } from "./popup"
+import { Text } from "./text"
+import { Dialog } from "./view"
 
 export const StatisticsInfo: FC<XStackProps> = ({ children, ...rest }) => {
   const [visible, setVisible] = useState(false)
@@ -15,7 +15,7 @@ export const StatisticsInfo: FC<XStackProps> = ({ children, ...rest }) => {
   return (
     <Fragment>
       <XStack {...rest} hitSlop={10} onPress={() => setVisible(true)}>
-        <Icon name="info" size={12} />
+        <Icon name="info" size={16} />
       </XStack>
       <Popup visible={visible} onClose={() => setVisible(false)}>
         <Dialog>

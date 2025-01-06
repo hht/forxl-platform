@@ -1,19 +1,17 @@
-import { Fragment, useEffect, useRef } from "react"
-import { useTranslation } from "react-i18next"
-import { shallow } from "zustand/shallow"
+import { Fragment, useEffect, useRef } from 'react'
+import { useTranslation } from 'react-i18next'
+import { shallow } from 'zustand/shallow'
 
-import { ScrollView, Tabs, Text, XStack, YStack } from "~/components"
-import { useOrderStore } from "~/hooks/useStore"
-import { DEVICE_WIDTH } from "~/lib/utils"
-import { ClosePosition } from "~/widgets/(home)/tabs/positions/close-position"
-import { OrderFilter } from "~/widgets/(home)/tabs/positions/order-filter"
+import { ScrollView, Tabs, Text, XStack, YStack } from '~/components'
+import { useOrderStore } from '~/hooks/useStore'
+import { DEVICE_WIDTH } from '~/lib/utils'
+import { ClosePosition } from '~/widgets/(home)/tabs/positions/close-position'
+import { OrderFilter } from '~/widgets/(home)/tabs/positions/order-filter'
 import {
-  ClosedOrders,
-  OpenOrders,
-  PendingOrders,
-} from "~/widgets/(home)/tabs/positions/position-list"
-import { Linear } from "~/widgets/shared/shape"
-import { WalletStatistics } from "~/widgets/shared/wallet-summary"
+    ClosedOrders, OpenOrders, PendingOrders
+} from '~/widgets/(home)/tabs/positions/position-list'
+import { Linear } from '~/widgets/shared/shape'
+import { WalletStatistics } from '~/widgets/shared/wallet-summary'
 
 export default function Page() {
   const { t } = useTranslation()

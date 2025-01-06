@@ -41,7 +41,7 @@ const ListItem: FC<
             useOrderStore.setState({
               currentPosition: data,
             })
-            router.push("/order")
+            router.push("/position")
           }}
           hitSlop={16}
         >

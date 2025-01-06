@@ -1,62 +1,92 @@
-import { useTranslation } from "react-i18next"
-import { useSafeAreaInsets } from "react-native-safe-area-context"
+import { FC } from 'react'
+import { useTranslation } from 'react-i18next'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { YStack } from 'tamagui'
+import { shallow } from 'zustand/shallow'
 
-import { useProfitAndLossStore } from "./profit-loss"
+import { getOpenPositions, getPendingPositions, proceedOrder } from '~/api/trade'
+import { Button, toast } from '~/components'
+import { useRequest } from '~/hooks/useRequest'
+import { useFroxlStore, useQuotesStore } from '~/hooks/useStore'
 
-import { updateOrder } from "~/api/trade"
-import { Button, toast, XStack } from "~/components"
-import { useRequest } from "~/hooks/useRequest"
-import { useOrderStore } from "~/hooks/useStore"
-
-export const OrderActions = () => {
+export const OrderActions: FC = () => {
   const { t } = useTranslation()
   const { bottom } = useSafeAreaInsets()
-  const { run, loading } = useRequest(updateOrder, {
+  const { loading, run } = useRequest(proceedOrder, {
     manual: true,
     onSuccess: () => {
-      toast.show(t("message.changePositionSuccess"))
+      if (useQuotesStore.getState().enablePending) {
+        getPendingPositions()
+      } else {
+        getOpenPositions()
+      }
+      useQuotesStore.setState({ order: { position: 0.01 } })
+      toast.show(t("message.orderSuccess"))
     },
   })
+  const { action, order, enablePending, disabled } = useQuotesStore(
+    (state) => ({
+      action: state.action,
+      order: state.order,
+      enablePending: state.enablePending,
+      disabled:
+        !state.currentFuture?.isDeal ||
+        !state.quotes[state.currentFuture?.futuresShow!],
+    }),
+    shallow
+  )
+  if (disabled) {
+    return null
+  }
   return (
-    <XStack gap="$md" px="$md" pb={bottom + 16}>
+    <YStack p="$md" pb={bottom + 16}>
       <Button
-        f={1}
-        type="accent"
-        onPress={() => {
-          useOrderStore.setState({
-            willClosePosition: useOrderStore.getState().currentPosition,
-          })
-        }}
-      >
-        {t("order.close")}
-      </Button>
-      <Button
-        f={1}
         isLoading={loading}
+        type={
+          enablePending
+            ? "accent"
+            : action === "buy"
+              ? "primary"
+              : "destructive"
+        }
+        disabled={
+          loading || !order?.position || (enablePending && !order?.price)
+        }
         onPress={() => {
-          const currentPosition = useOrderStore.getState().currentPosition
-          if (!currentPosition) return
           const {
-            stopProfitPrice,
-            stopLossPrice,
+            order,
+            currentFuture,
+            action,
             enableCloseLoss,
             enableCloseProfit,
-          } = useProfitAndLossStore.getState()
+            enablePending,
+          } = useQuotesStore.getState()
+          const quotes =
+            useQuotesStore.getState().quotes[
+              useQuotesStore.getState().currentFuture!.futuresShow!
+            ]
+          if (!currentFuture?.isDeal) {
+            toast.show(t("message.notInTradeTime"))
+            return
+          }
+          if (!quotes) {
+            toast.show(t("message.noQuotes"))
+            return
+          }
           if (enableCloseProfit) {
+            const orderPrice = useQuotesStore.getState().getOrderPrice(1)
             if (
-              currentPosition.openSafe === 0 &&
-              stopProfitPrice &&
-              stopProfitPrice <
-                currentPosition.price! + currentPosition.volatility! * 100
+              action === "buy" &&
+              order?.stopProfitPrice &&
+              orderPrice > order?.stopProfitPrice
             ) {
               toast.show(t("message.minProfitReached"))
               return
             }
             if (
-              currentPosition.openSafe === 1 &&
-              stopProfitPrice &&
-              stopProfitPrice >
-                currentPosition.price! - currentPosition.volatility! * 100
+              action === "sell" &&
+              order?.stopProfitPrice &&
+              orderPrice < order?.stopProfitPrice
             ) {
               toast.show(t("message.maxProfitReached"))
               return
@@ -64,34 +94,57 @@ export const OrderActions = () => {
           }
 
           if (enableCloseLoss) {
+            const orderPrice = useQuotesStore.getState().getOrderPrice(-1)
             if (
-              currentPosition.openSafe === 0 &&
-              stopLossPrice &&
-              stopLossPrice >
-                currentPosition.price! - currentPosition.volatility! * 100
+              action === "buy" &&
+              order?.stopLossPrice &&
+              orderPrice < order?.stopLossPrice
             ) {
-              toast.show(t("message.maxLossReached"))
+              toast.show(t("message.maxProfitReached"))
               return
             }
             if (
-              currentPosition.openSafe === 1 &&
-              stopLossPrice &&
-              stopLossPrice <
-                currentPosition.price! + currentPosition.volatility! * 100
+              action === "sell" &&
+              order?.stopLossPrice &&
+              orderPrice > order?.stopLossPrice
             ) {
-              toast.show(t("message.minLossReached"))
+              toast.show(t("message.minProfitReached"))
               return
             }
           }
+          const currentPrice = enablePending
+            ? (order?.price ?? 0)
+            : action === "buy"
+              ? quotes!.Bid
+              : quotes!.Ask
+
           run({
-            orderId: currentPosition.id!,
-            stopProfitPrice: enableCloseProfit ? (stopProfitPrice ?? 0) : 0,
-            stopLossPrice: enableCloseLoss ? (stopLossPrice ?? 0) : 0,
+            futuresId: useQuotesStore.getState().currentFuture!.futuresId!,
+            byOrSell: enablePending ? 7 : 0,
+            positions: {
+              spId: useFroxlStore.getState().account!.spId!,
+              position: order!.position!,
+              price: currentPrice,
+              isOverNight: 1,
+              openSafe: action === "buy" ? 0 : 1,
+              stopLossPrice:
+                enableCloseLoss && order?.stopLossPrice
+                  ? order.stopLossPrice
+                  : 0,
+              stopProfitPrice:
+                enableCloseProfit && order?.stopProfitPrice
+                  ? order.stopProfitPrice
+                  : 0,
+            },
           })
         }}
       >
-        {t("order.apply")}
+        {enablePending
+          ? t("trade.placeOrder")
+          : action === "buy"
+            ? t("trade.buy")
+            : t("trade.sell")}
       </Button>
-    </XStack>
+    </YStack>
   )
 }

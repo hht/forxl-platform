@@ -12,7 +12,17 @@
   },
   "message": {
     "copiedSuccess": "Copied successfully",
-    "copiedFailed": "Copy failed"
+    "copiedFailed": "Copy failed",
+    "minReached": "Minimum amount reached",
+    "minProfitReached": "Minimum profit amount reached",
+    "minLossReached": "Minimum loss amount reached",
+    "maxReached": "Maximum amount reached",
+    "maxProfitReached": "Maximum  profit amount reached",
+    "maxLossReached": "Maximum loss amount reached",
+    "changePositionSuccess": "Position changed successfully",
+    "orderSuccess": "Order placed successfully",
+    "noQuotes": "No Quotes",
+    "notInTradeTime": "It is not a trading time right now"
   },
   "tabs": {
     "home": "首页",
@@ -244,7 +254,44 @@
     "balance": "Balance",
     "equity": "Equity",
     "margin": "Margin",
-    "freeMargin": "Free Margin"
+    "profit": "Profit",
+    "freeMargin": "Free Margin",
+    "closeProfit": "Close at Profit",
+    "closeLoss": "Close at Loss",
+    "categories": "Categories",
+    "sell": "Sell",
+    "buy": "Buy",
+    "new": "New Position",
+    "chart": "Chart",
+    "info": "Info",
+    "max": "Max",
+    "requiredMargin": "Required Margin",
+    "buyWhen": "Buy when rate is",
+    "sellWhen": "Sell when rate is",
+    "rateDesc": "Also known as a Limit order, this feature enables automatic execution of a trade once the instrument’s price reaches the set level. This allows traders to enter the market at a predefined favorable price.",
+    "fromRate": "From last rate",
+    "currentPrice": "Current Price",
+    "placeOrder": "Place Order",
+    "closeProfitDesc": "Also known as Take Profit, this feature enables automatic close of a position once the asset's price reaches the set level. This is done to lock in profits and exit the trade with a positive return.",
+    "closeLossDesc": "Also known as Stop Loss, this feature enables automatic close of a position once the asset's price reaches the set level. This is a risk management tool used to protect capital from further loss.",
+    "balanceDesc": [
+      "Balance is the calculated total of all completed transactions on a trading account, including deposits and withdrawals. It can be the amount of funds you have before opening orders, or after you have closed all open orders; the balance does not change while orders are open."
+    ],
+    "equityDesc": [
+      "Equity = Balance + Floating P&L",
+      "Equity is the total value of the trading account, comprising of account balance and floating P&L."
+    ],
+    "marginDesc": [
+      "Margin is the funds used to open and maintain positions. If it drops too low, an alert, Margin call, is issued. Further decrease triggers Stop out, when losing positions are closed to save capital."
+    ],
+    "freeMarginDesc": [
+      "Free margin = Equity – Margin",
+      "Free margin is the funds available to open new positions after accounting for floating P&L and margin tied up in open positions."
+    ],
+    "openOn": "Market open on {{date}}"
+  },
+  "wallet": {
+    "addFunds": "Add Funds"
   },
   "positions": {
     "title": "Positions",
@@ -263,6 +310,14 @@
     "volume": "Volume",
     "currentPrice": "Current price",
     "pl": "P&L (profit plus loss)",
+    "today": "Today",
+    "lastWeek": "Last Week",
+    "lastMonth": "Last Month",
+    "last3Months": "Last 3 Months",
+    "last6Months": "Last 6 Months",
+    "lastYear": "Last Year",
+    "customPeriod": "Custom Period",
+    "yesterday": "Yesterday",
     "filters": {
       "title": "Filter",
       "children": [
@@ -275,7 +330,22 @@
         "Custom period"
       ]
     },
-
+    "closePosition": "Close Position",
     "clear": "clear filter"
+  },
+  "order": {
+    "title": "Details",
+    "volume": "Volume",
+    "price": "Price",
+    "margin": "Margin",
+    "ratio": "P/L Ratio",
+    "commission": "Commission",
+    "swap": "Swap",
+    "openTime": "Open Time",
+    "closeTime": "Close Time",
+    "id": "Position ID",
+    "profit": "Profit",
+    "close": "Close Position",
+    "apply": "Apply Changes"
   }
 }

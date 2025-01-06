@@ -1,28 +1,20 @@
-import BottomSheetBase from "@gorhom/bottom-sheet"
-import { useIsFocused } from "@react-navigation/native"
-import { AnimatePresence, useAnimationState } from "moti"
-import { FC, Fragment, useEffect, useRef, useState } from "react"
-import { useTranslation } from "react-i18next"
-import { useSafeAreaInsets } from "react-native-safe-area-context"
-import { shallow } from "zustand/shallow"
-import { createWithEqualityFn } from "zustand/traditional"
+import BottomSheetBase from '@gorhom/bottom-sheet'
+import { useIsFocused } from '@react-navigation/native'
+import { AnimatePresence, useAnimationState } from 'moti'
+import { FC, Fragment, useEffect, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { shallow } from 'zustand/shallow'
+import { createWithEqualityFn } from 'zustand/traditional'
 
-import { Notifier } from "./header"
+import { Notifier } from './header'
 
 import {
-  AnimatedFlow,
-  BottomSheet,
-  Button,
-  Icon,
-  Moti,
-  Separator,
-  Text,
-  XStack,
-  YStack,
-} from "~/components"
-import { useStatisticsStore } from "~/hooks/useStore"
-import { formatDecimal, t, uuid } from "~/lib/utils"
-import colors, { toRGBA } from "~/theme/colors"
+    AnimatedFlow, BottomSheet, Button, Icon, Moti, Separator, Text, XStack, YStack
+} from '~/components'
+import { usePromptStore, useStatisticsStore } from '~/hooks/useStore'
+import { formatDecimal, uuid } from '~/lib/utils'
+import colors, { toRGBA } from '~/theme/colors'
 
 const ListItem: FC<{ label: string; value: number; onPress: () => void }> = ({
   label,
@@ -51,7 +43,6 @@ const ListItem: FC<{ label: string; value: number; onPress: () => void }> = ({
 }
 
 const useStore = createWithEqualityFn<{
-  current?: "balance" | "equity" | "margin" | "freeMargin"
   title?: string
   desc?: string[]
   reloadKey?: string
@@ -83,7 +74,7 @@ const AnimatedDescription: FC<{ current: string }> = ({ current }) => {
   )
 }
 
-const Summary: FC<{ onPress: (v: string) => void }> = ({ onPress }) => {
+const Summary: FC = () => {
   const { t } = useTranslation()
   const { available, totalMoney, freezeMoney, supFreezeMoney } =
     useStatisticsStore((state) => state, shallow)
@@ -93,9 +84,7 @@ const Summary: FC<{ onPress: (v: string) => void }> = ({ onPress }) => {
         label={t("trade.balance")}
         value={available}
         onPress={() => {
-          onPress("balance")
           useStore.setState({
-            current: "balance",
             title: t("trade.balance"),
             desc: t("trade.balanceDesc", {
               returnObjects: true,
@@ -109,9 +98,7 @@ const Summary: FC<{ onPress: (v: string) => void }> = ({ onPress }) => {
         label={t("trade.equity")}
         value={totalMoney}
         onPress={() => {
-          onPress("equity")
-          useStore.setState({
-            current: "equity",
+          usePromptStore.setState({
             title: t("trade.equity"),
             desc: t("trade.equityDesc", {
               returnObjects: true,
@@ -125,9 +112,7 @@ const Summary: FC<{ onPress: (v: string) => void }> = ({ onPress }) => {
         label={t("trade.margin")}
         value={freezeMoney}
         onPress={() => {
-          onPress("margin")
-          useStore.setState({
-            current: "margin",
+          usePromptStore.setState({
             title: t("trade.margin"),
             desc: t("trade.marginDesc", {
               returnObjects: true,
@@ -141,9 +126,7 @@ const Summary: FC<{ onPress: (v: string) => void }> = ({ onPress }) => {
         label={t("trade.freeMargin")}
         value={supFreezeMoney}
         onPress={() => {
-          onPress("freeMargin")
-          useStore.setState({
-            current: "freeMargin",
+          usePromptStore.setState({
             title: t("trade.freeMargin"),
             desc: t("trade.freeMarginDesc", {
               returnObjects: true,
@@ -157,6 +140,8 @@ const Summary: FC<{ onPress: (v: string) => void }> = ({ onPress }) => {
 }
 
 export const WalletStatistics: FC = () => {
+  // eslint-disable-next-line react-compiler/react-compiler
+  "use no memo"
   const { top, bottom } = useSafeAreaInsets()
   const profit = useStatisticsStore((state) => state.profit, shallow)
   const { title, desc, reloadKey } = useStore((state) => state)
@@ -181,11 +166,12 @@ export const WalletStatistics: FC = () => {
   )
   const color = profit > 0 ? colors.primary : colors.destructive
   const isFocused = useIsFocused()
+  const { t } = useTranslation()
   useEffect(() => {
-    if (reloadKey && current && isFocused) {
+    if (reloadKey && title) {
       ref.current?.expand()
     }
-  }, [reloadKey, current, isFocused])
+  }, [reloadKey, title])
 
   useEffect(() => {
     if (visible) {
@@ -234,24 +220,13 @@ export const WalletStatistics: FC = () => {
               exit={{ opacity: 0, translateY: -20, height: 0 }}
               transition={{ type: "timing", duration: 200 }}
             >
-              <Summary onPress={(v: string) => setCurrent(v)} />
+              <Summary />
             </Moti>
           ) : null}
         </AnimatePresence>
       </YStack>
-      {current ? (
-        <BottomSheet
-          ref={ref}
-          index={0}
-          title={title}
-          onChange={(index) => {
-            if (index === -1) {
-              {
-                setCurrent(undefined)
-              }
-            }
-          }}
-        >
+      {title ? (
+        <BottomSheet ref={ref} index={0} title={title}>
           <YStack gap="$lg" px="$md" pb={bottom + 16}>
             {desc?.map((item, index) => (
               <Text key={index} col="$text" fos={15} lh={20}>
@@ -259,11 +234,9 @@ export const WalletStatistics: FC = () => {
               </Text>
             ))}
             <YStack ai="center">
-              {current ? <AnimatedDescription current={current} /> : null}
+              {title ? <AnimatedDescription current="balance" /> : null}
             </YStack>
-            {current === "balance" ? (
-              <Button>{t("wallet.addFunds")}</Button>
-            ) : null}
+            <Button>{t("wallet.addFunds")}</Button>
           </YStack>
         </BottomSheet>
       ) : null}

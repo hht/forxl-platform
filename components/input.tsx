@@ -1,24 +1,20 @@
-import { useBoolean } from "ahooks"
-import _ from "lodash"
-import { MotiText as AnimatedText, MotiView as AnimatedView } from "moti"
-import React, { FC, useCallback, useEffect, useRef, useState } from "react"
-import { StyleSheet, TextInput, TextInputProps } from "react-native"
+import { useBoolean } from 'ahooks'
+import _ from 'lodash'
+import { MotiText as AnimatedText, MotiView as AnimatedView } from 'moti'
+import React, { FC, useCallback, useEffect, useRef, useState } from 'react'
+import { StyleSheet, TextInput, TextInputProps } from 'react-native'
 import Animated, {
-  useAnimatedStyle,
-  useSharedValue,
-  withRepeat,
-  withSequence,
-  withTiming,
-} from "react-native-reanimated"
-import { XStack, YStack } from "tamagui"
+    useAnimatedStyle, useSharedValue, withRepeat, withSequence, withTiming
+} from 'react-native-reanimated'
+import { XStack, YStack } from 'tamagui'
 
-import { Button } from "./button"
-import { Icon } from "./icon"
-import { Text } from "./text"
-import { toast } from "./toast"
+import { Button } from './button'
+import { Icon } from './icon'
+import { Text } from './text'
+import { toast } from './toast'
 
-import { t } from "~/lib/utils"
-import colors from "~/theme/colors"
+import { t } from '~/lib/utils'
+import colors from '~/theme/colors'
 
 interface InputProps extends TextInputProps {
   addonAfter?: React.ReactNode
@@ -265,13 +261,13 @@ const Digit: FC<
     precision?: number
   }
 > = ({
-  className,
   value,
   min = 0,
   max = 999999999,
   step = 0.01,
   precision = 2,
   onChange,
+  editable = true,
   ...props
 }) => {
   const onSubmit = (value?: number) => {
@@ -298,11 +294,12 @@ const Digit: FC<
     <XStack h={56} boc="$border" w="100%" br="$sm" bw={1} ai="center">
       <Button
         type="icon"
+        disabled={!editable}
         onPress={() => {
           onSubmit((value ?? 0) - (step ?? 0))
         }}
       >
-        <Icon name="minus" className="w-5 h-5" />
+        <Icon name="minus" />
       </Button>
       <TextInput
         placeholderTextColor="transparent"
@@ -331,9 +328,11 @@ const Digit: FC<
         }}
         keyboardAppearance="dark"
         style={[styles.container, styles.digit]}
+        {...props}
       />
       <Button
         type="icon"
+        disabled={!editable}
         onPress={() => {
           onSubmit((value ?? 0) + (step ?? 0))
         }}
