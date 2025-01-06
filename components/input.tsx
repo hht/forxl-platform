@@ -114,12 +114,7 @@ export const InputBase: FC<InputProps> = ({
   )
 }
 
-const Password: FC<InputProps> = ({
-  className,
-  addonAfter,
-  value,
-  ...props
-}) => {
+const Password: FC<InputProps> = ({ addonAfter, value, ...props }) => {
   const [hidden, { toggle }] = useBoolean(true)
   return (
     <InputBase

@@ -154,7 +154,7 @@ export const Button = forwardRef(
           {isLoading ? (
             <Spinner size="small" />
           ) : _.isString(children) ? (
-            <Text fos={16} fow="600" col={rest.color ?? styles.color}>
+            <Text fos={16} lh={20} fow="600" col={rest.color ?? styles.color}>
               {children}
             </Text>
           ) : (

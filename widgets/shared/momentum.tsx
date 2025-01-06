@@ -5,8 +5,7 @@ import { AnimatedFlow, Icon, XStack } from '~/components'
 export const Momentum: FC<{
   data?: Future
   quotes: Pick<Quotes, "Bid"> & { BidDiff: number }
-  className?: string
-}> = ({ data, quotes, className }) => {
+}> = ({ data, quotes }) => {
   if (!data || !data.isDeal || !data.lastClosePrice || !quotes?.Bid) {
     return null
   }

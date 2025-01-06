@@ -1,27 +1,17 @@
-import BottomSheetBase from "@gorhom/bottom-sheet"
-import { router, Stack } from "expo-router"
-import { useRef } from "react"
-import { useTranslation } from "react-i18next"
-import { useSafeAreaInsets } from "react-native-safe-area-context"
+import BottomSheetBase from '@gorhom/bottom-sheet'
+import { router, Stack } from 'expo-router'
+import { useRef } from 'react'
+import { useTranslation } from 'react-i18next'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
-import { getAttestationFlag, getProfile } from "~/api/account"
+import { getAttestationFlag, getProfile } from '~/api/account'
 import {
-  BottomSheet,
-  Button,
-  Card,
-  Copyable,
-  Figure,
-  Icon,
-  Image,
-  ListItem,
-  ScrollView,
-  Text,
-  XStack,
-  YStack,
-} from "~/components"
-import { CACHE_KEY, useRequest } from "~/hooks/useRequest"
-import { useFroxlStore } from "~/hooks/useStore"
-import { SupportTip } from "~/widgets/(home)/profile"
+    BottomSheet, Button, Card, Copyable, Figure, Icon, Image, ListItem, ScrollView, Text, XStack,
+    YStack
+} from '~/components'
+import { CACHE_KEY, useRequest } from '~/hooks/useRequest'
+import { useFroxlStore } from '~/hooks/useStore'
+import { SupportTip } from '~/widgets/(home)/profile'
 
 const LEVEL_ICON = ["lv0", "lv1", "lv2"] as const
 
@@ -55,7 +45,9 @@ export default function Page() {
               bc="$secondary"
             />
             <YStack f={1} gap="$xs">
-              <Text fos={17}>{account?.email}</Text>
+              <Text fos={17} lh={20}>
+                {account?.email}
+              </Text>
               <XStack ai="center" gap="$xs">
                 <Text>UID:</Text>
                 <Copyable col="$primary">{`${account?.id}`}</Copyable>
@@ -79,7 +71,11 @@ export default function Page() {
             </XStack>
             <XStack gap="$sm" ai="center">
               <Figure name={`lv${currentLevel}`} width={21} height={23} />
-              <Text fos={15} col="$secondary">{`LV${currentLevel}`}</Text>
+              <Text
+                fos={15}
+                lh={18}
+                col="$secondary"
+              >{`LV${currentLevel}`}</Text>
             </XStack>
           </XStack>
         </Card>
@@ -139,7 +135,9 @@ export default function Page() {
             <YStack key={index} gap={12} py="$md">
               <XStack ai="center" gap="$sm">
                 <Figure name={LEVEL_ICON[index]} width={21} height={23} />
-                <Text fos={15}>{level.title}</Text>
+                <Text fos={15} lh={18}>
+                  {level.title}
+                </Text>
               </XStack>
               <Text col="$secondary">{level.desc}</Text>
             </YStack>

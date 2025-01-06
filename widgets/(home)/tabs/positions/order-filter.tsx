@@ -1,22 +1,13 @@
-import BottomSheetBase from "@gorhom/bottom-sheet"
-import { toDateId } from "@marceloterreiro/flash-calendar"
-import { FC, Fragment, useEffect, useRef, useState } from "react"
-import { useSafeAreaInsets } from "react-native-safe-area-context"
-import { shallow } from "zustand/shallow"
+import BottomSheetBase from '@gorhom/bottom-sheet'
+import { toDateId } from '@marceloterreiro/flash-calendar'
+import { FC, Fragment, useEffect, useRef, useState } from 'react'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { shallow } from 'zustand/shallow'
 
-import {
-  BottomSheet,
-  Button,
-  Calendar,
-  Icon,
-  ScrollView,
-  Text,
-  XStack,
-  YStack,
-} from "~/components"
-import { getDate } from "~/hooks/useLocale"
-import { OPTIONS, useOrderStore } from "~/hooks/useStore"
-import { dayjs, DEVICE_WIDTH, t, uuid } from "~/lib/utils"
+import { BottomSheet, Button, Calendar, Icon, ScrollView, Text, XStack, YStack } from '~/components'
+import { getDate } from '~/hooks/useLocale'
+import { OPTIONS, useOrderStore } from '~/hooks/useStore'
+import { dayjs, DEVICE_WIDTH, t, uuid } from '~/lib/utils'
 
 const getCalendarDayFormat = (date: Date) => date.getDate().toString()
 const getCalendarWeekDayFormat = (date: Date) =>
@@ -168,6 +159,7 @@ export const OrderFilter: FC = () => {
                 >
                   <Text
                     fos={15}
+                    lh={18}
                     col={
                       (current ?? filters.current.options) === option
                         ? "$primary"

@@ -14,7 +14,7 @@ export const AssetCard: FC = () => {
       <YStack gap="$sm" f={1}>
         <Text>{t("home.wallet")}</Text>
         <XStack ai="baseline" gap="$xs">
-          <Text col="$primary" fos={28} lh={28} mr="$xs" fow="900">
+          <Text col="$primary" fos={28} lh={32} mr="$xs" fow="900">
             {formatDecimal(data?.userWalletDetail.fundsAccount.available ?? 0)}
           </Text>
           <Text>USD</Text>

@@ -25,11 +25,11 @@
     "notInTradeTime": "It is not a trading time right now"
   },
   "tabs": {
-    "home": "Home",
-    "trade": "交易",
-    "positions": "订单",
-    "partner": "合作伙伴",
-    "wallet": "钱包"
+    "home": "Dashboard",
+    "trade": "Trade",
+    "positions": "Positions",
+    "partner": "Partner",
+    "wallet": "Wallet"
   },
   "anon": {
     "title": "Froxl Markets",

@@ -31,9 +31,9 @@ const Momentum: FC<{
 }> = ({ data, quotes }) => {
   if (!data || !data.isDeal || !data.lastClosePrice || !quotes?.Bid) {
     return (
-      <XStack className="text-base font-semibold text-secondary">
+      <XStack>
         <Text col="$secondary" fow="bold">
-          -
+          $0.00%
         </Text>
       </XStack>
     )

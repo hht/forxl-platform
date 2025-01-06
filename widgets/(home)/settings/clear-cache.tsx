@@ -23,7 +23,7 @@ export const ClearCacheItem = () => {
       />
       <Popup visible={visible} onClose={() => setVisible(false)}>
         <Dialog ai="center" jc="center">
-          <Text fos={20} lh={20}>
+          <Text fos={20} lh={22}>
             {dict.clearCache}
           </Text>
           <Text col="$secondary" ta="center">

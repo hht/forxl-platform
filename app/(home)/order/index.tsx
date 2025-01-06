@@ -1,10 +1,9 @@
-import { Stack } from "expo-router"
+import { Stack } from 'expo-router'
 
-import { YStack } from "~/components"
-import { FutureDetail } from "~/widgets/(home)/order/future-detail"
-import { OrderActions } from "~/widgets/(home)/order/order-actions"
-import { Linear } from "~/widgets/shared/shape"
-import { WalletStatistics } from "~/widgets/shared/wallet-summary"
+import { YStack } from '~/components'
+import { FutureDetail } from '~/widgets/(home)/order/future-detail'
+import { Linear } from '~/widgets/shared/shape'
+import { WalletStatistics } from '~/widgets/shared/wallet-summary'
 
 export default function Page() {
   return (

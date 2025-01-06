@@ -126,6 +126,8 @@ export const FutureDetail = () => {
         horizontal
         w={DEVICE_WIDTH}
         showsHorizontalScrollIndicator={false}
+        pagingEnabled
+        scrollEnabled={false}
       >
         <ScrollView f={1} w={DEVICE_WIDTH} showsVerticalScrollIndicator={false}>
           <YStack p="$md" gap="$sm" w="100%">
@@ -148,12 +150,7 @@ export const FutureDetail = () => {
           </YStack>
         </ScrollView>
         <ScrollView f={1} w={DEVICE_WIDTH} showsVerticalScrollIndicator={false}>
-          <FutureInfo
-            future={future}
-            onPress={() => {
-              setActiveIndex(0)
-            }}
-          />
+          <YStack p="$md" gap="$sm" w="100%" />
         </ScrollView>
         <ScrollView f={1} w={DEVICE_WIDTH} showsVerticalScrollIndicator={false}>
           <FutureInfo

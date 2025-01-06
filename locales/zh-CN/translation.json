@@ -233,8 +233,8 @@
   },
   "settings": {
     "title": "Settings",
-    "timeZone": "Time Zone",
-    "language": "Language",
+    "timeZone": "时区",
+    "language": "语言",
     "clearCache": "Clear Cache",
     "clearCacheDesc": "Are you sure you want to clear the cache? Deletingit won't affect the normal use of the app.",
     "about": "About Us",

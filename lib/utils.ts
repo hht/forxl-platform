@@ -7,14 +7,11 @@ import localeData from 'dayjs/plugin/localeData'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import utc from 'dayjs/plugin/utc'
 import * as FileSystem from 'expo-file-system'
-import * as Localization from 'expo-localization'
 import { router } from 'expo-router'
 import i18n from 'i18next'
 import _ from 'lodash'
-import { initReactI18next } from 'react-i18next'
 import { Dimensions, LayoutAnimation } from 'react-native'
 
-import { useFroxlStore } from '~/hooks/useStore'
 import en from '~/locales/en-US/translation.json'
 import zh from '~/locales/zh-CN/translation.json'
 
@@ -46,19 +43,6 @@ export type I18NResource = NestedKeyOf<(typeof resources)["en"]>
 export { i18n }
 
 export const t = i18n.t.bind(i18n)
-
-export const initI18Next = async () => {
-  const locale = Localization.getLocales()[0].languageCode
-  i18n.use(initReactI18next).init({
-    debug: false,
-    resources,
-    lng: useFroxlStore.getState().language ?? locale ?? "en",
-    defaultNS: "translation",
-    interpolation: {
-      escapeValue: false,
-    },
-  })
-}
 
 export const animateOnNextFrame = () => {
   LayoutAnimation.configureNext({
