@@ -1,11 +1,11 @@
-import { useInterval } from "ahooks"
-import _ from "lodash"
-import { useCallback, useEffect, useRef } from "react"
-import { createWithEqualityFn } from "zustand/traditional"
+import { useInterval } from 'ahooks'
+import _ from 'lodash'
+import { useCallback, useEffect, useRef } from 'react'
+import { createWithEqualityFn } from 'zustand/traditional'
 
-import { useFroxlStore, useQuotesStore } from "./useStore"
+import { useFroxlStore, useQuotesStore } from './useStore'
 
-import { getOpenPositions } from "~/api/trade"
+import { getOpenPositions } from '~/api/trade'
 
 export enum ReadyState {
   Connecting = 0,
@@ -37,7 +37,6 @@ const useWebSocketStore = createWithEqualityFn<WebSocketState>((set) => ({
 
 export const useWebSocket = () => {
   const { quotes } = useWebSocketStore()
-  const messageQueue = useRef<any[]>([])
   const websocketRef = useRef<WebSocket | null>(null)
   const lastMessageTimeRef = useRef<number>(Date.now())
   const sendMessage = useCallback(async (message: any) => {
@@ -47,9 +46,7 @@ export const useWebSocket = () => {
       }
       websocketRef.current?.send(JSON.stringify(message))
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    } catch (e) {
-      messageQueue.current.push(message)
-    }
+    } catch (e) {}
   }, [])
   const connect = useCallback(async () => {
     if (websocketRef.current) {
@@ -65,9 +62,6 @@ export const useWebSocket = () => {
         type: "watchAccount",
         data: { userNumber: useFroxlStore.getState().userNumber },
       })
-      while (messageQueue.current.length) {
-        sendMessage(messageQueue.current.shift())
-      }
     }
 
     websocketRef.current.onmessage = (m) => {
