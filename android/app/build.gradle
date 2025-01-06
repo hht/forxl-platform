@@ -124,6 +124,11 @@ android {
     androidResources {
         ignoreAssetsPattern '!.svn:!.git:!.ds_store:!*.scc:!CVS:!thumbs.db:!picasa.ini:!*~'
     }
+    configurations {
+        all*.exclude module: 'bcprov-jdk18on'
+        all*.exclude module: 'bcutil-jdk18on'
+        
+    }
 }
 
 // Apply static values from `gradle.properties` to the `android.packagingOptions`
