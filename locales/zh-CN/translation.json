@@ -224,21 +224,21 @@
     ]
   },
   "security": {
-    "title": "Security",
+    "title": "安全",
     "children": [
-      "Reset Password",
+      "重置密码",
       "Two-Factor Authentication",
       "Account Deactivation"
     ]
   },
   "settings": {
-    "title": "Settings",
+    "title": "设置",
     "timeZone": "时区",
     "language": "语言",
-    "clearCache": "Clear Cache",
+    "clearCache": "清除缓存",
     "clearCacheDesc": "Are you sure you want to clear the cache? Deletingit won't affect the normal use of the app.",
     "about": "About Us",
-    "ver": "Version",
+    "ver": "版本",
     "clearCacheSuccess": "Cache Cleared Successfully"
   },
   "notifications": {

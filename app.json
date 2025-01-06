@@ -47,7 +47,11 @@
     "runtimeVersion": "1.0.0",
     "updates": {
       "url": "https://u.expo.dev/f9ba398b-53b1-424d-843e-d6dfd0259367",
-      "channel": "production"
+      "channel": "production",
+      "requestHeaders": {
+        "expo-runtime-version": "1.0.0",
+        "expo-channel-name": "production"
+      }
     }
   }
 }
