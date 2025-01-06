@@ -1,10 +1,11 @@
-import { Stack } from "expo-router"
-import { Fragment } from "react"
-import { useTranslation } from "react-i18next"
+import { Stack } from 'expo-router'
+import { Fragment } from 'react'
+import { useTranslation } from 'react-i18next'
 
-import { Icon, ListItem, ScrollView } from "~/components"
-import { useFroxlStore } from "~/hooks/useStore"
-import { LANGUAGES } from "~/lib/constants"
+import { Icon, ListItem, ScrollView } from '~/components'
+import { useFroxlStore } from '~/hooks/useStore'
+import { LANGUAGES } from '~/lib/constants'
+import { dayjs, i18n } from '~/lib/utils'
 
 export default function Layout() {
   const { t } = useTranslation()
@@ -18,6 +19,8 @@ export default function Layout() {
             title={it.label as string}
             key={it.value}
             onPress={() => {
+              i18n.changeLanguage(it.value as string)
+              dayjs.locale(it.value as string)
               useFroxlStore.setState({ language: it.value as string })
             }}
             isLink={false}
