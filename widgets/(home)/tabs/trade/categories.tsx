@@ -110,6 +110,7 @@ export const FutureCategories: FC = () => {
           index={0}
           title={t("trade.categories")}
           ref={ref}
+          // eslint-disable-next-line react-compiler/react-compiler
           onClose={ref.current?.close}
           onChange={(index) => {
             if (index === -1) {

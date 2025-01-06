@@ -1,24 +1,13 @@
-import BottomSheetBase from "@gorhom/bottom-sheet"
-import { Fragment, useRef } from "react"
+import { Fragment } from "react"
 import { useTranslation } from "react-i18next"
-import { useSafeAreaInsets } from "react-native-safe-area-context"
 
 import { format, LEVEL_COLORS } from "./utils"
 
-import {
-  BottomSheet,
-  Card,
-  Icon,
-  Justified,
-  Row,
-  Text,
-  XStack,
-  YStack,
-} from "~/components"
-import { usePartnerStore } from "~/hooks/useStore"
+import { Card, Icon, Justified, Row, Text, XStack } from "~/components"
+import { usePartnerStore, usePromptStore } from "~/hooks/useStore"
+import { uuid } from "~/lib/utils"
 
 export const LevelInfo = () => {
-  const { bottom } = useSafeAreaInsets()
   const { t } = useTranslation()
   const dict = t("partner", {
     returnObjects: true,
@@ -28,7 +17,6 @@ export const LevelInfo = () => {
     currentConfig: state.config?.find((it) => it.level === state.currentLevel),
   }))
 
-  const bonusSheetRef = useRef<BottomSheetBase>(null)
   return (
     <Fragment>
       <Card gap="$md" blw="$xs" blc={LEVEL_COLORS[currentLevel] ?? "#CCB6A0"}>
@@ -43,7 +31,13 @@ export const LevelInfo = () => {
             <Text col="$secondary">{t("partner.tradingBonus")}</Text>
             <XStack
               hitSlop={10}
-              onPress={() => bonusSheetRef.current?.expand()}
+              onPress={() => {
+                usePromptStore.setState({
+                  title: dict.bonusDesc.title,
+                  desc: dict.bonusDesc.description,
+                  reloadKey: uuid(),
+                })
+              }}
             >
               <Icon name="info" size={12} />
             </XStack>
@@ -97,13 +91,6 @@ export const LevelInfo = () => {
           </Justified>
         ) : null}
       </Card>
-      <BottomSheet ref={bonusSheetRef} title={dict.bonusDesc.title}>
-        <YStack px="$md" gap="$md" pb={bottom + 16}>
-          {dict.bonusDesc.description.map((it, index) => (
-            <Text key={index}>{it}</Text>
-          ))}
-        </YStack>
-      </BottomSheet>
     </Fragment>
   )
 }

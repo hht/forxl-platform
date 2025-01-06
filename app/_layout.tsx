@@ -15,6 +15,7 @@ import { Toaster } from "~/components"
 import { initI18Next } from "~/lib/utils"
 import config from "~/theme/tamagui.config"
 import { AccountDetector } from "~/widgets/shared/detector"
+import { PromptSheet } from "~/widgets/shared/prompt-sheet"
 
 enableScreens(true)
 enableFreeze(true)
@@ -67,6 +68,7 @@ export default function RootLayout() {
           </ThemeProvider>
           <StatusBar style="light" translucent />
           <Toaster />
+          <PromptSheet />
         </TamaguiProvider>
       </GestureHandlerRootView>
     </Fragment>

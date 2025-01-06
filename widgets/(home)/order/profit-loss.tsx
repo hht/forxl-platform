@@ -6,12 +6,9 @@ import { shallow } from "zustand/shallow"
 import { createWithEqualityFn } from "zustand/traditional"
 
 import { Collapse, Icon, Input, Text, XStack, YStack } from "~/components"
-import { useOrderStore } from "~/hooks/useStore"
+import { useOrderStore, usePromptStore } from "~/hooks/useStore"
+import { uuid } from "~/lib/utils"
 import { ProfitTracker } from "~/widgets/(home)/tabs/positions/profit-tracker"
-
-const useStore = createWithEqualityFn<{ title?: string; desc?: string }>()(
-  (set) => ({})
-)
 
 export const useProfitAndLossStore = createWithEqualityFn<{
   stopProfitPrice?: number
@@ -84,9 +81,10 @@ export const ProfitAndLoss = () => {
             <XStack
               hitSlop={16}
               onPress={() => {
-                useStore.setState({
+                usePromptStore.setState({
                   title: t("trade.closeProfit"),
                   desc: t("trade.closeProfitDesc"),
+                  reloadKey: uuid(),
                 })
                 ref.current?.expand()
               }}
@@ -128,9 +126,10 @@ export const ProfitAndLoss = () => {
             <XStack
               hitSlop={16}
               onPress={() => {
-                useStore.setState({
+                usePromptStore.setState({
                   title: t("trade.closeLoss"),
                   desc: t("trade.closeLossDesc"),
+                  reloadKey: uuid(),
                 })
                 ref.current?.expand()
               }}

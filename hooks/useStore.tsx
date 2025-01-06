@@ -199,6 +199,12 @@ export const useSymbolStore = createWithEqualityFn<{
   codeOrName: "",
 }))
 
+export const usePromptStore = createWithEqualityFn<{
+  reloadKey?: string
+  title?: string
+  desc?: string | string[]
+}>(() => ({}))
+
 export const usePartnerStore = createWithEqualityFn<{
   activeIndex: number
   partnerLevel: number
