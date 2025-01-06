@@ -8,7 +8,8 @@
     "icon": "./assets/images/icon.png",
     "scheme": "froxl",
     "userInterfaceStyle": "dark",
-    "newArchEnabled": true,
+    "newArchEnabled": false,
+    "jsEngine": "jsc",
     "splash": {
       "image": "./assets/images/splash-icon.png",
       "resizeMode": "contain",

@@ -42,12 +42,6 @@ const ListItem: FC<{ label: string; value: number; onPress: () => void }> = ({
   )
 }
 
-const useStore = createWithEqualityFn<{
-  title?: string
-  desc?: string[]
-  reloadKey?: string
-}>()((set) => ({}))
-
 const AnimatedDescription: FC<{ current: string }> = ({ current }) => {
   const it = useStatisticsStore((state) => {
     switch (current) {
@@ -74,7 +68,9 @@ const AnimatedDescription: FC<{ current: string }> = ({ current }) => {
   )
 }
 
-const Summary: FC = () => {
+const Summary: FC<{
+  onChange: (v: { title: string; desc: string[]; reloadKey: string }) => void
+}> = ({ onChange }) => {
   const { t } = useTranslation()
   const { available, totalMoney, freezeMoney, supFreezeMoney } =
     useStatisticsStore((state) => state, shallow)
@@ -84,7 +80,7 @@ const Summary: FC = () => {
         label={t("trade.balance")}
         value={available}
         onPress={() => {
-          useStore.setState({
+          onChange({
             title: t("trade.balance"),
             desc: t("trade.balanceDesc", {
               returnObjects: true,
@@ -144,8 +140,11 @@ export const WalletStatistics: FC = () => {
   "use no memo"
   const { top, bottom } = useSafeAreaInsets()
   const profit = useStatisticsStore((state) => state.profit, shallow)
-  const { title, desc, reloadKey } = useStore((state) => state)
-  const [current, setCurrent] = useState<string | undefined>(undefined)
+  const [{ title, desc, reloadKey }, setState] = useState<{
+    title?: string
+    desc?: string[]
+    reloadKey?: string
+  }>({})
   const ref = useRef<BottomSheetBase>(null)
   const [visible, setVisible] = useState(false)
   const state = useAnimationState(
@@ -220,7 +219,7 @@ export const WalletStatistics: FC = () => {
               exit={{ opacity: 0, translateY: -20, height: 0 }}
               transition={{ type: "timing", duration: 200 }}
             >
-              <Summary />
+              <Summary onChange={setState} />
             </Moti>
           ) : null}
         </AnimatePresence>
