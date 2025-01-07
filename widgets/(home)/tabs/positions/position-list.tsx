@@ -1,30 +1,21 @@
-import { useIsFocused } from "@react-navigation/native"
-import { useInfiniteScroll } from "ahooks"
-import { router } from "expo-router"
-import { FC, Fragment, ReactNode, useCallback } from "react"
-import { useTranslation } from "react-i18next"
-import {
-  ActivityIndicator,
-  FlatList,
-  Platform,
-  RefreshControl,
-} from "react-native"
-import { XStackProps } from "tamagui"
-import { shallow } from "zustand/shallow"
+import { useIsFocused } from '@react-navigation/native'
+import { useInfiniteScroll } from 'ahooks'
+import { router } from 'expo-router'
+import { FC, Fragment, ReactNode, useCallback } from 'react'
+import { useTranslation } from 'react-i18next'
+import { ActivityIndicator, FlatList, Platform, RefreshControl } from 'react-native'
+import { XStackProps } from 'tamagui'
+import { shallow } from 'zustand/shallow'
 
-import {
-  getClosedPositions,
-  getOpenPositions,
-  getPendingPositions,
-} from "~/api/trade"
-import { AnimatedFlow, Figure, Icon, Text, XStack, YStack } from "~/components"
-import { getRecentDate } from "~/hooks/useLocale"
-import { CACHE_KEY, useRequest } from "~/hooks/useRequest"
-import { useOrderStore } from "~/hooks/useStore"
-import { subscribeQuotes } from "~/hooks/useWebsocket"
-import { dayjs, DEVICE_WIDTH, formatDecimal, uuid } from "~/lib/utils"
-import colors, { toRGBA } from "~/theme/colors"
-import { PriceCell } from "~/widgets/shared/price-cell"
+import { getClosedPositions, getOpenPositions, getPendingPositions } from '~/api/trade'
+import { AnimatedFlow, Figure, Icon, Text, XStack, YStack } from '~/components'
+import { getRecentDate } from '~/hooks/useLocale'
+import { CACHE_KEY, useRequest } from '~/hooks/useRequest'
+import { useOrderStore } from '~/hooks/useStore'
+import { subscribeQuotes } from '~/hooks/useWebsocket'
+import { dayjs, DEVICE_WIDTH, formatDecimal, uuid } from '~/lib/utils'
+import colors, { toRGBA } from '~/theme/colors'
+import { PriceCell } from '~/widgets/shared/price-cell'
 
 const ListItem: FC<
   {
@@ -122,7 +113,7 @@ const ArchivedListItem: FC<{ data: Position; dateVisible?: boolean }> = ({
       {dateVisible ? (
         <YStack px="$md" pt="$sm" w="100%">
           <Text fos={11} col="$secondary">
-            {getRecentDate(data.createTime)}
+            {getRecentDate(data.overTime)}
           </Text>
         </YStack>
       ) : null}
@@ -130,7 +121,7 @@ const ArchivedListItem: FC<{ data: Position; dateVisible?: boolean }> = ({
         <YStack gap="$sm">
           <Text fow="900">{data.futuresCode}</Text>
           <Text col="$secondary">
-            {dayjs(data.createTime).format("MMM DD, YYYY HH:mm")}
+            {dayjs(data.overTime).format("MMM DD, YYYY HH:mm")}
           </Text>
         </YStack>
         <YStack gap="$sm" f={1}>
@@ -387,8 +378,8 @@ export const ClosedOrders = () => {
             data={item}
             dateVisible={
               index === 0 ||
-              dayjs(item.createTime).format("YYYY-MM-DD") !==
-                dayjs(data?.list?.[index - 1]?.createTime).format("YYYY-MM-DD")
+              dayjs(item.overTime).format("YYYY-MM-DD") !==
+                dayjs(data?.list?.[index - 1]?.overTime).format("YYYY-MM-DD")
             }
           />
         )}

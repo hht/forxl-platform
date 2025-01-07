@@ -1,11 +1,23 @@
 import { request } from '~/hooks/useRequest'
+import { toInfinite } from '~/lib/utils'
 
-export const getNotifications = async (type: string) => {
-  return await request<PaginationResponse<Message>, { type: number }>(
-    "/user/userMessage",
-    "POST",
-    { type: parseInt(type) }
-  )
+export const getNotifications = async ({
+  type,
+  currentPage = 1,
+}: {
+  type: string
+  currentPage?: number
+}) => {
+  return await request<
+    PaginationResponse<Message>,
+    { type: number; currentPage: number; pageSize: number }
+  >("/user/userMessage", "POST", {
+    type: parseInt(type),
+    currentPage,
+    pageSize: 10,
+  }).then((res) => {
+    return toInfinite(res, currentPage)
+  })
 }
 
 export const readAllNotifications = async (type = 0) => {
