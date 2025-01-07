@@ -2,7 +2,6 @@ import { useIsFocused } from '@react-navigation/native'
 import { useInfiniteScroll } from 'ahooks'
 import dayjs from 'dayjs'
 import { Stack, useLocalSearchParams } from 'expo-router'
-import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ActivityIndicator, FlatList, Platform, RefreshControl } from 'react-native'
 
@@ -10,7 +9,8 @@ import { getNotifications, readAllNotifications, readNotification } from '~/api/
 import { Screen, Text, XStack } from '~/components'
 import { useRequest } from '~/hooks/useRequest'
 import colors from '~/theme/colors'
-import { ListEmptyComponent, ListItem } from '~/widgets/(home)/notifications/list'
+import { ListItem } from '~/widgets/(home)/notifications/list'
+import { ListEmptyComponent, ListFooterComponent } from '~/widgets/shared/list'
 
 export default function Page() {
   const { t, i18n } = useTranslation()
@@ -48,31 +48,6 @@ export default function Page() {
     }
   )
 
-  const ListFooterComponent = useCallback(() => {
-    if (!data?.list.length) return null
-    return (
-      <XStack
-        gap="$md"
-        p="$md"
-        ai="center"
-        w="100%"
-        jc="center"
-        pb={loading || loadingMore ? "$md" : 0}
-      >
-        {loading || loadingMore ? (
-          <ActivityIndicator color={colors.tertiary} />
-        ) : null}
-        <Text col="$tertiary" fow="700">
-          {loading
-            ? t("home.loading")
-            : loadingMore
-              ? t("home.loadingMore")
-              : ""}
-        </Text>
-      </XStack>
-    )
-  }, [loading, loadingMore, t, data?.list.length])
-
   const unRead = (data?.list?.filter((item) => !item.isRead)?.length ?? 0) > 0
 
   return (
@@ -99,7 +74,8 @@ export default function Page() {
         refreshing={loading}
         refreshControl={
           <RefreshControl
-            tintColor={colors.secondary}
+            colors={[colors.secondary]}
+            progressBackgroundColor={colors.card}
             refreshing={loading}
             onRefresh={reload}
           />
@@ -125,9 +101,16 @@ export default function Page() {
         )}
         onEndReached={loadMore}
         ListEmptyComponent={() => (
-          <ListEmptyComponent loading={loading} type={Number(type)} />
+          <ListEmptyComponent
+            loading={loading}
+            title={t(
+              type === "0"
+                ? "notifications.emptySystem"
+                : "notifications.emptyTrade"
+            )}
+          />
         )}
-        ListFooterComponent={ListFooterComponent}
+        ListFooterComponent={<ListFooterComponent loading={loadingMore} />}
       />
     </Screen>
   )

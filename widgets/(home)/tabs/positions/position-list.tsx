@@ -1,9 +1,9 @@
 import { useIsFocused } from '@react-navigation/native'
 import { useInfiniteScroll } from 'ahooks'
 import { router } from 'expo-router'
-import { FC, Fragment, ReactNode, useCallback } from 'react'
+import { FC, Fragment, ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
-import { ActivityIndicator, FlatList, Platform, RefreshControl } from 'react-native'
+import { FlatList, Platform, RefreshControl } from 'react-native'
 import { XStackProps } from 'tamagui'
 import { shallow } from 'zustand/shallow'
 
@@ -15,6 +15,7 @@ import { useOrderStore } from '~/hooks/useStore'
 import { subscribeQuotes } from '~/hooks/useWebsocket'
 import { dayjs, DEVICE_WIDTH, formatDecimal, uuid } from '~/lib/utils'
 import colors, { toRGBA } from '~/theme/colors'
+import { ListFooterComponent } from '~/widgets/shared/list'
 import { PriceCell } from '~/widgets/shared/price-cell'
 
 const ListItem: FC<
@@ -157,11 +158,7 @@ const ListEmptyComponent: FC<{
     shallow
   )
   if (loading) {
-    return (
-      <YStack ai="center" jc="center" h="100%" gap="$md">
-        <Text col="$tertiary">{t("home.loading")}</Text>
-      </YStack>
-    )
+    return null
   }
   return (
     <YStack ai="center" jc="center" h="100%" gap="$md" px={48}>
@@ -253,7 +250,8 @@ export const OpenOrders = () => {
         refreshing={loading}
         refreshControl={
           <RefreshControl
-            tintColor={colors.secondary}
+            colors={[colors.secondary]}
+            progressBackgroundColor={colors.card}
             refreshing={loading}
             onRefresh={refresh}
           />
@@ -287,7 +285,8 @@ export const PendingOrders = () => {
         refreshing={loading}
         refreshControl={
           <RefreshControl
-            tintColor={colors.secondary}
+            colors={[colors.secondary]}
+            progressBackgroundColor={colors.card}
             refreshing={loading}
             onRefresh={refresh}
           />
@@ -322,7 +321,6 @@ const ListHeaderComponent: FC<{ isEmpty?: boolean }> = ({ isEmpty }) => {
 
 export const ClosedOrders = () => {
   const isFocused = useIsFocused()
-  const { t } = useTranslation()
   const reloadKey = useOrderStore((state) => state.reloadKey, shallow)
   const { data, loading, loadMore, reload, loadingMore } = useInfiniteScroll<{
     list: Position[]
@@ -344,30 +342,6 @@ export const ClosedOrders = () => {
       isNoMore: (d) => d?.nextId === undefined,
     }
   )
-  const ListFooterComponent = useCallback(() => {
-    if (!data?.list.length) return null
-    return (
-      <XStack
-        gap="$md"
-        p="$md"
-        ai="center"
-        w="100%"
-        jc="center"
-        pb={loading || loadingMore ? "$md" : 0}
-      >
-        {loading || loadingMore ? (
-          <ActivityIndicator color={colors.tertiary} />
-        ) : null}
-        <Text col="$tertiary" fow="700">
-          {loading
-            ? t("home.loading")
-            : loadingMore
-              ? t("home.loadingMore")
-              : ""}
-        </Text>
-      </XStack>
-    )
-  }, [loading, loadingMore, t, data?.list.length])
 
   return (
     <YStack f={1} w={DEVICE_WIDTH}>
@@ -386,8 +360,9 @@ export const ClosedOrders = () => {
         refreshing={loading}
         refreshControl={
           <RefreshControl
-            tintColor={colors.secondary}
             refreshing={loading}
+            colors={[colors.secondary]}
+            progressBackgroundColor={colors.card}
             onRefresh={reload}
           />
         }
@@ -403,7 +378,7 @@ export const ClosedOrders = () => {
         ListEmptyComponent={() => (
           <ListEmptyComponent loading={loading} type="closed" />
         )}
-        ListFooterComponent={ListFooterComponent}
+        ListFooterComponent={<ListFooterComponent loading={loadingMore} />}
       ></FlatList>
     </YStack>
   )

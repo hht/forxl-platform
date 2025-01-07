@@ -22,7 +22,9 @@
     "changePositionSuccess": "Position changed successfully",
     "orderSuccess": "Order placed successfully",
     "noQuotes": "No Quotes",
-    "notInTradeTime": "It is not a trading time right now"
+    "notInTradeTime": "It is not a trading time right now",
+    "loading": "Loading...,please wait",
+    "empty": "No data"
   },
   "tabs": {
     "home": "首页",
@@ -74,8 +76,6 @@
     "wallet": "Wallet",
     "news": "Market News",
     "readMore": "Read More",
-    "loading": "Loading...",
-    "loadingMore": "Loading More...",
     "shortcuts": {
       "title": "Shortcuts",
       "children": [

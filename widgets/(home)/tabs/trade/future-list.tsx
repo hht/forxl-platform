@@ -3,17 +3,18 @@ import { useInfiniteScroll } from 'ahooks'
 import { router } from 'expo-router'
 import { FC, useCallback, useEffect, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import { ActivityIndicator, FlatList, Platform, RefreshControl } from 'react-native'
+import { FlatList, Platform, RefreshControl } from 'react-native'
 import { shallow } from 'zustand/shallow'
 
 import { FutureCategories } from './categories'
 
 import { getFutures } from '~/api/trade'
-import { AnimatedFlow, Figure, Icon, Text, XStack, YStack } from '~/components'
+import { AnimatedFlow, Icon, Text, XStack, YStack } from '~/components'
 import { useQuotesStore, useSymbolStore } from '~/hooks/useStore'
 import { subscribeQuotes } from '~/hooks/useWebsocket'
 import { DEVICE_WIDTH, t } from '~/lib/utils'
 import colors from '~/theme/colors'
+import { ListEmptyComponent, ListFooterComponent } from '~/widgets/shared/list'
 
 const INITIAL = {
   Ask: 0,
@@ -184,25 +185,6 @@ const keyExtractor = (
   index: number
 ) => `${item.futuresName!.toString()}${index}`
 
-const ListEmptyComponent: FC<{
-  loading: boolean
-}> = ({ loading }) => {
-  const { t } = useTranslation()
-  if (loading) {
-    return (
-      <YStack ai="center" jc="center" h="100%" gap="$md">
-        <Text col="$tertiary">{t("home.loading")}</Text>
-      </YStack>
-    )
-  }
-  return (
-    <YStack ai="center" jc="center" h="100%" gap="$md" px={48}>
-      <Figure name="empty" width={90} height={90} />
-      <Text col="$tertiary"></Text>
-    </YStack>
-  )
-}
-
 const renderItem = ({
   item,
 }: {
@@ -251,7 +233,7 @@ export const FutureList = () => {
       },
       {
         isNoMore: (d) => d?.nextId === undefined,
-        reloadDeps: [currentFuture],
+        reloadDeps: [currentFuture?.name],
       }
     )
 
@@ -279,31 +261,6 @@ export const FutureList = () => {
     }
   }, [mutationFuture, onToggle])
 
-  const ListFooterComponent = useCallback(() => {
-    if (!data?.list.length) return null
-    return (
-      <XStack
-        gap="$md"
-        p="$md"
-        ai="center"
-        w="100%"
-        jc="center"
-        pb={loading || loadingMore ? "$md" : 0}
-      >
-        {loading || loadingMore ? (
-          <ActivityIndicator color={colors.tertiary} />
-        ) : null}
-        <Text col="$tertiary" fow="700">
-          {loading
-            ? t("home.loading")
-            : loadingMore
-              ? t("home.loadingMore")
-              : ""}
-        </Text>
-      </XStack>
-    )
-  }, [loading, loadingMore, t, data?.list.length])
-
   return (
     <YStack f={1} w={DEVICE_WIDTH}>
       <XStack p="$md" ai="center" jc="space-between">
@@ -323,14 +280,19 @@ export const FutureList = () => {
         refreshing={loading}
         refreshControl={
           <RefreshControl
-            tintColor={colors.secondary}
+            colors={[colors.tertiary]}
+            progressBackgroundColor={colors.card}
             refreshing={loading}
             onRefresh={reload}
           />
         }
-        ListEmptyComponent={() => <ListEmptyComponent loading={loading} />}
+        ListEmptyComponent={() => (
+          <ListEmptyComponent loading={loadingMore || loading} />
+        )}
         onEndReached={loadMore}
-        ListFooterComponent={ListFooterComponent}
+        ListFooterComponent={() => (
+          <ListFooterComponent loading={loadingMore} />
+        )}
       ></FlatList>
     </YStack>
   )

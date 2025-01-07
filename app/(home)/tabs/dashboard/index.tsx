@@ -1,28 +1,21 @@
-import { useIsFocused } from "@react-navigation/native"
-import { useInfiniteScroll } from "ahooks"
-import dayjs from "dayjs"
-import { Stack } from "expo-router"
-import { useCallback } from "react"
-import { useTranslation } from "react-i18next"
-import { ActivityIndicator, FlatList, Platform } from "react-native"
+import { useIsFocused } from '@react-navigation/native'
+import { useInfiniteScroll } from 'ahooks'
+import dayjs from 'dayjs'
+import { Stack } from 'expo-router'
+import { FC, Fragment } from 'react'
+import { useTranslation } from 'react-i18next'
+import { ActivityIndicator, FlatList, Platform } from 'react-native'
 
-import { getNews } from "~/api/dashboard"
-import { Screen, Text, XStack } from "~/components"
-import colors from "~/theme/colors"
-import { AssetCard } from "~/widgets/(home)/tabs/dashboard/asset-card"
+import { getNews } from '~/api/dashboard'
+import { Screen, Text, XStack } from '~/components'
+import colors from '~/theme/colors'
+import { AssetCard } from '~/widgets/(home)/tabs/dashboard/asset-card'
+import { ListHeaderComponent, ListItem } from '~/widgets/(home)/tabs/dashboard/list'
 import {
-  ListHeaderComponent,
-  ListItem,
-} from "~/widgets/(home)/tabs/dashboard/list"
-import {
-  BrandTitle,
-  BreadCrumb,
-  CustomerService,
-  DefaultScreenOptions,
-  NativeStackNavigationOptions,
-  Notifier,
-} from "~/widgets/shared/header"
-import { Gradient } from "~/widgets/shared/shape"
+    BrandTitle, BreadCrumb, CustomerService, DefaultScreenOptions, NativeStackNavigationOptions,
+    Notifier
+} from '~/widgets/shared/header'
+import { Gradient } from '~/widgets/shared/shape'
 
 const ScreenOptions: NativeStackNavigationOptions = {
   ...DefaultScreenOptions,
@@ -51,6 +44,39 @@ const renderItem = ({
   return <ListItem item={item} index={index} />
 }
 
+const ListFooterComponent: FC<{ loading: boolean }> = ({ loading }) => {
+  const { t } = useTranslation()
+  return (
+    <XStack
+      gap="$md"
+      px="$md"
+      bblr="$md"
+      bbrr="$md"
+      bbw={1}
+      bbc="$border"
+      blw={1}
+      brw={1}
+      brc="$border"
+      blc="$border"
+      bc="$card"
+      mb="$md"
+      ai="center"
+      w="100%"
+      jc="center"
+      pb="$md"
+    >
+      {loading ? (
+        <Fragment>
+          <ActivityIndicator color={colors.tertiary} />
+          <Text col="$tertiary" fow="700">
+            {t("message.loading")}
+          </Text>
+        </Fragment>
+      ) : null}
+    </XStack>
+  )
+}
+
 export default function Page() {
   const isFocused = useIsFocused()
   const { t } = useTranslation()
@@ -72,40 +98,7 @@ export default function Page() {
       isNoMore: (d) => d?.nextId === undefined,
     }
   )
-  const ListFooterComponent = useCallback(() => {
-    if (!data?.list.length) return null
-    return (
-      <XStack
-        gap="$md"
-        px="$md"
-        bblr="$md"
-        bbrr="$md"
-        bbw={1}
-        bbc="$border"
-        blw={1}
-        brw={1}
-        brc="$border"
-        blc="$border"
-        bc="$card"
-        mb="$md"
-        ai="center"
-        w="100%"
-        jc="center"
-        pb={loading || loadingMore ? "$md" : 0}
-      >
-        {loading || loadingMore ? (
-          <ActivityIndicator color={colors.tertiary} />
-        ) : null}
-        <Text col="$tertiary" fow="700">
-          {loading
-            ? t("home.loading")
-            : loadingMore
-              ? t("home.loadingMore")
-              : ""}
-        </Text>
-      </XStack>
-    )
-  }, [loading, loadingMore, t, data?.list.length])
+
   return (
     <Screen pb={0} gap={0}>
       <Stack.Screen options={ScreenOptions} />
@@ -118,7 +111,7 @@ export default function Page() {
         onEndReached={loadMore}
         showsVerticalScrollIndicator={false}
         ListHeaderComponent={ListHeaderComponent}
-        ListFooterComponent={ListFooterComponent}
+        ListFooterComponent={<ListFooterComponent loading={loadingMore} />}
       ></FlatList>
     </Screen>
   )

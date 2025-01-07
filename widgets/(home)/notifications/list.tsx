@@ -1,9 +1,6 @@
 import dayjs from 'dayjs'
-import { FC } from 'react'
-import { useTranslation } from 'react-i18next'
-import { ActivityIndicator } from 'react-native'
 
-import { Figure, Icon, Text, XStack, YStack } from '~/components'
+import { Icon, Text, XStack, YStack } from '~/components'
 import { getRecentDate } from '~/hooks/useLocale'
 import colors from '~/theme/colors'
 
@@ -57,30 +54,6 @@ export const ListItem = ({
           <Text col="$tertiary">{dayjs(createTime).format("HH:mm:ss")}</Text>
         </YStack>
       </XStack>
-    </YStack>
-  )
-}
-
-export const ListEmptyComponent: FC<{ loading: boolean; type: number }> = ({
-  loading,
-  type = 0,
-}) => {
-  const { t } = useTranslation()
-  if (loading) {
-    return (
-      <YStack ai="center" jc="center" h="100%" gap="$md">
-        <ActivityIndicator color={colors.tertiary} />
-      </YStack>
-    )
-  }
-  return (
-    <YStack ai="center" jc="center" h="100%" gap="$md">
-      <Figure name="mailBox" width={90} height={90} />
-      <Text col="$secondary">
-        {t(
-          type === 0 ? "notifications.emptySystem" : "notifications.emptyTrade"
-        )}
-      </Text>
     </YStack>
   )
 }
