@@ -30,17 +30,17 @@ export const ReferralInfo = () => {
         <Figure name="giftBox" />
       </YStack>
       <YStack ai="center" jc="center" px="$lg" gap="$sm">
-        <Text fos={20} lh={24} fow="900">
+        <Text fos={20} lh={24} fow="bold">
           {dict.invite}
         </Text>
-        <Text fos={20} lh={24} fow="900">
+        <Text fos={20} lh={24} fow="bold">
           <Trans
             i18nKey="referral.bonus"
             values={{
               percent: 30,
             }}
             components={{
-              1: <Text fos={20} lh={24} fow="900" col="$primary" />,
+              1: <Text fos={20} lh={24} fow="bold" col="$primary" />,
             }}
           ></Trans>
         </Text>
@@ -60,7 +60,7 @@ export const ReferralInfo = () => {
         >
           <Statistics label={dict.earned}>
             <XStack ai="center" gap="$sm">
-              <Text fos={17} lh={20} fow="900">
+              <Text fos={17} lh={20} fow="bold">
                 {`$${formatDecimal(bonus?.earned ?? 0)}`}
               </Text>
               <Button mah={18} px={4} br={2} ai="center" jc="center">

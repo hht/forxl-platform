@@ -38,7 +38,7 @@ type NestedKeyOf<ObjectType extends object> = {
     : `${Key}`
 }[keyof ObjectType & (string | number)]
 
-export type I18NResource = NestedKeyOf<(typeof resources)["en"]>
+export type I18NResource = NestedKeyOf<(typeof resources)["en"]["translation"]>
 
 export { i18n }
 
@@ -147,4 +147,5 @@ export const toInfinite = <T>(data: PaginationResponse<T>, current: number) => {
   }
 }
 
-export const DEVICE_WIDTH = Dimensions.get("window").width
+export const { width: DEVICE_WIDTH, height: DEVICE_HEIGHT } =
+  Dimensions.get("window")

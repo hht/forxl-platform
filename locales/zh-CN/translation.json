@@ -318,7 +318,82 @@
     "openOn": "Market open on {{date}}"
   },
   "wallet": {
-    "addFunds": "Add Funds"
+    "addFunds": "充值",
+    "withdraw": "提现",
+    "statement": "Statement",
+    "card": "Card",
+    "rejectedRational": "Rejected Rationale",
+    "paymentAddress": "Payment Address",
+    "pendingReview": "Pending review",
+    "depositPassed": "Deposit passed",
+    "depositRejected": "Deposit rejected",
+    "paymentFailed": "Payment failed",
+    "withdrawReturned": "Withdraw returned",
+    "cardPendingPayment": "Pending payment (Card)",
+    "usdtPendingPayment": "Pending payment (USDT)",
+    "thirdPartyPendingPayment": "Pending payment (Third Party)",
+    "gbkydPendingPayment": "Pending payment (GBKYD)",
+    "paymentSubmitted": "Payment submitted",
+    "withdrawSubmitted": "Withdraw submitted",
+    "withdrawCreated": "Order created",
+    "withdrawPassed": "Withdraw passed",
+    "withdrawRejected": "Withdraw rejected",
+    "pendingPayment": "Pending payment",
+    "depositSuccessful": "Deposit successful",
+    "depositFailed": "Deposit failed",
+    "withdrawSuccessful": "Withdraw successful",
+    "withdrawFailed": "Withdraw failed",
+    "orderCancelled": "Order cancelled",
+    "trc20": "TRC20",
+    "bep20": "BEP20",
+    "bank": "Bank",
+    "thirdParty": "Fiat currency third parties",
+    "usdtTransfer": "USDT transfer",
+    "recharge": "Administrator recharge",
+    "reissue": "Commission reissue",
+    "empty": "No transactions here just byet.",
+    "depositAmount": "Deposit Amount",
+    "withdrawAmount": "Withdraw Amount",
+    "currency": "Currency",
+    "localCurrency": "Amount on local currency",
+    "transactionId": "Transaction ID",
+    "created": "Created",
+    "walletAddress": "Wallet Address",
+    "commission": "Commission",
+    "youGet": "You get",
+    "equityDesc": {
+      "title": "Interpretation of nouns",
+      "children": [
+        {
+          "title": "Balance",
+          "desc": "Balance is the calculated total of all completed transactions on a trading account, including deposits and withdrawals. It can be the amount of funds you have before opening orders, or after you have closed all open orders; the balance does not change while orders are open."
+        },
+        {
+          "title": "Equity",
+          "desc": "Equity is the total value of the trading account, comprising of account balance and floating P&L."
+        },
+        {
+          "title": "Floating P&L ",
+          "desc": "Floating P&L (Profit/Loss) shows your profit or loss on open positions. It includes floating funds plus swaps and commissions, if there are any. "
+        },
+        {
+          "title": "Pending deposit/withdrawal ",
+          "desc": "The total amount of funds from pending deposit and withdrawal requests that are currently being processed for the trading account."
+        },
+        {
+          "title": "Margin",
+          "desc": "Margin is the funds required as collateral to open and maintain a leveraged trading position. "
+        },
+        {
+          "title": "Free margin",
+          "desc": "Free margin is the funds available to open new positions after accounting for floating P&L and margin tied up in open positions."
+        },
+        {
+          "title": "Margin level",
+          "desc": "Margin level is the ratio of Equity to Margin, showing available margin for new trades. If the Margin level drops too low, a Margin Call is issued. If it decreases further, a Stop Out happens, closing positions to avoid a negative balance."
+        }
+      ]
+    }
   },
   "positions": {
     "title": "Positions",

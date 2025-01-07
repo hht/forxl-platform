@@ -1,18 +1,16 @@
-import { Stack } from "expo-router"
-import { useTranslation } from "react-i18next"
+import { Stack } from 'expo-router'
+import { useTranslation } from 'react-i18next'
 
-import { Figure, Screen, ScrollView, Text, XStack, YStack } from "~/components"
-import { usePartnerStore } from "~/hooks/useStore"
-import { AccountInfo } from "~/widgets/(home)/tabs/partner/account-info"
-import { LevelCard } from "~/widgets/(home)/tabs/partner/level-card"
-import { LevelInfo } from "~/widgets/(home)/tabs/partner/level-info"
-import { format, Level } from "~/widgets/(home)/tabs/partner/utils"
+import { Figure, Screen, ScrollView, Text, XStack, YStack } from '~/components'
+import { usePartnerStore } from '~/hooks/useStore'
+import { AccountInfo } from '~/widgets/(home)/tabs/partner/account-info'
+import { LevelCard } from '~/widgets/(home)/tabs/partner/level-card'
+import { LevelInfo } from '~/widgets/(home)/tabs/partner/level-info'
+import { format, Level } from '~/widgets/(home)/tabs/partner/utils'
 import {
-  BrandTitle,
-  DefaultScreenOptions,
-  NativeStackNavigationOptions,
-} from "~/widgets/shared/header"
-import { Gradient } from "~/widgets/shared/shape"
+    BrandTitle, DefaultScreenOptions, NativeStackNavigationOptions
+} from '~/widgets/shared/header'
+import { Gradient } from '~/widgets/shared/shape'
 
 const ScreenOptions: NativeStackNavigationOptions = {
   ...DefaultScreenOptions,
@@ -76,7 +74,7 @@ export default function Page() {
                       ai="center"
                       jc="center"
                     >
-                      <Text ff="$mono" fow="900" mb={8} fos={10}>
+                      <Text ff="$mono" fow="bold" mb={8} fos={10}>
                         {index}
                       </Text>
                     </XStack>

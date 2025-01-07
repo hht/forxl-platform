@@ -1,15 +1,15 @@
-import dayjs from "dayjs"
-import { router } from "expo-router"
-import { Fragment } from "react"
-import { useTranslation } from "react-i18next"
+import dayjs from 'dayjs'
+import { router } from 'expo-router'
+import { Fragment } from 'react'
+import { useTranslation } from 'react-i18next'
 
-import { Banners } from "./banners"
-import { Shortcuts } from "./short-cuts"
+import { Banners } from './banners'
+import { Shortcuts } from './short-cuts'
 
-import { getNews } from "~/api/dashboard"
-import { Figure, Icon, Image, Text, XStack, YStack } from "~/components"
-import { useWebViewStore } from "~/hooks/useStore"
-import colors, { toRGBA } from "~/theme/colors"
+import { getNews } from '~/api/dashboard'
+import { Figure, Icon, Image, Text, XStack, YStack } from '~/components'
+import { useWebViewStore } from '~/hooks/useStore'
+import colors, { toRGBA } from '~/theme/colors'
 
 export const ListItem = ({
   item,
@@ -47,7 +47,7 @@ export const ListItem = ({
           <YStack gap="$md" pt="$md">
             <XStack ai="center" gap="$xs">
               <Icon name="hot" />
-              <Text fow="900" fos={17} lh={20}>
+              <Text fow="bold" fos={17} lh={20}>
                 {t("home.news")}
               </Text>
             </XStack>
@@ -64,8 +64,8 @@ export const ListItem = ({
         </Fragment>
       ) : null}
       <YStack btw={1} gap="$sm" btc="$border" py="$md">
-        <Text numberOfLines={2} fow="900" lh={20}>
-          <Text col="$tertiary" fow="900" lh={20}>
+        <Text numberOfLines={2} fow="bold" lh={20}>
+          <Text col="$tertiary" fow="bold" lh={20}>
             {dayjs(item.date).format("HH:mm  ")}
           </Text>
           {item.headline}

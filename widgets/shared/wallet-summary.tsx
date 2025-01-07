@@ -200,7 +200,7 @@ export const WalletStatistics: FC = () => {
               setVisible((v) => !v)
             }}
           >
-            <Text col={color} fow="900">
+            <Text col={color} fow="bold">
               {`$${formatDecimal(profit)}`}
             </Text>
             <Moti state={state}>

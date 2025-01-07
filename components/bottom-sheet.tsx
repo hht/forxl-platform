@@ -49,6 +49,7 @@ export const BottomSheet = forwardRef<
             py={title ? "$lg" : "$md"}
             jc="space-between"
             ai="center"
+            zIndex={999}
           >
             <Text fos={20} lh={24} col="$text">
               {title}

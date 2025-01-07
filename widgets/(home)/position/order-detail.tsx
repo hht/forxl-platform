@@ -36,7 +36,7 @@ export const OrderDetail = () => {
             <Text
               fos={17}
               lh={20}
-              fow="900"
+              fow="bold"
               col={
                 currentPosition?.openSafe === 0 ? "$primary" : "$destructive"
               }
@@ -47,11 +47,11 @@ export const OrderDetail = () => {
                   : "positions.sell"
               )}
             </Text>
-            <Text fos={17} lh={20} fow="900">
+            <Text fos={17} lh={20} fow="bold">
               {currentPosition.futuresCode}
             </Text>
           </XStack>
-          <ProfitCell data={currentPosition} fos={17} lh={20} fow="900" />
+          <ProfitCell data={currentPosition} fos={17} lh={20} fow="bold" />
         </XStack>
         <XStack ai="center" jc="space-between" py="$md" bbc="$border" bbw={1}>
           <Text col="$secondary">{data?.futures?.futuresName}</Text>
@@ -94,7 +94,7 @@ export const OrderDetail = () => {
           <Text
             fos={17}
             lh={20}
-            fow="900"
+            fow="bold"
             col={currentPosition?.openSafe === 0 ? "$primary" : "$destructive"}
           >
             {t(
@@ -103,14 +103,14 @@ export const OrderDetail = () => {
                 : "positions.sell"
             )}
           </Text>
-          <Text fos={17} lh={20} fow="900">
+          <Text fos={17} lh={20} fow="bold">
             {currentPosition.futuresCode}
           </Text>
         </XStack>
         <Text
           fos={17}
           lh={20}
-          fow="900"
+          fow="bold"
           col={currentPosition.profit! > 0 ? "$primary" : "$destructive"}
         >
           {`$${currentPosition.profit! > 0 ? "+" : ""}${formatDecimal(

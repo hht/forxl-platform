@@ -61,7 +61,7 @@ export const Notifier: FC<{ icon?: IconType; type?: number }> = ({
           py={2}
           px={6}
         >
-          <Text col="$background" fos={10} fow="900">
+          <Text col="$background" fos={10} fow="bold">
             {count > 9 ? "9+" : count}
           </Text>
         </XStack>

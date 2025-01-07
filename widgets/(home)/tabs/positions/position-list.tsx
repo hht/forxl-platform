@@ -57,11 +57,11 @@ const EditableListItem: FC<{ data: Position }> = ({ data }) => {
         <Icon name="close" size={16} color={colors.secondary} />
       </XStack>
       <YStack f={1} gap="$sm">
-        <Text fow="900">{data.futuresCode}</Text>
+        <Text fow="bold">{data.futuresCode}</Text>
         <AnimatedFlow
           addonsBefore="$"
           value={data.profit ?? 0}
-          fow="900"
+          fow="bold"
         ></AnimatedFlow>
       </YStack>
       <YStack gap="$sm" f={1}>
@@ -120,14 +120,14 @@ const ArchivedListItem: FC<{ data: Position; dateVisible?: boolean }> = ({
       ) : null}
       <ListItem data={data} h={64} gap={32}>
         <YStack gap="$sm">
-          <Text fow="900">{data.futuresCode}</Text>
+          <Text fow="bold">{data.futuresCode}</Text>
           <Text col="$secondary">
             {dayjs(data.overTime).format("MMM DD, YYYY HH:mm")}
           </Text>
         </YStack>
         <YStack gap="$sm" f={1}>
           <Text
-            fow="900"
+            fow="bold"
             col={
               data.profit! > 0
                 ? "$primary"
@@ -313,7 +313,7 @@ const ListHeaderComponent: FC<{ isEmpty?: boolean }> = ({ isEmpty }) => {
         bc="$card/60"
         jc="center"
       >
-        <AnimatedFlow value={profit} addonsBefore="$" fow="900"></AnimatedFlow>
+        <AnimatedFlow value={profit} addonsBefore="$" fow="bold"></AnimatedFlow>
       </XStack>
     </XStack>
   )

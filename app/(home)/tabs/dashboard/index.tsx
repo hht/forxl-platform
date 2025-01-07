@@ -44,8 +44,14 @@ const renderItem = ({
   return <ListItem item={item} index={index} />
 }
 
-const ListFooterComponent: FC<{ loading: boolean }> = ({ loading }) => {
+const ListFooterComponent: FC<{ loading: boolean; isEmpty?: boolean }> = ({
+  loading,
+  isEmpty,
+}) => {
   const { t } = useTranslation()
+  if (isEmpty) {
+    return null
+  }
   return (
     <XStack
       gap="$md"
@@ -79,8 +85,7 @@ const ListFooterComponent: FC<{ loading: boolean }> = ({ loading }) => {
 
 export default function Page() {
   const isFocused = useIsFocused()
-  const { t } = useTranslation()
-  const { data, loading, loadMore, loadingMore } = useInfiniteScroll<{
+  const { data, loadMore, loadingMore } = useInfiniteScroll<{
     list: Awaited<ReturnType<typeof getNews>>["list"]
     nextId?: number
   }>(
@@ -111,7 +116,12 @@ export default function Page() {
         onEndReached={loadMore}
         showsVerticalScrollIndicator={false}
         ListHeaderComponent={ListHeaderComponent}
-        ListFooterComponent={<ListFooterComponent loading={loadingMore} />}
+        ListFooterComponent={
+          <ListFooterComponent
+            isEmpty={data?.list.length === 0}
+            loading={loadingMore}
+          />
+        }
       ></FlatList>
     </Screen>
   )

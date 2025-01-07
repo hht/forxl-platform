@@ -43,7 +43,7 @@ export const LevelCard: FC<{
       >
         <Text>{format(config?.[level].market ?? 0)}</Text>
         <Figure name={LEVELS[level]} width={56} height={56} />
-        <Text fow="900" col={active ? LEVEL_COLORS[level] : "#5E5D5C"}>
+        <Text fow="bold" col={active ? LEVEL_COLORS[level] : "#5E5D5C"}>
           {_.upperCase(dict.children[level])}
         </Text>
         {locked ? (

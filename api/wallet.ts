@@ -1,8 +1,8 @@
-import axios from "axios"
+import axios from 'axios'
 
-import { BASE_URL, request } from "~/hooks/useRequest"
-import { DepositResult, useFroxlStore } from "~/hooks/useStore"
-import { i18n } from "~/lib/utils"
+import { BASE_URL, request } from '~/hooks/useRequest'
+import { DepositResult, useFroxlStore } from '~/hooks/useStore'
+import { i18n, toInfinite } from '~/lib/utils'
 
 export const getPaymentMethods = async () => {
   return await request<PaymentMethod[], undefined>(
@@ -39,9 +39,9 @@ export const getWalletCategories = async () => {
   )
 }
 
-export const getFundHistory = async (params?: {
-  current: number
-  pageSize: number
+export const getFundHistory = async (params: {
+  currentPage: number
+  pageSize?: number
 }) => {
   return await request<
     PaginationResponse<{
@@ -61,12 +61,14 @@ export const getFundHistory = async (params?: {
       transferRate: number
       updateTime: number
       refuseReason: string
+      trc20Address: string
+      feeValue: number
     }>,
-    {}
+    { currentPage: number; pageSize?: number }
   >("/pay/getUserDepositRecords", "POST", {
-    currentPage: params?.current ?? 1,
+    currentPage: params?.currentPage ?? 1,
     pageSize: params?.pageSize ?? 10,
-  })
+  }).then((res) => toInfinite(res, params.currentPage))
 }
 
 /**
