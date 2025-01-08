@@ -1,20 +1,21 @@
-import { DarkTheme, ThemeProvider } from '@react-navigation/native'
-import { Stack } from 'expo-router/stack'
-import * as SplashScreen from 'expo-splash-screen'
-import { StatusBar } from 'expo-status-bar'
-import { Fragment } from 'react'
-import { Platform, UIManager } from 'react-native'
-import { AvoidSoftInput } from 'react-native-avoid-softinput'
-import { GestureHandlerRootView } from 'react-native-gesture-handler'
-import 'react-native-reanimated'
-import { enableFreeze, enableScreens } from 'react-native-screens'
-import { TamaguiProvider } from 'tamagui'
+import { BottomSheetModalProvider } from "@gorhom/bottom-sheet"
+import { DarkTheme, ThemeProvider } from "@react-navigation/native"
+import { Stack } from "expo-router/stack"
+import * as SplashScreen from "expo-splash-screen"
+import { StatusBar } from "expo-status-bar"
+import { Fragment } from "react"
+import { Platform, UIManager } from "react-native"
+import { AvoidSoftInput } from "react-native-avoid-softinput"
+import { GestureHandlerRootView } from "react-native-gesture-handler"
+import "react-native-reanimated"
+import { enableFreeze, enableScreens } from "react-native-screens"
+import { TamaguiProvider } from "tamagui"
 
-import { Toaster } from '~/components'
-import { useReady } from '~/hooks/useReady'
-import config from '~/theme/tamagui.config'
-import { AccountDetector } from '~/widgets/shared/detector'
-import { PromptSheet } from '~/widgets/shared/prompt-sheet'
+import { Toaster } from "~/components"
+import { useReady } from "~/hooks/useReady"
+import config from "~/theme/tamagui.config"
+import { AccountDetector } from "~/widgets/shared/detector"
+import { PromptSheet } from "~/widgets/shared/prompt-sheet"
 
 enableScreens(true)
 enableFreeze(true)
@@ -50,17 +51,19 @@ export default function RootLayout() {
     <Fragment>
       <AccountDetector />
       <GestureHandlerRootView>
-        <TamaguiProvider config={config}>
-          <ThemeProvider value={DarkTheme}>
-            <Stack
-              initialRouteName="(anon)"
-              screenOptions={{ headerShown: false }}
-            />
-          </ThemeProvider>
-          <StatusBar style="light" translucent />
-          <Toaster />
-          <PromptSheet />
-        </TamaguiProvider>
+        <BottomSheetModalProvider>
+          <TamaguiProvider config={config}>
+            <ThemeProvider value={DarkTheme}>
+              <Stack
+                initialRouteName="(anon)"
+                screenOptions={{ headerShown: false }}
+              />
+            </ThemeProvider>
+            <StatusBar style="light" translucent />
+            <Toaster />
+            <PromptSheet />
+          </TamaguiProvider>
+        </BottomSheetModalProvider>
       </GestureHandlerRootView>
     </Fragment>
   )

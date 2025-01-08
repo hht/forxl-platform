@@ -1,29 +1,30 @@
-import BottomSheetBase from '@gorhom/bottom-sheet'
-import { useIsFocused } from '@react-navigation/native'
-import { useInfiniteScroll } from 'ahooks'
-import dayjs from 'dayjs'
-import { Stack } from 'expo-router'
-import { useEffect, useRef, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import { FlatList, Platform, RefreshControl } from 'react-native'
-import { createWithEqualityFn } from 'zustand/traditional'
+import { useIsFocused } from "@react-navigation/native"
+import { useInfiniteScroll } from "ahooks"
+import dayjs from "dayjs"
+import { Stack } from "expo-router"
+import { FlatList, Platform, RefreshControl } from "react-native"
 
-import { getFundHistory } from '~/api/wallet'
-import { BottomSheet, Screen, YStack } from '~/components'
-import { uuid } from '~/lib/utils'
-import colors from '~/theme/colors'
-import { AssetCard } from '~/widgets/(home)/tabs/wallet/asset-card'
+import { getFundHistory } from "~/api/wallet"
+import { Screen, YStack } from "~/components"
+import { uuid } from "~/lib/utils"
+import colors from "~/theme/colors"
+import { AssetCard } from "~/widgets/(home)/tabs/wallet/asset-card"
 import {
-    ListEmptyComponent, ListHeaderComponent, ListItem
-} from '~/widgets/(home)/tabs/wallet/list'
+  ListEmptyComponent,
+  ListHeaderComponent,
+  ListItem,
+} from "~/widgets/(home)/tabs/wallet/list"
 import {
-    TransactionDetails, useTransactionStore
-} from '~/widgets/(home)/tabs/wallet/transaction-details'
+  TransactionDetails,
+  useTransactionStore,
+} from "~/widgets/(home)/tabs/wallet/transaction-details"
 import {
-    BrandTitle, DefaultScreenOptions, NativeStackNavigationOptions
-} from '~/widgets/shared/header'
-import { ListFooterComponent } from '~/widgets/shared/list'
-import { Gradient } from '~/widgets/shared/shape'
+  BrandTitle,
+  DefaultScreenOptions,
+  NativeStackNavigationOptions,
+} from "~/widgets/shared/header"
+import { ListFooterComponent } from "~/widgets/shared/list"
+import { Gradient } from "~/widgets/shared/shape"
 
 const ScreenOptions: NativeStackNavigationOptions = {
   ...DefaultScreenOptions,

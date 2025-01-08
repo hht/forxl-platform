@@ -1,12 +1,13 @@
-import { FC } from 'react'
-import { useTranslation } from 'react-i18next'
-import { shallow } from 'zustand/shallow'
+import { FC } from "react"
+import { useTranslation } from "react-i18next"
+import { shallow } from "zustand/shallow"
 
-import { ProfitTracker } from '../tabs/trade/profit-tracker'
+import { ProfitTracker } from "../tabs/trade/profit-tracker"
 
-import { Collapse, Icon, Input, Text, XStack } from '~/components'
-import { usePromptStore, useQuotesStore } from '~/hooks/useStore'
-import { uuid } from '~/lib/utils'
+import { Collapse, Icon, Input, Text, XStack } from "~/components"
+import { usePromptStore, useQuotesStore } from "~/hooks/useStore"
+import { uuid } from "~/lib/utils"
+import colors from "~/theme/colors"
 
 const toggleExpended = (enableCloseProfit: boolean) => {
   useQuotesStore.setState({ enableCloseProfit })
@@ -32,7 +33,7 @@ const Title: FC = () => {
           })
         }}
       >
-        <Icon name="info" size={12} color="$secondary" />
+        <Icon name="info" size={12} color={colors.secondary} />
       </XStack>
     </XStack>
   )

@@ -1,13 +1,22 @@
-import BottomSheetBase from '@gorhom/bottom-sheet'
-import { toDateId } from '@marceloterreiro/flash-calendar'
-import { FC, Fragment, useEffect, useRef, useState } from 'react'
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import { shallow } from 'zustand/shallow'
+import { BottomSheetModal } from "@gorhom/bottom-sheet"
+import { toDateId } from "@marceloterreiro/flash-calendar"
+import { FC, Fragment, useEffect, useRef, useState } from "react"
+import { useSafeAreaInsets } from "react-native-safe-area-context"
+import { shallow } from "zustand/shallow"
 
-import { BottomSheet, Button, Calendar, Icon, ScrollView, Text, XStack, YStack } from '~/components'
-import { getDate } from '~/hooks/useLocale'
-import { OPTIONS, useOrderStore } from '~/hooks/useStore'
-import { dayjs, DEVICE_WIDTH, t, uuid } from '~/lib/utils'
+import {
+  BottomSheet,
+  Button,
+  Calendar,
+  Icon,
+  ScrollView,
+  Text,
+  XStack,
+  YStack,
+} from "~/components"
+import { getDate } from "~/hooks/useLocale"
+import { OPTIONS, useOrderStore } from "~/hooks/useStore"
+import { dayjs, DEVICE_WIDTH, t, uuid } from "~/lib/utils"
 
 const getCalendarDayFormat = (date: Date) => date.getDate().toString()
 const getCalendarWeekDayFormat = (date: Date) =>
@@ -90,7 +99,7 @@ export const OrderFilter: FC = () => {
     from?: number
     to?: number
   }>({})
-  const ref = useRef<BottomSheetBase>(null)
+  const ref = useRef<BottomSheetModal>(null)
   const scrollRef = useRef<ScrollView>(null)
   const [date, setDate] = useState(toDateId(new Date()))
   const [range, setRange] = useState<"from" | "to" | undefined>(undefined)
@@ -105,7 +114,7 @@ export const OrderFilter: FC = () => {
     <Fragment>
       <XStack
         onPress={() => {
-          ref.current?.expand()
+          ref.current?.present()
         }}
         hitSlop={16}
       >
@@ -119,12 +128,12 @@ export const OrderFilter: FC = () => {
       <BottomSheet
         ref={ref}
         title={t("positions.filters.title")}
-        onClose={() => {
+        onDismiss={() => {
           if (range) {
             setRange(undefined)
             return
           }
-          ref.current?.close()
+          ref.current?.dismiss()
         }}
         onChange={(index) => {
           if (index === -1) {
@@ -275,7 +284,7 @@ export const OrderFilter: FC = () => {
                     to: undefined,
                     reloadKey: uuid(),
                   })
-                  ref.current?.close()
+                  ref.current?.dismiss()
                 }}
               >
                 {t("positions.clear")}
@@ -291,7 +300,7 @@ export const OrderFilter: FC = () => {
                     ...getFilters({ options: current, from, to }),
                     reloadKey: uuid(),
                   })
-                  ref.current?.close()
+                  ref.current?.dismiss()
                 }}
               >
                 {t("action.apply")}

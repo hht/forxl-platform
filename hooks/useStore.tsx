@@ -1,37 +1,22 @@
-import AsyncStorage from '@react-native-async-storage/async-storage'
-import { produce } from 'immer'
-import { createJSONStorage, persist } from 'zustand/middleware'
-import { createWithEqualityFn } from 'zustand/traditional'
+import AsyncStorage from "@react-native-async-storage/async-storage"
+import { produce } from "immer"
+import { createJSONStorage, persist } from "zustand/middleware"
+import { createWithEqualityFn } from "zustand/traditional"
 
-import { getPartnerConfig } from '~/api/partner'
-import { getFutureCategories } from '~/api/trade'
-import { dayjs } from '~/lib/utils'
+import { getPartnerConfig } from "~/api/partner"
+import { getFutureCategories } from "~/api/trade"
+import { dayjs } from "~/lib/utils"
 
 interface Store {
   account?: Account
   userNumber?: string
   timezone: number
   language: string
-}
-
-const getCurrentFuturePrice = (params: {
-  futureCode: string
-  action: "buy" | "sell"
-  volatility?: number
-  clazzSpread?: number
-  buyPrice?: string | number
-  sellPrice?: string | number
-  Ask?: number
-  Bid?: number
-}) => {
-  const { Ask, Bid, action, volatility, clazzSpread, buyPrice, sellPrice } =
-    params
-  const diff = ((volatility ?? 0) * (clazzSpread ?? 0)) / 2
-  const price =
-    action === "buy"
-      ? (Ask ?? Number(buyPrice)) + diff
-      : (Bid ?? Number(sellPrice)) - diff
-  return price
+  histories?: {
+    futuresCode: string
+    futuresName: string
+    isSelect: boolean
+  }[]
 }
 
 export const useFroxlStore = createWithEqualityFn<Store>()(
@@ -342,4 +327,24 @@ export const computeProfit = (
     default:
       return 0
   }
+}
+
+const getCurrentFuturePrice = (params: {
+  futureCode: string
+  action: "buy" | "sell"
+  volatility?: number
+  clazzSpread?: number
+  buyPrice?: string | number
+  sellPrice?: string | number
+  Ask?: number
+  Bid?: number
+}) => {
+  const { Ask, Bid, action, volatility, clazzSpread, buyPrice, sellPrice } =
+    params
+  const diff = ((volatility ?? 0) * (clazzSpread ?? 0)) / 2
+  const price =
+    action === "buy"
+      ? (Ask ?? Number(buyPrice)) + diff
+      : (Bid ?? Number(sellPrice)) - diff
+  return price
 }

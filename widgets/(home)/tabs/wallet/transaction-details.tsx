@@ -1,4 +1,4 @@
-import BottomSheetBase from "@gorhom/bottom-sheet"
+import { BottomSheetModal } from "@gorhom/bottom-sheet"
 import { FC, Fragment, ReactNode, useEffect, useRef } from "react"
 import { useTranslation } from "react-i18next"
 import { useSafeAreaInsets } from "react-native-safe-area-context"
@@ -61,22 +61,17 @@ export const TransactionDetails: FC = () => {
   const { t } = useTranslation()
   const { bottom } = useSafeAreaInsets()
   const { data, reloadKey } = useTransactionStore((state) => state, shallow)
-  const ref = useRef<BottomSheetBase>(null)
+  const ref = useRef<BottomSheetModal>(null)
   useEffect(() => {
     if (reloadKey) {
-      ref.current?.expand()
+      ref.current?.present()
     }
   }, [reloadKey])
   const isDeposit = data?.operationType === 9001
   const isCrypto = data?.recordType === 0 || data?.recordType === 1
   if (!data) return null
   return (
-    <BottomSheet
-      ref={ref}
-      index={0}
-      title="    "
-      onClose={() => ref.current?.close()}
-    >
+    <BottomSheet ref={ref} index={0} title="    ">
       <YStack p="$md" mt={-60} pb={bottom + 16}>
         <YStack ai="center" gap="$md" bbc="$border" bbw={1} pb="$md">
           <XStack

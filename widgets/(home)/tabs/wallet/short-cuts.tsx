@@ -1,12 +1,10 @@
-import BottomSheetBase from '@gorhom/bottom-sheet'
-import { Href, router } from 'expo-router'
-import { FC, useMemo, useRef } from 'react'
-import { useTranslation } from 'react-i18next'
-import { Dimensions } from 'react-native'
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { Href, router } from "expo-router"
+import { FC, useMemo } from "react"
+import { useTranslation } from "react-i18next"
+import { Dimensions } from "react-native"
 
-import { Card, Icon, IconType, Text, YStack } from '~/components'
-import colors from '~/theme/colors'
+import { Card, Icon, IconType, Text, YStack } from "~/components"
+import colors from "~/theme/colors"
 
 const SHORTCUT_ROUTES: { [key: number]: { icon: IconType; href?: Href } } = {
   0: {

@@ -1,14 +1,14 @@
-import BottomSheetBase from '@gorhom/bottom-sheet'
-import { useUnmount } from 'ahooks'
-import { Fragment, useEffect, useMemo, useRef } from 'react'
-import { useTranslation } from 'react-i18next'
-import { shallow } from 'zustand/shallow'
-import { createWithEqualityFn } from 'zustand/traditional'
+import { BottomSheetModal } from "@gorhom/bottom-sheet"
+import { useUnmount } from "ahooks"
+import { Fragment, useEffect, useMemo, useRef } from "react"
+import { useTranslation } from "react-i18next"
+import { shallow } from "zustand/shallow"
+import { createWithEqualityFn } from "zustand/traditional"
 
-import { Collapse, Icon, Input, Text, XStack, YStack } from '~/components'
-import { useOrderStore, usePromptStore } from '~/hooks/useStore'
-import { uuid } from '~/lib/utils'
-import { ProfitTracker } from '~/widgets/(home)/tabs/positions/profit-tracker'
+import { Collapse, Icon, Input, Text, XStack, YStack } from "~/components"
+import { useOrderStore, usePromptStore } from "~/hooks/useStore"
+import { uuid } from "~/lib/utils"
+import { ProfitTracker } from "~/widgets/(home)/tabs/positions/profit-tracker"
 
 export const useProfitAndLossStore = createWithEqualityFn<{
   stopProfitPrice?: number
@@ -26,7 +26,7 @@ export const ProfitAndLoss = () => {
     (state) => state.currentPosition,
     shallow
   )
-  const ref = useRef<BottomSheetBase>(null)
+  const ref = useRef<BottomSheetModal>(null)
 
   const { stopProfitPrice, stopLossPrice, enableCloseLoss, enableCloseProfit } =
     useProfitAndLossStore((state) => state)
@@ -86,7 +86,7 @@ export const ProfitAndLoss = () => {
                   desc: t("trade.closeProfitDesc"),
                   reloadKey: uuid(),
                 })
-                ref.current?.expand()
+                ref.current?.dismiss()
               }}
             >
               <Icon name="info" size={12}></Icon>
@@ -131,7 +131,7 @@ export const ProfitAndLoss = () => {
                   desc: t("trade.closeLossDesc"),
                   reloadKey: uuid(),
                 })
-                ref.current?.expand()
+                ref.current?.present()
               }}
             >
               <Icon name="info" size={12}></Icon>

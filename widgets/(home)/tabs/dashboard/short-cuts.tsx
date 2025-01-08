@@ -1,14 +1,13 @@
-import BottomSheetBase from '@gorhom/bottom-sheet'
-import { Href, router } from 'expo-router'
-import _ from 'lodash'
-import { FC, Fragment, useMemo, useRef } from 'react'
-import { useTranslation } from 'react-i18next'
-import { Dimensions } from 'react-native'
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { BottomSheetModal } from "@gorhom/bottom-sheet"
+import { Href, router } from "expo-router"
+import _ from "lodash"
+import { FC, Fragment, useMemo, useRef } from "react"
+import { useTranslation } from "react-i18next"
+import { Dimensions } from "react-native"
+import { useSafeAreaInsets } from "react-native-safe-area-context"
 
-import { BottomSheet, Card, Icon, IconType, Text, XStack } from '~/components'
-import { waitFor } from '~/lib/utils'
-import colors from '~/theme/colors'
+import { BottomSheet, Card, Icon, IconType, Text, XStack } from "~/components"
+import colors from "~/theme/colors"
 
 const SHORTCUT_ROUTES: { [key: number]: { icon: IconType; href?: Href } } = {
   0: {
@@ -68,7 +67,7 @@ const SHORTCUT_SIZE = (Dimensions.get("window").width - 16 * 5) / 4
 
 export const Shortcuts: FC = () => {
   const { t } = useTranslation()
-  const bottomSheetRef = useRef<BottomSheetBase>(null)
+  const bottomSheetRef = useRef<BottomSheetModal>(null)
   const insets = useSafeAreaInsets()
   const shortcuts = t("home.shortcuts", { returnObjects: true })
   const items = useMemo(
@@ -95,7 +94,7 @@ export const Shortcuts: FC = () => {
               if (SHORTCUT_ROUTES[item.index].href) {
                 router.push(SHORTCUT_ROUTES[item.index].href!)
               } else {
-                bottomSheetRef.current?.expand()
+                bottomSheetRef.current?.present()
               }
             }}
             ai="center"
@@ -115,7 +114,7 @@ export const Shortcuts: FC = () => {
       <BottomSheet
         ref={bottomSheetRef}
         title={shortcuts.title}
-        onClose={() => bottomSheetRef.current?.close()}
+        onDismiss={() => bottomSheetRef.current?.dismiss()}
       >
         <XStack gap="$md" w="100%" fw="wrap" px="$md" pb={insets.bottom + 16}>
           {_.times(12).map((item, index) => (
@@ -126,11 +125,10 @@ export const Shortcuts: FC = () => {
               h={SHORTCUT_SIZE}
               onPress={async () => {
                 if (SHORTCUT_ROUTES[index].href) {
-                  bottomSheetRef.current?.close()
-                  await waitFor(500)
+                  bottomSheetRef.current?.dismiss()
                   router.push(SHORTCUT_ROUTES[index].href!)
                 } else {
-                  bottomSheetRef.current?.expand()
+                  bottomSheetRef.current?.present()
                 }
               }}
               ai="center"

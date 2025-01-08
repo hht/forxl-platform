@@ -1,4 +1,4 @@
-import BottomSheetBase from "@gorhom/bottom-sheet"
+import { BottomSheetModal } from "@gorhom/bottom-sheet"
 import { router, useSegments } from "expo-router"
 import { FC, useEffect, useRef } from "react"
 import { useTranslation } from "react-i18next"
@@ -36,7 +36,7 @@ export const ClosePosition: FC<{ activeIndex: number }> = ({ activeIndex }) => {
       }
     },
     onFinally: () => {
-      ref.current?.close()
+      ref.current?.dismiss()
     },
   })
   const { run: cancel, loading: cancelling } = useRequest(cancelOrder, {
@@ -47,19 +47,19 @@ export const ClosePosition: FC<{ activeIndex: number }> = ({ activeIndex }) => {
       }
     },
     onFinally: () => {
-      ref.current?.close()
+      ref.current?.dismiss()
     },
   })
-  const ref = useRef<BottomSheetBase>(null)
+  const ref = useRef<BottomSheetModal>(null)
   useEffect(() => {
     if (position) {
       const quote = useQuotesStore.getState().quotes[position.futuresCode!]
       if (!quote) {
         subscribeQuotes([position?.futuresCode, position?.linkFuturesCode])
       }
-      ref.current?.expand()
+      ref.current?.present()
     } else {
-      ref.current?.close()
+      ref.current?.dismiss()
     }
   }, [position])
   if (!position) return null
@@ -68,7 +68,7 @@ export const ClosePosition: FC<{ activeIndex: number }> = ({ activeIndex }) => {
       ref={ref}
       index={0}
       title={t("positions.close", { code: position?.futuresCode ?? "" })}
-      onClose={() => {
+      onDismiss={() => {
         useOrderStore.setState({ willClosePosition: undefined })
       }}
     >

@@ -1,14 +1,21 @@
-import BottomSheetBase from '@gorhom/bottom-sheet'
-import { FC, Fragment, useRef } from 'react'
-import { useTranslation } from 'react-i18next'
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import { shallow } from 'zustand/shallow'
+import { BottomSheetModal } from "@gorhom/bottom-sheet"
+import { FC, Fragment, useRef } from "react"
+import { useTranslation } from "react-i18next"
+import { useSafeAreaInsets } from "react-native-safe-area-context"
+import { shallow } from "zustand/shallow"
 
 import {
-    AnimatedFlow, BottomSheet, Card, Icon, ScrollView, Text, XStack, YStack
-} from '~/components'
-import { useStatisticsStore } from '~/hooks/useStore'
-import { DEVICE_HEIGHT } from '~/lib/utils'
+  AnimatedFlow,
+  BottomSheet,
+  Card,
+  Icon,
+  ScrollView,
+  Text,
+  XStack,
+  YStack,
+} from "~/components"
+import { useStatisticsStore } from "~/hooks/useStore"
+import { DEVICE_HEIGHT } from "~/lib/utils"
 
 export const AssetCard: FC = () => {
   const { t } = useTranslation()
@@ -24,14 +31,14 @@ export const AssetCard: FC = () => {
     }),
     shallow
   )
-  const ref = useRef<BottomSheetBase>(null)
+  const ref = useRef<BottomSheetModal>(null)
   return (
     <Fragment>
       <Card fd="row" ai="center">
         <YStack gap="$sm" f={1}>
           <XStack ai="center" jc="space-between">
             <Text col="$secondary">{t("wallet.equity")}</Text>
-            <XStack hitSlop={16} onPress={() => ref.current?.expand()}>
+            <XStack hitSlop={16} onPress={() => ref.current?.present()}>
               <Icon name="info" size={20} />
             </XStack>
           </XStack>
@@ -56,8 +63,6 @@ export const AssetCard: FC = () => {
       <BottomSheet
         title={dict.title}
         ref={ref}
-        // eslint-disable-next-line react-compiler/react-compiler
-        onClose={ref.current?.close}
         maxDynamicContentSize={DEVICE_HEIGHT * 0.9}
       >
         <ScrollView showsVerticalScrollIndicator={false}>

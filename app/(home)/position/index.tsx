@@ -1,7 +1,5 @@
-import BottomSheetBase from "@gorhom/bottom-sheet"
 import { useUnmount } from "ahooks"
 import { Stack } from "expo-router"
-import { useRef } from "react"
 import { useTranslation } from "react-i18next"
 import { shallow } from "zustand/shallow"
 
@@ -23,8 +21,6 @@ export default function Layout() {
     }),
     shallow
   )
-
-  const ref = useRef<BottomSheetBase>(null)
 
   useUnmount(() => {
     useOrderStore.setState({

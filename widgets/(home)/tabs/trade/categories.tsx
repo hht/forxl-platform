@@ -1,14 +1,14 @@
-import BottomSheetBase from '@gorhom/bottom-sheet'
-import { FC, Fragment, useEffect, useRef, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import { shallow } from 'zustand/shallow'
+import { BottomSheetModal } from "@gorhom/bottom-sheet"
+import { FC, Fragment, useEffect, useRef, useState } from "react"
+import { useTranslation } from "react-i18next"
+import { useSafeAreaInsets } from "react-native-safe-area-context"
+import { shallow } from "zustand/shallow"
 
-import { getFutureCategories } from '~/api/trade'
-import { BottomSheet, Icon, IconType, Text, XStack, YStack } from '~/components'
-import { CACHE_KEY, useRequest } from '~/hooks/useRequest'
-import { useSymbolStore } from '~/hooks/useStore'
-import colors from '~/theme/colors'
+import { getFutureCategories } from "~/api/trade"
+import { BottomSheet, Icon, IconType, Text, XStack, YStack } from "~/components"
+import { CACHE_KEY, useRequest } from "~/hooks/useRequest"
+import { useSymbolStore } from "~/hooks/useStore"
+import colors from "~/theme/colors"
 
 const getItemIcon = (
   data: Awaited<ReturnType<typeof getFutureCategories>>[number]
@@ -70,7 +70,6 @@ export const FutureCategories: FC = () => {
   const { t } = useTranslation()
   const { bottom } = useSafeAreaInsets()
   const currentFuture = useSymbolStore((state) => state.currentFuture, shallow)
-  const [visible, setVisible] = useState(false)
   const { data } = useRequest(getFutureCategories, {
     cacheKey: CACHE_KEY.FUTURE_CATEGORIES,
     staleTime: 1000 * 60 * 60,
@@ -87,16 +86,18 @@ export const FutureCategories: FC = () => {
       }
     },
   })
-  const ref = useRef<BottomSheetBase>(null)
+  const ref = useRef<BottomSheetModal>(null)
   useEffect(() => {
-    ref.current?.close()
+    if (currentFuture) {
+      ref.current?.dismiss()
+    }
   }, [currentFuture])
   return (
     <Fragment>
       <XStack
         hitSlop={16}
         onPress={() => {
-          setVisible((v) => !v)
+          ref.current?.present()
         }}
         gap="$xs"
       >
@@ -105,26 +106,13 @@ export const FutureCategories: FC = () => {
           <Icon name="chevronRight" size={16}></Icon>
         </XStack>
       </XStack>
-      {visible ? (
-        <BottomSheet
-          index={0}
-          title={t("trade.categories")}
-          ref={ref}
-          // eslint-disable-next-line react-compiler/react-compiler
-          onClose={ref.current?.close}
-          onChange={(index) => {
-            if (index === -1) {
-              setVisible(false)
-            }
-          }}
-        >
-          <YStack pb={bottom}>
-            {data?.map((item) => (
-              <ListItem key={item.name} data={item}></ListItem>
-            ))}
-          </YStack>
-        </BottomSheet>
-      ) : null}
+      <BottomSheet index={0} title={t("trade.categories")} ref={ref}>
+        <YStack pb={bottom}>
+          {data?.map((item) => (
+            <ListItem key={item.name} data={item}></ListItem>
+          ))}
+        </YStack>
+      </BottomSheet>
     </Fragment>
   )
 }

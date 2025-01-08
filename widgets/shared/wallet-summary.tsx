@@ -1,4 +1,4 @@
-import BottomSheetBase from "@gorhom/bottom-sheet"
+import { BottomSheetModal } from "@gorhom/bottom-sheet"
 import { useIsFocused } from "@react-navigation/native"
 import { AnimatePresence, useAnimationState } from "moti"
 import { FC, Fragment, useEffect, useRef, useState } from "react"
@@ -152,7 +152,7 @@ export const WalletStatistics: FC = () => {
     desc?: string[]
     reloadKey?: string
   }>({})
-  const ref = useRef<BottomSheetBase>(null)
+  const ref = useRef<BottomSheetModal>(null)
   const [visible, setVisible] = useState(false)
   const state = useAnimationState(
     {
@@ -175,7 +175,7 @@ export const WalletStatistics: FC = () => {
   const { t } = useTranslation()
   useEffect(() => {
     if (reloadKey && title) {
-      ref.current?.expand()
+      ref.current?.present()
     }
   }, [reloadKey, title])
 

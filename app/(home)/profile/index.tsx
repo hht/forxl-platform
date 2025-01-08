@@ -1,17 +1,27 @@
-import BottomSheetBase from '@gorhom/bottom-sheet'
-import { router, Stack } from 'expo-router'
-import { useRef } from 'react'
-import { useTranslation } from 'react-i18next'
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { BottomSheetModal } from "@gorhom/bottom-sheet"
+import { router, Stack } from "expo-router"
+import { useRef } from "react"
+import { useTranslation } from "react-i18next"
+import { useSafeAreaInsets } from "react-native-safe-area-context"
 
-import { getAttestationFlag, getProfile } from '~/api/account'
+import { getAttestationFlag, getProfile } from "~/api/account"
 import {
-    BottomSheet, Button, Card, Copyable, Figure, Icon, Image, ListItem, ScrollView, Text, XStack,
-    YStack
-} from '~/components'
-import { CACHE_KEY, useRequest } from '~/hooks/useRequest'
-import { useFroxlStore } from '~/hooks/useStore'
-import { SupportTip } from '~/widgets/(home)/profile'
+  BottomSheet,
+  Button,
+  Card,
+  Copyable,
+  Figure,
+  Icon,
+  Image,
+  ListItem,
+  ScrollView,
+  Text,
+  XStack,
+  YStack,
+} from "~/components"
+import { CACHE_KEY, useRequest } from "~/hooks/useRequest"
+import { useFroxlStore } from "~/hooks/useStore"
+import { SupportTip } from "~/widgets/(home)/profile"
 
 const LEVEL_ICON = ["lv0", "lv1", "lv2"] as const
 
@@ -22,7 +32,7 @@ export default function Page() {
   })
   const account = useFroxlStore((state) => state.account)
   const { bottom } = useSafeAreaInsets()
-  const bottomSheetRef = useRef<BottomSheetBase>(null)
+  const bottomSheetRef = useRef<BottomSheetModal>(null)
   const { data: profile } = useRequest(getProfile, {
     cacheKey: CACHE_KEY.USER,
   })
@@ -63,7 +73,7 @@ export default function Page() {
               <XStack
                 hitSlop={16}
                 onPress={() => {
-                  bottomSheetRef.current?.expand()
+                  bottomSheetRef.current?.present()
                 }}
               >
                 <Icon name="info" size={16}></Icon>
@@ -146,7 +156,7 @@ export default function Page() {
         <YStack p="$md" pb={bottom + 16}>
           <Button
             onPress={() => {
-              bottomSheetRef.current?.close()
+              bottomSheetRef.current?.dismiss()
             }}
           >
             {t("action.ok")}

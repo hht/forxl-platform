@@ -1,18 +1,21 @@
-import BottomSheetBase, {
-    BottomSheetBackdrop, BottomSheetBackdropProps, BottomSheetProps, BottomSheetView
-} from '@gorhom/bottom-sheet'
-import { forwardRef } from 'react'
-import { Dimensions, StyleSheet } from 'react-native'
-import { Portal, Text, XStack } from 'tamagui'
+import {
+  BottomSheetBackdrop,
+  BottomSheetBackdropProps,
+  BottomSheetModal,
+  BottomSheetModalProps,
+  BottomSheetView,
+} from "@gorhom/bottom-sheet"
+import { forwardRef } from "react"
+import { Dimensions, StyleSheet } from "react-native"
+import { Portal, Text, XStack } from "tamagui"
 
-import { Icon } from './icon'
+import { Icon } from "./icon"
 
-import colors from '~/theme/colors'
+import colors from "~/theme/colors"
 
-interface BottomSheetModalProps {
+interface BottomSheetProps {
   title?: string
   children: React.ReactNode
-  onClose?: () => void
 }
 
 const renderBackdrop = (props: BottomSheetBackdropProps) => (
@@ -26,21 +29,20 @@ const renderBackdrop = (props: BottomSheetBackdropProps) => (
 const MAX_HEIGHT = Dimensions.get("window").height * 0.8
 
 export const BottomSheet = forwardRef<
-  BottomSheetBase,
+  BottomSheetModal,
   BottomSheetModalProps & BottomSheetProps
->(({ title, children, onClose, ...rest }, ref) => {
+>(({ title, children, onDismiss, ...rest }, ref) => {
   return (
     <Portal>
-      <BottomSheetBase
+      <BottomSheetModal
         ref={ref}
-        index={-1}
         backgroundStyle={styles.container}
         backdropComponent={renderBackdrop}
         handleComponent={null}
         enableDynamicSizing
         maxDynamicContentSize={MAX_HEIGHT}
         enablePanDownToClose
-        onClose={onClose}
+        onDismiss={onDismiss}
         {...rest}
       >
         <BottomSheetView>
@@ -57,10 +59,10 @@ export const BottomSheet = forwardRef<
             <XStack
               onPress={() => {
                 const r = ref as any
-                if (onClose) {
-                  onClose()
+                if (onDismiss) {
+                  onDismiss()
                 } else {
-                  r?.current?.close()
+                  r.current?.dismiss()
                 }
               }}
               pressStyle={{
@@ -73,7 +75,7 @@ export const BottomSheet = forwardRef<
           </XStack>
           {children}
         </BottomSheetView>
-      </BottomSheetBase>
+      </BottomSheetModal>
     </Portal>
   )
 })

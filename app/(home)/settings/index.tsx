@@ -1,4 +1,4 @@
-import BottomSheetBase from "@gorhom/bottom-sheet"
+import { BottomSheetModal } from "@gorhom/bottom-sheet"
 import { router, Stack } from "expo-router"
 import _ from "lodash"
 import { Fragment, useMemo, useRef } from "react"
@@ -27,7 +27,7 @@ export default function Layout() {
     () => TIMEZONES.find((it) => it.value === timezone)?.timezone,
     [timezone]
   )
-  const timeSheetRef = useRef<BottomSheetBase>(null)
+  const timeSheetRef = useRef<BottomSheetModal>(null)
   return (
     <Fragment>
       <Stack.Screen options={{ title: dict.title }}></Stack.Screen>
@@ -36,7 +36,7 @@ export default function Layout() {
           title={dict.timeZone}
           addonAfter={<Text col="$primary">{utfOffset}</Text>}
           onPress={() => {
-            timeSheetRef.current?.expand()
+            timeSheetRef.current?.present()
           }}
         />
         <ListItem
