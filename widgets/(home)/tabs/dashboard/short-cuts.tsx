@@ -16,7 +16,7 @@ const SHORTCUT_ROUTES: { [key: number]: { icon: IconType; href?: Href } } = {
   },
   1: {
     icon: "withdraw",
-    href: "/tabs/wallet",
+    href: "/withdraw",
   },
   2: {
     icon: "kyc",
@@ -44,7 +44,7 @@ const SHORTCUT_ROUTES: { [key: number]: { icon: IconType; href?: Href } } = {
   },
   8: {
     icon: "security",
-    href: "/tabs/wallet",
+    href: "/security",
   },
   9: {
     icon: "website",

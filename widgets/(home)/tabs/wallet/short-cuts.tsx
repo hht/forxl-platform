@@ -9,11 +9,11 @@ import colors from "~/theme/colors"
 const SHORTCUT_ROUTES: { [key: number]: { icon: IconType; href?: Href } } = {
   0: {
     icon: "addFunds",
-    href: "/tabs/wallet",
+    href: "/deposit",
   },
   1: {
     icon: "withdraw",
-    href: "/tabs/wallet",
+    href: "/withdraw",
   },
   2: {
     icon: "statement",
