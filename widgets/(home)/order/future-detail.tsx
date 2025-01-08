@@ -114,7 +114,7 @@ export const FutureDetail = () => {
       </XStack>
       <XStack p="$md" pb={0} bbc="$border" bbw={1}>
         <Tabs
-          data={[dict.new, dict.chart, dict.info]}
+          data={[dict.newPosition, dict.chart, dict.info]}
           activeIndex={activeIndex}
           onChange={setActiveIndex}
         />

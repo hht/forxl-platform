@@ -1,20 +1,27 @@
-import BottomSheetBase from '@gorhom/bottom-sheet'
-import { useIsFocused } from '@react-navigation/native'
-import { AnimatePresence, useAnimationState } from 'moti'
-import { FC, Fragment, useEffect, useRef, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import { shallow } from 'zustand/shallow'
-import { createWithEqualityFn } from 'zustand/traditional'
+import BottomSheetBase from "@gorhom/bottom-sheet"
+import { useIsFocused } from "@react-navigation/native"
+import { AnimatePresence, useAnimationState } from "moti"
+import { FC, Fragment, useEffect, useRef, useState } from "react"
+import { useTranslation } from "react-i18next"
+import { useSafeAreaInsets } from "react-native-safe-area-context"
+import { shallow } from "zustand/shallow"
 
-import { Notifier } from './header'
+import { Notifier } from "./header"
 
 import {
-    AnimatedFlow, BottomSheet, Button, Icon, Moti, Separator, Text, XStack, YStack
-} from '~/components'
-import { usePromptStore, useStatisticsStore } from '~/hooks/useStore'
-import { formatDecimal, uuid } from '~/lib/utils'
-import colors, { toRGBA } from '~/theme/colors'
+  AnimatedFlow,
+  BottomSheet,
+  Button,
+  Icon,
+  Moti,
+  Separator,
+  Text,
+  XStack,
+  YStack,
+} from "~/components"
+import { usePromptStore, useStatisticsStore } from "~/hooks/useStore"
+import { formatDecimal, uuid } from "~/lib/utils"
+import colors, { toRGBA } from "~/theme/colors"
 
 const ListItem: FC<{ label: string; value: number; onPress: () => void }> = ({
   label,
@@ -77,12 +84,12 @@ const Summary: FC<{
   return (
     <XStack fd="row" h="100%" w="100%" ai="center">
       <ListItem
-        label={t("trade.balance")}
+        label={t("wallet.balance")}
         value={available}
         onPress={() => {
           onChange({
-            title: t("trade.balance"),
-            desc: t("trade.balanceDesc", {
+            title: t("wallet.balance"),
+            desc: t("wallet.balanceDesc", {
               returnObjects: true,
             }),
             reloadKey: uuid(),
@@ -91,12 +98,12 @@ const Summary: FC<{
       />
       <Separator orientation="vertical" h="50%" />
       <ListItem
-        label={t("trade.equity")}
+        label={t("wallet.equity")}
         value={totalMoney}
         onPress={() => {
           usePromptStore.setState({
-            title: t("trade.equity"),
-            desc: t("trade.equityDesc", {
+            title: t("wallet.equity"),
+            desc: t("wallet.equityDesc", {
               returnObjects: true,
             }),
             reloadKey: uuid(),
@@ -105,12 +112,12 @@ const Summary: FC<{
       />
       <Separator orientation="vertical" h="50%" />
       <ListItem
-        label={t("trade.margin")}
+        label={t("wallet.freeMargin")}
         value={freezeMoney}
         onPress={() => {
           usePromptStore.setState({
-            title: t("trade.margin"),
-            desc: t("trade.marginDesc", {
+            title: t("wallet.freeMargin"),
+            desc: t("wallet.marginDesc", {
               returnObjects: true,
             }),
             reloadKey: uuid(),
@@ -119,12 +126,12 @@ const Summary: FC<{
       />
       <Separator orientation="vertical" h="50%" />
       <ListItem
-        label={t("trade.freeMargin")}
+        label={t("wallet.freeMargin")}
         value={supFreezeMoney}
         onPress={() => {
           usePromptStore.setState({
-            title: t("trade.freeMargin"),
-            desc: t("trade.freeMarginDesc", {
+            title: t("wallet.freeMargin"),
+            desc: t("wallet.freeMarginDesc", {
               returnObjects: true,
             }),
             reloadKey: uuid(),

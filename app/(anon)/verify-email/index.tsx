@@ -31,13 +31,12 @@ const openInbox = async () => {
       }
     }
   } catch (error) {
-    toast.show(t("anon.openEmailError"))
+    toast.show(t("message.openEmailError"))
   }
 }
 
 export default function Page() {
   const { t } = useTranslation()
-
   return (
     <Screen gap={32}>
       <Stack.Screen options={ScreenOptions} />
@@ -50,7 +49,7 @@ export default function Page() {
       </YStack>
       <YStack gap="$md" ai="center" pb={32}>
         <Button w="100%" onPress={openInbox}>
-          {t("anon.openEmail")}
+          {t("action.openEmailApp")}
         </Button>
         <Button w="100%" type="accent" onPress={router.back}>
           {t("anon.noThanks")}

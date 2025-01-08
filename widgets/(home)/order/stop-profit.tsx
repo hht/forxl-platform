@@ -21,12 +21,12 @@ const Title: FC = () => {
   const { t } = useTranslation()
   return (
     <XStack ai="center" gap="$sm">
-      <Text fow="bold">{t("trade.closeProfit")}</Text>
+      <Text fow="bold">{t("trade.closeAtProfit")}</Text>
       <XStack
         hitSlop={16}
         onPress={() => {
           usePromptStore.setState({
-            title: t("trade.closeProfit"),
+            title: t("trade.closeAtProfit"),
             desc: t("trade.closeProfitDesc"),
             reloadKey: uuid(),
           })

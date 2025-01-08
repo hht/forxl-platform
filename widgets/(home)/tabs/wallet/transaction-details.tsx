@@ -1,16 +1,28 @@
-import BottomSheetBase from '@gorhom/bottom-sheet'
-import { FC, Fragment, ReactNode, useEffect, useRef } from 'react'
-import { useTranslation } from 'react-i18next'
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import { shallow } from 'zustand/shallow'
-import { createWithEqualityFn } from 'zustand/traditional'
+import BottomSheetBase from "@gorhom/bottom-sheet"
+import { FC, Fragment, ReactNode, useEffect, useRef } from "react"
+import { useTranslation } from "react-i18next"
+import { useSafeAreaInsets } from "react-native-safe-area-context"
+import { shallow } from "zustand/shallow"
+import { createWithEqualityFn } from "zustand/traditional"
 
-import { CHANNEL_DESCRIPTION, DEPOSIT_STATUS, getStatusColor, WITHDRAW_STATUS } from './utils'
+import {
+  CHANNEL_DESCRIPTION,
+  DEPOSIT_STATUS,
+  getStatusColor,
+  WITHDRAW_STATUS,
+} from "./utils"
 
-import { getFundHistory } from '~/api/wallet'
-import { BottomSheet, copyToClipboard, Icon, Text, XStack, YStack } from '~/components'
-import { dayjs, formatDecimal } from '~/lib/utils'
-import colors, { toRGBA } from '~/theme/colors'
+import { getFundHistory } from "~/api/wallet"
+import {
+  BottomSheet,
+  copyToClipboard,
+  Icon,
+  Text,
+  XStack,
+  YStack,
+} from "~/components"
+import { dayjs, formatDecimal } from "~/lib/utils"
+import colors, { toRGBA } from "~/theme/colors"
 
 export const useTransactionStore = createWithEqualityFn<{
   data?: Awaited<ReturnType<typeof getFundHistory>>["list"][number]
@@ -120,7 +132,7 @@ export const TransactionDetails: FC = () => {
           {isDeposit ? null : (
             <Fragment>
               <ListItem
-                title={t("wallet.commission")}
+                title={t("trade.commission")}
                 value={`$${formatDecimal(data.feeValue)}`}
               />
               <ListItem

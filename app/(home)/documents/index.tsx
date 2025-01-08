@@ -19,7 +19,7 @@ export default function Layout() {
   })
   return (
     <YStack f={1}>
-      <Stack.Screen options={{ title: dict.title }} />
+      <Stack.Screen options={{ title: t("profile.documents") }} />
       <ScrollView f={1} p="$md" showsVerticalScrollIndicator={false}>
         {dict.children.map((it, index) => (
           <ListItem title={it} key={index} />

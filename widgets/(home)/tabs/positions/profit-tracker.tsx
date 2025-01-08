@@ -1,10 +1,10 @@
-import _ from "lodash"
-import { FC } from "react"
-import { XStack } from "tamagui"
+import _ from 'lodash'
+import { FC } from 'react'
+import { XStack } from 'tamagui'
 
-import { AnimatedFlow, Text } from "~/components"
-import { computeProfit } from "~/hooks/useStore"
-import { t } from "~/lib/utils"
+import { AnimatedFlow, Text } from '~/components'
+import { computeProfit } from '~/hooks/useStore'
+import { t } from '~/lib/utils'
 
 export const ProfitTracker: FC<{
   order: FuturesOrder

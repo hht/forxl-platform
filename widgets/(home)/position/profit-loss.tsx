@@ -1,14 +1,14 @@
-import BottomSheetBase from "@gorhom/bottom-sheet"
-import { useUnmount } from "ahooks"
-import { Fragment, useEffect, useMemo, useRef } from "react"
-import { useTranslation } from "react-i18next"
-import { shallow } from "zustand/shallow"
-import { createWithEqualityFn } from "zustand/traditional"
+import BottomSheetBase from '@gorhom/bottom-sheet'
+import { useUnmount } from 'ahooks'
+import { Fragment, useEffect, useMemo, useRef } from 'react'
+import { useTranslation } from 'react-i18next'
+import { shallow } from 'zustand/shallow'
+import { createWithEqualityFn } from 'zustand/traditional'
 
-import { Collapse, Icon, Input, Text, XStack, YStack } from "~/components"
-import { useOrderStore, usePromptStore } from "~/hooks/useStore"
-import { uuid } from "~/lib/utils"
-import { ProfitTracker } from "~/widgets/(home)/tabs/positions/profit-tracker"
+import { Collapse, Icon, Input, Text, XStack, YStack } from '~/components'
+import { useOrderStore, usePromptStore } from '~/hooks/useStore'
+import { uuid } from '~/lib/utils'
+import { ProfitTracker } from '~/widgets/(home)/tabs/positions/profit-tracker'
 
 export const useProfitAndLossStore = createWithEqualityFn<{
   stopProfitPrice?: number
@@ -77,12 +77,12 @@ export const ProfitAndLoss = () => {
         }}
         title={
           <XStack gap="$xs" ai="center">
-            <Text fow="700">{t("trade.closeProfit")}</Text>
+            <Text fow="700">{t("trade.closeAtProfit")}</Text>
             <XStack
               hitSlop={16}
               onPress={() => {
                 usePromptStore.setState({
-                  title: t("trade.closeProfit"),
+                  title: t("trade.closeAtProfit"),
                   desc: t("trade.closeProfitDesc"),
                   reloadKey: uuid(),
                 })
@@ -122,12 +122,12 @@ export const ProfitAndLoss = () => {
         }}
         title={
           <XStack gap="$xs" ai="center">
-            <Text fow="700">{t("trade.closeLoss")}</Text>
+            <Text fow="700">{t("trade.closeAtLoss")}</Text>
             <XStack
               hitSlop={16}
               onPress={() => {
                 usePromptStore.setState({
-                  title: t("trade.closeLoss"),
+                  title: t("trade.closeAtLoss"),
                   desc: t("trade.closeLossDesc"),
                   reloadKey: uuid(),
                 })

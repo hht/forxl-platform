@@ -66,11 +66,11 @@ export const OrderActions: FC = () => {
               useQuotesStore.getState().currentFuture!.futuresShow!
             ]
           if (!currentFuture?.isDeal) {
-            toast.show(t("message.notInTradeTime"))
+            toast.show(t("trade.notInTradeTime"))
             return
           }
           if (!quotes) {
-            toast.show(t("message.noQuotes"))
+            toast.show(t("trade.noQuotes"))
             return
           }
           if (enableCloseProfit) {
@@ -140,7 +140,7 @@ export const OrderActions: FC = () => {
         }}
       >
         {enablePending
-          ? t("trade.placeOrder")
+          ? t("order.placeOrder")
           : action === "buy"
             ? t("trade.buy")
             : t("trade.sell")}

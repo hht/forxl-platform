@@ -1,10 +1,10 @@
-import _ from "lodash"
-import { FC } from "react"
-import { useTranslation } from "react-i18next"
-import { shallow } from "zustand/shallow"
+import _ from 'lodash'
+import { FC } from 'react'
+import { useTranslation } from 'react-i18next'
+import { shallow } from 'zustand/shallow'
 
-import { AnimatedFlow, Text, XStack } from "~/components"
-import { computeProfit, useQuotesStore } from "~/hooks/useStore"
+import { AnimatedFlow, Text, XStack } from '~/components'
+import { computeProfit, useQuotesStore } from '~/hooks/useStore'
 
 export const ProfitTracker: FC<{
   order: FuturesOrder

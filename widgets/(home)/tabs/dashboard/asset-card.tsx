@@ -12,7 +12,7 @@ export const AssetCard: FC = () => {
   return (
     <Card fd="row" ai="center">
       <YStack gap="$sm" f={1}>
-        <Text>{t("home.wallet")}</Text>
+        <Text>{t("wallet.title")}</Text>
         <XStack ai="baseline" gap="$xs">
           <Text col="$primary" fos={28} lh={32} mr="$xs" fow="bold">
             {formatDecimal(data?.userWalletDetail.fundsAccount.available ?? 0)}

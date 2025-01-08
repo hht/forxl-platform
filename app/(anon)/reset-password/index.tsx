@@ -80,11 +80,11 @@ export default function Page() {
       <Stack.Screen options={ScreenOptions} />
       <YStack gap={12}>
         <Text subject>{t("anon.resetPassword")}</Text>
-        <Text col="$secondary">{t("anon.resetPasswordDescription")}</Text>
+        <Text col="$secondary">{t("anon.resetPasswordDesc")}</Text>
       </YStack>
       <YStack gap="$lg" f={1}>
         <Input.Password
-          label={t("anon.newPassword")}
+          label={t("settings.newPassword")}
           value={password}
           status={errors?.password ? "error" : "success"}
           onChangeText={(password) => useStore.setState({ password })}
@@ -100,7 +100,7 @@ export default function Page() {
         <PasswordValidator password={password} />
       </YStack>
       <Button disabled={!success} isLoading={loading} onPress={run} mb={32}>
-        {t("anon.reset")}
+        {t("settings.resetPassword")}
       </Button>
     </Screen>
   )

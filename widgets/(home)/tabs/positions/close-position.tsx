@@ -75,19 +75,19 @@ export const ClosePosition: FC<{ activeIndex: number }> = ({ activeIndex }) => {
       <YStack px="$md" pb={bottom + 16}>
         <XStack ai="center" jc="space-between" py={12}>
           <Text fos={11} col="$secondary">
-            {t("positions.volume")}
+            {t("trade.volume")}
           </Text>
           <Text>{position?.position ?? 0}</Text>
         </XStack>
         <XStack ai="center" jc="space-between" py={12}>
           <Text fos={11} col="$secondary">
-            {t("positions.currentPrice")}
+            {t("trade.currentPrice")}
           </Text>
           {position ? <PriceCell data={position} /> : null}
         </XStack>
         <XStack ai="center" jc="space-between" py={12}>
           <Text fos={11} col="$secondary">
-            {t("positions.pl")}
+            {t("trade.profitLoss")}
           </Text>
           {position ? <ProfitCell data={position} /> : null}
         </XStack>

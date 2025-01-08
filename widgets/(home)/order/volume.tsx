@@ -1,11 +1,11 @@
-import _ from 'lodash'
-import { FC } from 'react'
-import { useTranslation } from 'react-i18next'
-import { shallow } from 'zustand/shallow'
+import _ from "lodash"
+import { FC } from "react"
+import { useTranslation } from "react-i18next"
+import { shallow } from "zustand/shallow"
 
-import { AnimatedFlow, Card, Input, Text, XStack, YStack } from '~/components'
-import { useQuotesStore, useStatisticsStore } from '~/hooks/useStore'
-import { formatDecimal } from '~/lib/utils'
+import { AnimatedFlow, Card, Input, Text, XStack, YStack } from "~/components"
+import { useQuotesStore, useStatisticsStore } from "~/hooks/useStore"
+import { formatDecimal } from "~/lib/utils"
 
 export const TradeVolume: FC<{ future?: FuturesDetail }> = ({ future }) => {
   const { t } = useTranslation()
@@ -25,7 +25,7 @@ export const TradeVolume: FC<{ future?: FuturesDetail }> = ({ future }) => {
   return (
     <Card bw={0}>
       <XStack ai="center" jc="space-between">
-        <Text fow="bold">{t("positions.volume")}</Text>
+        <Text fow="bold">{t("trade.volume")}</Text>
         <XStack
           hitSlop={16}
           onPress={() => {
@@ -68,7 +68,7 @@ export const TradeVolume: FC<{ future?: FuturesDetail }> = ({ future }) => {
         </YStack>
         <YStack ai="flex-end">
           <Text fos={11} col="$secondary">
-            {t("trade.freeMargin")}
+            {t("wallet.freeMargin")}
           </Text>
           <AnimatedFlow
             addonsBefore="$"

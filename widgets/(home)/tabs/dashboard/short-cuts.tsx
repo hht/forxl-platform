@@ -7,12 +7,13 @@ import { Dimensions } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 import { BottomSheet, Card, Icon, IconType, Text, XStack } from '~/components'
+import { waitFor } from '~/lib/utils'
 import colors from '~/theme/colors'
 
 const SHORTCUT_ROUTES: { [key: number]: { icon: IconType; href?: Href } } = {
   0: {
     icon: "addFunds",
-    href: "/tabs/wallet",
+    href: "/deposit",
   },
   1: {
     icon: "withdraw",
@@ -28,7 +29,7 @@ const SHORTCUT_ROUTES: { [key: number]: { icon: IconType; href?: Href } } = {
   },
   4: {
     icon: "referral",
-    href: "/tabs/wallet",
+    href: "/referral-program",
   },
   5: {
     icon: "statement",
@@ -36,7 +37,7 @@ const SHORTCUT_ROUTES: { [key: number]: { icon: IconType; href?: Href } } = {
   },
   6: {
     icon: "support",
-    href: "/tabs/wallet",
+    href: "/support",
   },
   7: {
     icon: "community",
@@ -80,6 +81,7 @@ export const Shortcuts: FC = () => {
     ],
     [shortcuts]
   )
+
   return (
     <Fragment>
       <XStack gap="$md" w="100%" fw="wrap">
@@ -89,7 +91,7 @@ export const Shortcuts: FC = () => {
             w={SHORTCUT_SIZE}
             h={SHORTCUT_SIZE}
             key={item.index}
-            onPress={() => {
+            onPress={async () => {
               if (SHORTCUT_ROUTES[item.index].href) {
                 router.push(SHORTCUT_ROUTES[item.index].href!)
               } else {
@@ -122,8 +124,10 @@ export const Shortcuts: FC = () => {
               key={index}
               w={SHORTCUT_SIZE}
               h={SHORTCUT_SIZE}
-              onPress={() => {
+              onPress={async () => {
                 if (SHORTCUT_ROUTES[index].href) {
+                  bottomSheetRef.current?.close()
+                  await waitFor(500)
                   router.push(SHORTCUT_ROUTES[index].href!)
                 } else {
                   bottomSheetRef.current?.expand()

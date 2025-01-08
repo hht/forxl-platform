@@ -13,7 +13,7 @@ import { DEVICE_HEIGHT } from '~/lib/utils'
 export const AssetCard: FC = () => {
   const { t } = useTranslation()
   const { bottom } = useSafeAreaInsets()
-  const dict = t("wallet.equityDesc", {
+  const dict = t("wallet.assetDesc", {
     returnObjects: true,
   })
   const { available, totalMoney, supFreezeMoney } = useStatisticsStore(
@@ -30,7 +30,7 @@ export const AssetCard: FC = () => {
       <Card fd="row" ai="center">
         <YStack gap="$sm" f={1}>
           <XStack ai="center" jc="space-between">
-            <Text col="$secondary">{t("trade.equity")}</Text>
+            <Text col="$secondary">{t("wallet.equity")}</Text>
             <XStack hitSlop={16} onPress={() => ref.current?.expand()}>
               <Icon name="info" size={20} />
             </XStack>
@@ -44,11 +44,11 @@ export const AssetCard: FC = () => {
             col="$text"
           />
           <XStack py="$xs" ai="center" jc="space-between">
-            <Text col="$secondary">{t("trade.balance")}</Text>
+            <Text col="$secondary">{t("wallet.balance")}</Text>
             <AnimatedFlow col="$text" addonsBefore="$" value={available} />
           </XStack>
           <XStack ai="center" jc="space-between">
-            <Text col="$secondary">{t("trade.freeMargin")}</Text>
+            <Text col="$secondary">{t("wallet.freeMargin")}</Text>
             <AnimatedFlow col="$text" addonsBefore="$" value={supFreezeMoney} />
           </XStack>
         </YStack>

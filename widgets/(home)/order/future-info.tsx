@@ -1,11 +1,11 @@
-import { FC, Fragment } from 'react'
-import { useTranslation } from 'react-i18next'
+import { FC, Fragment } from "react"
+import { useTranslation } from "react-i18next"
 
-import { MarketInfo } from './market-info'
+import { MarketInfo } from "./market-info"
 
-import { Text, XStack, YStack } from '~/components'
-import { useQuotesStore } from '~/hooks/useStore'
-import { formatDecimal } from '~/lib/utils'
+import { Text, XStack, YStack } from "~/components"
+import { useQuotesStore } from "~/hooks/useStore"
+import { formatDecimal } from "~/lib/utils"
 
 const ListItem: FC<{ title: string; value: string; desc?: string }> = ({
   title,
@@ -50,7 +50,7 @@ export const FutureInfo: FC<{
           desc={t("trade.executionTypeDesc")}
         />
         <ListItem
-          title={t("order.commission")}
+          title={t("trade.commission")}
           value={t("trade.perLot", {
             amount: formatDecimal(future.futuresParam?.tradingFee ?? 0),
           })}

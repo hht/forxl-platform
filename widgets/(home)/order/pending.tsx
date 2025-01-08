@@ -19,14 +19,16 @@ const Title: FC = () => {
   return (
     <XStack ai="center" gap="$sm">
       <Text fow="bold">
-        {t(action === "buy" ? "trade.buyWhen" : "trade.sellWhen")}
+        {t(action === "buy" ? "trade.buyWhenRateIs" : "trade.sellWhenRateIs")}
       </Text>
       <XStack
         hitSlop={16}
         onPress={() => {
           usePromptStore.setState({
-            title: t(action === "buy" ? "trade.buyWhen" : "trade.sellWhen"),
-            desc: t("trade.rateDesc"),
+            title: t(
+              action === "buy" ? "trade.buyWhenRateIs" : "trade.sellWhenRateIs"
+            ),
+            desc: t("trade.sellWhenRateIsDesc"),
             reloadKey: uuid(),
           })
         }}
@@ -44,7 +46,7 @@ const PriceTracker: FC<{ current?: number }> = ({ current }) => {
   return (
     <XStack gap="$sm">
       <Text fos={11} col="$secondary">
-        {t("trade.fromRate")}:
+        {t("trade.fromLastRate")}:
       </Text>
       <AnimatedFlow
         fos={11}

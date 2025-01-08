@@ -28,7 +28,7 @@ export const OrderActions = () => {
           })
         }}
       >
-        {t("order.close")}
+        {t("positions.closePosition")}
       </Button>
       <Button
         f={1}

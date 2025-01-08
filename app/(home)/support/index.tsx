@@ -17,7 +17,7 @@ export default function Layout() {
   })
   return (
     <ScrollView f={1} p="$md" showsVerticalScrollIndicator={false}>
-      <Stack.Screen options={{ title: dict.title }} />
+      <Stack.Screen options={{ title: t("profile.support") }} />
       <XStack ai="center" jc="center" p="$md">
         <Figure name="supportBanner" />
       </XStack>

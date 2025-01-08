@@ -1,14 +1,21 @@
-import { Stack } from 'expo-router'
-import { useTranslation } from 'react-i18next'
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { Stack } from "expo-router"
+import { useTranslation } from "react-i18next"
+import { useSafeAreaInsets } from "react-native-safe-area-context"
 
-import { getBonusConfig, getPartnerConfig } from '~/api/partner'
-import { Figure, IconType, ScrollView, Text, XStack, YStack } from '~/components'
-import { useRequest } from '~/hooks/useRequest'
-import { usePartnerStore } from '~/hooks/useStore'
-import { DEVICE_WIDTH, formatDecimal } from '~/lib/utils'
-import { AccountInfo } from '~/widgets/(home)/referral-program/account-info'
-import { ReferralInfo } from '~/widgets/(home)/referral-program/referral-info'
+import { getBonusConfig, getPartnerConfig } from "~/api/partner"
+import {
+  Figure,
+  IconType,
+  ScrollView,
+  Text,
+  XStack,
+  YStack,
+} from "~/components"
+import { useRequest } from "~/hooks/useRequest"
+import { usePartnerStore } from "~/hooks/useStore"
+import { DEVICE_WIDTH, formatDecimal } from "~/lib/utils"
+import { AccountInfo } from "~/widgets/(home)/referral-program/account-info"
+import { ReferralInfo } from "~/widgets/(home)/referral-program/referral-info"
 
 const LEVEL_ICON: IconType[] = ["user", "pair", "group"]
 
@@ -29,7 +36,7 @@ export default function Layout() {
   })
   return (
     <YStack f={1}>
-      <Stack.Screen options={{ title: dict.title }} />
+      <Stack.Screen options={{ title: t("profile.referralProgram") }} />
       <XStack pos="absolute" t={0} l={0} r={0}>
         <Figure name="grid" width={DEVICE_WIDTH} height={DEVICE_WIDTH} />
       </XStack>

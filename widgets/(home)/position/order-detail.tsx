@@ -1,16 +1,16 @@
-import { Fragment } from 'react'
-import { useTranslation } from 'react-i18next'
-import { shallow } from 'zustand/shallow'
+import { Fragment } from "react"
+import { useTranslation } from "react-i18next"
+import { shallow } from "zustand/shallow"
 
-import { getFuture } from '~/api/trade'
-import { Icon, Text, XStack } from '~/components'
-import { useRequest } from '~/hooks/useRequest'
-import { useOrderStore } from '~/hooks/useStore'
-import { dayjs, formatDecimal } from '~/lib/utils'
-import colors from '~/theme/colors'
-import { ListItem } from '~/widgets/(home)/position/list-item'
-import { PriceCell } from '~/widgets/shared/price-cell'
-import { ProfitCell } from '~/widgets/shared/profit-cell'
+import { getFuture } from "~/api/trade"
+import { Icon, Text, XStack } from "~/components"
+import { useRequest } from "~/hooks/useRequest"
+import { useOrderStore } from "~/hooks/useStore"
+import { dayjs, formatDecimal } from "~/lib/utils"
+import colors from "~/theme/colors"
+import { ListItem } from "~/widgets/(home)/position/list-item"
+import { PriceCell } from "~/widgets/shared/price-cell"
+import { ProfitCell } from "~/widgets/shared/profit-cell"
 
 export const OrderDetail = () => {
   const { t } = useTranslation()
@@ -41,11 +41,7 @@ export const OrderDetail = () => {
                 currentPosition?.openSafe === 0 ? "$primary" : "$destructive"
               }
             >
-              {t(
-                currentPosition?.openSafe === 0
-                  ? "positions.buy"
-                  : "positions.sell"
-              )}
+              {t(currentPosition?.openSafe === 0 ? "trade.buy" : "trade.sell")}
             </Text>
             <Text fos={17} lh={20} fow="bold">
               {currentPosition.futuresCode}
@@ -70,12 +66,14 @@ export const OrderDetail = () => {
             </XStack>
           </XStack>
         </XStack>
-        <ListItem label={dict.volume}>{`${currentPosition.position}`}</ListItem>
         <ListItem
-          label={dict.margin}
+          label={t("trade.volume")}
+        >{`${currentPosition.position}`}</ListItem>
+        <ListItem
+          label={t("wallet.margin")}
         >{`$${formatDecimal(currentPosition.securityDeposit ?? 0)}`}</ListItem>
         <ListItem
-          label={dict.commission}
+          label={t("trade.commission")}
         >{`$${formatDecimal(currentPosition.tradingFee ?? 0)}`}</ListItem>
         <ListItem
           label={dict.swap}
@@ -97,11 +95,7 @@ export const OrderDetail = () => {
             fow="bold"
             col={currentPosition?.openSafe === 0 ? "$primary" : "$destructive"}
           >
-            {t(
-              currentPosition?.openSafe === 0
-                ? "positions.buy"
-                : "positions.sell"
-            )}
+            {t(currentPosition?.openSafe === 0 ? "trade.buy" : "trade.sell")}
           </Text>
           <Text fos={17} lh={20} fow="bold">
             {currentPosition.futuresCode}
@@ -141,12 +135,14 @@ export const OrderDetail = () => {
           </XStack>
         </XStack>
       </XStack>
-      <ListItem label={dict.volume}>{`${currentPosition.position}`}</ListItem>
       <ListItem
-        label={dict.margin}
+        label={t("trade.volume")}
+      >{`${currentPosition.position}`}</ListItem>
+      <ListItem
+        label={t("wallet.margin")}
       >{`$${formatDecimal(currentPosition.securityDeposit ?? 0)}`}</ListItem>
       <ListItem
-        label={dict.commission}
+        label={t("trade.commission")}
       >{`$${formatDecimal(currentPosition.tradingFee ?? 0)}`}</ListItem>
       <ListItem
         label={dict.swap}
@@ -157,12 +153,12 @@ export const OrderDetail = () => {
       <ListItem
         label={dict.closeTime}
       >{`${dayjs(currentPosition.overTime).format("MMM DD, YYYY HH:mm")}`}</ListItem>
-      <ListItem label={t("trade.closeLoss")}>
+      <ListItem label={t("trade.closeAtLoss")}>
         {currentPosition.stopLossPrice
           ? `$${formatDecimal(currentPosition.stopLossPrice, currentPosition.volatility)}`
           : "-"}
       </ListItem>
-      <ListItem label={t("trade.closeProfit")}>
+      <ListItem label={t("trade.closeAtProfit")}>
         {currentPosition.stopProfitPrice
           ? `$${formatDecimal(currentPosition.stopProfitPrice, currentPosition.volatility)}`
           : "-"}

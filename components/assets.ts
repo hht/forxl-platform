@@ -62,7 +62,7 @@ export { default as indices } from "~/assets/images/icon/indices.svg"
 export { default as popular } from "~/assets/images/icon/popular.svg"
 export { default as starFilled } from "~/assets/images/icon/star-filled.svg"
 export { default as trend } from "~/assets/images/icon/trend.svg"
-
+export { default as dollar } from "~/assets/images/icon/dollar.svg"
 // 图片
 export { default as logo } from "~/assets/images/widgets/logo.svg"
 export { default as verifyEmail } from "~/assets/images/widgets/verify-email.svg"

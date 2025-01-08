@@ -1,22 +1,26 @@
-import { useIsFocused } from '@react-navigation/native'
-import { useInfiniteScroll } from 'ahooks'
-import { router } from 'expo-router'
-import { FC, Fragment, ReactNode } from 'react'
-import { useTranslation } from 'react-i18next'
-import { FlatList, Platform, RefreshControl } from 'react-native'
-import { XStackProps } from 'tamagui'
-import { shallow } from 'zustand/shallow'
+import { useIsFocused } from "@react-navigation/native"
+import { useInfiniteScroll } from "ahooks"
+import { router } from "expo-router"
+import { FC, Fragment, ReactNode } from "react"
+import { useTranslation } from "react-i18next"
+import { FlatList, Platform, RefreshControl } from "react-native"
+import { XStackProps } from "tamagui"
+import { shallow } from "zustand/shallow"
 
-import { getClosedPositions, getOpenPositions, getPendingPositions } from '~/api/trade'
-import { AnimatedFlow, Figure, Icon, Text, XStack, YStack } from '~/components'
-import { getRecentDate } from '~/hooks/useLocale'
-import { CACHE_KEY, useRequest } from '~/hooks/useRequest'
-import { useOrderStore } from '~/hooks/useStore'
-import { subscribeQuotes } from '~/hooks/useWebsocket'
-import { dayjs, DEVICE_WIDTH, formatDecimal, uuid } from '~/lib/utils'
-import colors, { toRGBA } from '~/theme/colors'
-import { ListFooterComponent } from '~/widgets/shared/list'
-import { PriceCell } from '~/widgets/shared/price-cell'
+import {
+  getClosedPositions,
+  getOpenPositions,
+  getPendingPositions,
+} from "~/api/trade"
+import { AnimatedFlow, Figure, Icon, Text, XStack, YStack } from "~/components"
+import { getRecentDate } from "~/hooks/useLocale"
+import { CACHE_KEY, useRequest } from "~/hooks/useRequest"
+import { useOrderStore } from "~/hooks/useStore"
+import { subscribeQuotes } from "~/hooks/useWebsocket"
+import { dayjs, DEVICE_WIDTH, formatDecimal, uuid } from "~/lib/utils"
+import colors, { toRGBA } from "~/theme/colors"
+import { ListFooterComponent } from "~/widgets/shared/list"
+import { PriceCell } from "~/widgets/shared/price-cell"
 
 const ListItem: FC<
   {
@@ -66,7 +70,7 @@ const EditableListItem: FC<{ data: Position }> = ({ data }) => {
       </YStack>
       <YStack gap="$sm" f={1}>
         <XStack ai="center" gap="$sm">
-          <Text>{`${t(data.openSafe ? "positions.sell" : "positions.buy")} ${data.position} ${t("positions.lots")}`}</Text>
+          <Text>{`${t(data.openSafe ? "trade.sell" : "trade.buy")} ${data.position} ${t("trade.lots")}`}</Text>
           {data.stopProfitPrice ? (
             <Text
               fos={10}
@@ -139,7 +143,7 @@ const ArchivedListItem: FC<{ data: Position; dateVisible?: boolean }> = ({
             ${data.profit! > 0 ? "+" : ""}
             {formatDecimal(data.profit ?? 0)}
           </Text>
-          <Text col="$secondary">{`${t(data.openSafe ? "positions.sell" : "positions.buy")} ${data.position} ${t("positions.lots")}`}</Text>
+          <Text col="$secondary">{`${t(data.openSafe ? "trade.sell" : "trade.buy")} ${data.position} ${t("trade.lots")}`}</Text>
         </YStack>
       </ListItem>
     </Fragment>
@@ -166,19 +170,19 @@ const ListEmptyComponent: FC<{
       <Text>
         {t(
           type === "open"
-            ? "positions.noOpenPositions"
+            ? "trade.openPositionEmptyTitle"
             : type === "orders"
-              ? "positions.noPendingPositions"
-              : "positions.noClosedPositions"
+              ? "trade.pendingPositionEmptyTitle"
+              : "trade.closedPositionEmptyTitle"
         )}
       </Text>
       <Text fos={11} ta="center" col="$tertiary">
         {t(
           type === "open"
-            ? "positions.noOpenPositionsDesc"
+            ? "trade.openPositionEmptyDesc"
             : type === "orders"
-              ? "positions.noPendingPositionsDesc"
-              : "positions.noClosedPositionsDesc"
+              ? "trade.pendingPositionEmptyDesc"
+              : "trade.closedPositionEmptyTitle"
         )}
       </Text>
       {type === "closed" && filtered ? (

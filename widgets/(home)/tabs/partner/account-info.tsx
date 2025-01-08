@@ -1,19 +1,35 @@
-import _ from 'lodash'
-import { Fragment, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import { shallow } from 'zustand/shallow'
+import _ from "lodash"
+import { Fragment, useState } from "react"
+import { useTranslation } from "react-i18next"
+import { shallow } from "zustand/shallow"
 
-import { LEVELS } from './utils'
+import { LEVELS } from "./utils"
 
-import { getPartnerConfig, getPartnerInfo, getReferralList } from '~/api/partner'
 import {
-    Button, Card, copyToClipboard, Dialog, Figure, Icon, Justified, Popup, Row, ScrollView,
-    Statistics, Text, XStack, YStack
-} from '~/components'
-import { formatDate } from '~/hooks/useLocale'
-import { useRequest } from '~/hooks/useRequest'
-import { useFroxlStore, usePartnerStore } from '~/hooks/useStore'
-import { DEVICE_WIDTH, formatDecimal } from '~/lib/utils'
+  getPartnerConfig,
+  getPartnerInfo,
+  getReferralList,
+} from "~/api/partner"
+import {
+  Button,
+  Card,
+  copyToClipboard,
+  Dialog,
+  Figure,
+  Icon,
+  Justified,
+  Popup,
+  Row,
+  ScrollView,
+  Statistics,
+  Text,
+  XStack,
+  YStack,
+} from "~/components"
+import { formatDate } from "~/hooks/useLocale"
+import { useRequest } from "~/hooks/useRequest"
+import { useFroxlStore, usePartnerStore } from "~/hooks/useStore"
+import { DEVICE_WIDTH, formatDecimal } from "~/lib/utils"
 
 export const AccountInfo = () => {
   const { account } = useFroxlStore()
@@ -56,7 +72,7 @@ export const AccountInfo = () => {
           </YStack>
         </XStack>
         <Justified>
-          <Statistics label={dict.directAccounts}>
+          <Statistics label={t("referral.accounts")}>
             <Row gap="$sm">
               <Text fos={17} lh={20} fow="700">
                 {`${data?.activeDirectNum ?? 0}/${data?.allDirectNum ?? 0}`}
@@ -92,7 +108,7 @@ export const AccountInfo = () => {
           </Statistics>
         </Justified>
         <Justified>
-          <Statistics label={dict.earned}>
+          <Statistics label={t("referral.earned")}>
             <Row gap="$xs">
               <Text fow="700">{`$${formatDecimal(data?.earned ?? 0)}`}</Text>
               <Button h={18} px="$xs" br="$xs" onPress={() => {}}>

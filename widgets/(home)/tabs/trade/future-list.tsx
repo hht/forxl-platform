@@ -2,7 +2,6 @@ import { useIsFocused } from '@react-navigation/native'
 import { useInfiniteScroll } from 'ahooks'
 import { router } from 'expo-router'
 import { FC, useCallback, useEffect, useMemo } from 'react'
-import { useTranslation } from 'react-i18next'
 import { FlatList, Platform, RefreshControl } from 'react-native'
 import { shallow } from 'zustand/shallow'
 
@@ -192,7 +191,6 @@ const renderItem = ({
 }) => <ListItem data={item} />
 
 export const FutureList = () => {
-  const { t } = useTranslation()
   const isFocused = useIsFocused()
   const { currentFuture, mutationFuture } = useSymbolStore(
     (state) => ({

@@ -1,6 +1,6 @@
-import { useFroxlStore } from './useStore'
+import { useFroxlStore } from "./useStore"
 
-import { dayjs, i18n, t } from '~/lib/utils'
+import { dayjs, i18n, t } from "~/lib/utils"
 
 export const getDate = (date?: dayjs.ConfigType) => {
   return dayjs(date).utcOffset(useFroxlStore.getState().timezone)
@@ -28,9 +28,9 @@ export const formatDate = (
 export const getRecentDate = (date?: number) => {
   const dayjsDate = getDate(date)
   if (dayjsDate.isToday()) {
-    return t("notifications.today")
+    return t("calendar.today")
   } else if (dayjsDate.isYesterday()) {
-    return t("notifications.yesterday")
+    return t("calendar.yesterday")
   } else {
     return dayjsDate.format("YYYY-MM-DD")
   }
