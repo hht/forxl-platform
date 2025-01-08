@@ -70,7 +70,7 @@ const EditableListItem: FC<{ data: Position }> = ({ data }) => {
       </YStack>
       <YStack gap="$sm" f={1}>
         <XStack ai="center" gap="$sm">
-          <Text>{`${t(data.openSafe ? "trade.sell" : "trade.buy")} ${data.position} ${t("trade.lots")}`}</Text>
+          <Text>{`${t(data.openSafe ? "trade.sell" : "trade.buy")} ${data.position} ${t("trade.lots", { amount: "" })}`}</Text>
           {data.stopProfitPrice ? (
             <Text
               fos={10}
@@ -143,7 +143,7 @@ const ArchivedListItem: FC<{ data: Position; dateVisible?: boolean }> = ({
             ${data.profit! > 0 ? "+" : ""}
             {formatDecimal(data.profit ?? 0)}
           </Text>
-          <Text col="$secondary">{`${t(data.openSafe ? "trade.sell" : "trade.buy")} ${data.position} ${t("trade.lots")}`}</Text>
+          <Text col="$secondary">{`${t(data.openSafe ? "trade.sell" : "trade.buy")} ${data.position} ${t("trade.lots", { amount: "" })}`}</Text>
         </YStack>
       </ListItem>
     </Fragment>

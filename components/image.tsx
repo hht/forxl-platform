@@ -9,16 +9,12 @@ export const StyledImage = styled(ImageBase, {
   width: "100%",
   contentFit: "cover",
   cachePolicy: "disk",
+  aspectRatio: "auto",
 })
 
 export const Image: FC<ImageBaseProps & ImageProps> = ({
   children,
   ...rest
 }) => {
-  const blurhash = "L05=62offQofoffQfQfQfQfQfQfQ"
-  return (
-    <StyledImage placeholder={blurhash} {...rest}>
-      {children}
-    </StyledImage>
-  )
+  return <StyledImage {...rest}>{children}</StyledImage>
 }

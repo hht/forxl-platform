@@ -212,7 +212,7 @@ interface Profile {
   inviteUserList?: Agent[]
   traderDetail?: Trader
   user?: Account
-  realName?: Certification
+  realName: Certification
 }
 
 /**
