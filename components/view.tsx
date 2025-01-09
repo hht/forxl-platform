@@ -1,13 +1,17 @@
-import { MotiView } from 'moti'
-import { FC } from 'react'
-import { ActivityIndicator, Platform } from 'react-native'
-import { AvoidSoftInputView, AvoidSoftInputViewProps } from 'react-native-avoid-softinput'
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import { styled, XStack, XStackProps, YStack, YStackProps } from 'tamagui'
+import _ from "lodash"
+import { MotiView } from "moti"
+import { FC, ReactNode } from "react"
+import { ActivityIndicator, Platform } from "react-native"
+import {
+  AvoidSoftInputView,
+  AvoidSoftInputViewProps,
+} from "react-native-avoid-softinput"
+import { useSafeAreaInsets } from "react-native-safe-area-context"
+import { styled, XStack, XStackProps, YStack, YStackProps } from "tamagui"
 
-import { Text } from './text'
+import { Text } from "./text"
 
-import colors from '~/theme/colors'
+import colors from "~/theme/colors"
 
 export const View = styled(YStack, {
   name: "View",
@@ -24,7 +28,19 @@ export const View = styled(YStack, {
   } as const,
 })
 
-export const Card = styled(View, {
+const Item: FC<{ title: string; children: ReactNode }> = ({
+  title,
+  children,
+}) => {
+  return (
+    <XStack ai="center" jc="space-between" py="$sm">
+      <Text col="$secondary">{title}</Text>
+      {_.isString(children) ? <Text>{children}</Text> : children}
+    </XStack>
+  )
+}
+
+const CardBase = styled(View, {
   name: "Card",
   p: 16,
   br: 8,
@@ -32,6 +48,8 @@ export const Card = styled(View, {
   bw: 1,
   boc: "$border",
 })
+
+export const Card = Object.assign(CardBase, { Item })
 
 export const Justified = styled(XStack, {
   ai: "center",

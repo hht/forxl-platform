@@ -1,12 +1,13 @@
-import * as Clipboard from 'expo-clipboard'
-import _ from 'lodash'
-import { FC } from 'react'
-import { styled, Text as TamaText, TextProps, XStack } from 'tamagui'
+import * as Clipboard from "expo-clipboard"
+import _ from "lodash"
+import { FC } from "react"
+import { styled, Text as TamaText, TextProps, XStack } from "tamagui"
 
-import { Icon } from './icon'
-import { toast } from './toast'
+import { Icon } from "./icon"
+import { toast } from "./toast"
 
-import { formatDecimal, t } from '~/lib/utils'
+import { formatDecimal, t } from "~/lib/utils"
+import colors from "~/theme/colors"
 
 /**
  * 默认字体组件
@@ -74,7 +75,7 @@ export const Copyable: FC<{ children?: string } & TextProps> = ({
       }}
     >
       <Text {...rest}>{children}</Text>
-      <Icon name="copy" size={12}></Icon>
+      <Icon name="copy" size={12} color={colors.primary}></Icon>
     </XStack>
   )
 }
