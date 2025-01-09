@@ -2,10 +2,10 @@ import { router } from "expo-router"
 import { FC } from "react"
 
 import { Card, Icon, Image, Text } from "~/components"
-import { usePaymentStore } from "~/hooks/useStore"
+import { useWalletStore } from "~/hooks/useStore"
 
 export const PaymentMethod: FC = () => {
-  const { method } = usePaymentStore()
+  const { method } = useWalletStore()
   if (!method) return null
   return (
     <Card

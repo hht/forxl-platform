@@ -1,8 +1,10 @@
 import axios from "axios"
+import * as ImagePicker from "expo-image-picker"
 
+import { toast } from "~/components"
 import { BASE_URL, request } from "~/hooks/useRequest"
 import { DepositResult, useFroxlStore } from "~/hooks/useStore"
-import { i18n, toInfinite } from "~/lib/utils"
+import { i18n, t, toInfinite } from "~/lib/utils"
 
 export const getPaymentMethods = async () => {
   return await request<PaymentMethod[], undefined>(
@@ -222,19 +224,38 @@ export const cancelDeposit = async (params: { orderNo: string }) => {
   return await request("/pay/cancelGiantPay", "POST", params)
 }
 
-export const upload = async (file: File) => {
-  const formData = new FormData()
-  formData.append("user", "test")
-  formData.append("file", file)
+export const upload = async () => {
+  const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync()
+  if (status !== "granted") {
+    toast.show(t("message.accessMedia"))
+    return
+  }
+  const result = await ImagePicker.launchImageLibraryAsync({
+    mediaTypes: ["images"],
+    allowsEditing: true,
+    aspect: [4, 3],
+    quality: 0,
+  })
 
-  try {
-    const response = await axios.post(`${BASE_URL}/other/upload`, formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    })
-    return { src: response.data.data.src as string }
-  } catch (error) {
-    throw error
+  if (!result.canceled && result.assets && result.assets.length > 0) {
+    const file = result.assets[0]
+    const formData = new FormData()
+    formData.append("user", "test")
+    formData.append("file", {
+      uri: file.uri,
+      name: file.fileName || "photo.jpg",
+      type: file.type || "image/jpeg",
+    } as any)
+
+    try {
+      const response = await axios.post(`${BASE_URL}/other/upload`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      return { src: response.data.data.src as string }
+    } catch (error) {
+      throw error
+    }
   }
 }

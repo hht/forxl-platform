@@ -1,5 +1,6 @@
 import { BottomSheetModal } from "@gorhom/bottom-sheet"
 import { useIsFocused } from "@react-navigation/native"
+import { router } from "expo-router"
 import { AnimatePresence, useAnimationState } from "moti"
 import { FC, Fragment, useEffect, useRef, useState } from "react"
 import { useTranslation } from "react-i18next"
@@ -242,7 +243,14 @@ export const WalletStatistics: FC = () => {
             <YStack ai="center">
               {title ? <AnimatedDescription current="balance" /> : null}
             </YStack>
-            <Button>{t("wallet.addFunds")}</Button>
+            <Button
+              onPress={() => {
+                ref.current?.dismiss()
+                router.push("/deposit")
+              }}
+            >
+              {t("wallet.addFunds")}
+            </Button>
           </YStack>
         </BottomSheet>
       ) : null}

@@ -115,7 +115,8 @@
     "openEmailError": "We couldn't open your email app. Please check your email and click the verification link.",
     "closePositionSuccess": "Position closed successfully",
     "orderSuccess": "Order placed successfully",
-    "changePositionSuccess": "Position changed successfully"
+    "changePositionSuccess": "Position changed successfully",
+    "accessMedia": "Sorry, we need camera roll permissions to make this work!"
   },
   "home": {
     "news": "Market News",
@@ -351,12 +352,15 @@
     "minimumDepositPrompt": "The minimum deposit amount is {{min}}. If you deposit less than the minimum amount, your funds will be lost. ",
     "usdtPrompt": "Deposit exactly in USDT. Do not use P2P marketplaces. Otherwise, your transaction will be considered a third-party payment and rejected.",
     "openWalletDesc": "Open your bank card digital wallet",
+    "openCryptoDesc": "Open your crypto wallet or exchange app.",
+    "qrCodeDesc": "Scan the QR code or transfer <1>{{amount}} USDT</1> to the address below. ",
     "order": "Order",
     "phoneNumber": "Phone Number",
     "processingTime": "Processing Time",
     "requestStatement": "Request Statement",
     "securityVerification": "Security Verification",
     "sellerBankCard": "Seller bank card",
+    "paymentInformation": "Payment Information",
     "statement": "Statement",
     "thinkAgain": "Think again",
     "transferToSeller": "Transfer to seller",

@@ -1,6 +1,5 @@
 import { router } from "expo-router"
-import _ from "lodash"
-import { FC, Fragment, ReactNode } from "react"
+import { FC, Fragment } from "react"
 
 import { getPaymentMethods, getWithdrawalMethods } from "~/api/wallet"
 import {
@@ -13,32 +12,20 @@ import {
   YStack,
 } from "~/components"
 import { CACHE_KEY, useRequest } from "~/hooks/useRequest"
-import { usePaymentStore } from "~/hooks/useStore"
+import { useWalletStore } from "~/hooks/useStore"
 import { formatDecimal, t } from "~/lib/utils"
-
-const ListItem: FC<{ title: string; children: ReactNode }> = ({
-  title,
-  children,
-}) => {
-  return (
-    <XStack ai="center" jc="space-between" py="$sm">
-      <Text col="$secondary">{title}</Text>
-      {_.isString(children) ? <Text>{children}</Text> : children}
-    </XStack>
-  )
-}
 
 export const PaymentMethodDescription: FC<{
   method: PaymentMethod
 }> = ({ method }) => {
   return (
     <Fragment>
-      <ListItem title={t("trade.commission")}>
+      <Card.Item title={t("trade.commission")}>
         {method.fee ? formatDecimal(method.fee) : t("wallet.networkFeeOnly")}
-      </ListItem>
-      <ListItem title={t("wallet.processingTime")}>
+      </Card.Item>
+      <Card.Item title={t("wallet.processingTime")}>
         {method.arrivalTimeDesc || t("wallet.instantly")}
-      </ListItem>
+      </Card.Item>
       {/* <ListItem title={t("wallet.limit")}>
         <Text className="text-white">
           {method.incomeMoneyMin
@@ -60,15 +47,15 @@ export const WithdrawMethodDescription: FC<{
 }> = ({ method }) => {
   return (
     <Fragment>
-      <ListItem title={t("trade.commission")}>
+      <Card.Item title={t("trade.commission")}>
         {method.feeValue
           ? `${formatDecimal(method.feeValue)}%`
           : t("wallet.networkFeeOnly")}
-      </ListItem>
-      <ListItem title={t("wallet.processingTime")}>
+      </Card.Item>
+      <Card.Item title={t("wallet.processingTime")}>
         {method.arrivalTimeDesc ?? ""}
-      </ListItem>
-      <ListItem title={t("wallet.limit")}>
+      </Card.Item>
+      <Card.Item title={t("wallet.limit")}>
         <Text className="text-white">
           {method.minAmount
             ? `${t("wallet.from")} ${formatDecimal(method.minAmount)} USD`
@@ -79,7 +66,7 @@ export const WithdrawMethodDescription: FC<{
             ? `${t("wallet.to")} ${formatDecimal(data.maxAmount)} USD `
             : ""}
         </Text> */}
-      </ListItem>
+      </Card.Item>
     </Fragment>
   )
 }
@@ -91,7 +78,9 @@ export const PaymentMethodCard: FC<{
     <Card
       gap="$md"
       onPress={() => {
-        usePaymentStore.setState({ method })
+        useWalletStore.setState({
+          method,
+        })
         router.push("/deposit/form")
       }}
     >

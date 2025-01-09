@@ -219,38 +219,48 @@ export type DepositResult =
       address: string
       price: number
       payType: 0
+      orderNo: string
     }
   | {
       address: string
       price: number
       payType: 1
+      orderNo: string
+    }
+  | {
+      address: string
+      price: number
+      payType: 101
+      orderNo: string
+    }
+  | {
+      address: string
+      price: number
+      payType: 102
+      orderNo: string
     }
 
-export const useWalletStore = createWithEqualityFn<{
-  depositResult?: DepositResult
-  image?: string
-  depositRequest?: {
-    payBank: string
-    payName: string
-    payAccount: string
-  }
-}>((set) => ({}))
+const INITIAL = {
+  depositResult: undefined,
+  depositRequest: {
+    payBank: "",
+    payName: "",
+    payAccount: "",
+  },
+}
 
-export const usePaymentStore = createWithEqualityFn<{
+export const useWalletStore = createWithEqualityFn<{
+  image?: string
   method?: PaymentMethod
-  data: {
+  depositRequest: {
     payBank: string
     payName: string
     payAccount: string
     amount?: number
   }
-}>(() => ({
-  data: {
-    payBank: "",
-    payName: "",
-    payAccount: "",
-  },
-}))
+  depositResult?: DepositResult
+  clean: () => void
+}>((set) => ({ ...INITIAL, clean: () => set(INITIAL) }))
 
 export const computeProfit = (
   futures: Pick<

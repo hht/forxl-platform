@@ -8,7 +8,7 @@ export const InfoCard: FC<PropsWithChildren> = ({ children }) => {
     <Card fd="row" gap="$sm" px={12} py="$sm">
       <Icon name="info" size={20} />
       {_.isString(children) ? (
-        <Text col="$secondary" f={1}>
+        <Text col="$secondary" f={1} lh={20}>
           {children}
         </Text>
       ) : (
