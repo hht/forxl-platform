@@ -1,20 +1,24 @@
-import { useBoolean } from 'ahooks'
-import _ from 'lodash'
-import { MotiText as AnimatedText, MotiView as AnimatedView } from 'moti'
-import React, { FC, useCallback, useEffect, useRef, useState } from 'react'
-import { StyleSheet, TextInput, TextInputProps } from 'react-native'
+import { useBoolean } from "ahooks"
+import _ from "lodash"
+import { MotiText as AnimatedText, MotiView as AnimatedView } from "moti"
+import React, { FC, useCallback, useEffect, useRef, useState } from "react"
+import { StyleSheet, TextInput, TextInputProps } from "react-native"
 import Animated, {
-    useAnimatedStyle, useSharedValue, withRepeat, withSequence, withTiming
-} from 'react-native-reanimated'
-import { XStack, YStack } from 'tamagui'
+  useAnimatedStyle,
+  useSharedValue,
+  withRepeat,
+  withSequence,
+  withTiming,
+} from "react-native-reanimated"
+import { XStack, YStack } from "tamagui"
 
-import { Button } from './button'
-import { Icon } from './icon'
-import { Text } from './text'
-import { toast } from './toast'
+import { Button } from "./button"
+import { Icon } from "./icon"
+import { Text } from "./text"
+import { toast } from "./toast"
 
-import { t } from '~/lib/utils'
-import colors from '~/theme/colors'
+import { t } from "~/lib/utils"
+import colors from "~/theme/colors"
 
 interface InputProps extends TextInputProps {
   addonAfter?: React.ReactNode
@@ -23,6 +27,7 @@ interface InputProps extends TextInputProps {
   bc?: string
   backgroundColor?: string
   message?: string
+  disableValidation?: boolean
 }
 
 export const InputBase: FC<InputProps> = ({
@@ -32,6 +37,7 @@ export const InputBase: FC<InputProps> = ({
   value,
   addonAfter,
   message,
+  disableValidation,
   backgroundColor = colors.background,
   ...rest
 }) => {
@@ -107,9 +113,11 @@ export const InputBase: FC<InputProps> = ({
           </AnimatedText>
         </AnimatedView>
       </XStack>
-      <Text col="$destructive" fos={12}>
-        {value && !isFocused ? (message ?? "") : ""}
-      </Text>
+      {disableValidation ? null : (
+        <Text col="$destructive" fos={12}>
+          {value && !isFocused ? (message ?? "") : ""}
+        </Text>
+      )}
     </YStack>
   )
 }
@@ -246,6 +254,43 @@ export const OTP = ({
   )
 }
 
+const AMOUNT_REGEX = /^\d*\.?\d{0,2}$/
+
+const Decimal: FC<
+  Omit<InputProps, "onChange" | "value"> & {
+    value?: number
+    onChange: (v?: number) => void
+    max?: number
+  }
+> = ({ value, onChange, max, ...props }) => {
+  return (
+    <InputBase
+      value={`${value ?? ""}`}
+      keyboardType="numeric"
+      onChangeText={(e) => {
+        if (!e || e === "") {
+          onChange(undefined)
+          return
+        }
+        // 验证输入格式
+        if (!AMOUNT_REGEX.test(e)) {
+          return
+        }
+        if (max && parseFloat(e) > parseFloat(`${max}`)) {
+          onChange(parseFloat(`${max}`))
+          toast.show(t("message.maxReached"))
+          return
+        }
+        const v = parseFloat(e)
+        if (_.isNumber(v) && !_.isNaN(v)) {
+          onChange(v)
+        }
+      }}
+      {...props}
+    />
+  )
+}
+
 const Digit: FC<
   Omit<InputProps, "onChange" | "value"> & {
     value?: number
@@ -342,6 +387,7 @@ export const Input = Object.assign(InputBase, {
   Password,
   OTP,
   Digit,
+  Decimal,
 })
 
 Password.displayName = "PasswordInput"

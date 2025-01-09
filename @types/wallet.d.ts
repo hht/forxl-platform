@@ -138,7 +138,7 @@ interface PaymentMethod {
    * payNameRequired
    */
   payNameRequired?: number
-  payType?: 0 | 1 | 3
+  payType?: 0 | 1 | 3 | 101 | 102
   /**
    * 图标地址
    */

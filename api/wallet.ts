@@ -1,8 +1,8 @@
-import axios from 'axios'
+import axios from "axios"
 
-import { BASE_URL, request } from '~/hooks/useRequest'
-import { DepositResult, useFroxlStore } from '~/hooks/useStore'
-import { i18n, toInfinite } from '~/lib/utils'
+import { BASE_URL, request } from "~/hooks/useRequest"
+import { DepositResult, useFroxlStore } from "~/hooks/useStore"
+import { i18n, toInfinite } from "~/lib/utils"
 
 export const getPaymentMethods = async () => {
   return await request<PaymentMethod[], undefined>(
@@ -161,7 +161,7 @@ export const sendStatement = async (params: {
 export const deposit = async (params: {
   code: string
   amount: number
-  type: 0 | 1 | 3
+  type: 0 | 1 | 3 | 101 | 102
   paymentId?: number
 }) => {
   switch (params.type) {

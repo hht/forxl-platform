@@ -1,15 +1,16 @@
-import dayjs from 'dayjs'
-import { router } from 'expo-router'
-import { Fragment } from 'react'
-import { useTranslation } from 'react-i18next'
+import dayjs from "dayjs"
+import { router } from "expo-router"
+import { Fragment } from "react"
+import { useTranslation } from "react-i18next"
 
-import { Banners } from './banners'
-import { Shortcuts } from './short-cuts'
+import { Banners } from "./banners"
+import { Shortcuts } from "./short-cuts"
 
-import { getNews } from '~/api/dashboard'
-import { Figure, Icon, Image, Text, XStack, YStack } from '~/components'
-import { useWebViewStore } from '~/hooks/useStore'
-import colors, { toRGBA } from '~/theme/colors'
+import { getNews } from "~/api/dashboard"
+import { Figure, Icon, Image, Text, XStack, YStack } from "~/components"
+import { useWebViewStore } from "~/hooks/useStore"
+import { trimHTML } from "~/lib/utils"
+import colors, { toRGBA } from "~/theme/colors"
 
 export const ListItem = ({
   item,
@@ -19,12 +20,7 @@ export const ListItem = ({
   index: number
 }) => {
   const { t } = useTranslation()
-  const html = item.content
-    .replace(/<style[^>]*>[\s\S]*?<\/style>/gi, "") // 移除 style 标签及内容
-    .replace(/<[^>]+>/g, "") // 移除其他 HTML 标签
-    .replace(/&nbsp;/g, " ") // 替换 HTML 空格
-    .replace(/\s+/g, " ") // 合并多个空格
-    .trim()
+  const html = trimHTML(item.content)
   const isFirst = index === 0
   return (
     <YStack

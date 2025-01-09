@@ -258,7 +258,6 @@
     "addressFormatError": "Address format error",
     "addressPrompt": "Copy the address of your USDT (TRC20) wallet or scan user QRcode to Deposit",
     "addressPromptDesc": "Use the copied address during the transfer from your personal USDT (TRC20) wallet to your USDT (TRC20) wallet. This is your permanent address. You can save this address to use it next time you make a deposit.",
-    "averageTime": "Average Time",
     "balance": "Balance",
     "balanceDesc": [
       "Balance is the calculated total of all completed transactions on a trading account, including deposits and withdrawals. It can be the amount of funds you have before opening orders, or after you have closed all open orders; the balance does not change while orders are open."
@@ -283,7 +282,8 @@
     "depositDetailsDesc": "This is an approximate conversion rate. It may change by the time the transaction is processed",
     "depositMethod": "Deposit Method",
     "instantly": "Instantly",
-    "depositPrompt": "To use this method for transferring funds, please ensure that your remittance information is filled out accurately. Be sure to transfer the exact amount you entered to the account provided by Forxl. Please use a bank card registered under your real name for the transfer. Any transfers not made by you personally will not be credited, and any fees incurred due to refunds will be borne by you.",
+    "depositBankPrompt": "To use this method for transferring funds, please ensure that your remittance information is filled out accurately. Be sure to transfer the exact amount you entered to the account provided by Forxl. Please use a bank card registered under your real name for the transfer. Any transfers not made by you personally will not be credited, and any fees incurred due to refunds will be borne by you.",
+    "depositCryptoPrompt": "To use this method for transferring funds, please ensure that your remittance information is filled out accurately. Be sure to transfer the exact amount you entered to the cryptocurrency address provided by Forxl. Please use the wallet address you have provided for the transfer. If your actual payment address does not match the address you submitted, any fees incurred due to refunds will be borne by you.",
     "depositRangePrompt": "You can deposit from {{min}} to {{max}} {{unit}}",
     "depositWalletDesc": "Please use the wallet to scan the code to pay or copy the wallet address",
     "depositTrc20Prompt": "Please do not deposit any non-TRC20 network USDT assets to the below addresses, otherwise the assets will not be recovered!",
@@ -422,6 +422,7 @@
     "usdtTransfer": "USDT transfer",
     "recharge": "Administrator recharge",
     "reissue": "Commission reissue",
+    "youWillGet": "You will get",
     "sendStatementSuccessful": "Your statement of account has been sent to your email. Please check it."
   },
   "tools": {

@@ -21,6 +21,7 @@ import { dayjs, DEVICE_WIDTH, formatDecimal, uuid } from "~/lib/utils"
 import colors, { toRGBA } from "~/theme/colors"
 import { ListFooterComponent } from "~/widgets/shared/list"
 import { PriceCell } from "~/widgets/shared/price-cell"
+import { ProfitCell } from "~/widgets/shared/profit-cell"
 
 const ListItem: FC<
   {
@@ -62,11 +63,7 @@ const EditableListItem: FC<{ data: Position }> = ({ data }) => {
       </XStack>
       <YStack f={1} gap="$sm">
         <Text fow="bold">{data.futuresCode}</Text>
-        <AnimatedFlow
-          addonsBefore="$"
-          value={data.profit ?? 0}
-          fow="bold"
-        ></AnimatedFlow>
+        <ProfitCell data={data} fow="bold" />
       </YStack>
       <YStack gap="$sm" f={1}>
         <XStack ai="center" gap="$sm">

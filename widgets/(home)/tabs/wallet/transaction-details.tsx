@@ -86,7 +86,7 @@ export const TransactionDetails: FC = () => {
             <Icon
               name={isDeposit ? "addFunds" : "withdraw"}
               size={48}
-              color={isDeposit ? colors.primary : colors.destructive}
+              color={getStatusColor(data.status)}
             ></Icon>
           </XStack>
           <Text subject>

@@ -11,6 +11,7 @@ import { VerificationCard } from "~/widgets/shared/validation-card"
 export default function Page() {
   const { t } = useTranslation()
   const { bottom } = useSafeAreaInsets()
+
   return (
     <ScrollView f={1} showsVerticalScrollIndicator={false}>
       <Stack.Screen options={{ title: t("wallet.deposit") }} />

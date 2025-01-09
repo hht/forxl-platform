@@ -67,6 +67,7 @@ export { default as twoFactorWord } from "~/assets/images/icon/two-factor-word.s
 export { default as figure } from "~/assets/images/icon/figure.svg"
 export { default as creditCard } from "~/assets/images/icon/credit-card.svg"
 export { default as twoFactor } from "~/assets/images/icon/two-factor.svg"
+export { default as warn } from "~/assets/images/icon/warn.svg"
 // 图片
 export { default as logo } from "~/assets/images/widgets/logo.svg"
 export { default as verifyEmail } from "~/assets/images/widgets/verify-email.svg"

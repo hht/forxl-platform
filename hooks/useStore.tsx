@@ -236,6 +236,22 @@ export const useWalletStore = createWithEqualityFn<{
   }
 }>((set) => ({}))
 
+export const usePaymentStore = createWithEqualityFn<{
+  method?: PaymentMethod
+  data: {
+    payBank: string
+    payName: string
+    payAccount: string
+    amount?: number
+  }
+}>(() => ({
+  data: {
+    payBank: "",
+    payName: "",
+    payAccount: "",
+  },
+}))
+
 export const computeProfit = (
   futures: Pick<
     Position,

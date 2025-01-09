@@ -1,13 +1,18 @@
-import { FC, Fragment } from 'react'
-import { useTranslation } from 'react-i18next'
+import { FC, Fragment } from "react"
+import { useTranslation } from "react-i18next"
 
-import { Shortcuts } from './short-cuts'
-import { CHANNEL_DESCRIPTION, DEPOSIT_STATUS, getStatusColor, WITHDRAW_STATUS } from './utils'
+import { Shortcuts } from "./short-cuts"
+import {
+  CHANNEL_DESCRIPTION,
+  DEPOSIT_STATUS,
+  getStatusColor,
+  WITHDRAW_STATUS,
+} from "./utils"
 
-import { getFundHistory } from '~/api/wallet'
-import { Icon, Image, Text, XStack, YStack } from '~/components'
-import { getRecentDate } from '~/hooks/useLocale'
-import { formatDecimal } from '~/lib/utils'
+import { getFundHistory } from "~/api/wallet"
+import { Icon, Image, Text, XStack, YStack } from "~/components"
+import { getRecentDate } from "~/hooks/useLocale"
+import { formatDecimal } from "~/lib/utils"
 
 export const ListItem: FC<{
   data: Awaited<ReturnType<typeof getFundHistory>>["list"][number]
@@ -45,6 +50,7 @@ export const ListItem: FC<{
         >
           <Icon
             name={data.operationType === 9001 ? "addFunds" : "withdraw"}
+            color={getStatusColor(data.status)}
             size={24}
           />
         </XStack>

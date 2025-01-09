@@ -1,19 +1,19 @@
-import dayjs from 'dayjs'
-import 'dayjs/locale/en'
-import 'dayjs/locale/zh'
-import isToday from 'dayjs/plugin/isToday'
-import isYesterday from 'dayjs/plugin/isYesterday'
-import localeData from 'dayjs/plugin/localeData'
-import relativeTime from 'dayjs/plugin/relativeTime'
-import utc from 'dayjs/plugin/utc'
-import * as FileSystem from 'expo-file-system'
-import { router } from 'expo-router'
-import i18n from 'i18next'
-import _ from 'lodash'
-import { Dimensions, LayoutAnimation } from 'react-native'
+import dayjs from "dayjs"
+import "dayjs/locale/en"
+import "dayjs/locale/zh"
+import isToday from "dayjs/plugin/isToday"
+import isYesterday from "dayjs/plugin/isYesterday"
+import localeData from "dayjs/plugin/localeData"
+import relativeTime from "dayjs/plugin/relativeTime"
+import utc from "dayjs/plugin/utc"
+import * as FileSystem from "expo-file-system"
+import { router } from "expo-router"
+import i18n from "i18next"
+import _ from "lodash"
+import { Dimensions, LayoutAnimation } from "react-native"
 
-import en from '~/locales/en-US/translation.json'
-import zh from '~/locales/zh-CN/translation.json'
+import en from "~/locales/en-US/translation.json"
+import zh from "~/locales/zh-CN/translation.json"
 
 dayjs.extend(localeData)
 dayjs.extend(utc)
@@ -80,11 +80,13 @@ export const uuid = () =>
 
 export const formatDecimal = (value: string | number, fraction = 0.01) => {
   const precision = fraction.toString().split(".")[1]?.length ?? 0
-  return new Intl.NumberFormat(i18n.resolvedLanguage, {
+  const factor = Math.pow(10, precision)
+  const truncated = Math.trunc(Number(value) * factor) / factor
+  return new Intl.NumberFormat("en", {
     style: "decimal",
     minimumFractionDigits: precision,
     maximumFractionDigits: precision,
-  }).format(_.isNaN(Number(value)) ? 0 : Number(value))
+  }).format(_.isNaN(Number(truncated)) ? 0 : Number(truncated))
 }
 
 export const popToTop = () => {
@@ -149,3 +151,12 @@ export const toInfinite = <T>(data: PaginationResponse<T>, current: number) => {
 
 export const { width: DEVICE_WIDTH, height: DEVICE_HEIGHT } =
   Dimensions.get("window")
+
+export const trimHTML = (html: string) => {
+  return html
+    .replace(/<style[^>]*>[\s\S]*?<\/style>/gi, "") // 移除 style 标签及内容
+    .replace(/<[^>]+>/g, "") // 移除其他 HTML 标签
+    .replace(/&nbsp;/g, " ") // 替换 HTML 空格
+    .replace(/\s+/g, " ") // 合并多个空格
+    .trim()
+}

@@ -1,3 +1,4 @@
+import { router } from "expo-router"
 import _ from "lodash"
 import { FC, Fragment, ReactNode } from "react"
 
@@ -12,6 +13,7 @@ import {
   YStack,
 } from "~/components"
 import { CACHE_KEY, useRequest } from "~/hooks/useRequest"
+import { usePaymentStore } from "~/hooks/useStore"
 import { formatDecimal, t } from "~/lib/utils"
 
 const ListItem: FC<{ title: string; children: ReactNode }> = ({
@@ -27,49 +29,49 @@ const ListItem: FC<{ title: string; children: ReactNode }> = ({
 }
 
 export const PaymentMethodDescription: FC<{
-  data: PaymentMethod
-}> = ({ data }) => {
+  method: PaymentMethod
+}> = ({ method }) => {
   return (
     <Fragment>
       <ListItem title={t("trade.commission")}>
-        {data.fee ? formatDecimal(data.fee) : t("wallet.networkFeeOnly")}
+        {method.fee ? formatDecimal(method.fee) : t("wallet.networkFeeOnly")}
       </ListItem>
-      <ListItem title={t("wallet.averageTime")}>
-        {data.arrivalTimeDesc || t("wallet.instantly")}
+      <ListItem title={t("wallet.processingTime")}>
+        {method.arrivalTimeDesc || t("wallet.instantly")}
       </ListItem>
-      <ListItem title={t("wallet.limit")}>
+      {/* <ListItem title={t("wallet.limit")}>
         <Text className="text-white">
-          {data.incomeMoneyMin
-            ? `${t("wallet.from")} ${formatDecimal(data.incomeMoneyMin)} USD`
+          {method.incomeMoneyMin
+            ? `${t("wallet.from")} ${formatDecimal(method.incomeMoneyMin)} USD`
             : ""}
         </Text>
-        {/* <Text className="text-white">
-          {data.incomeMoneyMax
-            ? `${t("wallet.to")} ${formatDecimal(data.incomeMoneyMax)} USD `
+        <Text className="text-white">
+          {method.incomeMoneyMax
+            ? `${t("wallet.to")} ${formatDecimal(method.incomeMoneyMax)} USD `
             : ""}
-        </Text> */}
-      </ListItem>
+        </Text>
+      </ListItem> */}
     </Fragment>
   )
 }
 
 export const WithdrawMethodDescription: FC<{
-  data: WithdrawMethod
-}> = ({ data }) => {
+  method: WithdrawMethod
+}> = ({ method }) => {
   return (
     <Fragment>
       <ListItem title={t("trade.commission")}>
-        {data.feeValue
-          ? `${formatDecimal(data.feeValue)}%`
+        {method.feeValue
+          ? `${formatDecimal(method.feeValue)}%`
           : t("wallet.networkFeeOnly")}
       </ListItem>
-      <ListItem title={t("wallet.averageTime")}>
-        {data.arrivalTimeDesc ?? ""}
+      <ListItem title={t("wallet.processingTime")}>
+        {method.arrivalTimeDesc ?? ""}
       </ListItem>
       <ListItem title={t("wallet.limit")}>
         <Text className="text-white">
-          {data.minAmount
-            ? `${t("wallet.from")} ${formatDecimal(data.minAmount)} USD`
+          {method.minAmount
+            ? `${t("wallet.from")} ${formatDecimal(method.minAmount)} USD`
             : ""}
         </Text>
         {/* <Text className="text-white">
@@ -83,47 +85,53 @@ export const WithdrawMethodDescription: FC<{
 }
 
 export const PaymentMethodCard: FC<{
-  data: PaymentMethod
-}> = ({ data }) => {
+  method: PaymentMethod
+}> = ({ method }) => {
   return (
-    <Card gap="$md">
+    <Card
+      gap="$md"
+      onPress={() => {
+        usePaymentStore.setState({ method })
+        router.push("/deposit/form")
+      }}
+    >
       <XStack ai="center" jc="space-between">
         <YStack gap="$sm">
           <Text fos={17} lh={20} fow="bold">
-            {data.name}
+            {method.name}
           </Text>
           <XStack ai="center" gap="$sm">
-            {data.userAuth ? <Icon name="creditCard" size={16} /> : null}
+            {method.userAuth ? <Icon name="creditCard" size={16} /> : null}
             <Icon name="twoFactor" size={16} />
           </XStack>
         </YStack>
-        <Image source={{ uri: data.picUrl }} w={40} h={40} />
+        <Image source={{ uri: method.picUrl }} w={40} h={40} />
       </XStack>
       <Separator />
-      <PaymentMethodDescription data={data} />
+      <PaymentMethodDescription method={method} />
     </Card>
   )
 }
 
 export const WithdrawMethodCard: FC<{
-  data: WithdrawMethod
-}> = ({ data }) => {
+  method: WithdrawMethod
+}> = ({ method }) => {
   return (
     <Card gap="$md">
       <XStack ai="center" jc="space-between">
         <YStack gap="$sm">
           <Text fos={17} lh={20} fow="bold">
-            {data.channelName}
+            {method.channelName}
           </Text>
           <XStack ai="center" gap="$sm">
-            {data.userAuth ? <Icon name="creditCard" size={16} /> : null}
+            {method.userAuth ? <Icon name="creditCard" size={16} /> : null}
             <Icon name="twoFactor" size={16} />
           </XStack>
         </YStack>
-        <Image source={{ uri: data.picUrl }} w={40} h={40} />
+        <Image source={{ uri: method.picUrl }} w={40} h={40} />
       </XStack>
       <Separator />
-      <WithdrawMethodDescription data={data} />
+      <WithdrawMethodDescription method={method} />
     </Card>
   )
 }
@@ -135,7 +143,7 @@ export const PaymentMethods: FC = () => {
   return (
     <Fragment>
       {data?.map((method) => (
-        <PaymentMethodCard key={method.id} data={method} />
+        <PaymentMethodCard key={method.id} method={method} />
       ))}
     </Fragment>
   )
@@ -148,7 +156,7 @@ export const WithdrawMethods: FC = () => {
   return (
     <Fragment>
       {data?.map((method) => (
-        <WithdrawMethodCard key={method.id} data={method} />
+        <WithdrawMethodCard key={method.id} method={method} />
       ))}
     </Fragment>
   )
