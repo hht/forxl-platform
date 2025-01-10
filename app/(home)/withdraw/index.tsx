@@ -13,7 +13,7 @@ export default function Page() {
   const { bottom } = useSafeAreaInsets()
   return (
     <ScrollView f={1} showsVerticalScrollIndicator={false}>
-      <Stack.Screen options={{ title: t("wallet.withdraw") }} />
+      <Stack.Screen options={{ title: t("wallet.withdrawal") }} />
       <YStack p="$md" gap={20} pb={bottom + 16}>
         <YStack gap={12}>
           <AccountCard />

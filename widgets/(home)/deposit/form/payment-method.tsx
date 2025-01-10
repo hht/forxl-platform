@@ -5,7 +5,7 @@ import { Card, Icon, Image, Text } from "~/components"
 import { useWalletStore } from "~/hooks/useStore"
 
 export const PaymentMethod: FC = () => {
-  const { method } = useWalletStore()
+  const { depositMethod: method } = useWalletStore()
   if (!method) return null
   return (
     <Card

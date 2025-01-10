@@ -79,7 +79,7 @@ export const PaymentMethodCard: FC<{
       gap="$md"
       onPress={() => {
         useWalletStore.setState({
-          method,
+          depositMethod: method,
         })
         router.push("/deposit/form")
       }}
@@ -106,7 +106,15 @@ export const WithdrawMethodCard: FC<{
   method: WithdrawMethod
 }> = ({ method }) => {
   return (
-    <Card gap="$md">
+    <Card
+      gap="$md"
+      onPress={() => {
+        useWalletStore.setState({
+          withdrawMethod: method,
+        })
+        router.push("/withdraw/form")
+      }}
+    >
       <XStack ai="center" jc="space-between">
         <YStack gap="$sm">
           <Text fos={17} lh={20} fow="bold">

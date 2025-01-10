@@ -4,13 +4,13 @@ import { useTranslation } from "react-i18next"
 import { Input, Text, YStack } from "~/components"
 import { useWalletStore } from "~/hooks/useStore"
 import { trimHTML } from "~/lib/utils"
+import { PaymentMethod } from "~/widgets/(home)/deposit/form/payment-method"
 import { AttentionCard } from "~/widgets/shared/attention-card"
 import { InfoCard } from "~/widgets/shared/info-card"
-import { PaymentMethod } from "~/widgets/shared/payment-method"
 
 export const DepositForm: FC = () => {
   const { t } = useTranslation()
-  const { method, depositRequest } = useWalletStore()
+  const { depositMethod: method, depositRequest } = useWalletStore()
   if (method?.payType === 3) {
     return (
       <Fragment>

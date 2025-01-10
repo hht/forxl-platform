@@ -4,10 +4,10 @@ import { useTranslation } from "react-i18next"
 import { Card, Separator, Text, YStack } from "~/components"
 import { useWalletStore } from "~/hooks/useStore"
 import { formatDecimal } from "~/lib/utils"
-import { PaymentMethodDescription } from "~/widgets/shared/payment-methods"
+import { WithdrawMethodDescription } from "~/widgets/shared/payment-methods"
 
-export const DepositSummary: FC = () => {
-  const { depositMethod: method, depositRequest } = useWalletStore()
+export const WithdrawSummary: FC = () => {
+  const { withdrawMethod: method, withdrawRequest } = useWalletStore()
   const { t } = useTranslation()
   if (!method) return null
   return (
@@ -16,10 +16,10 @@ export const DepositSummary: FC = () => {
         <Text col="$secondary">{t("wallet.youWillGet")}</Text>
         <Text
           subject
-        >{`$${formatDecimal(depositRequest?.amount ? depositRequest.amount - (method.fee ?? 0) : 0)}`}</Text>
+        >{`$${formatDecimal(withdrawRequest?.amount ? withdrawRequest.amount - (method.feeValue ?? 0) : 0)}`}</Text>
       </YStack>
       <Separator />
-      <PaymentMethodDescription method={method} />
+      <WithdrawMethodDescription method={method} />
     </Card>
   )
 }

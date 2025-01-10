@@ -3,12 +3,12 @@ import { useTranslation } from "react-i18next"
 
 import { Text, YStack } from "~/components"
 import { useWalletStore } from "~/hooks/useStore"
+import { PaymentMethod } from "~/widgets/(home)/deposit/form/payment-method"
 import { InfoCard } from "~/widgets/shared/info-card"
-import { PaymentMethod } from "~/widgets/shared/payment-method"
 
 export const USDT: FC = () => {
   const { t } = useTranslation()
-  const { method } = useWalletStore()
+  const { depositMethod: method } = useWalletStore()
   return (
     <Fragment>
       <InfoCard>

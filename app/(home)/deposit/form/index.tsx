@@ -1,36 +1,22 @@
 import { useUnmount } from "ahooks"
 import { router, Stack } from "expo-router"
-import { FC, PropsWithChildren } from "react"
 import { useTranslation } from "react-i18next"
 import { useSafeAreaInsets } from "react-native-safe-area-context"
 
 import { deposit } from "~/api/wallet"
-import {
-  Button,
-  Card,
-  Input,
-  ScrollView,
-  Text,
-  XStack,
-  YStack,
-} from "~/components"
+import { Button, Card, Input, ScrollView, Text, YStack } from "~/components"
 import { useRequest } from "~/hooks/useRequest"
 import { DepositResult, useWalletStore } from "~/hooks/useStore"
 import { formatDecimal } from "~/lib/utils"
 import { DepositForm } from "~/widgets/(home)/deposit/form/form"
 import { DepositSummary } from "~/widgets/(home)/deposit/form/summary"
 import { AccountCard } from "~/widgets/shared/account-card"
-
-const Unit: FC<PropsWithChildren> = ({ children }) => (
-  <XStack pl="$md" h="100%" ai="center" jc="center" blc="$border" blw={1}>
-    <Text>{children}</Text>
-  </XStack>
-)
+import { InputSuffix } from "~/widgets/shared/input-suffix"
 
 export default function Page() {
   const { t } = useTranslation()
   const { bottom } = useSafeAreaInsets()
-  const { method, depositRequest } = useWalletStore()
+  const { depositMethod: method, depositRequest } = useWalletStore()
   const { run, loading } = useRequest(deposit, {
     manual: true,
     onSuccess: (data) => {
@@ -64,7 +50,7 @@ export default function Page() {
           label={t("wallet.depositAmount")}
           value={depositRequest.amount}
           max={method?.incomeMoneyMax ?? 9999999}
-          addonAfter={<Unit>USD</Unit>}
+          addonAfter={<InputSuffix>USD</InputSuffix>}
           disableValidation
           onChange={(amount) =>
             useWalletStore.setState({

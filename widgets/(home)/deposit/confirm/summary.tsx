@@ -42,7 +42,7 @@ const AmountCard: FC = () => {
 
 export const DepositSummary: FC = () => {
   const { t } = useTranslation()
-  const { method, depositResult } = useWalletStore()
+  const { depositMethod: method, depositResult } = useWalletStore()
   return (
     <Card>
       <AmountCard />

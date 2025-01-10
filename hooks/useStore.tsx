@@ -247,11 +247,20 @@ const INITIAL = {
     payName: "",
     payAccount: "",
   },
+  withdrawRequest: {
+    address: "",
+    amount: undefined,
+  },
 }
 
 export const useWalletStore = createWithEqualityFn<{
   image?: string
-  method?: PaymentMethod
+  depositMethod?: PaymentMethod
+  withdrawMethod?: WithdrawMethod
+  withdrawRequest: {
+    address: string
+    amount?: number
+  }
   depositRequest: {
     payBank: string
     payName: string
