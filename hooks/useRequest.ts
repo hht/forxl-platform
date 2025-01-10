@@ -78,7 +78,6 @@ export const request = async <T, U>(
       return res as T
     })
     .catch((error) => {
-      console.log(error)
       console.log("🚀", url)
       console.log("👜", JSON.stringify(body))
       console.log("🚫", JSON.stringify(error.message ?? error))

@@ -1,5 +1,6 @@
 import axios from "axios"
 import * as ImagePicker from "expo-image-picker"
+import { Platform } from "react-native"
 
 import { toast } from "~/components"
 import { BASE_URL, request } from "~/hooks/useRequest"
@@ -239,14 +240,15 @@ export const upload = async () => {
 
   if (!result.canceled && result.assets && result.assets.length > 0) {
     const file = result.assets[0]
+
     const formData = new FormData()
     formData.append("user", "test")
     formData.append("file", {
-      uri: file.uri,
+      uri: !file.uri.startsWith("file") ? `file://${file.uri}` : file.uri,
       name: file.fileName || "photo.jpg",
-      type: file.type || "image/jpeg",
+      type:
+        Platform.OS === "android" ? `image/jpeg` : file.type || "image/jpeg",
     } as any)
-
     try {
       const response = await axios.post(`${BASE_URL}/other/upload`, formData, {
         headers: {
