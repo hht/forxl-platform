@@ -22,7 +22,9 @@ export default function Layout() {
         <Figure name="supportBanner" />
       </XStack>
       <YStack p="$md" gap="$md" ai="center" jc="center">
-        <Text subject>{dict.header}</Text>
+        <Text subject bold>
+          {dict.header}
+        </Text>
         <Text col="$secondary" ta="center">
           {dict.desc}
         </Text>

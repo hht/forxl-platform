@@ -44,7 +44,9 @@ export default function Layout() {
         <ReferralInfo />
         <AccountInfo />
         <YStack py="$md">
-          <Text subject>{dict.benefits.title}</Text>
+          <Text subject bold>
+            {dict.benefits.title}
+          </Text>
           {LEVEL_ICON.map((it, index) => (
             <XStack
               key={index}

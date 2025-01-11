@@ -30,7 +30,7 @@ export const Stepper: FC<{ children: ReactNode[] }> = ({ children }) => {
               t={0}
               bc="#131517"
             >
-              <Text fow="bold">{index + 1}</Text>
+              <Text bold>{index + 1}</Text>
             </XStack>
             <YStack pb={32} pt={3} f={1}>
               {it}

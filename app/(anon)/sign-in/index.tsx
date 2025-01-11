@@ -72,7 +72,9 @@ export default function Page() {
     <Screen gap={32}>
       <Stack.Screen options={ScreenOptions} />
       <YStack gap={12}>
-        <Text subject>{t("anon.welcome")}</Text>
+        <Text subject bold>
+          {t("anon.welcome")}
+        </Text>
         <Text col="$secondary">{t("anon.welcomeDesc")}</Text>
       </YStack>
       <YStack gap="$md" f={1}>
@@ -96,16 +98,16 @@ export default function Page() {
       </Button>
       <YStack gap="$md" ai="center" pb={32}>
         <Link href="/(anon)/forgot-password" asChild>
-          <Text col="$primary" fow="700" textDecorationLine="underline">
+          <Text col="$primary" bold textDecorationLine="underline">
             {t("anon.forgotPassword")}
           </Text>
         </Link>
         <XStack ai="center" gap={2}>
-          <Text col="$secondary" fow="700">
+          <Text col="$secondary" bold>
             {t("anon.noAccount")}
           </Text>
           <Link href="/(anon)/sign-up" replace asChild>
-            <Text col="$primary" fow="700" textDecorationLine="underline">
+            <Text col="$primary" bold textDecorationLine="underline">
               {t("anon.title")}
             </Text>
           </Link>

@@ -58,7 +58,7 @@ export const Tabs: React.FC<TabsProps> = ({ data, activeIndex, onChange }) => {
             hitSlop={16}
           >
             <Text
-              fow={activeIndex === index ? "900" : "400"}
+              fow={activeIndex === index ? "bold" : "400"}
               lh={16}
               col={activeIndex === index ? "$primary" : "$secondary"}
             >

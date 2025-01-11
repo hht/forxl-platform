@@ -19,7 +19,7 @@ const Title: FC = () => {
   const action = useQuotesStore((s) => s.action, shallow)
   return (
     <XStack ai="center" gap="$sm">
-      <Text fow="bold">
+      <Text bold>
         {t(action === "buy" ? "trade.buyWhenRateIs" : "trade.sellWhenRateIs")}
       </Text>
       <XStack
@@ -46,7 +46,7 @@ const PriceTracker: FC<{ current?: number }> = ({ current }) => {
   if (!price || !current) return null
   return (
     <XStack gap="$sm">
-      <Text fos={11} col="$secondary">
+      <Text caption col="$secondary">
         {t("trade.fromLastRate")}:
       </Text>
       <AnimatedFlow

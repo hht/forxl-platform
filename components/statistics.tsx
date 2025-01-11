@@ -42,7 +42,7 @@ const StatisticsBase: FC<
         {info ? <StatisticsInfo>{info}</StatisticsInfo> : null}
       </XStack>
       {_.isString(children) ? (
-        <Text fos={17} lh={20} fow="700">
+        <Text heading bold>
           {children}
         </Text>
       ) : (

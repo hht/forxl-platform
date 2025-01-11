@@ -1,9 +1,12 @@
-import { FC } from 'react'
-import { useTranslation } from 'react-i18next'
-import { ActivityIndicator, RefreshControl as RefreshControlBase } from 'react-native'
+import { FC } from "react"
+import { useTranslation } from "react-i18next"
+import {
+  ActivityIndicator,
+  RefreshControl as RefreshControlBase,
+} from "react-native"
 
-import { Figure, Text, XStack, YStack } from '~/components'
-import colors from '~/theme/colors'
+import { Figure, Text, XStack, YStack } from "~/components"
+import colors from "~/theme/colors"
 
 export const ListEmptyComponent: FC<{ loading: boolean; title?: string }> = ({
   loading,
@@ -31,7 +34,7 @@ export const ListFooterComponent: FC<{ loading: boolean }> = ({ loading }) => {
   return (
     <XStack gap="$md" p="$md" ai="center" w="100%" jc="center" pb="$md">
       <ActivityIndicator color={colors.tertiary} />
-      <Text col="$tertiary" fow="700">
+      <Text col="$tertiary" bold>
         {t("message.loading")}
       </Text>
     </XStack>

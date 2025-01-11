@@ -1,13 +1,20 @@
-import { Fragment } from 'react'
-import { Trans, useTranslation } from 'react-i18next'
+import { Fragment } from "react"
+import { Trans, useTranslation } from "react-i18next"
 
-import { getBonusInfo, getPartnerInfo } from '~/api/partner'
+import { getBonusInfo, getPartnerInfo } from "~/api/partner"
 import {
-    Button, Card, copyToClipboard, Figure, Statistics, Text, XStack, YStack
-} from '~/components'
-import { useRequest } from '~/hooks/useRequest'
-import { useFroxlStore, usePartnerStore } from '~/hooks/useStore'
-import { formatDecimal } from '~/lib/utils'
+  Button,
+  Card,
+  copyToClipboard,
+  Figure,
+  Statistics,
+  Text,
+  XStack,
+  YStack,
+} from "~/components"
+import { useRequest } from "~/hooks/useRequest"
+import { useFroxlStore, usePartnerStore } from "~/hooks/useStore"
+import { formatDecimal } from "~/lib/utils"
 
 export const ReferralInfo = () => {
   const { t } = useTranslation()
@@ -30,17 +37,17 @@ export const ReferralInfo = () => {
         <Figure name="giftBox" />
       </YStack>
       <YStack ai="center" jc="center" px="$lg" gap="$sm">
-        <Text fos={20} lh={24} fow="bold">
+        <Text subject bold>
           {dict.invite}
         </Text>
-        <Text fos={20} lh={24} fow="bold">
+        <Text subject bold>
           <Trans
             i18nKey="referral.bonus"
             values={{
               percent: 30,
             }}
             components={{
-              1: <Text fos={20} lh={24} fow="bold" col="$primary" />,
+              1: <Text subject bold col="$primary" />,
             }}
           ></Trans>
         </Text>
@@ -60,7 +67,7 @@ export const ReferralInfo = () => {
         >
           <Statistics label={dict.earned}>
             <XStack ai="center" gap="$sm">
-              <Text fos={17} lh={20} fow="bold">
+              <Text heading bold>
                 {`$${formatDecimal(bonus?.earned ?? 0)}`}
               </Text>
               <Button mah={18} px={4} br={2} ai="center" jc="center">
@@ -74,7 +81,7 @@ export const ReferralInfo = () => {
             label={dict.spillover}
             info={
               <YStack gap="$md">
-                <Text ta="center" subject fow="400">
+                <Text ta="center" subject>
                   {dict.spillover}
                 </Text>
                 <Text ta="center" lh={18} col="$secondary">

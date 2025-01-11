@@ -42,7 +42,9 @@ export default function Page() {
       <Stack.Screen options={ScreenOptions} />
       <YStack gap="$md" f={1} ai="center" jc="center" p="$lg">
         <Figure name="verifyEmail" />
-        <Text subject>{t("anon.verifyYourEmail")}</Text>
+        <Text subject bold>
+          {t("anon.verifyYourEmail")}
+        </Text>
         <Text col="$secondary" ta="center">
           {t("anon.verifyYourEmailDesc")}
         </Text>

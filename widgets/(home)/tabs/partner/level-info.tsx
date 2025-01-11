@@ -21,10 +21,10 @@ export const LevelInfo = () => {
     <Fragment>
       <Card gap="$md" blw="$xs" blc={LEVEL_COLORS[currentLevel] ?? "#CCB6A0"}>
         <Row gap="$sm">
-          <Text fow="700" col={LEVEL_COLORS[currentLevel]}>
+          <Text bold col={LEVEL_COLORS[currentLevel]}>
             {dict.children[currentLevel]}
           </Text>
-          <Text fow="700">{dict.benefits}</Text>
+          <Text bold>{dict.benefits}</Text>
         </Row>
         <Justified>
           <Row gap="$xs">
@@ -56,7 +56,7 @@ export const LevelInfo = () => {
             })}
           </Text>
         </Justified>
-        <Text fow="700" mt={12} mb={1}>
+        <Text bold mt={12} mb={1}>
           {t("partner.requirements")}
         </Text>
         <Justified>

@@ -61,7 +61,9 @@ export default function Page() {
     <Screen gap={32}>
       <Stack.Screen options={ScreenOptions} />
       <YStack gap={12}>
-        <Text subject>{t("anon.signUp")}</Text>
+        <Text subject bold>
+          {t("anon.signUp")}
+        </Text>
         <Text col="$secondary">{t("anon.welcomeDesc")}</Text>
       </YStack>
       <YStack gap="$md" f={1}>
@@ -81,7 +83,7 @@ export default function Page() {
         />
       </YStack>
       <YStack gap="$md" ai="center" pb={32}>
-        <Text caption col="$secondary" lh={14} ai="baseline">
+        <Text caption col="$secondary" ai="baseline">
           <Trans
             i18nKey="anon.terms"
             components={{

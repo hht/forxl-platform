@@ -47,7 +47,7 @@ export const AssetCard: FC = () => {
             value={totalMoney}
             fos={28}
             lh={32}
-            fow="bold"
+            bold
             col="$text"
           />
           <XStack py="$xs" ai="center" jc="space-between">
@@ -69,7 +69,7 @@ export const AssetCard: FC = () => {
           <YStack px="$md" pb={bottom + 16} gap="$md">
             {dict.children.map((item, index) => (
               <YStack gap="$sm" key={index}>
-                <Text fos={17} fow="bold">
+                <Text heading bold>
                   {item.title}
                 </Text>
                 <Text>{item.desc}</Text>

@@ -1,21 +1,28 @@
-import { useIsFocused } from '@react-navigation/native'
-import { useInfiniteScroll } from 'ahooks'
-import dayjs from 'dayjs'
-import { Stack } from 'expo-router'
-import { FC, Fragment } from 'react'
-import { useTranslation } from 'react-i18next'
-import { ActivityIndicator, FlatList, Platform } from 'react-native'
+import { useIsFocused } from "@react-navigation/native"
+import { useInfiniteScroll } from "ahooks"
+import dayjs from "dayjs"
+import { Stack } from "expo-router"
+import { FC, Fragment } from "react"
+import { useTranslation } from "react-i18next"
+import { ActivityIndicator, FlatList, Platform } from "react-native"
 
-import { getNews } from '~/api/dashboard'
-import { Screen, Text, XStack } from '~/components'
-import colors from '~/theme/colors'
-import { AssetCard } from '~/widgets/(home)/tabs/dashboard/asset-card'
-import { ListHeaderComponent, ListItem } from '~/widgets/(home)/tabs/dashboard/list'
+import { getNews } from "~/api/dashboard"
+import { Screen, Text, XStack } from "~/components"
+import colors from "~/theme/colors"
+import { AssetCard } from "~/widgets/(home)/tabs/dashboard/asset-card"
 import {
-    BrandTitle, BreadCrumb, CustomerService, DefaultScreenOptions, NativeStackNavigationOptions,
-    Notifier
-} from '~/widgets/shared/header'
-import { Gradient } from '~/widgets/shared/shape'
+  ListHeaderComponent,
+  ListItem,
+} from "~/widgets/(home)/tabs/dashboard/list"
+import {
+  BrandTitle,
+  BreadCrumb,
+  CustomerService,
+  DefaultScreenOptions,
+  NativeStackNavigationOptions,
+  Notifier,
+} from "~/widgets/shared/header"
+import { Gradient } from "~/widgets/shared/shape"
 
 const ScreenOptions: NativeStackNavigationOptions = {
   ...DefaultScreenOptions,
@@ -74,7 +81,7 @@ const ListFooterComponent: FC<{ loading: boolean; isEmpty?: boolean }> = ({
       {loading ? (
         <Fragment>
           <ActivityIndicator color={colors.tertiary} />
-          <Text col="$tertiary" fow="700">
+          <Text col="$tertiary" bold>
             {t("message.loading")}
           </Text>
         </Fragment>

@@ -24,18 +24,28 @@ export const Text = styled(TamaText, {
   fos: 13,
   lh: 16,
   variants: {
+    head: {
+      true: {
+        fos: 28,
+        lh: 32,
+      },
+    },
     subject: {
       true: {
         fos: 20,
         lh: 24,
-        fow: "900",
       },
     },
-    head: {
+    heading: {
+      true: {
+        fos: 17,
+        lh: 20,
+      },
+    },
+    title: {
       true: {
         fos: 15,
         lh: 17,
-        fow: "900",
       },
     },
     caption: {
@@ -43,6 +53,11 @@ export const Text = styled(TamaText, {
         fos: 11,
         lg: 14,
         fow: "400",
+      },
+    },
+    bold: {
+      true: {
+        fow: "bold",
       },
     },
   } as const,
@@ -92,15 +107,11 @@ export const AnimatedFlow = ({
   addonsBefore?: React.ReactNode
   addonsAfter?: React.ReactNode
   gradientClassName?: string
+  bold?: boolean
 } & TextProps) => {
   return (
     <XStack>
-      <Text
-        fos={13}
-        col={value > 0 ? "$primary" : "$destructive"}
-        {...rest}
-        ff="$mono"
-      >
+      <Text col={value > 0 ? "$primary" : "$destructive"} {...rest} ff="$mono">
         {addonsBefore}
         {_.isNumber(value) && !_.isNaN(value)
           ? `${formatDecimal(value, fraction)}`

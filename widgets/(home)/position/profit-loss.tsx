@@ -77,7 +77,7 @@ export const ProfitAndLoss = () => {
         }}
         title={
           <XStack gap="$xs" ai="center">
-            <Text fow="700">{t("trade.closeAtProfit")}</Text>
+            <Text bold>{t("trade.closeAtProfit")}</Text>
             <XStack
               hitSlop={16}
               onPress={() => {
@@ -122,7 +122,7 @@ export const ProfitAndLoss = () => {
         }}
         title={
           <XStack gap="$xs" ai="center">
-            <Text fow="700">{t("trade.closeAtLoss")}</Text>
+            <Text bold>{t("trade.closeAtLoss")}</Text>
             <XStack
               hitSlop={16}
               onPress={() => {

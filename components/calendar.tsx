@@ -1,14 +1,17 @@
 import {
-    Calendar as CalendarBase, CalendarProps, CalendarTheme, useCalendar
-} from '@marceloterreiro/flash-calendar'
-import { FC } from 'react'
-import { XStack, YStack } from 'tamagui'
+  Calendar as CalendarBase,
+  CalendarProps,
+  CalendarTheme,
+  useCalendar,
+} from "@marceloterreiro/flash-calendar"
+import { FC } from "react"
+import { XStack, YStack } from "tamagui"
 
-import { Icon } from './icon'
-import { Text } from './text'
+import { Icon } from "./icon"
+import { Text } from "./text"
 
-import { dayjs } from '~/lib/utils'
-import colors from '~/theme/colors'
+import { dayjs } from "~/lib/utils"
+import colors from "~/theme/colors"
 
 const ACCENT_COLOR = "#13261E"
 
@@ -87,7 +90,7 @@ export const Calendar: FC<
       <YStack gap={props.calendarRowVerticalSpacing ?? 4} w="100%">
         {/* Replaces `Calendar.Row.Month` with a custom implementation */}
         <XStack px="$md" ai="center" jc="space-between" w="100%">
-          <Text fos={17} lh={24} ff="Inter" fow={700}>
+          <Text heading bold>
             {dayjs(props.calendarMonthId).format("MMMM YYYY")}
           </Text>
           <XStack gap="$md" ai="center">

@@ -167,8 +167,7 @@ export const OrderFilter: FC = () => {
                   hitSlop={16}
                 >
                   <Text
-                    fos={15}
-                    lh={18}
+                    title
                     col={
                       (current ?? filters.current.options) === option
                         ? "$primary"

@@ -1,10 +1,10 @@
-import { FC } from 'react'
-import { useTranslation } from 'react-i18next'
-import { TextProps } from 'tamagui'
-import { shallow } from 'zustand/shallow'
+import { FC } from "react"
+import { useTranslation } from "react-i18next"
+import { TextProps } from "tamagui"
+import { shallow } from "zustand/shallow"
 
-import { AnimatedFlow, Text, XStack, YStack } from '~/components'
-import { useQuotesStore } from '~/hooks/useStore'
+import { AnimatedFlow, Text, XStack, YStack } from "~/components"
+import { useQuotesStore } from "~/hooks/useStore"
 
 export const CurrentPrice: FC<{ action?: "buy" | "sell" } & TextProps> = ({
   action,
@@ -26,14 +26,14 @@ export const CurrentPrice: FC<{ action?: "buy" | "sell" } & TextProps> = ({
           fontSize={17}
           value={price}
           fraction={volatility}
-          fow="bold"
+          bold
           col="$text"
           {...rest}
         />
       ) : (
         <Text>-</Text>
       )}
-      <Text col="$secondary" fos={11}>
+      <Text col="$secondary" caption>
         {t("trade.currentPrice")}
       </Text>
     </YStack>

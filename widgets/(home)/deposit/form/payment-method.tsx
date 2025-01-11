@@ -17,7 +17,7 @@ export const PaymentMethod: FC = () => {
       }}
     >
       <Image source={{ uri: method.picUrl }} w={40} h={40}></Image>
-      <Text f={1} fos={15} lh={20}>
+      <Text f={1} title>
         {method.name}
       </Text>
       <Icon name="chevronRight" size={16}></Icon>

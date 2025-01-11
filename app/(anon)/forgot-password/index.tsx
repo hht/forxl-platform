@@ -62,7 +62,9 @@ export default function Page() {
     <Screen gap={32}>
       <Stack.Screen options={ScreenOptions} />
       <YStack gap={12}>
-        <Text subject>{t("anon.forgotPassword")}</Text>
+        <Text subject bold>
+          {t("anon.forgotPassword")}
+        </Text>
         <Text col="$secondary">{t("anon.resetPasswordDesc")}</Text>
       </YStack>
       <YStack gap="$lg" f={1}>

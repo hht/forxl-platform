@@ -7,9 +7,10 @@ import {
 } from "@gorhom/bottom-sheet"
 import { forwardRef } from "react"
 import { Dimensions, StyleSheet } from "react-native"
-import { Portal, Text, XStack } from "tamagui"
+import { Portal, XStack } from "tamagui"
 
 import { Icon } from "./icon"
+import { Text } from "./text"
 
 import colors from "~/theme/colors"
 
@@ -53,7 +54,7 @@ export const BottomSheet = forwardRef<
             ai="center"
             zIndex={999}
           >
-            <Text fos={20} lh={24} col="$text">
+            <Text subject col="$text">
               {title}
             </Text>
             <XStack

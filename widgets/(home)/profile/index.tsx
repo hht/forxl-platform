@@ -1,7 +1,7 @@
-import { FC, Fragment, ReactNode, useState } from 'react'
-import { useTranslation } from 'react-i18next'
+import { FC, Fragment, ReactNode, useState } from "react"
+import { useTranslation } from "react-i18next"
 
-import { Button, Dialog, Popup, Text, XStack } from '~/components'
+import { Button, Dialog, Popup, Text, XStack } from "~/components"
 
 export const SupportTip: FC<{ children: ReactNode }> = ({ children }) => {
   const [visible, setVisible] = useState(false)
@@ -13,9 +13,7 @@ export const SupportTip: FC<{ children: ReactNode }> = ({ children }) => {
     <Fragment>
       <Popup visible={visible} onClose={() => setVisible(false)}>
         <Dialog>
-          <Text fos={20} lh={20}>
-            {dict.title}
-          </Text>
+          <Text subject>{dict.title}</Text>
           <Text col="$secondary">{dict.desc}</Text>
           <XStack w="100%" gap={12} pt={12}>
             <Button
@@ -26,7 +24,7 @@ export const SupportTip: FC<{ children: ReactNode }> = ({ children }) => {
                 setVisible(false)
               }}
             >
-              <Text col="$text" fow="700">
+              <Text col="$text" bold>
                 {t("action.cancel")}
               </Text>
             </Button>
@@ -37,7 +35,7 @@ export const SupportTip: FC<{ children: ReactNode }> = ({ children }) => {
                 setVisible(false)
               }}
             >
-              <Text col="$background" fow="700">
+              <Text col="$background" bold>
                 {dict.action}
               </Text>
             </Button>

@@ -86,7 +86,7 @@ export const PaymentMethodCard: FC<{
     >
       <XStack ai="center" jc="space-between">
         <YStack gap="$sm">
-          <Text fos={17} lh={20} fow="bold">
+          <Text heading bold>
             {method.name}
           </Text>
           <XStack ai="center" gap="$sm">
@@ -117,7 +117,7 @@ export const WithdrawMethodCard: FC<{
     >
       <XStack ai="center" jc="space-between">
         <YStack gap="$sm">
-          <Text fos={17} lh={20} fow="bold">
+          <Text heading bold>
             {method.channelName}
           </Text>
           <XStack ai="center" gap="$sm">

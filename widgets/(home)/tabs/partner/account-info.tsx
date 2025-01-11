@@ -74,7 +74,7 @@ export const AccountInfo = () => {
         <Justified>
           <Statistics label={t("referral.accounts")}>
             <Row gap="$sm">
-              <Text fos={17} lh={20} fow="700">
+              <Text heading bold>
                 {`${data?.activeDirectNum ?? 0}/${data?.allDirectNum ?? 0}`}
               </Text>
               <XStack hitSlop={10} onPress={() => setVisible(true)}>
@@ -91,7 +91,7 @@ export const AccountInfo = () => {
                 )
               }}
             >
-              <Text fow="bold" col="$background">
+              <Text bold col="$background">
                 {t("action.share")}
               </Text>
             </Button>
@@ -99,7 +99,7 @@ export const AccountInfo = () => {
         </Justified>
         <Justified>
           <Statistics label={dict.size}>
-            <Text fow="700">
+            <Text bold>
               {t("partner.personCount", { count: data?.teamSize })}
             </Text>
           </Statistics>
@@ -110,7 +110,7 @@ export const AccountInfo = () => {
         <Justified>
           <Statistics label={t("referral.earned")}>
             <Row gap="$xs">
-              <Text fow="700">{`$${formatDecimal(data?.earned ?? 0)}`}</Text>
+              <Text bold>{`$${formatDecimal(data?.earned ?? 0)}`}</Text>
               <Button h={18} px="$xs" br="$xs" onPress={() => {}}>
                 <Text caption col="$background">
                   {t("action.query")}

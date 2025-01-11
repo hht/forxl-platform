@@ -1,8 +1,8 @@
-import { FC, ReactNode } from 'react'
-import { XStack } from 'tamagui'
+import { FC, ReactNode } from "react"
+import { XStack } from "tamagui"
 
-import { Icon, IconType } from './icon'
-import { Text } from './text'
+import { Icon, IconType } from "./icon"
+import { Text } from "./text"
 
 export const ListItem: FC<{
   title: string
@@ -14,7 +14,7 @@ export const ListItem: FC<{
   return (
     <XStack gap="$sm" h={56} ai="center" onPress={onPress}>
       {icon ? <Icon name={icon} size={24} /> : null}
-      <Text f={1} fos={15} lh={20}>
+      <Text f={1} title>
         {title}
       </Text>
       {addonAfter}

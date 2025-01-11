@@ -22,7 +22,7 @@ export const TwoFactorCard: FC = () => {
         >
           <Card p="$md" bc={toRGBA(colors.warning, 0.2)}>
             <YStack gap="$sm">
-              <Text fow="bold">{t("settings.twoFactor")}</Text>
+              <Text bold>{t("settings.twoFactor")}</Text>
               <Text caption col="$secondary">
                 {t("settings.twoFactorDesc")}
               </Text>
@@ -31,7 +31,7 @@ export const TwoFactorCard: FC = () => {
             <XStack pt="$md" ai="center">
               <XStack ai="center" gap={12} f={1}>
                 <Icon name="twoFactor" size={24} />
-                <Text fos={15}>2FA</Text>
+                <Text title>2FA</Text>
               </XStack>
               <XStack gap="$xs">
                 <Text col="$warning">{t("settings.notEnabled")}</Text>

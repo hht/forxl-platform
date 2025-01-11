@@ -55,9 +55,7 @@ export default function Page() {
               bc="$secondary"
             />
             <YStack f={1} gap="$xs">
-              <Text fos={17} lh={20}>
-                {account?.email}
-              </Text>
+              <Text heading>{account?.email}</Text>
               <XStack ai="center" gap="$xs">
                 <Text>UID:</Text>
                 <Copyable col="$primary">{`${account?.id}`}</Copyable>
@@ -81,11 +79,7 @@ export default function Page() {
             </XStack>
             <XStack gap="$sm" ai="center">
               <Figure name={`lv${currentLevel}`} width={21} height={23} />
-              <Text
-                fos={15}
-                lh={18}
-                col="$secondary"
-              >{`LV${currentLevel}`}</Text>
+              <Text title col="$secondary">{`LV${currentLevel}`}</Text>
             </XStack>
           </XStack>
         </Card>
@@ -145,9 +139,7 @@ export default function Page() {
             <YStack key={index} gap={12} py="$md">
               <XStack ai="center" gap="$sm">
                 <Figure name={LEVEL_ICON[index]} width={21} height={23} />
-                <Text fos={15} lh={18}>
-                  {level.title}
-                </Text>
+                <Text title>{level.title}</Text>
               </XStack>
               <Text col="$secondary">{level.desc}</Text>
             </YStack>

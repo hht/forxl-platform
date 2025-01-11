@@ -31,7 +31,7 @@ export const DepositSteps: FC = () => {
             <Copyable>{`${formatDecimal(depositResult?.transferAmount ?? 0)} ${depositResult?.currency}`}</Copyable>
           </XStack>
           <Card gap={0}>
-            <Text mb={12} fow="bold">
+            <Text mb={12} bold>
               {t("wallet.paymentInformation")}
             </Text>
             <Card.Item title={t("wallet.fullName")}>
@@ -94,7 +94,7 @@ export const DepositSteps: FC = () => {
               ></QRCode>
             </XStack>
             <XStack gap={12} ai="center">
-              <Text f={1} fow="bold">
+              <Text f={1} bold>
                 {depositResult?.address}
               </Text>
               <XStack
@@ -109,7 +109,7 @@ export const DepositSteps: FC = () => {
                   copyToClipboard(depositResult?.address ?? "")
                 }}
               >
-                <Text col="$primary" fow="bold" lh={24}>
+                <Text col="$primary" bold lh={24}>
                   {t("action.copy")}
                 </Text>
               </XStack>

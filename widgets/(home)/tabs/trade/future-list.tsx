@@ -1,19 +1,19 @@
-import { useIsFocused } from '@react-navigation/native'
-import { useInfiniteScroll } from 'ahooks'
-import { router } from 'expo-router'
-import { FC, useCallback, useEffect, useMemo } from 'react'
-import { FlatList, Platform, RefreshControl } from 'react-native'
-import { shallow } from 'zustand/shallow'
+import { useIsFocused } from "@react-navigation/native"
+import { useInfiniteScroll } from "ahooks"
+import { router } from "expo-router"
+import { FC, useCallback, useEffect, useMemo } from "react"
+import { FlatList, Platform, RefreshControl } from "react-native"
+import { shallow } from "zustand/shallow"
 
-import { FutureCategories } from './categories'
+import { FutureCategories } from "./categories"
 
-import { getFutures } from '~/api/trade'
-import { AnimatedFlow, Icon, Text, XStack, YStack } from '~/components'
-import { useQuotesStore, useSymbolStore } from '~/hooks/useStore'
-import { subscribeQuotes } from '~/hooks/useWebsocket'
-import { DEVICE_WIDTH, t } from '~/lib/utils'
-import colors from '~/theme/colors'
-import { ListEmptyComponent, ListFooterComponent } from '~/widgets/shared/list'
+import { getFutures } from "~/api/trade"
+import { AnimatedFlow, Icon, Text, XStack, YStack } from "~/components"
+import { useQuotesStore, useSymbolStore } from "~/hooks/useStore"
+import { subscribeQuotes } from "~/hooks/useWebsocket"
+import { DEVICE_WIDTH, t } from "~/lib/utils"
+import colors from "~/theme/colors"
+import { ListEmptyComponent, ListFooterComponent } from "~/widgets/shared/list"
 
 const INITIAL = {
   Ask: 0,
@@ -32,7 +32,7 @@ const Momentum: FC<{
   if (!data || !data.isDeal || !data.lastClosePrice || !quotes?.Bid) {
     return (
       <XStack>
-        <Text col="$secondary" fow="bold">
+        <Text col="$secondary" bold>
           $0.00%
         </Text>
       </XStack>
@@ -56,7 +56,7 @@ const Momentum: FC<{
         fraction={0.01}
         addonsBefore={momentum > 0 ? "+" : ""}
         addonsAfter="%"
-        fow="bold"
+        bold
         col={
           momentum > 0
             ? "$primary"
@@ -124,7 +124,7 @@ const ListItem: FC<{ data: Future }> = ({ data }) => {
                 ? "$destructive"
                 : "$secondary"
           }
-          fow="bold"
+          bold
           value={quotes.Bid ? sellPrice : Number(data.sellPrice)}
           fraction={data.volatility}
         />
@@ -153,7 +153,7 @@ const ListItem: FC<{ data: Future }> = ({ data }) => {
         <AnimatedFlow
           value={quotes.Ask ? buyPrice : Number(data.buyPrice)}
           fraction={data.volatility}
-          fow="bold"
+          bold
           col={
             quotes?.AskDiff > 0
               ? "$primary"

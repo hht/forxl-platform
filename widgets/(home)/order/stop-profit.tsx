@@ -22,7 +22,7 @@ const Title: FC = () => {
   const { t } = useTranslation()
   return (
     <XStack ai="center" gap="$sm">
-      <Text fow="bold">{t("trade.closeAtProfit")}</Text>
+      <Text bold>{t("trade.closeAtProfit")}</Text>
       <XStack
         hitSlop={16}
         onPress={() => {

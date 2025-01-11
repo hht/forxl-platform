@@ -34,16 +34,15 @@ export const OrderDetail = () => {
         <XStack ai="center" jc="space-between">
           <XStack ai="center" gap="$sm">
             <Text
-              fos={17}
-              lh={20}
-              fow="bold"
+              heading
+              bold
               col={
                 currentPosition?.openSafe === 0 ? "$primary" : "$destructive"
               }
             >
               {t(currentPosition?.openSafe === 0 ? "trade.buy" : "trade.sell")}
             </Text>
-            <Text fos={17} lh={20} fow="bold">
+            <Text heading bold>
               {currentPosition.futuresCode}
             </Text>
           </XStack>
@@ -90,21 +89,19 @@ export const OrderDetail = () => {
       <XStack ai="center" jc="space-between">
         <XStack ai="center" gap="$sm">
           <Text
-            fos={17}
-            lh={20}
-            fow="bold"
+            heading
+            bold
             col={currentPosition?.openSafe === 0 ? "$primary" : "$destructive"}
           >
             {t(currentPosition?.openSafe === 0 ? "trade.buy" : "trade.sell")}
           </Text>
-          <Text fos={17} lh={20} fow="bold">
+          <Text heading bold>
             {currentPosition.futuresCode}
           </Text>
         </XStack>
         <Text
-          fos={17}
-          lh={20}
-          fow="bold"
+          heading
+          bold
           col={currentPosition.profit! > 0 ? "$primary" : "$destructive"}
         >
           {`$${currentPosition.profit! > 0 ? "+" : ""}${formatDecimal(

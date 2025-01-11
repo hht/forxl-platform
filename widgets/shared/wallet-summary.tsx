@@ -32,7 +32,7 @@ const ListItem: FC<{ label: string; value: number; onPress: () => void }> = ({
   return (
     <YStack gap="$xs" f={1} ai="center" jc="center" h="100%" onPress={onPress}>
       <XStack pb="$xs" ov="hidden">
-        <Text fos={11} col="$secondary">
+        <Text caption col="$secondary">
           {label}
         </Text>
         <XStack
@@ -208,7 +208,7 @@ export const WalletStatistics: FC = () => {
               setVisible((v) => !v)
             }}
           >
-            <Text col={color} fow="bold">
+            <Text col={color} bold>
               {`$${formatDecimal(profit)}`}
             </Text>
             <Moti state={state}>

@@ -25,7 +25,7 @@ export const TradeVolume: FC<{ future?: FuturesDetail }> = ({ future }) => {
   return (
     <Card bw={0}>
       <XStack ai="center" jc="space-between">
-        <Text fow="bold">{t("trade.volume")}</Text>
+        <Text bold>{t("trade.volume")}</Text>
         <XStack
           hitSlop={16}
           onPress={() => {
@@ -41,7 +41,7 @@ export const TradeVolume: FC<{ future?: FuturesDetail }> = ({ future }) => {
             })
           }}
         >
-          <Text fos={11} col="$primary">
+          <Text caption col="$primary">
             {t("trade.max")}
           </Text>
         </XStack>
@@ -58,16 +58,16 @@ export const TradeVolume: FC<{ future?: FuturesDetail }> = ({ future }) => {
       />
       <XStack ai="center" jc="space-between">
         <YStack>
-          <Text fos={11} col="$secondary">
+          <Text caption col="$secondary">
             {t("trade.requiredMargin")}
           </Text>
           <Text
-            fos={11}
+            caption
             col="$secondary"
           >{`$${formatDecimal(requiredMargin)}`}</Text>
         </YStack>
         <YStack ai="flex-end">
-          <Text fos={11} col="$secondary">
+          <Text caption col="$secondary">
             {t("wallet.freeMargin")}
           </Text>
           <AnimatedFlow

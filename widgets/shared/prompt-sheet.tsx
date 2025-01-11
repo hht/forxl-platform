@@ -19,12 +19,10 @@ export const PromptSheet: FC = () => {
     <BottomSheet ref={ref} title={title} index={0}>
       <YStack px="$md" pb={bottom + 16}>
         {_.isString(desc) ? (
-          <Text fos={15} lh={20}>
-            {desc}
-          </Text>
+          <Text title>{desc}</Text>
         ) : (
           desc?.map((item, index) => (
-            <Text fos={15} key={index} lh={20}>
+            <Text title key={index}>
               {item}
             </Text>
           ))

@@ -1,9 +1,17 @@
-import { Fragment, useState } from 'react'
-import { useTranslation } from 'react-i18next'
+import { Fragment, useState } from "react"
+import { useTranslation } from "react-i18next"
 
-import { Button, Dialog, ListItem, Popup, Text, toast, XStack } from '~/components'
-import { CACHE_KEY, useRequest } from '~/hooks/useRequest'
-import { clearCache, getCacheSize } from '~/lib/utils'
+import {
+  Button,
+  Dialog,
+  ListItem,
+  Popup,
+  Text,
+  toast,
+  XStack,
+} from "~/components"
+import { CACHE_KEY, useRequest } from "~/hooks/useRequest"
+import { clearCache, getCacheSize } from "~/lib/utils"
 
 export const ClearCacheItem = () => {
   const { t } = useTranslation()
@@ -23,9 +31,7 @@ export const ClearCacheItem = () => {
       />
       <Popup visible={visible} onClose={() => setVisible(false)}>
         <Dialog ai="center" jc="center">
-          <Text fos={20} lh={22}>
-            {dict.clearCache}
-          </Text>
+          <Text heading>{dict.clearCache}</Text>
           <Text col="$secondary" ta="center">
             {dict.clearCacheDesc}
           </Text>
@@ -38,7 +44,7 @@ export const ClearCacheItem = () => {
                 setVisible(false)
               }}
             >
-              <Text col="$text" fow="700">
+              <Text col="$text" bold>
                 {t("action.cancel")}
               </Text>
             </Button>
@@ -56,7 +62,7 @@ export const ClearCacheItem = () => {
                   })
               }}
             >
-              <Text col="$background" fow="700">
+              <Text col="$background" bold>
                 {t("action.yes")}
               </Text>
             </Button>

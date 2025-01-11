@@ -43,7 +43,7 @@ export const ListItem = ({
           <YStack gap="$md" pt="$md">
             <XStack ai="center" gap="$xs">
               <Icon name="hot" />
-              <Text fow="bold" fos={17} lh={20}>
+              <Text bold heading>
                 {t("home.news")}
               </Text>
             </XStack>
@@ -52,7 +52,7 @@ export const ListItem = ({
               w="100%"
               aspectRatio={311 / 68}
             />
-            <Text fow="700">{dayjs(item.date).format("DD MMMM, YYYY")}</Text>
+            <Text bold>{dayjs(item.date).format("DD MMMM, YYYY")}</Text>
           </YStack>
           <XStack pos="absolute" top={0} right={0} w="100%">
             <Figure name="r" />
@@ -60,8 +60,8 @@ export const ListItem = ({
         </Fragment>
       ) : null}
       <YStack btw={1} gap="$sm" btc="$border" py="$md">
-        <Text numberOfLines={2} fow="bold" lh={20}>
-          <Text col="$tertiary" fow="bold" lh={20}>
+        <Text numberOfLines={2} bold lh={20}>
+          <Text col="$tertiary" bold lh={20}>
             {dayjs(item.date).format("HH:mm  ")}
           </Text>
           {item.headline}

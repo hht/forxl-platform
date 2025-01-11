@@ -26,7 +26,7 @@ export const ListItem: FC<{
     <Fragment>
       {dateVisible ? (
         <YStack pt="$sm" w="100%">
-          <Text fos={11} col="$secondary">
+          <Text caption col="$secondary">
             {getRecentDate(data.addTime)}
           </Text>
         </YStack>
@@ -55,7 +55,7 @@ export const ListItem: FC<{
           />
         </XStack>
         <YStack f={1} gap="$sm">
-          <Text fow="bold">
+          <Text bold>
             {t(
               data.operationType === 9001
                 ? "wallet.addFunds"
@@ -72,7 +72,7 @@ export const ListItem: FC<{
         </YStack>
         <YStack gap="$sm" ai="flex-end">
           <Text
-            fow="bold"
+            bold
             col={data.realAmount > 0 ? "$primary" : "$destructive"}
           >{`$${formatDecimal(data.realAmount)}`}</Text>
           <Text col="$secondary">

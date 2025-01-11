@@ -62,7 +62,7 @@ const EditableListItem: FC<{ data: Position }> = ({ data }) => {
         <Icon name="close" size={16} color={colors.secondary} />
       </XStack>
       <YStack f={1} gap="$sm">
-        <Text fow="bold">{data.futuresCode}</Text>
+        <Text bold>{data.futuresCode}</Text>
         <ProfitCell data={data} fow="bold" />
       </YStack>
       <YStack gap="$sm" f={1}>
@@ -114,21 +114,21 @@ const ArchivedListItem: FC<{ data: Position; dateVisible?: boolean }> = ({
     <Fragment>
       {dateVisible ? (
         <YStack px="$md" pt="$sm" w="100%">
-          <Text fos={11} col="$secondary">
+          <Text caption col="$secondary">
             {getRecentDate(data.overTime)}
           </Text>
         </YStack>
       ) : null}
       <ListItem data={data} h={64} gap={32}>
         <YStack gap="$sm">
-          <Text fow="bold">{data.futuresCode}</Text>
+          <Text bold>{data.futuresCode}</Text>
           <Text col="$secondary">
             {dayjs(data.overTime).format("MMM DD, YYYY HH:mm")}
           </Text>
         </YStack>
         <YStack gap="$sm" f={1}>
           <Text
-            fow="bold"
+            bold
             col={
               data.profit! > 0
                 ? "$primary"
@@ -173,7 +173,7 @@ const ListEmptyComponent: FC<{
               : "trade.closedPositionEmptyTitle"
         )}
       </Text>
-      <Text fos={11} ta="center" col="$tertiary">
+      <Text caption ta="center" col="$tertiary">
         {t(
           type === "open"
             ? "trade.openPositionEmptyDesc"
@@ -195,7 +195,7 @@ const ListEmptyComponent: FC<{
           }}
         >
           <Text
-            fos={11}
+            caption
             col="$warning"
             textDecorationStyle="solid"
             textDecorationLine="underline"
@@ -213,7 +213,7 @@ const ListEmptyComponent: FC<{
           }}
         >
           <Text
-            fos={11}
+            caption
             col="$primary"
             textDecorationStyle="solid"
             textDecorationLine="underline"
@@ -314,7 +314,7 @@ const ListHeaderComponent: FC<{ isEmpty?: boolean }> = ({ isEmpty }) => {
         bc="$card/60"
         jc="center"
       >
-        <AnimatedFlow value={profit} addonsBefore="$" fow="bold"></AnimatedFlow>
+        <AnimatedFlow value={profit} addonsBefore="$" bold></AnimatedFlow>
       </XStack>
     </XStack>
   )

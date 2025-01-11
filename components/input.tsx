@@ -244,7 +244,7 @@ export const OTP = ({
           justifyContent="center"
           backgroundColor="$background"
         >
-          <Text fontSize={20}>{digit}</Text>
+          <Text subject>{digit}</Text>
           {focused && !digit && index === digits.findIndex((d) => !d) && (
             <Animated.View style={[styles.cursor, cursorStyle]} />
           )}

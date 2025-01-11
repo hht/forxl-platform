@@ -46,7 +46,7 @@ export const VerificationCard: FC = () => {
         >
           <Card p="$md" bc={toRGBA(colors.warning, 0.2)}>
             <YStack gap="$sm">
-              <Text fow="bold">{t("settings.passVerification")}</Text>
+              <Text bold>{t("settings.passVerification")}</Text>
               <Text caption col="$secondary">
                 {t("settings.passVerificationDesc")}
               </Text>
@@ -55,7 +55,7 @@ export const VerificationCard: FC = () => {
             <XStack pt="$md" ai="center">
               <XStack ai="center" gap={12} f={1}>
                 <Icon name="creditCard" size={24} />
-                <Text fos={15}>{t("profile.identityVerification")}</Text>
+                <Text title>{t("profile.identityVerification")}</Text>
               </XStack>
               <XStack gap="$xs">
                 <Text col="$warning">

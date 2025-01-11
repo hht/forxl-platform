@@ -15,11 +15,11 @@ const ListItem: FC<{ title: string; value: string; desc?: string }> = ({
   return (
     <YStack p="$md" gap="$sm">
       <XStack ai="center" jc="space-between">
-        <Text fow="bold">{title}</Text>
-        <Text fow="bold">{value}</Text>
+        <Text bold>{title}</Text>
+        <Text bold>{value}</Text>
       </XStack>
       {desc ? (
-        <Text fos={11} col="$secondary">
+        <Text caption col="$secondary">
           {desc}
         </Text>
       ) : null}

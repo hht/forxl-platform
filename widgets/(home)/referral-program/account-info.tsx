@@ -1,10 +1,17 @@
-import { Fragment } from 'react'
-import { Trans, useTranslation } from 'react-i18next'
+import { Fragment } from "react"
+import { Trans, useTranslation } from "react-i18next"
 
-import { Icon, IconType, StatisticsInfo, Text, XStack, YStack } from '~/components'
-import { usePartnerStore } from '~/hooks/useStore'
-import { formatDecimal } from '~/lib/utils'
-import colors from '~/theme/colors'
+import {
+  Icon,
+  IconType,
+  StatisticsInfo,
+  Text,
+  XStack,
+  YStack,
+} from "~/components"
+import { usePartnerStore } from "~/hooks/useStore"
+import { formatDecimal } from "~/lib/utils"
+import colors from "~/theme/colors"
 
 const LEVEL_ICON: IconType[] = ["user", "pair", "group"]
 
@@ -35,7 +42,7 @@ export const AccountInfo = () => {
           <Text subject>{dict.accounts}</Text>
           <StatisticsInfo>
             <YStack gap="$md">
-              <Text ta="center" subject fow="400">
+              <Text ta="center" subject>
                 {dict.activeUser}
               </Text>
               <Text ta="center" lh={18} col="$secondary">

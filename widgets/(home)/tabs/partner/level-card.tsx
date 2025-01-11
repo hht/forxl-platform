@@ -1,13 +1,13 @@
-import _ from 'lodash'
-import { FC } from 'react'
-import { useTranslation } from 'react-i18next'
-import { LinearGradient } from 'tamagui/linear-gradient'
-import { shallow } from 'zustand/shallow'
+import _ from "lodash"
+import { FC } from "react"
+import { useTranslation } from "react-i18next"
+import { LinearGradient } from "tamagui/linear-gradient"
+import { shallow } from "zustand/shallow"
 
-import { format, GRADIENT_COLORS, Level, LEVEL_COLORS, LEVELS } from './utils'
+import { format, GRADIENT_COLORS, Level, LEVEL_COLORS, LEVELS } from "./utils"
 
-import { Figure, Icon, Text, XStack, YStack } from '~/components'
-import { usePartnerStore } from '~/hooks/useStore'
+import { Figure, Icon, Text, XStack, YStack } from "~/components"
+import { usePartnerStore } from "~/hooks/useStore"
 
 export const LevelCard: FC<{
   level: Level
@@ -43,7 +43,7 @@ export const LevelCard: FC<{
       >
         <Text>{format(config?.[level].market ?? 0)}</Text>
         <Figure name={LEVELS[level]} width={56} height={56} />
-        <Text fow="bold" col={active ? LEVEL_COLORS[level] : "#5E5D5C"}>
+        <Text bold col={active ? LEVEL_COLORS[level] : "#5E5D5C"}>
           {_.upperCase(dict.children[level])}
         </Text>
         {locked ? (
@@ -54,7 +54,7 @@ export const LevelCard: FC<{
       </YStack>
       {partnerLevel === level ? (
         <XStack h={28} ai="center" jc="center">
-          <Text col="#2F281A" fow="700" fos={11}>
+          <Text col="#2F281A" bold caption>
             {dict.currentRank}
           </Text>
         </XStack>

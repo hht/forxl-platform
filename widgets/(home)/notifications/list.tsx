@@ -1,8 +1,8 @@
-import dayjs from 'dayjs'
+import dayjs from "dayjs"
 
-import { Icon, Text, XStack, YStack } from '~/components'
-import { getRecentDate } from '~/hooks/useLocale'
-import colors from '~/theme/colors'
+import { Icon, Text, XStack, YStack } from "~/components"
+import { getRecentDate } from "~/hooks/useLocale"
+import colors from "~/theme/colors"
 
 export const ListItem = ({
   item,
@@ -50,7 +50,7 @@ export const ListItem = ({
         </XStack>
         <YStack gap="$sm" f={1}>
           <Text col="$secondary">{title}</Text>
-          <Text head>{content}</Text>
+          <Text title>{content}</Text>
           <Text col="$tertiary">{dayjs(createTime).format("HH:mm:ss")}</Text>
         </YStack>
       </XStack>

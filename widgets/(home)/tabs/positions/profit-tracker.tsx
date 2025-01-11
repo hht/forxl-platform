@@ -1,10 +1,10 @@
-import _ from 'lodash'
-import { FC } from 'react'
-import { XStack } from 'tamagui'
+import _ from "lodash"
+import { FC } from "react"
+import { XStack } from "tamagui"
 
-import { AnimatedFlow, Text } from '~/components'
-import { computeProfit } from '~/hooks/useStore'
-import { t } from '~/lib/utils'
+import { AnimatedFlow, Text } from "~/components"
+import { computeProfit } from "~/hooks/useStore"
+import { t } from "~/lib/utils"
 
 export const ProfitTracker: FC<{
   order: FuturesOrder
@@ -27,7 +27,7 @@ export const ProfitTracker: FC<{
   )
   return (
     <XStack gap="$sm">
-      <Text col="$secondary" fos={11}>
+      <Text col="$secondary" caption>
         {t("trade.profit")}:
       </Text>
       <XStack>

@@ -56,7 +56,7 @@ const ListItem: FC<{
       }}
     >
       <Icon name={getItemIcon(data)} size={20}></Icon>
-      <Text fos={15} f={1} lh={20} col={active ? colors.primary : colors.text}>
+      <Text title f={1} col={active ? colors.primary : colors.text}>
         {data.name}
       </Text>
       {currentFuture?.name === data.name ? (

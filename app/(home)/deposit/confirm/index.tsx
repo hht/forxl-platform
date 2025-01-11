@@ -62,7 +62,9 @@ export default function Page() {
             })}
           </AttentionCard>
           <DepositSummary />
-          <Text subject>{t("wallet.depositSteps")}</Text>
+          <Text subject bold>
+            {t("wallet.depositSteps")}
+          </Text>
           <DepositSteps />
           <XStack gap="$md">
             <Button
@@ -93,9 +95,7 @@ export default function Page() {
         <Dialog br="$md">
           <YStack ai="center" px="$md" gap={12}>
             <Figure name="tip" color={colors.warning} width={88} />
-            <Text fos={20} lh={24}>
-              {t("wallet.tips")}
-            </Text>
+            <Text subject>{t("wallet.tips")}</Text>
             <Text col="$secondary" ta="center">
               {t("wallet.depositConfirmPrompt")}
             </Text>

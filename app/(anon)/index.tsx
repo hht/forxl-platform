@@ -1,11 +1,13 @@
-import { router } from 'expo-router'
-import { Stack } from 'expo-router/stack'
-import { useTranslation } from 'react-i18next'
+import { router } from "expo-router"
+import { Stack } from "expo-router/stack"
+import { useTranslation } from "react-i18next"
 
-import { Button, Figure, Screen, Text, YStack } from '~/components'
+import { Button, Figure, Screen, Text, YStack } from "~/components"
 import {
-    DefaultScreenOptions, LiveSupport, NativeStackNavigationOptions
-} from '~/widgets/shared/header'
+  DefaultScreenOptions,
+  LiveSupport,
+  NativeStackNavigationOptions,
+} from "~/widgets/shared/header"
 
 const ScreenOption: NativeStackNavigationOptions = {
   ...DefaultScreenOptions,
@@ -21,7 +23,7 @@ export default function Page() {
       <Stack.Screen options={ScreenOption} />
       <YStack f={1} gap="$md" p="$xs" ai="center" pt="20%">
         <Figure name="logo" width={90} height={90} />
-        <Text fos={24} lh={24} fow="bold">
+        <Text fos={24} lh={24} bold>
           {t("anon.title")}
         </Text>
         <Text col="$secondary" ta="center">
