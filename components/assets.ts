@@ -69,6 +69,8 @@ export { default as creditCard } from "~/assets/images/icon/credit-card.svg"
 export { default as twoFactor } from "~/assets/images/icon/two-factor.svg"
 export { default as warn } from "~/assets/images/icon/warn.svg"
 export { default as upload } from "~/assets/images/icon/upload.svg"
+export { default as notAgreed } from "~/assets/images/icon/not-agreed.svg"
+export { default as agreed } from "~/assets/images/icon/agreed.svg"
 // 图片
 export { default as logo } from "~/assets/images/widgets/logo.svg"
 export { default as verifyEmail } from "~/assets/images/widgets/verify-email.svg"

@@ -151,6 +151,7 @@ export const Shortcuts: FC = () => {
               onPress={async () => {
                 bottomSheetRef.current?.dismiss()
                 if (SHORTCUT_ROUTES[index].href) {
+                  await waitFor(200)
                   router.push(SHORTCUT_ROUTES[index].href!)
                   return
                 }

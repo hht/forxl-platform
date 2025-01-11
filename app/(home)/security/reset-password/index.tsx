@@ -2,19 +2,12 @@ import { useUnmount } from "ahooks"
 import { Stack } from "expo-router"
 import { useMemo } from "react"
 import { useTranslation } from "react-i18next"
+import { useSafeAreaInsets } from "react-native-safe-area-context"
 import { z } from "zod"
 import { createWithEqualityFn } from "zustand/traditional"
 
 import { changePassword } from "~/api/account"
-import {
-  Button,
-  Input,
-  Screen,
-  ScrollView,
-  Text,
-  toast,
-  YStack,
-} from "~/components"
+import { Button, Input, ScrollView, Text, toast, YStack } from "~/components"
 import { useRequest } from "~/hooks/useRequest"
 import { useFroxlStore } from "~/hooks/useStore"
 import {
@@ -44,7 +37,7 @@ export const useStore = createWithEqualityFn<Store>()((set) => INITIAL)
 
 export default function Page() {
   const { password, confirm, previous } = useStore()
-
+  const { bottom } = useSafeAreaInsets()
   const { t } = useTranslation("translation")
   const matches = t("anon.matches", {
     returnObjects: true,
@@ -117,18 +110,21 @@ export default function Page() {
           </YStack>
         </YStack>
       </ScrollView>
-      <Button
-        disabled={!success}
-        isLoading={loading}
-        onPress={() =>
-          run({
-            password,
-            previous: useStore.getState().previous,
-          })
-        }
-      >
-        {t("settings.resetPassword")}
-      </Button>
+      <YStack p="$md">
+        <Button
+          disabled={!success}
+          isLoading={loading}
+          onPress={() =>
+            run({
+              password,
+              previous: useStore.getState().previous,
+            })
+          }
+        >
+          {t("settings.resetPassword")}
+        </Button>
+      </YStack>
+      <YStack h={bottom} />
     </YStack>
   )
 }
