@@ -115,7 +115,7 @@ export const InputBase: FC<InputProps> = ({
       </XStack>
       {disableValidation ? null : (
         <Text col="$destructive" fos={12}>
-          {value && !isFocused ? (message ?? "") : ""}
+          {value && !isFocused ? (message ?? "  ") : "  "}
         </Text>
       )}
     </YStack>

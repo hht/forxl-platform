@@ -2,6 +2,7 @@ import { NativeStackNavigationOptions } from "@react-navigation/native-stack"
 import { router } from "expo-router"
 import { FC } from "react"
 import { useTranslation } from "react-i18next"
+import { Platform } from "react-native"
 
 import { getNewMessageCount } from "~/api/notifications"
 import { Figure, Icon, IconType, Text, XStack } from "~/components"
@@ -10,7 +11,12 @@ import colors from "~/theme/colors"
 
 export const HeaderLeft: FC<{ onPress?: () => void }> = ({ onPress }) => {
   return (
-    <XStack py={12} hitSlop={16} onPress={onPress ?? router.back}>
+    <XStack
+      py={12}
+      hitSlop={16}
+      pl={Platform.OS === "web" ? 16 : 0}
+      onPress={onPress ?? router.back}
+    >
       <Icon name="arrowLeft" color={colors.text} size={20} />
     </XStack>
   )
