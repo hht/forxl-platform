@@ -33,8 +33,10 @@ export const Switch: FC<SwitchProps> = ({
     )
   }, [checked, backgroundColor, offset])
   const toggleSwitch = () => {
-    if (disabled) return
-
+    if (disabled) {
+      onCheckedChange?.(checked)
+      return
+    }
     const v = !checked
     offset.value = withTiming(v ? 20 : 0)
     backgroundColor.value = withTiming(v ? colors.primary : colors.tertiary)
@@ -53,7 +55,9 @@ export const Switch: FC<SwitchProps> = ({
     <XStack
       ai="center"
       jc="center"
-      onPress={toggleSwitch}
+      onPress={(e) => {
+        toggleSwitch()
+      }}
       o={disabled ? disabledOpacity : 1}
     >
       <Animated.View style={[styles.track, trackStyle]}>

@@ -1,17 +1,14 @@
 import { useUnmount } from "ahooks"
 import { router, Stack } from "expo-router"
-import { useMemo } from "react"
 import { useTranslation } from "react-i18next"
-import { z } from "zod"
 import { createWithEqualityFn } from "zustand/traditional"
 
-import { changePassword, deleteAccount } from "~/api/account"
+import { deleteAccount } from "~/api/account"
 import {
   Button,
   Card,
   Figure,
   Icon,
-  Input,
   Screen,
   Text,
   toast,
@@ -21,16 +18,6 @@ import {
 import { useRequest } from "~/hooks/useRequest"
 import { useFroxlStore } from "~/hooks/useStore"
 import colors, { toRGBA } from "~/theme/colors"
-import {
-  LiveSupport,
-  NativeStackNavigationOptions,
-} from "~/widgets/shared/header"
-import { PasswordValidator } from "~/widgets/shared/password-validator"
-
-const ScreenOptions: NativeStackNavigationOptions = {
-  title: "",
-  headerRight: () => <LiveSupport />,
-}
 
 interface Store {
   agreed: boolean

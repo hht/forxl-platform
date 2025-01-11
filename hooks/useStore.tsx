@@ -199,6 +199,12 @@ export const usePartnerStore = createWithEqualityFn<{
   currentLevel: 0,
 }))
 
+export const useGoogleAuthStore = createWithEqualityFn<{
+  code: string
+}>((set) => ({
+  code: "",
+}))
+
 export type DepositResult =
   | {
       currency: string

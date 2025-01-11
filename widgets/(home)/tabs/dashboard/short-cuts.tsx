@@ -71,7 +71,9 @@ export const Shortcuts: FC = () => {
         },
         8: {
           icon: "security",
-          href: "/security",
+          onPress: () => {
+            toggleVisible(true)
+          },
         },
         9: {
           icon: "website",
@@ -156,7 +158,7 @@ export const Shortcuts: FC = () => {
                   return
                 }
                 if (SHORTCUT_ROUTES[index].onPress) {
-                  SHORTCUT_ROUTES[index].onPress()
+                  SHORTCUT_ROUTES[index].onPress?.()
                   return
                 }
               }}

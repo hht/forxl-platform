@@ -3,15 +3,6 @@ import { useTranslation } from "react-i18next"
 
 import { ListItem, ScrollView, YStack } from "~/components"
 
-const LINKS = [
-  "http://www.163.com",
-  "http://www.163.com",
-  "http://www.163.com",
-  "http://www.163.com",
-  "http://www.163.com",
-  "http://www.163.com",
-]
-
 const ROUTE = [
   "/security/reset-password",
   "/security/2fa",
