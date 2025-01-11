@@ -12,6 +12,7 @@ import { enableFreeze, enableScreens } from "react-native-screens"
 import { TamaguiProvider } from "tamagui"
 
 import { Toaster } from "~/components"
+import { PortalProvider } from "~/components/portal"
 import { useReady } from "~/hooks/useReady"
 import config from "~/theme/tamagui.config"
 import { AccountDetector } from "~/widgets/shared/detector"
@@ -52,17 +53,19 @@ export default function RootLayout() {
       <AccountDetector />
       <GestureHandlerRootView>
         <BottomSheetModalProvider>
-          <TamaguiProvider config={config}>
-            <ThemeProvider value={DarkTheme}>
-              <Stack
-                initialRouteName="(anon)"
-                screenOptions={{ headerShown: false }}
-              />
-            </ThemeProvider>
-            <StatusBar style="light" translucent />
-            <Toaster />
-            <PromptSheet />
-          </TamaguiProvider>
+          <PortalProvider>
+            <TamaguiProvider config={config}>
+              <ThemeProvider value={DarkTheme}>
+                <Stack
+                  initialRouteName="(anon)"
+                  screenOptions={{ headerShown: false }}
+                />
+              </ThemeProvider>
+              <StatusBar style="light" translucent />
+              <Toaster />
+              <PromptSheet />
+            </TamaguiProvider>
+          </PortalProvider>
         </BottomSheetModalProvider>
       </GestureHandlerRootView>
     </Fragment>

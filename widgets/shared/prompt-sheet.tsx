@@ -17,7 +17,7 @@ export const PromptSheet: FC = () => {
   }, [reloadKey])
   return reloadKey ? (
     <BottomSheet ref={ref} title={title} index={0}>
-      <YStack px="$md" pb={bottom + 16}>
+      <YStack px="$md" gap="$sm" pb={bottom + 16}>
         {_.isString(desc) ? (
           <Text title>{desc}</Text>
         ) : (

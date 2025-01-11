@@ -121,6 +121,8 @@
   "home": {
     "news": "Market News",
     "readMore": "Read More",
+    "later": "Later",
+    "enable2FA": "Enable 2FA",
     "shortcuts": {
       "title": "Shortcuts",
       "children": [

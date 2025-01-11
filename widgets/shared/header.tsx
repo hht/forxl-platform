@@ -21,7 +21,9 @@ export const BrandTitle: FC = () => {
   return (
     <XStack ai="center" jc="center" gap="$sm">
       <Figure name="logo" width={24} height={24} />
-      <Text head>{t("anon.title")}</Text>
+      <Text title bold>
+        {t("anon.title")}
+      </Text>
     </XStack>
   )
 }

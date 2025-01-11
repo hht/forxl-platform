@@ -1,8 +1,8 @@
 import { MotiView } from "moti"
-import { AnimatePresence } from "moti/build/core"
-import { FC, ReactNode, useCallback, useEffect } from "react"
+import { ReactNode, useCallback, useContext, useEffect } from "react"
 import { BackHandler, Platform, StyleSheet, ViewStyle } from "react-native"
-import { Portal } from "tamagui"
+
+import { PortalContext } from "./portal"
 
 interface PopupProps {
   visible: boolean
@@ -12,7 +12,6 @@ interface PopupProps {
   closeOnTouchOutside?: boolean
   style?: ViewStyle
 }
-
 export const Popup = ({
   visible,
   onClose,
@@ -21,6 +20,7 @@ export const Popup = ({
   closeOnTouchOutside = false,
   style,
 }: PopupProps) => {
+  const { mount, unmount } = useContext(PortalContext)
   // 处理返回按钮
   const handleBackButton = useCallback(() => {
     if (visible) {
@@ -39,70 +39,61 @@ export const Popup = ({
     return () => subscription.remove()
   }, [handleBackButton])
 
-  return (
-    <Portal>
-      <AnimatePresence>
-        {visible && (
-          <MotiView
-            from={{
-              opacity: 0,
-            }}
-            animate={{
-              opacity: 1,
-            }}
-            exit={{
-              opacity: 0,
-            }}
-            transition={{
-              type: "timing",
-              duration: 200,
-            }}
-            style={styles.container}
-            onTouchEnd={() => closeOnTouchOutside && onClose()}
-          >
-            <MotiView
-              from={{
-                opacity: 0,
-                translateY: 100,
-              }}
-              animate={{
-                opacity: 1,
-                scale: 1,
-                translateY: 0,
-              }}
-              exit={{
-                opacity: 0,
-                translateY: 100,
-              }}
-              transition={{
-                type: "spring",
-                damping: 20,
-                stiffness: 300,
-              }}
-              style={[
-                styles.content,
-                position === "bottom" && styles.bottomContent,
-                style,
-              ]}
-              onTouchEnd={(e) => e.stopPropagation()}
-            >
-              {children}
-            </MotiView>
-          </MotiView>
-        )}
-      </AnimatePresence>
-    </Portal>
-  )
+  useEffect(() => {
+    if (visible) {
+      mount(
+        <MotiView
+          from={{
+            opacity: 0,
+            translateY: 100,
+          }}
+          animate={{
+            opacity: 1,
+            scale: 1,
+            translateY: 0,
+          }}
+          exit={{
+            opacity: 0,
+            translateY: 100,
+          }}
+          transition={{
+            type: "spring",
+            damping: 20,
+            stiffness: 300,
+          }}
+          style={[styles.content, style]}
+        >
+          {children}
+        </MotiView>
+      )
+    } else {
+      unmount()
+    }
+
+    return () => unmount()
+  }, [
+    visible,
+    children,
+    position,
+    style,
+    mount,
+    closeOnTouchOutside,
+    onClose,
+    unmount,
+  ])
+
+  useEffect(() => {
+    const subscription = BackHandler.addEventListener(
+      "hardwareBackPress",
+      handleBackButton
+    )
+    return () => subscription.remove()
+  }, [handleBackButton])
+
+  return null
 }
 
 const styles = StyleSheet.create({
-  container: {
-    ...StyleSheet.absoluteFillObject,
-    backgroundColor: "rgba(0,0,0,0.5)",
-    justifyContent: "center",
-    alignItems: "center",
-    pointerEvents: "auto",
-  },
   content: {
     width: "90%",
     alignSelf: "center",
@@ -124,12 +115,5 @@ const styles = StyleSheet.create({
         shadowRadius: 3.84,
       },
     }),
-  },
-  bottomContent: {
-    position: "absolute",
-    bottom: 0,
-    width: "100%",
-    borderBottomLeftRadius: 0,
-    borderBottomRightRadius: 0,
   },
 })
