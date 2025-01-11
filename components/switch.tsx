@@ -13,12 +13,14 @@ interface SwitchProps {
   checked?: boolean
   onCheckedChange?: (checked: boolean) => void
   disabled?: boolean
+  disabledOpacity?: number
 }
 
 export const Switch: FC<SwitchProps> = ({
   checked = false,
   onCheckedChange,
   disabled,
+  disabledOpacity = 0.5,
 }) => {
   const offset = useSharedValue(checked ? 20 : 0)
   const backgroundColor = useSharedValue(
@@ -52,7 +54,7 @@ export const Switch: FC<SwitchProps> = ({
       ai="center"
       jc="center"
       onPress={toggleSwitch}
-      o={disabled ? 0.5 : 1}
+      o={disabled ? disabledOpacity : 1}
     >
       <Animated.View style={[styles.track, trackStyle]}>
         <Animated.View style={[styles.thumb, thumbStyle]} />

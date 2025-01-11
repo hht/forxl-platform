@@ -1,7 +1,14 @@
 import { useBoolean } from "ahooks"
 import _ from "lodash"
 import { MotiText as AnimatedText, MotiView as AnimatedView } from "moti"
-import React, { FC, useCallback, useEffect, useRef, useState } from "react"
+import React, {
+  FC,
+  Fragment,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react"
 import { StyleSheet, TextInput, TextInputProps } from "react-native"
 import Animated, {
   useAnimatedStyle,
@@ -17,7 +24,7 @@ import { Icon } from "./icon"
 import { Text } from "./text"
 import { toast } from "./toast"
 
-import { t } from "~/lib/utils"
+import { DEVICE_WIDTH, t } from "~/lib/utils"
 import colors from "~/theme/colors"
 
 interface InputProps extends TextInputProps {
@@ -152,20 +159,21 @@ interface OTPInputProps {
   onComplete?: (value: string) => void
 }
 
-export const OTP = ({
+const OTP_WIDTH = (DEVICE_WIDTH - 32 - 16 * 5) / 6
+
+const OTP = ({
   length = 6,
   disabled = false,
   value = "",
   onChange,
   onComplete,
 }: OTPInputProps) => {
-  const [focused, setFocused] = useState(false)
   const [digits, setDigits] = useState(
     value.split("").concat(new Array(length).fill("")).slice(0, length)
   )
+  const [focused, setFocused] = useState(false)
+  const inputRef = useRef<TextInput>(null)
   const cursorOpacity = useSharedValue(1)
-
-  // 光标动画
   const cursorStyle = useAnimatedStyle(() => ({
     opacity: cursorOpacity.value,
   }))
@@ -182,75 +190,87 @@ export const OTP = ({
     } else {
       cursorOpacity.value = withTiming(0)
     }
-  }, [focused, cursorOpacity])
+  }, [cursorOpacity, focused])
 
-  const onKeyPress = useCallback(
-    (key: string) => {
-      if (disabled) return
+  const onChangeText = useCallback(
+    (text: string) => {
+      if (!/^\d*$/.test(text)) {
+        return
+      }
       const newDigits = [...digits]
       const currentIndex = newDigits.findIndex((d) => !d)
 
+      if (currentIndex !== -1) {
+        newDigits[currentIndex] = text.slice(-1)
+        setDigits(newDigits)
+        onChange?.(newDigits.join(""))
+
+        if (newDigits.every((d) => d) && newDigits.length === length) {
+          onComplete?.(newDigits.join(""))
+          inputRef.current?.blur()
+        }
+      }
+    },
+    [digits, length, onChange, onComplete]
+  )
+
+  const onKeyPress = useCallback(
+    ({ nativeEvent: { key } }: any) => {
       if (key === "Backspace") {
+        const newDigits = [...digits]
         const lastFilledIndex = newDigits.map((d) => !!d).lastIndexOf(true)
+
         if (lastFilledIndex !== -1) {
           newDigits[lastFilledIndex] = ""
           setDigits(newDigits)
           onChange?.(newDigits.join(""))
         }
-        return
-      }
-
-      if (currentIndex !== -1 && /^\d$/.test(key)) {
-        newDigits[currentIndex] = key
-        setDigits(newDigits)
-        onChange?.(newDigits.join(""))
-
-        if (newDigits.every((d) => d)) {
-          onComplete?.(newDigits.join(""))
-        }
       }
     },
-    [digits, disabled, onChange, onComplete]
+    [digits, onChange]
   )
 
-  useEffect(() => {
-    const keyboardListener = ({ key }: KeyboardEvent) => {
-      if (focused) {
-        onKeyPress(key)
-      }
+  const onPress = useCallback(() => {
+    if (!disabled) {
+      setFocused(true)
+      inputRef.current?.focus()
     }
-
-    if (typeof window !== "undefined") {
-      window.addEventListener("keydown", keyboardListener)
-      return () => window.removeEventListener("keydown", keyboardListener)
-    }
-  }, [focused, onKeyPress])
+  }, [disabled])
 
   return (
-    <XStack gap="$2" onPress={() => !disabled && setFocused(true)}>
-      {digits.map((digit, index) => (
-        <YStack
-          key={index}
-          width={40}
-          height={48}
-          borderWidth={1}
-          borderColor={
-            focused && !digit && index === digits.findIndex((d) => !d)
-              ? "$primary"
-              : "$border"
-          }
-          borderRadius="$2"
-          alignItems="center"
-          justifyContent="center"
-          backgroundColor="$background"
-        >
-          <Text subject>{digit}</Text>
-          {focused && !digit && index === digits.findIndex((d) => !d) && (
-            <Animated.View style={[styles.cursor, cursorStyle]} />
-          )}
-        </YStack>
-      ))}
-    </XStack>
+    <Fragment>
+      <TextInput
+        ref={inputRef}
+        value=""
+        onChangeText={onChangeText}
+        onKeyPress={onKeyPress}
+        maxLength={1}
+        keyboardType="number-pad"
+        style={styles.hidden}
+        onFocus={() => setFocused(true)}
+        onBlur={() => setFocused(false)}
+      />
+      <XStack gap="$md" onPress={onPress}>
+        {digits.map((digit, index) => (
+          <YStack
+            key={index}
+            w={OTP_WIDTH}
+            height={OTP_WIDTH}
+            bw={1}
+            boc={digit ? "$primary" : "$border"}
+            br="$2"
+            ai="center"
+            jc="center"
+            bc="$background"
+          >
+            <Text subject>{digit}</Text>
+            {focused && !digit && index === digits.findIndex((d) => !d) && (
+              <Animated.View style={[styles.cursor, cursorStyle]} />
+            )}
+          </YStack>
+        ))}
+      </XStack>
+    </Fragment>
   )
 }
 
@@ -410,7 +430,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     width: 2,
     height: 24,
-    backgroundColor: "#000",
+    backgroundColor: colors.primary,
   },
   label: {
     position: "absolute",
@@ -421,5 +441,11 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     pointerEvents: "none",
+  },
+  hidden: {
+    position: "absolute",
+    width: 1,
+    height: 1,
+    opacity: 0,
   },
 })
