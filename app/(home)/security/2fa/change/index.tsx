@@ -1,38 +1,24 @@
-import { useUnmount } from "ahooks"
 import * as Clipboard from "expo-clipboard"
 import { router, Stack } from "expo-router"
 import { Trans, useTranslation } from "react-i18next"
 
-import { closeGa } from "~/api/account"
 import {
   Button,
   Input,
   Screen,
   ScrollView,
   Text,
-  toast,
   XStack,
   YStack,
 } from "~/components"
-import { useRequest } from "~/hooks/useRequest"
 import { useGoogleAuthStore } from "~/hooks/useStore"
 
 export default function Page() {
   const { t } = useTranslation("translation")
   const { checkCode } = useGoogleAuthStore()
-  const { run, loading } = useRequest(closeGa, {
-    manual: true,
-    onSuccess: () => {
-      router.back()
-      toast.show(t("security.twoFactorDisabledSuccessfully"))
-    },
-  })
-  useUnmount(() => {
-    useGoogleAuthStore.setState({ checkCode: "" })
-  })
   return (
     <Screen p="$md" pt={32} gap={24}>
-      <Stack.Screen options={{ title: t("security.closeTwoFactor") }} />
+      <Stack.Screen options={{ title: t("security.changeTwoFactor") }} />
       <ScrollView
         f={1}
         showsVerticalScrollIndicator={false}
@@ -78,14 +64,13 @@ export default function Page() {
           />
         </Text>
         <Button
-          isLoading={loading}
           w="100%"
           disabled={checkCode?.length !== 6}
           onPress={() => {
-            run({ code: checkCode })
+            router.replace("/security/2fa/change/confirm")
           }}
         >
-          {t("security.closeTwoFactor")}
+          {t("action.continue")}
         </Button>
       </YStack>
     </Screen>

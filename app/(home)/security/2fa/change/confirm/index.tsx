@@ -1,15 +1,14 @@
 import { useUnmount } from "ahooks"
 import { router, Stack } from "expo-router"
-import { useState } from "react"
 import { useTranslation } from "react-i18next"
-import { useSafeAreaInsets } from "react-native-safe-area-context"
 
-import { bindGa, getGaInfo } from "~/api/account"
+import { getGaInfo, updateGa } from "~/api/account"
 import {
   Button,
   copyToClipboard,
   Image,
   Input,
+  Screen,
   ScrollView,
   Stepper,
   Text,
@@ -22,21 +21,20 @@ import { useGoogleAuthStore } from "~/hooks/useStore"
 
 export default function Page() {
   const { t } = useTranslation("translation")
-  const { bottom } = useSafeAreaInsets()
+  const { code, checkCode } = useGoogleAuthStore()
   const { data } = useRequest(getGaInfo)
-  const { checkCode } = useGoogleAuthStore()
-  const { run, loading } = useRequest(bindGa, {
+  const { run, loading } = useRequest(updateGa, {
     manual: true,
     onSuccess: () => {
       router.back()
-      toast.show(t("security.twoFactorEnabledSuccessfully"))
+      toast.show(t("security.twoFactorChangedSuccessfully"))
     },
   })
   useUnmount(() => {
-    useGoogleAuthStore.setState({ checkCode: "" })
+    useGoogleAuthStore.setState({ code: "", checkCode: "" })
   })
   return (
-    <YStack f={1} pb={bottom + 16}>
+    <Screen p={0}>
       <ScrollView f={1} p="$md" showsVerticalScrollIndicator={false}>
         <Stack.Screen options={{ title: t("security.enableTwoFactor") }} />
         <YStack pt={32}>
@@ -75,9 +73,9 @@ export default function Page() {
           </Stepper>
           <Input.OTP
             length={6}
-            value={checkCode}
-            onChange={(checkCode) => {
-              useGoogleAuthStore.setState({ checkCode })
+            value={code}
+            onChange={(code) => {
+              useGoogleAuthStore.setState({ code })
             }}
           />
         </YStack>
@@ -85,14 +83,14 @@ export default function Page() {
       <YStack p="$md">
         <Button
           isLoading={loading}
-          disabled={loading || checkCode.length < 6}
+          disabled={loading || code.length < 6}
           onPress={() => {
-            run({ code: checkCode, secret: data?.secret! })
+            run({ code, secret: data?.secret!, checkCode })
           }}
         >
           {t("security.enable")}
         </Button>
       </YStack>
-    </YStack>
+    </Screen>
   )
 }

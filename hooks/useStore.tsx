@@ -200,8 +200,10 @@ export const usePartnerStore = createWithEqualityFn<{
 }))
 
 export const useGoogleAuthStore = createWithEqualityFn<{
+  checkCode: string
   code: string
 }>((set) => ({
+  checkCode: "",
   code: "",
 }))
 

@@ -31,7 +31,8 @@
     "verify": "Verify",
     "submitRequest": "Submit Request",
     "enter": "Enter Dashboard",
-    "home": "Go to Home"
+    "home": "Go to Home",
+    "continue": "Continue"
   },
   "anon": {
     "title": "Froxl Markets",
@@ -607,8 +608,10 @@
     "twoFactorEnabledSuccessfully": "Two-factor Authentication enabled successfully",
     "changeTwoFactor": "Change Two-factor Authentication",
     "twoFactorConfig": "Enable Two-factor Authentication",
+    "twoFactorChangedSuccessfully": "New Two-factor Authentication set successfully",
     "twoFactorCopy": "Copy key",
     "googleAuthCodeDesc": "Google Authenticator verification code",
+    "unavailable": "Two-factor Authentication Not available? <1>Contact US</1>",
     "twoFactorDesc": "Keep your account secured by turning on 2FA .2FA is required when add funds and withdrawal funds.",
     "twoFactorStepOne": "Download a Two-Factor Authentication app to your device such as Authy or Google Authenticator.",
     "twoFactorStepTwo": "Use the app to scan QR code or copy and paste key",

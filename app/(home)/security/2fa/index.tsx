@@ -5,6 +5,7 @@ import { ActivityIndicator } from "react-native"
 import { getAttestationFlag } from "~/api/account"
 import { Figure, ListItem, Switch, Text, YStack } from "~/components"
 import { CACHE_KEY, useRequest } from "~/hooks/useRequest"
+import { useGoogleAuthStore } from "~/hooks/useStore"
 import colors from "~/theme/colors"
 
 export default function Page() {
@@ -53,7 +54,13 @@ export default function Page() {
         />
         <ListItem
           title={t("security.changeTwoFactor")}
-          onPress={() => {}}
+          disabled={!data?.ga}
+          onPress={() => {
+            if (data?.ga) {
+              useGoogleAuthStore.setState({ checkCode: "", code: "" })
+              router.push("/security/2fa/change")
+            }
+          }}
           isLink
         />
       </YStack>
