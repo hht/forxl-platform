@@ -110,7 +110,7 @@ export default function Page() {
       }
       return getNews({
         page: d?.nextId ?? 1,
-        date: dayjs().format("YYYY-MM-DD"),
+        date: dayjs().subtract(3, "days").format("YYYY-MM-DD"),
       })
     },
     {

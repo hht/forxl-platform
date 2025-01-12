@@ -1,4 +1,5 @@
 import { BottomSheetModal } from "@gorhom/bottom-sheet"
+import * as Linking from "expo-linking"
 import { Href, router } from "expo-router"
 import _ from "lodash"
 import { FC, Fragment, useMemo, useRef } from "react"
@@ -13,7 +14,7 @@ import colors from "~/theme/colors"
 const SHORTCUT_SIZE = (Dimensions.get("window").width - 16 * 5) / 4
 
 const SHORTCUT_ROUTES: {
-  [key: number]: { icon: IconType; href?: Href }
+  [key: number]: { icon: IconType; href?: Href; onPress?: () => void }
 } = {
   0: {
     icon: "addFunds",
@@ -25,11 +26,9 @@ const SHORTCUT_ROUTES: {
   },
   2: {
     icon: "kyc",
-    href: "/tabs/wallet",
   },
   3: {
     icon: "card",
-    href: "/tabs/wallet",
   },
   4: {
     icon: "referral",
@@ -45,7 +44,6 @@ const SHORTCUT_ROUTES: {
   },
   7: {
     icon: "community",
-    href: "/tabs/wallet",
   },
   8: {
     icon: "security",
@@ -53,11 +51,13 @@ const SHORTCUT_ROUTES: {
   },
   9: {
     icon: "website",
-    href: "/tabs/wallet",
+    onPress: () => {
+      Linking.openURL("https://app.froxl-markets.com/")
+    },
   },
   10: {
     icon: "calendar",
-    href: "/tabs/wallet",
+    href: "/eco-calendar",
   },
   11: {
     icon: "news",
@@ -98,7 +98,10 @@ export const Shortcuts: FC = () => {
                 router.push(SHORTCUT_ROUTES[item.index].href!)
                 return
               }
-              bottomSheetRef.current?.present()
+              if (SHORTCUT_ROUTES[item.index].icon === "more") {
+                bottomSheetRef.current?.present()
+                return
+              }
             }}
             ai="center"
             jc="center"
@@ -128,8 +131,12 @@ export const Shortcuts: FC = () => {
               h={SHORTCUT_SIZE}
               onPress={async () => {
                 bottomSheetRef.current?.dismiss()
+                await waitFor(200)
+                if (SHORTCUT_ROUTES[index].onPress) {
+                  SHORTCUT_ROUTES[index].onPress()
+                  return
+                }
                 if (SHORTCUT_ROUTES[index].href) {
-                  await waitFor(200)
                   router.push(SHORTCUT_ROUTES[index].href!)
                   return
                 }
