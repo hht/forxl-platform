@@ -116,7 +116,7 @@ export const getAssets = async () => {
 
 export const getWalletStatement = async (params: {
   currentPage: number
-  pageSize: number
+  pageSize?: number
   stateCategory: number
   time: string
 }) => {
@@ -142,12 +142,15 @@ export const getWalletStatement = async (params: {
     }
   >("/walletRecord/queryPage", "POST", {
     ...params,
+    pageSize: params.pageSize ?? 10,
     language: i18n.language,
-  }).then((res) => ({
-    list: res.list,
-    current: res.pageNum,
-    total: res.total,
-  }))
+  })
+    .then((res) => ({
+      resultList: res.list,
+      current: res.pageNum,
+      pages: res.total,
+    }))
+    .then((res) => toInfinite(res, params.currentPage))
 }
 
 export const sendStatement = async (params: {

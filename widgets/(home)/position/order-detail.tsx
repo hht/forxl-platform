@@ -6,7 +6,7 @@ import { getFuture } from "~/api/trade"
 import { Icon, Text, XStack } from "~/components"
 import { useRequest } from "~/hooks/useRequest"
 import { useOrderStore } from "~/hooks/useStore"
-import { dayjs, formatDecimal } from "~/lib/utils"
+import { dayjs, formatCurrency, formatDecimal } from "~/lib/utils"
 import colors from "~/theme/colors"
 import { ListItem } from "~/widgets/(home)/position/list-item"
 import { PriceCell } from "~/widgets/shared/price-cell"
@@ -68,15 +68,15 @@ export const OrderDetail = () => {
         <ListItem
           label={t("trade.volume")}
         >{`${currentPosition.position}`}</ListItem>
-        <ListItem
-          label={t("wallet.margin")}
-        >{`$${formatDecimal(currentPosition.securityDeposit ?? 0)}`}</ListItem>
-        <ListItem
-          label={t("trade.commission")}
-        >{`$${formatDecimal(currentPosition.tradingFee ?? 0)}`}</ListItem>
-        <ListItem
-          label={dict.swap}
-        >{`$${formatDecimal(currentPosition.overNightFee ?? 0)}`}</ListItem>
+        <ListItem label={t("wallet.margin")}>
+          {formatCurrency(currentPosition.securityDeposit ?? 0)}
+        </ListItem>
+        <ListItem label={t("trade.commission")}>
+          {formatCurrency(currentPosition.tradingFee ?? 0)}
+        </ListItem>
+        <ListItem label={dict.swap}>
+          {formatCurrency(currentPosition.overNightFee ?? 0)}
+        </ListItem>
         <ListItem
           label={dict.openTime}
         >{`${dayjs(currentPosition.createTime).format("MMM DD, YYYY HH:mm")}`}</ListItem>
@@ -104,7 +104,7 @@ export const OrderDetail = () => {
           bold
           col={currentPosition.profit! > 0 ? "$primary" : "$destructive"}
         >
-          {`$${currentPosition.profit! > 0 ? "+" : ""}${formatDecimal(
+          {`${currentPosition.profit! > 0 ? "+" : ""}${formatCurrency(
             currentPosition.profit ?? 0,
             currentPosition.volatility
           )}`}
@@ -135,15 +135,15 @@ export const OrderDetail = () => {
       <ListItem
         label={t("trade.volume")}
       >{`${currentPosition.position}`}</ListItem>
-      <ListItem
-        label={t("wallet.margin")}
-      >{`$${formatDecimal(currentPosition.securityDeposit ?? 0)}`}</ListItem>
-      <ListItem
-        label={t("trade.commission")}
-      >{`$${formatDecimal(currentPosition.tradingFee ?? 0)}`}</ListItem>
-      <ListItem
-        label={dict.swap}
-      >{`$${formatDecimal(currentPosition.overNightFee ?? 0)}`}</ListItem>
+      <ListItem label={t("wallet.margin")}>
+        {formatCurrency(currentPosition.securityDeposit ?? 0)}
+      </ListItem>
+      <ListItem label={t("trade.commission")}>
+        {formatCurrency(currentPosition.tradingFee ?? 0)}
+      </ListItem>
+      <ListItem label={dict.swap}>
+        {formatCurrency(currentPosition.overNightFee ?? 0)}
+      </ListItem>
       <ListItem
         label={dict.openTime}
       >{`${dayjs(currentPosition.createTime).format("MMM DD, YYYY HH:mm")}`}</ListItem>
@@ -152,12 +152,18 @@ export const OrderDetail = () => {
       >{`${dayjs(currentPosition.overTime).format("MMM DD, YYYY HH:mm")}`}</ListItem>
       <ListItem label={t("trade.closeAtLoss")}>
         {currentPosition.stopLossPrice
-          ? `$${formatDecimal(currentPosition.stopLossPrice, currentPosition.volatility)}`
+          ? formatCurrency(
+              currentPosition.stopLossPrice,
+              currentPosition.volatility
+            )
           : "-"}
       </ListItem>
       <ListItem label={t("trade.closeAtProfit")}>
         {currentPosition.stopProfitPrice
-          ? `$${formatDecimal(currentPosition.stopProfitPrice, currentPosition.volatility)}`
+          ? formatCurrency(
+              currentPosition.stopProfitPrice,
+              currentPosition.volatility
+            )
           : "-"}
       </ListItem>
       <ListItem label={dict.id}>{`${currentPosition.orderSn}`}</ListItem>

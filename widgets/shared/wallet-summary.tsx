@@ -21,7 +21,7 @@ import {
   YStack,
 } from "~/components"
 import { usePromptStore, useStatisticsStore } from "~/hooks/useStore"
-import { formatDecimal, uuid } from "~/lib/utils"
+import { formatCurrency, uuid } from "~/lib/utils"
 import colors, { toRGBA } from "~/theme/colors"
 
 const ListItem: FC<{ label: string; value: number; onPress: () => void }> = ({
@@ -209,7 +209,7 @@ export const WalletStatistics: FC = () => {
             }}
           >
             <Text col={color} bold>
-              {`$${formatDecimal(profit)}`}
+              {formatCurrency(profit)}
             </Text>
             <Moti state={state}>
               <Icon name="chevronRight" color={color} size={14} />

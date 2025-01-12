@@ -15,13 +15,13 @@ export const ListEmptyComponent: FC<{ loading: boolean; title?: string }> = ({
   const { t } = useTranslation()
   if (loading) {
     return (
-      <YStack ai="center" jc="center" h="100%" gap="$md">
+      <YStack ai="center" jc="center" gap="$md" h="100%" py={48}>
         <Text col="$tertiary">{t("message.loading")}</Text>
       </YStack>
     )
   }
   return (
-    <YStack ai="center" jc="center" h="100%" gap="$md" px={48}>
+    <YStack ai="center" jc="center" gap="$md" py={48}>
       <Figure name="empty" width={90} height={90} />
       <Text col="$tertiary">{title ?? t("message.empty")}</Text>
     </YStack>

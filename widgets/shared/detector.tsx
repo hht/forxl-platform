@@ -5,6 +5,7 @@ import {
 } from "expo-router"
 import { useEffect } from "react"
 
+import { useLocaleCalendar } from "~/hooks/useLocale"
 import { useFroxlStore } from "~/hooks/useStore"
 import { popToTop } from "~/lib/utils"
 
@@ -24,5 +25,9 @@ export const AccountDetector = () => {
       }
     })
   }, [userNumber, rootNavigation, navigationState?.key])
+  return null
+}
+export const LocaleDetector = () => {
+  useLocaleCalendar()
   return null
 }

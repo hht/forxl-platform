@@ -12,7 +12,7 @@ import {
 import { getFundHistory } from "~/api/wallet"
 import { Icon, Image, Text, XStack, YStack } from "~/components"
 import { getRecentDate } from "~/hooks/useLocale"
-import { formatDecimal } from "~/lib/utils"
+import { formatCurrency } from "~/lib/utils"
 
 export const ListItem: FC<{
   data: Awaited<ReturnType<typeof getFundHistory>>["list"][number]
@@ -71,10 +71,9 @@ export const ListItem: FC<{
           </Text>
         </YStack>
         <YStack gap="$sm" ai="flex-end">
-          <Text
-            bold
-            col={data.realAmount > 0 ? "$primary" : "$destructive"}
-          >{`$${formatDecimal(data.realAmount)}`}</Text>
+          <Text bold col={data.realAmount > 0 ? "$primary" : "$destructive"}>
+            {formatCurrency(data.realAmount)}
+          </Text>
           <Text col="$secondary">
             {t(CHANNEL_DESCRIPTION[data.recordType] as any)}
           </Text>

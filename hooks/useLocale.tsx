@@ -1,3 +1,6 @@
+import { useEffect } from "react"
+import { useTranslation } from "react-i18next"
+
 import { useFroxlStore } from "./useStore"
 
 import { dayjs, i18n, t } from "~/lib/utils"
@@ -34,4 +37,14 @@ export const getRecentDate = (date?: number) => {
   } else {
     return dayjsDate.format("YYYY-MM-DD")
   }
+}
+
+export const useLocaleCalendar = () => {
+  const { i18n } = useTranslation()
+  useEffect(() => {
+    dayjs.locale(i18n.language)
+    useFroxlStore.setState({
+      language: i18n.resolvedLanguage ?? i18n.language,
+    })
+  }, [i18n.language, i18n.resolvedLanguage])
 }

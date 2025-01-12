@@ -14,6 +14,7 @@ import {
   ListHeaderComponent,
   ListItem,
 } from "~/widgets/(home)/tabs/dashboard/list"
+import { TwoFactorNotifier } from "~/widgets/(home)/tabs/dashboard/two-factor-dialog"
 import {
   BrandTitle,
   BreadCrumb,
@@ -130,6 +131,7 @@ export default function Page() {
           />
         }
       ></FlatList>
+      <TwoFactorNotifier />
     </Screen>
   )
 }

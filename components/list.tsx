@@ -1,17 +1,27 @@
 import { FC, ReactNode } from "react"
-import { XStack } from "tamagui"
+import { TextProps, XStack } from "tamagui"
 
 import { Icon, IconType } from "./icon"
 import { Text } from "./text"
 
-export const ListItem: FC<{
-  title: string
-  icon?: IconType
-  onPress?: () => void
-  disabled?: boolean
-  addonAfter?: ReactNode
-  isLink?: boolean
-}> = ({ title, icon, addonAfter, onPress, disabled, isLink = true }) => {
+export const ListItem: FC<
+  {
+    title: string
+    icon?: IconType
+    onPress?: () => void
+    disabled?: boolean
+    addonAfter?: ReactNode
+    isLink?: boolean
+  } & TextProps
+> = ({
+  title,
+  icon,
+  addonAfter,
+  onPress,
+  disabled,
+  isLink = true,
+  ...rest
+}) => {
   return (
     <XStack
       gap="$sm"
@@ -22,7 +32,7 @@ export const ListItem: FC<{
       onPress={onPress}
     >
       {icon ? <Icon name={icon} size={24} /> : null}
-      <Text f={1} title>
+      <Text f={1} title {...rest}>
         {title}
       </Text>
       {addonAfter}

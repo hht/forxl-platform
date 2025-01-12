@@ -1,13 +1,20 @@
-import * as Haptics from 'expo-haptics'
-import React, { memo } from 'react'
-import { Platform, StyleSheet, Text, View } from 'react-native'
-import { Gesture, GestureDetector } from 'react-native-gesture-handler'
+import * as Haptics from "expo-haptics"
+import React, { memo } from "react"
+import { Platform, StyleSheet, Text, View } from "react-native"
+import { Gesture, GestureDetector } from "react-native-gesture-handler"
 import Animated, {
-    cancelAnimation, Extrapolation, interpolate, runOnJS, SharedValue, useAnimatedStyle,
-    useDerivedValue, useSharedValue, withSpring
-} from 'react-native-reanimated'
+  cancelAnimation,
+  Extrapolation,
+  interpolate,
+  runOnJS,
+  SharedValue,
+  useAnimatedStyle,
+  useDerivedValue,
+  useSharedValue,
+  withSpring,
+} from "react-native-reanimated"
 
-import colors from '~/theme/colors'
+import colors from "~/theme/colors"
 
 interface PickerItemProps {
   label: string

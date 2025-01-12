@@ -17,7 +17,7 @@ export const USDT: FC = () => {
       {method?.remark ? <InfoCard>{method.remark}</InfoCard> : null}
       <PaymentMethod />
       <YStack gap="$sm">
-        <Text head>{t("wallet.addressPrompt")}</Text>
+        <Text heading>{t("wallet.addressPrompt")}</Text>
         <Text col="$secondary">{t("wallet.addressPromptDesc")}</Text>
       </YStack>
     </Fragment>

@@ -87,7 +87,7 @@ export default function Page() {
             ))}
           </XStack>
         </YStack>
-        <ScrollView horizontal>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
           <XStack gap="$sm" py="$md">
             {dict.children.map((it, index) => (
               <LevelCard

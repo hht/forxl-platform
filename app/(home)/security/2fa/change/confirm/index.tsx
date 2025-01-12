@@ -3,26 +3,17 @@ import { router, Stack } from "expo-router"
 import { useTranslation } from "react-i18next"
 
 import { getGaInfo, updateGa } from "~/api/account"
-import {
-  Button,
-  copyToClipboard,
-  Image,
-  Input,
-  Screen,
-  ScrollView,
-  Stepper,
-  Text,
-  toast,
-  XStack,
-  YStack,
-} from "~/components"
-import { useRequest } from "~/hooks/useRequest"
+import { Button, Input, Screen, ScrollView, toast, YStack } from "~/components"
+import { CACHE_KEY, useRequest } from "~/hooks/useRequest"
 import { useGoogleAuthStore } from "~/hooks/useStore"
+import { Steps } from "~/widgets/(home)/security/steps"
 
 export default function Page() {
   const { t } = useTranslation("translation")
   const { code, checkCode } = useGoogleAuthStore()
-  const { data } = useRequest(getGaInfo)
+  const { data } = useRequest(getGaInfo, {
+    cacheKey: CACHE_KEY.GOOGLE_AUTH,
+  })
   const { run, loading } = useRequest(updateGa, {
     manual: true,
     onSuccess: () => {
@@ -38,39 +29,7 @@ export default function Page() {
       <ScrollView f={1} p="$md" showsVerticalScrollIndicator={false}>
         <Stack.Screen options={{ title: t("security.enableTwoFactor") }} />
         <YStack pt={32}>
-          <Stepper>
-            <Text col="$secondary">{t("security.twoFactorStepOne")}</Text>
-            <YStack gap="$md">
-              <Text col="$secondary">{t("security.twoFactorStepTwo")}</Text>
-              <YStack ai="center" gap="$md">
-                <XStack p={10} w={110} h={110} bc="white" br="$sm">
-                  {data?.secret ? (
-                    <Image
-                      source={`data:image/png;base64,${data?.pngStr}` as any}
-                      w={90}
-                      h={90}
-                    ></Image>
-                  ) : null}
-                </XStack>
-                <YStack gap="$sm" ai="center">
-                  <Text title ta="center">
-                    {data?.secret}
-                  </Text>
-                  <XStack
-                    hitSlop={16}
-                    onPress={() => {
-                      copyToClipboard(data?.secret)
-                    }}
-                  >
-                    <Text title col="$primary">
-                      {t("security.twoFactorCopy")}
-                    </Text>
-                  </XStack>
-                </YStack>
-              </YStack>
-            </YStack>
-            <Text col="$secondary">{t("security.twoFactorStepThree")}</Text>
-          </Stepper>
+          <Steps />
           <Input.OTP
             length={6}
             value={code}

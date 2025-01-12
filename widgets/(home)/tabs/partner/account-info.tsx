@@ -29,7 +29,7 @@ import {
 import { formatDate } from "~/hooks/useLocale"
 import { useRequest } from "~/hooks/useRequest"
 import { useFroxlStore, usePartnerStore } from "~/hooks/useStore"
-import { DEVICE_WIDTH, formatDecimal } from "~/lib/utils"
+import { DEVICE_WIDTH, formatCurrency, formatDecimal } from "~/lib/utils"
 
 export const AccountInfo = () => {
   const { account } = useFroxlStore()
@@ -103,14 +103,14 @@ export const AccountInfo = () => {
               {t("partner.personCount", { count: data?.teamSize })}
             </Text>
           </Statistics>
-          <Statistics label={dict.volume} jc="flex-end">
-            <Text>{`$${formatDecimal(data?.teamVolume ?? 0)}`}</Text>
+          <Statistics label={dict.volume} ai="flex-end">
+            <Text>{formatCurrency(data?.teamVolume ?? 0)}</Text>
           </Statistics>
         </Justified>
         <Justified>
           <Statistics label={t("referral.earned")}>
             <Row gap="$xs">
-              <Text bold>{`$${formatDecimal(data?.earned ?? 0)}`}</Text>
+              <Text bold>{formatDecimal(data?.earned ?? 0)}</Text>
               <Button h={18} px="$xs" br="$xs" onPress={() => {}}>
                 <Text caption col="$background">
                   {t("action.query")}
@@ -128,7 +128,7 @@ export const AccountInfo = () => {
 
       <Popup visible={visible} onClose={() => setVisible(false)}>
         <Dialog py="$md" px="$md" w={DEVICE_WIDTH - 32}>
-          <Text head>{dict.partnerList}</Text>
+          <Text heading>{dict.partnerList}</Text>
           <ScrollView
             horizontal
             w={DEVICE_WIDTH - 32}
@@ -195,7 +195,7 @@ export const AccountInfo = () => {
                   </Justified>
                   <Justified>
                     <Text col="$secondary">{t("partner.fundsInvested")}</Text>
-                    <Text>{`$${formatDecimal(`${item.invested}`)}`}</Text>
+                    <Text>{formatDecimal(`${item.invested}`)}</Text>
                   </Justified>
                   <Justified>
                     <Text col="$secondary">{t("partner.registerDate")}</Text>

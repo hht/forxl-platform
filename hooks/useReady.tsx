@@ -1,14 +1,23 @@
-import { useMount } from 'ahooks'
-import { useFonts } from 'expo-font'
-import * as Localization from 'expo-localization'
-import * as SplashScreen from 'expo-splash-screen'
-import * as Updates from 'expo-updates'
-import { useCallback, useState } from 'react'
-import { initReactI18next } from 'react-i18next'
+import { useMount } from "ahooks"
+import { useFonts } from "expo-font"
+import * as Localization from "expo-localization"
+import * as SplashScreen from "expo-splash-screen"
+import * as Updates from "expo-updates"
+import { useCallback, useState } from "react"
+import { initReactI18next } from "react-i18next"
+import {
+  configureReanimatedLogger,
+  ReanimatedLogLevel,
+} from "react-native-reanimated"
 
-import { useFroxlStore } from './useStore'
+import { useFroxlStore } from "./useStore"
 
-import { i18n, resources } from '~/lib/utils'
+import { i18n, resources } from "~/lib/utils"
+
+configureReanimatedLogger({
+  level: ReanimatedLogLevel.warn,
+  strict: false, // Reanimated 默认以严格模式运行
+})
 
 export const useReady = () => {
   const [ready, setReady] = useState(false)

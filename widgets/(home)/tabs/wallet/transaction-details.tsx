@@ -21,7 +21,7 @@ import {
   XStack,
   YStack,
 } from "~/components"
-import { dayjs, formatDecimal } from "~/lib/utils"
+import { dayjs, formatCurrency, formatDecimal } from "~/lib/utils"
 import colors, { toRGBA } from "~/theme/colors"
 
 export const useTransactionStore = createWithEqualityFn<{
@@ -122,17 +122,17 @@ export const TransactionDetails: FC = () => {
             title={t(
               isDeposit ? "wallet.depositAmount" : "wallet.withdrawAmount"
             )}
-            value={`$${formatDecimal(data.realAmount)}`}
+            value={formatCurrency(data.realAmount)}
           />
           {isDeposit ? null : (
             <Fragment>
               <ListItem
                 title={t("trade.commission")}
-                value={`$${formatDecimal(data.feeValue)}`}
+                value={formatCurrency(data.feeValue)}
               />
               <ListItem
                 title={t("wallet.youGet")}
-                value={`$${formatDecimal(data.realAmount - data.feeValue)}`}
+                value={formatCurrency(data.realAmount - data.feeValue)}
               />
             </Fragment>
           )}

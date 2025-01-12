@@ -15,7 +15,7 @@ import { Toaster } from "~/components"
 import { PortalProvider } from "~/components/portal"
 import { useReady } from "~/hooks/useReady"
 import config from "~/theme/tamagui.config"
-import { AccountDetector } from "~/widgets/shared/detector"
+import { AccountDetector, LocaleDetector } from "~/widgets/shared/detector"
 import { PromptSheet } from "~/widgets/shared/prompt-sheet"
 
 enableScreens(true)
@@ -51,6 +51,7 @@ export default function RootLayout() {
   return (
     <Fragment>
       <AccountDetector />
+      <LocaleDetector />
       <GestureHandlerRootView>
         <BottomSheetModalProvider>
           <PortalProvider>

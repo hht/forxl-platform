@@ -5,7 +5,7 @@ import { createWithEqualityFn } from "zustand/traditional"
 
 import { getPartnerConfig } from "~/api/partner"
 import { getFutureCategories } from "~/api/trade"
-import { dayjs } from "~/lib/utils"
+import { dayjs, i18n } from "~/lib/utils"
 
 interface Store {
   account?: Account
@@ -205,6 +205,21 @@ export const useGoogleAuthStore = createWithEqualityFn<{
 }>((set) => ({
   checkCode: "",
   code: "",
+}))
+
+export const useStatementStore = createWithEqualityFn<{
+  activeIndex: number
+  date?: Date
+  current?: number
+  language: string
+  months?: string[]
+  updatedAt?: number
+}>((set) => ({
+  activeIndex: 0,
+  date: new Date(),
+  language: i18n.language,
+  months: [],
+  updatedAt: Date.now(),
 }))
 
 export type DepositResult =

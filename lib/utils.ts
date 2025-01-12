@@ -89,6 +89,15 @@ export const formatDecimal = (value: string | number, fraction = 0.01) => {
   }).format(_.isNaN(Number(truncated)) ? 0 : Number(truncated))
 }
 
+export const formatCurrency = (value?: number | string, decimals = 2) => {
+  return new Intl.NumberFormat("en", {
+    style: "currency",
+    currency: "USD",
+    minimumFractionDigits: decimals,
+    maximumFractionDigits: decimals,
+  }).format(_.isNaN(Number(value)) ? 0 : Number(value))
+}
+
 export const popToTop = () => {
   while (router.canGoBack()) {
     router.back()

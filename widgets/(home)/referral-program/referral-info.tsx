@@ -14,7 +14,7 @@ import {
 } from "~/components"
 import { useRequest } from "~/hooks/useRequest"
 import { useFroxlStore, usePartnerStore } from "~/hooks/useStore"
-import { formatDecimal } from "~/lib/utils"
+import { formatCurrency } from "~/lib/utils"
 
 export const ReferralInfo = () => {
   const { t } = useTranslation()
@@ -68,7 +68,7 @@ export const ReferralInfo = () => {
           <Statistics label={dict.earned}>
             <XStack ai="center" gap="$sm">
               <Text heading bold>
-                {`$${formatDecimal(bonus?.earned ?? 0)}`}
+                {formatCurrency(bonus?.earned ?? 0)}
               </Text>
               <Button mah={18} px={4} br={2} ai="center" jc="center">
                 <Text caption col="$background">
@@ -90,7 +90,7 @@ export const ReferralInfo = () => {
               </YStack>
             }
           >
-            {`$${formatDecimal(bonus?.spillover ?? 0)}`}
+            {formatCurrency(bonus?.spillover ?? 0)}
           </Statistics>
         </XStack>
         <YStack gap="$md">

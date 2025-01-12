@@ -21,7 +21,7 @@ import {
 } from "~/components"
 import { CACHE_KEY, useRequest } from "~/hooks/useRequest"
 import { useFroxlStore } from "~/hooks/useStore"
-import { SupportTip } from "~/widgets/(home)/profile"
+import { SupportTip } from "~/widgets/(home)/profile/suppirt-tip"
 
 const LEVEL_ICON = ["lv0", "lv1", "lv2"] as const
 

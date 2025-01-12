@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next"
 
 import { Card, Copyable, Separator, Text, XStack, YStack } from "~/components"
 import { useWalletStore } from "~/hooks/useStore"
-import { dayjs, formatDecimal } from "~/lib/utils"
+import { dayjs, formatCurrency, formatDecimal } from "~/lib/utils"
 
 const AmountCard: FC = () => {
   const { t } = useTranslation()
@@ -18,7 +18,7 @@ const AmountCard: FC = () => {
             {depositResult?.currency}
           </Text>
           <Text col="$secondary">
-            {` = $${formatDecimal(depositResult?.usdAmount)}`}
+            {` = ${formatCurrency(depositResult?.usdAmount)}`}
           </Text>
         </XStack>
         <Text caption col="$secondary">
@@ -33,7 +33,7 @@ const AmountCard: FC = () => {
       <XStack ai="baseline" gap="$sm">
         <Text subject>{formatDecimal(depositResult?.price ?? 0)} USDT</Text>
         <Text col="$secondary">
-          ={`$${formatDecimal(depositResult?.price ?? 0)}`}
+          ={formatCurrency(depositResult?.price ?? 0)}
         </Text>
       </XStack>
     </YStack>

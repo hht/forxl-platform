@@ -9,7 +9,7 @@ import React, {
   useRef,
   useState,
 } from "react"
-import { StyleSheet, TextInput, TextInputProps } from "react-native"
+import { Platform, StyleSheet, TextInput, TextInputProps } from "react-native"
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
@@ -351,7 +351,7 @@ const Digit: FC<
   const regex = new RegExp(`^\\d*\\.?\\d{0,${precision}}$`)
 
   return (
-    <XStack h={56} boc="$border" w="100%" br="$sm" bw={1} ai="center">
+    <XStack h={56} w="100%" boc="$border" br="$sm" bw={1} ai="center">
       <Button
         type="icon"
         disabled={!editable}
@@ -414,15 +414,16 @@ Password.displayName = "PasswordInput"
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    width: Platform.OS === "web" ? "100%" : undefined,
     height: "100%",
+    flex: Platform.OS === "web" ? undefined : 1,
     backgroundColor: "transparent",
     fontSize: 15,
     borderWidth: 0,
     borderColor: "transparent",
   },
   digit: {
-    fontWeight: "900",
+    fontWeight: "700",
     color: colors.text,
     fontSize: 20,
   },

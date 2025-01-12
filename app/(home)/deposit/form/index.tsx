@@ -7,7 +7,7 @@ import { deposit } from "~/api/wallet"
 import { Button, Card, Input, ScrollView, Text, YStack } from "~/components"
 import { useRequest } from "~/hooks/useRequest"
 import { DepositResult, useWalletStore } from "~/hooks/useStore"
-import { formatDecimal } from "~/lib/utils"
+import { formatCurrency } from "~/lib/utils"
 import { DepositForm } from "~/widgets/(home)/deposit/form/form"
 import { DepositSummary } from "~/widgets/(home)/deposit/form/summary"
 import { AccountCard } from "~/widgets/shared/account-card"
@@ -40,8 +40,8 @@ export default function Page() {
         <Card>
           <Text>
             {t("wallet.depositRangePrompt", {
-              min: `$${formatDecimal(method?.incomeMoneyMin ?? 0)}`,
-              max: `$${formatDecimal(method?.incomeMoneyMax ?? 0)}`,
+              min: formatCurrency(method?.incomeMoneyMin ?? 0),
+              max: formatCurrency(method?.incomeMoneyMax ?? 0),
               unit: "USD",
             })}
           </Text>

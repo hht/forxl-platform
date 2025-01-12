@@ -17,7 +17,7 @@ const SHORTCUT_ROUTES: { [key: number]: { icon: IconType; href?: Href } } = {
   },
   2: {
     icon: "statement",
-    href: "/tabs/wallet",
+    href: "/statement",
   },
   3: {
     icon: "card",

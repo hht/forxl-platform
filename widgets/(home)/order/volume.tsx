@@ -5,7 +5,7 @@ import { shallow } from "zustand/shallow"
 
 import { AnimatedFlow, Card, Input, Text, XStack, YStack } from "~/components"
 import { useQuotesStore, useStatisticsStore } from "~/hooks/useStore"
-import { formatDecimal } from "~/lib/utils"
+import { formatCurrency } from "~/lib/utils"
 
 export const TradeVolume: FC<{ future?: FuturesDetail }> = ({ future }) => {
   const { t } = useTranslation()
@@ -61,10 +61,9 @@ export const TradeVolume: FC<{ future?: FuturesDetail }> = ({ future }) => {
           <Text caption col="$secondary">
             {t("trade.requiredMargin")}
           </Text>
-          <Text
-            caption
-            col="$secondary"
-          >{`$${formatDecimal(requiredMargin)}`}</Text>
+          <Text caption col="$secondary">
+            {formatCurrency(requiredMargin)}
+          </Text>
         </YStack>
         <YStack ai="flex-end">
           <Text caption col="$secondary">
