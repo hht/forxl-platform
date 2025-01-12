@@ -47,7 +47,7 @@ export default function Page() {
         ></Input>
       </YStack>
       <YStack f={1} gap={12}>
-        <Text>{t("wallet.googleAuthCodeDesc")}</Text>
+        <Text>{t("security.googleAuthCodeDesc")}</Text>
         <Input
           label={t("wallet.verificationCode")}
           value={""}

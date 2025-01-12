@@ -365,7 +365,6 @@ const Digit: FC<
         placeholderTextColor="transparent"
         underlineColorAndroid={undefined}
         keyboardType="numeric"
-        textAlign="center"
         value={`${!_.isUndefined(value ?? min) ? _.round(value ?? min ?? 0, precision) : ""}`}
         onChangeText={(e) => {
           if (!e) {
@@ -387,7 +386,13 @@ const Digit: FC<
           }
         }}
         keyboardAppearance="dark"
-        style={[styles.container, styles.digit]}
+        style={[
+          styles.container,
+          styles.digit,
+          {
+            textAlign: "center",
+          },
+        ]}
         {...props}
       />
       <Button

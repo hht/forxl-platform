@@ -6,7 +6,7 @@ import { styled, Text as TamaText, TextProps, XStack } from "tamagui"
 import { Icon } from "./icon"
 import { toast } from "./toast"
 
-import { formatDecimal, t } from "~/lib/utils"
+import { formatCurrency, formatDecimal, t } from "~/lib/utils"
 import colors from "~/theme/colors"
 
 /**
@@ -112,10 +112,13 @@ export const AnimatedFlow = ({
   return (
     <XStack>
       <Text col={value > 0 ? "$primary" : "$destructive"} {...rest} ff="$mono">
-        {addonsBefore}
+        {addonsBefore === "$" ? null : addonsBefore}
         {_.isNumber(value) && !_.isNaN(value)
-          ? `${formatDecimal(value, fraction)}`
+          ? addonsBefore === "$"
+            ? formatCurrency(value, fraction)
+            : `${formatDecimal(value, fraction)}`
           : null}
+
         {addonsAfter}
       </Text>
     </XStack>

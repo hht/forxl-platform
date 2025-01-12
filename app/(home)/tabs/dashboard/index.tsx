@@ -103,7 +103,7 @@ export default function Page() {
       }
       return getNews({
         page: d?.nextId ?? 1,
-        date: dayjs().subtract(3, "d").format("YYYY-MM-DD"),
+        date: dayjs().format("YYYY-MM-DD"),
       })
     },
     {

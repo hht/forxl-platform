@@ -1,7 +1,6 @@
 import { Href, router } from "expo-router"
 import { FC, useMemo } from "react"
 import { useTranslation } from "react-i18next"
-import { Dimensions } from "react-native"
 
 import { Card, Icon, IconType, Text, YStack } from "~/components"
 import colors from "~/theme/colors"
@@ -24,8 +23,6 @@ const SHORTCUT_ROUTES: { [key: number]: { icon: IconType; href?: Href } } = {
     href: "/tabs/wallet",
   },
 } as const
-
-const SHORTCUT_SIZE = (Dimensions.get("window").width - 16 * 5) / 4
 
 export const Shortcuts: FC = () => {
   const { t } = useTranslation()

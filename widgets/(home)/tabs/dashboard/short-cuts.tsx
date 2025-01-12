@@ -61,7 +61,7 @@ const SHORTCUT_ROUTES: {
   },
   11: {
     icon: "news",
-    href: "/tabs/wallet",
+    href: "/news",
   },
   12: {
     icon: "more",

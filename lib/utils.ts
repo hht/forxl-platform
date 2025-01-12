@@ -90,12 +90,19 @@ export const formatDecimal = (value: string | number, fraction = 0.01) => {
 }
 
 export const formatCurrency = (value?: number | string, decimals = 2) => {
-  return new Intl.NumberFormat("en", {
-    style: "currency",
-    currency: "USD",
-    minimumFractionDigits: decimals,
-    maximumFractionDigits: decimals,
-  }).format(_.isNaN(Number(value)) ? 0 : Number(value))
+  const num = _.isNaN(Number(value)) ? 0 : Number(value)
+  const sign = num < 0 ? "-" : ""
+  console.log(value, num, sign)
+  return (
+    sign +
+    new Intl.NumberFormat("en", {
+      style: "currency",
+      currency: "USD",
+      minimumFractionDigits: decimals,
+      maximumFractionDigits: decimals,
+      signDisplay: "never", // 禁用默认符号显示
+    }).format(Math.abs(num))
+  ) // 使用绝对值格式化
 }
 
 export const popToTop = () => {

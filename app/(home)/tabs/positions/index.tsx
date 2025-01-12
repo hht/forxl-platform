@@ -1,3 +1,4 @@
+import { useUnmount } from "ahooks"
 import { Fragment, useEffect, useRef } from "react"
 import { useTranslation } from "react-i18next"
 import { shallow } from "zustand/shallow"
@@ -41,6 +42,9 @@ export default function Page() {
       animated: true,
     })
   }, [activeIndex])
+  useUnmount(() => {
+    useOrderStore.setState({ activeIndex: 0 })
+  })
   return (
     <Fragment>
       <YStack f={1}>
