@@ -9,7 +9,7 @@ import { FutureCategories } from "./categories"
 
 import { getFutures } from "~/api/trade"
 import { AnimatedFlow, Icon, Text, XStack, YStack } from "~/components"
-import { useQuotesStore, useSymbolStore } from "~/hooks/useStore"
+import { useFroxlStore, useQuotesStore, useSymbolStore } from "~/hooks/useStore"
 import { subscribeQuotes } from "~/hooks/useWebsocket"
 import { DEVICE_WIDTH, t } from "~/lib/utils"
 import colors from "~/theme/colors"
@@ -249,6 +249,17 @@ export const FutureList = () => {
       useSymbolStore.setState({
         mutationFuture: undefined,
       })
+      useFroxlStore.setState({
+        histories: useFroxlStore.getState().histories?.map((item) => {
+          if (item.futuresId === params.futuresId) {
+            return {
+              ...item,
+              selected: params.selected,
+            }
+          }
+          return item
+        }),
+      })
     },
     [data, mutate]
   )
@@ -263,7 +274,12 @@ export const FutureList = () => {
     <YStack f={1} w={DEVICE_WIDTH}>
       <XStack p="$md" ai="center" jc="space-between">
         <FutureCategories />
-        <XStack hitSlop={16} onPress={() => {}}>
+        <XStack
+          hitSlop={16}
+          onPress={() => {
+            router.push("/explore")
+          }}
+        >
           <Icon name="search" size={20}></Icon>
         </XStack>
       </XStack>

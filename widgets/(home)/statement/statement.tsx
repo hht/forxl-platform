@@ -1,5 +1,5 @@
 import { useIsFocused } from "@react-navigation/native"
-import { useInfiniteScroll } from "ahooks"
+import { useInfiniteScroll, useMount } from "ahooks"
 import { useMemo } from "react"
 import { useTranslation } from "react-i18next"
 import { Tabs as CollapsibleTabs } from "react-native-collapsible-tab-view"
@@ -59,6 +59,9 @@ export const Statement = () => {
     onSuccess: (data) => {
       toast.show(t("wallet.sendStatementSuccessful"))
     },
+  })
+  useMount(() => {
+    useStatementStore.setState({ months: [], language: i18n.language })
   })
   return (
     <CollapsibleTabs.Container

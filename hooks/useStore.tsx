@@ -12,11 +12,7 @@ interface Store {
   userNumber?: string
   timezone: number
   language: string
-  histories?: {
-    futuresCode: string
-    futuresName: string
-    isSelect: boolean
-  }[]
+  histories?: Future[]
 }
 
 export const useFroxlStore = createWithEqualityFn<Store>()(

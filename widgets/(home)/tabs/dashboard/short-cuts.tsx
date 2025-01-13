@@ -133,7 +133,7 @@ export const Shortcuts: FC = () => {
                 bottomSheetRef.current?.dismiss()
                 await waitFor(200)
                 if (SHORTCUT_ROUTES[index].onPress) {
-                  SHORTCUT_ROUTES[index].onPress()
+                  SHORTCUT_ROUTES[index].onPress?.()
                   return
                 }
                 if (SHORTCUT_ROUTES[index].href) {

@@ -92,7 +92,6 @@ export const formatDecimal = (value: string | number, fraction = 0.01) => {
 export const formatCurrency = (value?: number | string, decimals = 2) => {
   const num = _.isNaN(Number(value)) ? 0 : Number(value)
   const sign = num < 0 ? "-" : ""
-  console.log(value, num, sign)
   return (
     sign +
     new Intl.NumberFormat("en", {

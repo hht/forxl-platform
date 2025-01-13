@@ -173,6 +173,7 @@
     "tp": "TP",
     "price": "Price",
     "profit": "Profit",
+    "lastSeen": "Last Seen",
     "commission": "Commission",
     "operation": "Operation",
     "searchSymbol": "Search Symbol",

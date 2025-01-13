@@ -92,10 +92,28 @@ export default function Page() {
             router.push("/referral-program")
           }}
         />
-        <ListItem icon="identity" title={dict.identityVerification} />
+        <ListItem
+          icon="identity"
+          title={dict.identityVerification}
+          addonAfter={
+            <Text col={certificated ? "$primary" : "$warning"}>
+              {certificated
+                ? t("settings.certificated")
+                : t("profile.unCertified")}
+            </Text>
+          }
+        />
         <ListItem
           icon="shield"
           title={dict.security}
+          addonAfter={
+            <XStack
+              w="$xs"
+              h="$xs"
+              br="$xs"
+              bc={attestation?.ga ? "$primary" : "$destructive"}
+            ></XStack>
+          }
           onPress={() => {
             router.push("/security")
           }}

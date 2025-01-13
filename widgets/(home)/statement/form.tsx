@@ -42,7 +42,7 @@ export const RequestStatement: FC = () => {
       </XStack>
       <Text col="$secondary">{t("wallet.selectMonth")}</Text>
       <Text>{getDate().year() - 1}</Text>
-      <Row fw="wrap" jc="space-between">
+      <Row fw="wrap">
         {MONTHS.map((month, index) => (
           <Row
             key={month}
@@ -70,7 +70,7 @@ export const RequestStatement: FC = () => {
         ))}
       </Row>
       <Text>{getDate().year()}</Text>
-      <Row fw="wrap" jc="space-between">
+      <Row fw="wrap">
         {_.times(getDate().month() + 1).map((index) => (
           <Row
             key={index}
