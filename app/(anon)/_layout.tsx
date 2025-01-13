@@ -8,7 +8,7 @@ import {
 } from "~/widgets/shared/header"
 
 export const unstable_settings = {
-  initialRouteName: "(anon)",
+  initialRouteName: "index",
 }
 
 const ScreenOptions: NativeStackNavigationOptions = {
