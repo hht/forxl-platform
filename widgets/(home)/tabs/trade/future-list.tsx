@@ -211,6 +211,12 @@ export const FutureList = () => {
             nextId: d?.nextId ?? 1,
           })
         }
+        if (!currentFuture) {
+          return Promise.resolve({
+            list: d?.list ?? [],
+            nextId: d?.nextId ?? 1,
+          })
+        }
         return getFutures({
           currentPage: d?.nextId ?? 1,
           pageSize: 10,
