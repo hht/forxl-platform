@@ -1,15 +1,16 @@
-import { BottomSheetModal } from "@gorhom/bottom-sheet"
-import * as Linking from "expo-linking"
-import { Href, router } from "expo-router"
-import _ from "lodash"
-import { FC, Fragment, useMemo, useRef } from "react"
-import { useTranslation } from "react-i18next"
-import { Dimensions } from "react-native"
-import { useSafeAreaInsets } from "react-native-safe-area-context"
+import { BottomSheetModal } from '@gorhom/bottom-sheet'
+import * as Linking from 'expo-linking'
+import { Href, router } from 'expo-router'
+import _ from 'lodash'
+import { FC, Fragment, useMemo, useRef } from 'react'
+import { useTranslation } from 'react-i18next'
+import { Dimensions } from 'react-native'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
-import { BottomSheet, Card, Icon, IconType, Text, XStack } from "~/components"
-import { waitFor } from "~/lib/utils"
-import colors from "~/theme/colors"
+import { BottomSheet, Card, Icon, IconType, Text, XStack } from '~/components'
+import { useFroxlStore, useKYCStore } from '~/hooks/useStore'
+import { uuid, waitFor } from '~/lib/utils'
+import colors from '~/theme/colors'
 
 const SHORTCUT_SIZE = (Dimensions.get("window").width - 16 * 5) / 4
 
@@ -26,6 +27,9 @@ const SHORTCUT_ROUTES: {
   },
   2: {
     icon: "kyc",
+    onPress: () => {
+      useKYCStore.setState({ refreshKey: uuid() })
+    },
   },
   3: {
     icon: "card",
@@ -94,6 +98,10 @@ export const Shortcuts: FC = () => {
             h={SHORTCUT_SIZE}
             key={item.index}
             onPress={async () => {
+              if (SHORTCUT_ROUTES[item.index].onPress) {
+                SHORTCUT_ROUTES[item.index].onPress?.()
+                return
+              }
               if (SHORTCUT_ROUTES[item.index].href) {
                 router.push(SHORTCUT_ROUTES[item.index].href!)
                 return

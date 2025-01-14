@@ -1,17 +1,10 @@
-import { Fragment, useState } from "react"
-import { useTranslation } from "react-i18next"
+import { Fragment, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { Platform } from 'react-native'
 
-import {
-  Button,
-  Dialog,
-  ListItem,
-  Popup,
-  Text,
-  toast,
-  XStack,
-} from "~/components"
-import { CACHE_KEY, useRequest } from "~/hooks/useRequest"
-import { clearCache, getCacheSize } from "~/lib/utils"
+import { Button, Dialog, ListItem, Popup, Text, toast, XStack } from '~/components'
+import { CACHE_KEY, useRequest } from '~/hooks/useRequest'
+import { clearCache, getCacheSize } from '~/lib/utils'
 
 export const ClearCacheItem = () => {
   const { t } = useTranslation()
@@ -22,6 +15,7 @@ export const ClearCacheItem = () => {
   const { data, refresh } = useRequest(getCacheSize, {
     cacheKey: CACHE_KEY.CACHE_SIZE,
   })
+  if (Platform.OS === "web") return null
   return (
     <Fragment>
       <ListItem

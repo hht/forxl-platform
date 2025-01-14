@@ -29,6 +29,10 @@ export const useFroxlStore = createWithEqualityFn<Store>()(
   )
 )
 
+export const useKYCStore = createWithEqualityFn<{
+  refreshKey?: string
+}>(() => ({}))
+
 export const useWebViewStore = createWithEqualityFn<{
   title?: string
   uri?: string

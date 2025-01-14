@@ -32,6 +32,7 @@ export const signIn = async (params: { email: string; password: string }) => {
     user: { code: params.email, pwd: params.password },
   })
   useFroxlStore.setState({ userNumber, account: user })
+  await getProfile()
 }
 
 /**

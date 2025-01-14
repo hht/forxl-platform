@@ -22,6 +22,7 @@
     "@shopify/flash-list": "1.7.1",
     "@shopify/react-native-skia": "1.5.0",
     "@sumsub/react-native-mobilesdk-module": "^1.33.1",
+    "@sumsub/websdk-react": "^2.3.11",
     "@tamagui/animations-react-native": "^1.120.1",
     "@tamagui/config": "^1.120.1",
     "@tamagui/font-inter": "^1.120.1",

@@ -39,5 +39,11 @@ export const readNotification = async (messageId: number) => {
  */
 
 export const getNewMessageCount = async (type = 0) => {
-  return await request<number, undefined>("/user/newMessageCount", "POST")
+  return await request<number, { type: number }>(
+    "/user/newMessageCount",
+    "POST",
+    {
+      type,
+    }
+  )
 }
