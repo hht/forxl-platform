@@ -1,14 +1,14 @@
 import { FC } from 'react'
-import { TextProps } from 'tamagui'
 import { shallow } from 'zustand/shallow'
 
 import { AnimatedFlow } from '~/components'
 import { computeProfit, useQuotesStore } from '~/hooks/useStore'
 
-export const ProfitCell: FC<{ data: Position } & TextProps> = ({
-  data,
-  ...rest
-}) => {
+export const ProfitCell: FC<{
+  data: Position
+  fontSize?: number
+  bold?: boolean
+}> = ({ data, fontSize = 13, bold = false }) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const quotes = useQuotesStore(
     (state) => state.quotes[data.futuresCode!],
@@ -18,8 +18,9 @@ export const ProfitCell: FC<{ data: Position } & TextProps> = ({
   return (
     <AnimatedFlow
       value={profit}
+      fontSize={fontSize}
       addonsBefore={`$${profit > 0 ? "+" : ""}`}
-      {...rest}
+      bold={bold}
     ></AnimatedFlow>
   )
 }

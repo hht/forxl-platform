@@ -1,21 +1,15 @@
-import { BottomSheetModal } from "@gorhom/bottom-sheet"
-import { FC, Fragment, useRef } from "react"
-import { useTranslation } from "react-i18next"
-import { useSafeAreaInsets } from "react-native-safe-area-context"
-import { shallow } from "zustand/shallow"
+import { BottomSheetModal } from '@gorhom/bottom-sheet'
+import { FC, Fragment, useRef } from 'react'
+import { useTranslation } from 'react-i18next'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { shallow } from 'zustand/shallow'
 
 import {
-  AnimatedFlow,
-  BottomSheet,
-  Card,
-  Icon,
-  ScrollView,
-  Text,
-  XStack,
-  YStack,
-} from "~/components"
-import { useStatisticsStore } from "~/hooks/useStore"
-import { DEVICE_HEIGHT } from "~/lib/utils"
+    AnimatedFlow, BottomSheet, Card, Icon, ScrollView, Text, XStack, YStack
+} from '~/components'
+import { useStatisticsStore } from '~/hooks/useStore'
+import { DEVICE_HEIGHT } from '~/lib/utils'
+import colors from '~/theme/colors'
 
 export const AssetCard: FC = () => {
   const { t } = useTranslation()
@@ -45,18 +39,25 @@ export const AssetCard: FC = () => {
           <AnimatedFlow
             addonsBefore="$"
             value={totalMoney}
-            fos={28}
-            lh={32}
+            fontSize={28}
             bold
-            col="$text"
+            color={colors.text}
           />
           <XStack py="$xs" ai="center" jc="space-between">
             <Text col="$secondary">{t("wallet.balance")}</Text>
-            <AnimatedFlow col="$text" addonsBefore="$" value={available} />
+            <AnimatedFlow
+              color={colors.text}
+              addonsBefore="$"
+              value={available}
+            />
           </XStack>
           <XStack ai="center" jc="space-between">
             <Text col="$secondary">{t("wallet.freeMargin")}</Text>
-            <AnimatedFlow col="$text" addonsBefore="$" value={supFreezeMoney} />
+            <AnimatedFlow
+              color={colors.text}
+              addonsBefore="$"
+              value={supFreezeMoney}
+            />
           </XStack>
         </YStack>
       </Card>

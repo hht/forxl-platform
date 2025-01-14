@@ -1,13 +1,13 @@
-import { FC, Fragment, useMemo } from "react"
-import { useTranslation } from "react-i18next"
-import { useSafeAreaInsets } from "react-native-safe-area-context"
-import { XStackProps } from "tamagui"
-import { shallow } from "zustand/shallow"
+import { FC, Fragment, useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { XStackProps } from 'tamagui'
+import { shallow } from 'zustand/shallow'
 
-import { AnimatedFlow, Button, Icon, Text, XStack, YStack } from "~/components"
-import { useQuotesStore } from "~/hooks/useStore"
-import { dayjs, formatDecimal } from "~/lib/utils"
-import colors, { toRGBA } from "~/theme/colors"
+import { AnimatedFlow, Button, Icon, Text, XStack, YStack } from '~/components'
+import { useQuotesStore } from '~/hooks/useStore'
+import { dayjs, formatDecimal } from '~/lib/utils'
+import colors, { toRGBA } from '~/theme/colors'
 
 const FutureInfo: FC<{ onPress?: () => void }> = ({ onPress }) => {
   const { t } = useTranslation()
@@ -52,12 +52,12 @@ const FutureInfo: FC<{ onPress?: () => void }> = ({ onPress }) => {
               value={quotes.Ask ? buyPrice : Number(currentFuture.buyPrice)}
               fraction={currentFuture.volatility}
               bold
-              col={
+              color={
                 quotes?.AskDiff > 0
-                  ? "$primary"
+                  ? colors.primary
                   : quotes?.AskDiff < 0
-                    ? "$destructive"
-                    : "$secondary"
+                    ? colors.destructive
+                    : colors.secondary
               }
             />
           </YStack>
@@ -78,12 +78,12 @@ const FutureInfo: FC<{ onPress?: () => void }> = ({ onPress }) => {
           <YStack ai="center" jc="center">
             <Text bold>{t("trade.sell")}</Text>
             <AnimatedFlow
-              col={
+              color={
                 quotes?.BidDiff > 0
-                  ? "$primary"
+                  ? colors.primary
                   : quotes?.BidDiff < 0
-                    ? "$destructive"
-                    : "$secondary"
+                    ? colors.destructive
+                    : colors.secondary
               }
               bold
               value={quotes.Bid ? sellPrice : Number(currentFuture.sellPrice)}

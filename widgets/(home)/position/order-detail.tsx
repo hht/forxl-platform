@@ -46,7 +46,7 @@ export const OrderDetail = () => {
               {currentPosition.futuresCode}
             </Text>
           </XStack>
-          <ProfitCell data={currentPosition} fos={17} lh={20} fow="bold" />
+          <ProfitCell data={currentPosition} fontSize={17} bold />
         </XStack>
         <XStack ai="center" jc="space-between" py="$md" bbc="$border" bbw={1}>
           <Text col="$secondary">{data?.futures?.futuresName}</Text>
@@ -61,7 +61,7 @@ export const OrderDetail = () => {
               <XStack rotate="180deg">
                 <Icon name="arrowLeft" color={colors.text} size={12} />
               </XStack>
-              <PriceCell data={currentPosition} col="$text" />
+              <PriceCell data={currentPosition} color={colors.text} />
             </XStack>
           </XStack>
         </XStack>

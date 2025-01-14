@@ -1,33 +1,25 @@
-import { useRequest, useUnmount } from "ahooks"
-import { router } from "expo-router"
-import { useEffect, useMemo, useRef, useState } from "react"
-import { useTranslation } from "react-i18next"
-import { shallow } from "zustand/shallow"
+import { useRequest, useUnmount } from 'ahooks'
+import { router } from 'expo-router'
+import { useEffect, useMemo, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { shallow } from 'zustand/shallow'
 
-import { Action, CurrentPrice } from "./current-price"
-import { FutureInfo } from "./future-info"
-import { OrderActions } from "./order-actions"
-import { PendingCard } from "./pending"
-import { StopLossCard } from "./stop-loss"
-import { StopProfitCard } from "./stop-profit"
-import { ToggleFavorite } from "./toggle-favorite"
-import { TradeVolume } from "./volume"
+import { Action, CurrentPrice } from './current-price'
+import { FutureInfo } from './future-info'
+import { OrderActions } from './order-actions'
+import { PendingCard } from './pending'
+import { StopLossCard } from './stop-loss'
+import { StopProfitCard } from './stop-profit'
+import { ToggleFavorite } from './toggle-favorite'
+import { TradeVolume } from './volume'
 
-import { getFuture } from "~/api/trade"
-import {
-  Card,
-  Icon,
-  ScrollView,
-  Tabs,
-  Text,
-  XStack,
-  YStack,
-} from "~/components"
-import { CACHE_KEY } from "~/hooks/useRequest"
-import { useQuotesStore } from "~/hooks/useStore"
-import { subscribeQuotes } from "~/hooks/useWebsocket"
-import { DEVICE_WIDTH } from "~/lib/utils"
-import colors from "~/theme/colors"
+import { getFuture } from '~/api/trade'
+import { Card, Icon, ScrollView, Tabs, Text, XStack, YStack } from '~/components'
+import { CACHE_KEY } from '~/hooks/useRequest'
+import { useQuotesStore } from '~/hooks/useStore'
+import { subscribeQuotes } from '~/hooks/useWebsocket'
+import { DEVICE_WIDTH } from '~/lib/utils'
+import colors from '~/theme/colors'
 
 export const FutureDetail = () => {
   const { t } = useTranslation()
@@ -141,7 +133,7 @@ export const FutureDetail = () => {
           <YStack p="$md" gap="$sm" w="100%">
             <Card bw={0}>
               <XStack ai="center" jc="space-between">
-                <CurrentPrice />
+                <CurrentPrice action={action} />
                 <Action />
               </XStack>
             </Card>

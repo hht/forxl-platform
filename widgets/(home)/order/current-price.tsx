@@ -1,15 +1,15 @@
-import { FC } from "react"
-import { useTranslation } from "react-i18next"
-import { TextProps } from "tamagui"
-import { shallow } from "zustand/shallow"
+import { FC } from 'react'
+import { useTranslation } from 'react-i18next'
+import { TextProps } from 'tamagui'
+import { shallow } from 'zustand/shallow'
 
-import { AnimatedFlow, Text, XStack, YStack } from "~/components"
-import { useQuotesStore } from "~/hooks/useStore"
+import { AnimatedFlow, Text, XStack, YStack } from '~/components'
+import { useQuotesStore } from '~/hooks/useStore'
+import colors from '~/theme/colors'
 
-export const CurrentPrice: FC<{ action?: "buy" | "sell" } & TextProps> = ({
-  action,
-  ...rest
-}) => {
+export const CurrentPrice: FC<{
+  action?: "buy" | "sell"
+}> = ({ action }) => {
   const { t } = useTranslation()
   const price = useQuotesStore(
     (state) => state.getCurrentPrice(action),
@@ -27,8 +27,7 @@ export const CurrentPrice: FC<{ action?: "buy" | "sell" } & TextProps> = ({
           value={price}
           fraction={volatility}
           bold
-          col="$text"
-          {...rest}
+          color={colors.text}
         />
       ) : (
         <Text>-</Text>

@@ -59,7 +59,7 @@ const EditableListItem: FC<{ data: Position }> = ({ data }) => {
       </XStack>
       <YStack f={1} gap="$sm">
         <Text bold>{data.futuresCode}</Text>
-        <ProfitCell data={data} fow="bold" />
+        <ProfitCell data={data} bold />
       </YStack>
       <YStack gap="$sm" f={1} ai="flex-start">
         <XStack ai="center" gap="$sm">
@@ -94,7 +94,7 @@ const EditableListItem: FC<{ data: Position }> = ({ data }) => {
           <XStack rotate="180deg">
             <Icon name="arrowLeft" color={colors.secondary} size={12} />
           </XStack>
-          <PriceCell col="$secondary" data={data} />
+          <PriceCell color={colors.secondary} data={data} />
         </XStack>
       </YStack>
     </ListItem>

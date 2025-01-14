@@ -33,7 +33,7 @@ const Momentum: FC<{
     return (
       <XStack>
         <Text col="$secondary" bold>
-          $0.00%
+          0.00%
         </Text>
       </XStack>
     )
@@ -57,13 +57,6 @@ const Momentum: FC<{
         addonsBefore={momentum > 0 ? "+" : ""}
         addonsAfter="%"
         bold
-        col={
-          momentum > 0
-            ? "$primary"
-            : momentum < 0
-              ? "$destructive"
-              : "$secondary"
-        }
       />
     </XStack>
   )
@@ -84,7 +77,7 @@ const ListItem: FC<{ data: Future }> = ({ data }) => {
   const available = data.isDeal
   return (
     <XStack gap="$sm" p="$md" bbc="$border" bbw={1} ai="center">
-      <YStack f={1} gap="$sm">
+      <YStack f={1} gap="$xs">
         <XStack gap="$sm" ai="center">
           <Text>{data.futuresShow}</Text>
           {data.selected ? <Icon name="starFilled" size={12} /> : null}
@@ -117,12 +110,12 @@ const ListItem: FC<{ data: Future }> = ({ data }) => {
       >
         <Text col={available ? "$text" : "$tertiary"}>{t("trade.sell")}</Text>
         <AnimatedFlow
-          col={
+          color={
             quotes?.BidDiff > 0
-              ? "$primary"
+              ? colors.primary
               : quotes?.BidDiff < 0
-                ? "$destructive"
-                : "$secondary"
+                ? colors.destructive
+                : colors.secondary
           }
           bold
           value={quotes.Bid ? sellPrice : Number(data.sellPrice)}
@@ -154,12 +147,12 @@ const ListItem: FC<{ data: Future }> = ({ data }) => {
           value={quotes.Ask ? buyPrice : Number(data.buyPrice)}
           fraction={data.volatility}
           bold
-          col={
+          color={
             quotes?.AskDiff > 0
-              ? "$primary"
+              ? colors.primary
               : quotes?.AskDiff < 0
-                ? "$destructive"
-                : "$secondary"
+                ? colors.destructive
+                : colors.secondary
           }
         />
       </YStack>

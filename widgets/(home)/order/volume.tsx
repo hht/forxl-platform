@@ -1,11 +1,12 @@
-import _ from "lodash"
-import { FC } from "react"
-import { useTranslation } from "react-i18next"
-import { shallow } from "zustand/shallow"
+import _ from 'lodash'
+import { FC } from 'react'
+import { useTranslation } from 'react-i18next'
+import { shallow } from 'zustand/shallow'
 
-import { AnimatedFlow, Card, Input, Text, XStack, YStack } from "~/components"
-import { useQuotesStore, useStatisticsStore } from "~/hooks/useStore"
-import { formatCurrency } from "~/lib/utils"
+import { AnimatedFlow, Card, Input, Text, XStack, YStack } from '~/components'
+import { useQuotesStore, useStatisticsStore } from '~/hooks/useStore'
+import { formatCurrency } from '~/lib/utils'
+import colors from '~/theme/colors'
 
 export const TradeVolume: FC<{ future?: FuturesDetail }> = ({ future }) => {
   const { t } = useTranslation()
@@ -72,8 +73,8 @@ export const TradeVolume: FC<{ future?: FuturesDetail }> = ({ future }) => {
           <AnimatedFlow
             addonsBefore="$"
             value={available}
-            fos={11}
-            col="$secondary"
+            fontSize={11}
+            color={colors.secondary}
           />
         </YStack>
       </XStack>

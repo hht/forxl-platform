@@ -1,13 +1,13 @@
-import { FC, useMemo } from "react"
-import { TextProps } from "tamagui"
-import { shallow } from "zustand/shallow"
+import { FC, useMemo } from 'react'
+import { shallow } from 'zustand/shallow'
 
-import { AnimatedFlow } from "~/components"
-import { useQuotesStore } from "~/hooks/useStore"
+import { AnimatedFlow } from '~/components'
+import { useQuotesStore } from '~/hooks/useStore'
+import colors from '~/theme/colors'
 
-export const PriceCell: FC<{ data: Position } & TextProps> = ({
+export const PriceCell: FC<{ data: Position; color?: string }> = ({
   data,
-  ...rest
+  color = colors.text,
 }) => {
   const quotes = useQuotesStore(
     (state) => state.quotes[data.futuresCode!],
@@ -26,7 +26,7 @@ export const PriceCell: FC<{ data: Position } & TextProps> = ({
           data.price) - (data.openSafe! === 0 ? diff : -diff)
       }
       fraction={data.volatility}
-      {...rest}
+      color={color}
     ></AnimatedFlow>
   )
 }

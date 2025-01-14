@@ -103,7 +103,6 @@ export default function Page() {
     }
   )
 
-  console.log(data?.list?.length)
   return (
     <Screen pb={0} gap={0}>
       <Stack.Screen options={ScreenOptions} />

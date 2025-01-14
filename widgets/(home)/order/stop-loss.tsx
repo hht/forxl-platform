@@ -1,19 +1,19 @@
-import { FC } from "react"
-import { useTranslation } from "react-i18next"
-import { shallow } from "zustand/shallow"
+import { FC } from 'react'
+import { useTranslation } from 'react-i18next'
+import { shallow } from 'zustand/shallow'
 
-import { ProfitTracker } from "../tabs/trade/profit-tracker"
+import { ProfitTracker } from '../tabs/trade/profit-tracker'
 
-import { Collapse, Icon, Input, Text, XStack } from "~/components"
-import { usePromptStore, useQuotesStore } from "~/hooks/useStore"
-import { uuid } from "~/lib/utils"
-import colors from "~/theme/colors"
+import { Collapse, Icon, Input, Text, XStack } from '~/components'
+import { usePromptStore, useQuotesStore } from '~/hooks/useStore'
+import { uuid } from '~/lib/utils'
+import colors from '~/theme/colors'
 
 const toggleExpended = (enableCloseLoss: boolean) => {
   useQuotesStore.setState({ enableCloseLoss })
   if (enableCloseLoss) {
     useQuotesStore.getState().updateOrder({
-      stopLossPrice: useQuotesStore.getState().getOrderPrice(1),
+      stopLossPrice: useQuotesStore.getState().getOrderPrice(-1),
     })
   }
 }
