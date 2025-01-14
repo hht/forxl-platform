@@ -1,27 +1,23 @@
-import { useIsFocused } from "@react-navigation/native"
-import { useInfiniteScroll } from "ahooks"
-import { router } from "expo-router"
-import { FC, Fragment, ReactNode } from "react"
-import { useTranslation } from "react-i18next"
-import { FlatList, Platform, RefreshControl } from "react-native"
-import { XStackProps } from "tamagui"
-import { shallow } from "zustand/shallow"
+import { useIsFocused } from '@react-navigation/native'
+import { useInfiniteScroll } from 'ahooks'
+import { router } from 'expo-router'
+import { FC, Fragment, ReactNode } from 'react'
+import { useTranslation } from 'react-i18next'
+import { FlatList, Platform, RefreshControl } from 'react-native'
+import { XStackProps } from 'tamagui'
+import { shallow } from 'zustand/shallow'
 
-import {
-  getClosedPositions,
-  getOpenPositions,
-  getPendingPositions,
-} from "~/api/trade"
-import { AnimatedFlow, Figure, Icon, Text, XStack, YStack } from "~/components"
-import { getRecentDate } from "~/hooks/useLocale"
-import { CACHE_KEY, useRequest } from "~/hooks/useRequest"
-import { useOrderStore } from "~/hooks/useStore"
-import { subscribeQuotes } from "~/hooks/useWebsocket"
-import { dayjs, DEVICE_WIDTH, formatDecimal, uuid } from "~/lib/utils"
-import colors, { toRGBA } from "~/theme/colors"
-import { ListFooterComponent } from "~/widgets/shared/list"
-import { PriceCell } from "~/widgets/shared/price-cell"
-import { ProfitCell } from "~/widgets/shared/profit-cell"
+import { getClosedPositions, getOpenPositions, getPendingPositions } from '~/api/trade'
+import { AnimatedFlow, Figure, Icon, Text, XStack, YStack } from '~/components'
+import { getRecentDate } from '~/hooks/useLocale'
+import { CACHE_KEY, useRequest } from '~/hooks/useRequest'
+import { useOrderStore } from '~/hooks/useStore'
+import { subscribeQuotes } from '~/hooks/useWebsocket'
+import { dayjs, DEVICE_WIDTH, formatCurrency, formatDecimal, uuid } from '~/lib/utils'
+import colors, { toRGBA } from '~/theme/colors'
+import { ListFooterComponent } from '~/widgets/shared/list'
+import { PriceCell } from '~/widgets/shared/price-cell'
+import { ProfitCell } from '~/widgets/shared/profit-cell'
 
 const ListItem: FC<
   {
@@ -65,7 +61,7 @@ const EditableListItem: FC<{ data: Position }> = ({ data }) => {
         <Text bold>{data.futuresCode}</Text>
         <ProfitCell data={data} fow="bold" />
       </YStack>
-      <YStack gap="$sm" f={1}>
+      <YStack gap="$sm" f={1} ai="flex-start">
         <XStack ai="center" gap="$sm">
           <Text>{`${t(data.openSafe ? "trade.sell" : "trade.buy")} ${data.position} ${t("trade.lots", { amount: "" })}`}</Text>
           {data.stopProfitPrice ? (
@@ -73,7 +69,7 @@ const EditableListItem: FC<{ data: Position }> = ({ data }) => {
               fos={10}
               bc={toRGBA(colors.primary, 0.1)}
               col="$primary"
-              p={2}
+              px={2}
               br={2}
             >
               TP
@@ -84,15 +80,15 @@ const EditableListItem: FC<{ data: Position }> = ({ data }) => {
               fos={10}
               bc={toRGBA(colors.destructive, 0.1)}
               col="$destructive"
-              p={2}
+              px={2}
               br={2}
             >
               SL
             </Text>
           ) : null}
         </XStack>
-        <XStack ai="center" gap="$xs" jc="center">
-          <Text col="$secondary" ff="$mono">
+        <XStack ai="center" gap="$xs">
+          <Text col="$secondary">
             {formatDecimal(data.price!, data.volatility)}
           </Text>
           <XStack rotate="180deg">
@@ -137,8 +133,8 @@ const ArchivedListItem: FC<{ data: Position; dateVisible?: boolean }> = ({
                   : "$secondary"
             }
           >
-            ${data.profit! > 0 ? "+" : ""}
-            {formatDecimal(data.profit ?? 0)}
+            {data.profit! > 0 ? "+" : ""}
+            {formatCurrency(data.profit ?? 0)}
           </Text>
           <Text col="$secondary">{`${t(data.openSafe ? "trade.sell" : "trade.buy")} ${data.position} ${t("trade.lots", { amount: "" })}`}</Text>
         </YStack>

@@ -1,13 +1,13 @@
-import * as Clipboard from "expo-clipboard"
-import _ from "lodash"
-import { FC } from "react"
-import { styled, Text as TamaText, TextProps, XStack } from "tamagui"
+import * as Clipboard from 'expo-clipboard'
+import _ from 'lodash'
+import { FC } from 'react'
+import { styled, Text as TamaText, TextProps, XStack } from 'tamagui'
 
-import { Icon } from "./icon"
-import { toast } from "./toast"
+import { Icon } from './icon'
+import { toast } from './toast'
 
-import { formatCurrency, formatDecimal, t } from "~/lib/utils"
-import colors from "~/theme/colors"
+import { formatCurrency, formatDecimal, t } from '~/lib/utils'
+import colors from '~/theme/colors'
 
 /**
  * 默认字体组件
@@ -111,7 +111,7 @@ export const AnimatedFlow = ({
 } & TextProps) => {
   return (
     <XStack>
-      <Text col={value > 0 ? "$primary" : "$destructive"} {...rest} ff="$mono">
+      <Text col={value > 0 ? "$primary" : "$destructive"} {...rest}>
         {addonsBefore === "$" ? null : addonsBefore}
         {_.isNumber(value) && !_.isNaN(value)
           ? addonsBefore === "$"

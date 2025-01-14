@@ -599,7 +599,6 @@
   },
   "security": {
     "title": "安全",
-    "enable": "Enable",
     "disable": "Disable",
     "notEnabled": "Not enabled",
     "twoFactor": "Two-factor Authentication",
@@ -608,7 +607,6 @@
     "twoFactorDisabledSuccessfully": "Two-factor Authentication closed successfully",
     "twoFactorEnabledSuccessfully": "Two-factor Authentication enabled successfully",
     "changeTwoFactor": "Change Two-factor Authentication",
-    "twoFactorConfig": "Enable Two-factor Authentication",
     "twoFactorChangedSuccessfully": "New Two-factor Authentication set successfully",
     "twoFactorCopy": "Copy key",
     "googleAuthCodeDesc": "Google Authenticator verification code",
@@ -622,7 +620,31 @@
       "重置密码",
       "Two-Factor Authentication",
       "Account Deactivation"
-    ]
+    ],
+    "uncertified": "Upload documents and prove your identity.",
+    "uncertifiedDesc": [
+      "Live trading",
+      "Unlimited deposits & withdrawals",
+      "Bank card transactions",
+      "Cryptocurrencies"
+    ],
+    "inProgress": " ID check is in progress",
+    "inProgressDesc": " Identity Verification is already in progress.Please wait till the check is done, it usually takes a few minutes.",
+    "rejected": "Identity Verification Rejected",
+    "rejectedDesc": "Your previous verification request was rejected.",
+    "rejectReason": "Reason for refusal: ",
+    "certificated": "Certificated",
+    "certified": {
+      "title": "Your Identity Verification",
+      "name": "Name",
+      "typeOfDocument": "Type of document",
+      "certificateNumber": "Certificate Number"
+    },
+    "getVerified": "Get verified",
+    "final": "Final",
+    "process": "In Progress",
+    "passVerification": "Pass full verification",
+    "passVerificationDesc": "For access to unlimited deposits and withdrawals, bank card transactions, and crypto trading."
   },
   "settings": {
     "title": "设置",
@@ -635,7 +657,6 @@
     "clearCacheSuccess": "Cache Cleared Successfully",
     "authenticatorDesc": "With 2-Step Verification, also called two-factor authentication, you can add an extra layer of security to your account in case your password is stolen.",
     "avatar": "Hello, {{email}}",
-    "certificateNumber": "Certificate Number",
     "currentPassword": "Current Password",
     "newPassword": "New Password",
     "passwordResetSuccessful": "Password reset successfully",
@@ -657,29 +678,12 @@
     "emailVerificationCodeDesc": "Email verification code sent to {{email}} successfully",
     "emailVerified": "Email verified successfully",
     "emailChangedSuccessful": "Email changed successfully",
-    "certificated": "Certificated",
-    "final": "Final",
-    "process": "In Progress",
     "init": "Initialing",
-    "name": "Name",
-    "passVerification": "Pass full verification",
-    "passVerificationDesc": "For access to unlimited deposits and withdrawals, bank card transactions, and crypto trading.",
-    "rejected": "Identity Verification Rejected",
-    "rejectedDesc": "your previous verification request was rejected",
-    "initDesc": "init desc",
-    "processDesc": "process desc",
-    "retryDesc": "retry desc",
-    "rejectReason": "Reason for refusal: ",
     "resetPassword": "Reset Password",
     "enabled": "Enabled",
     "setNewPassword": "Setting New Password",
     "timezone": "Timezone",
-    "typeOfDocument": "Type of document",
-    "uncertified": "Uncertified",
-    "uid": "UID",
-    "verification": "Verification",
-    "verified": "Identity verified",
-    "verifiedDesc": "You' ve completed your identity verification. Get started on your Trading journey now!"
+    "uid": "UID"
   },
   "notifications": {
     "system": "System Notifications",

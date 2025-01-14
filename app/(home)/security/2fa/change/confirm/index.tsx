@@ -1,12 +1,12 @@
-import { useUnmount } from "ahooks"
-import { router, Stack } from "expo-router"
-import { useTranslation } from "react-i18next"
+import { useUnmount } from 'ahooks'
+import { router, Stack } from 'expo-router'
+import { useTranslation } from 'react-i18next'
 
-import { getGaInfo, updateGa } from "~/api/account"
-import { Button, Input, Screen, ScrollView, toast, YStack } from "~/components"
-import { CACHE_KEY, useRequest } from "~/hooks/useRequest"
-import { useGoogleAuthStore } from "~/hooks/useStore"
-import { Steps } from "~/widgets/(home)/security/steps"
+import { getGaInfo, updateGa } from '~/api/account'
+import { Button, Input, Screen, ScrollView, toast, YStack } from '~/components'
+import { CACHE_KEY, useRequest } from '~/hooks/useRequest'
+import { useGoogleAuthStore } from '~/hooks/useStore'
+import { Steps } from '~/widgets/(home)/security/steps'
 
 export default function Page() {
   const { t } = useTranslation("translation")
@@ -47,7 +47,7 @@ export default function Page() {
             run({ code, secret: data?.secret!, checkCode })
           }}
         >
-          {t("security.enable")}
+          {t("action.enable")}
         </Button>
       </YStack>
     </Screen>

@@ -154,7 +154,7 @@ export const WalletStatistics: FC = () => {
     reloadKey?: string
   }>({})
   const ref = useRef<BottomSheetModal>(null)
-  const [visible, setVisible] = useState(false)
+  const [visible, setVisible] = useState(true)
   const state = useAnimationState(
     {
       from: {
@@ -204,6 +204,7 @@ export const WalletStatistics: FC = () => {
             gap="$xs"
             px="$md"
             py={6}
+            zIndex={10}
             onPress={() => {
               setVisible((v) => !v)
             }}

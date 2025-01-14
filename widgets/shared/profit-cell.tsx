@@ -1,9 +1,9 @@
-import { FC } from "react"
-import { TextProps } from "tamagui"
-import { shallow } from "zustand/shallow"
+import { FC } from 'react'
+import { TextProps } from 'tamagui'
+import { shallow } from 'zustand/shallow'
 
-import { AnimatedFlow } from "~/components"
-import { computeProfit, useQuotesStore } from "~/hooks/useStore"
+import { AnimatedFlow } from '~/components'
+import { computeProfit, useQuotesStore } from '~/hooks/useStore'
 
 export const ProfitCell: FC<{ data: Position } & TextProps> = ({
   data,

@@ -1,16 +1,16 @@
-import { Fragment } from "react"
-import { useTranslation } from "react-i18next"
-import { shallow } from "zustand/shallow"
+import { Fragment } from 'react'
+import { useTranslation } from 'react-i18next'
+import { shallow } from 'zustand/shallow'
 
-import { getFuture } from "~/api/trade"
-import { Icon, Text, XStack } from "~/components"
-import { useRequest } from "~/hooks/useRequest"
-import { useOrderStore } from "~/hooks/useStore"
-import { dayjs, formatCurrency, formatDecimal } from "~/lib/utils"
-import colors from "~/theme/colors"
-import { ListItem } from "~/widgets/(home)/position/list-item"
-import { PriceCell } from "~/widgets/shared/price-cell"
-import { ProfitCell } from "~/widgets/shared/profit-cell"
+import { getFuture } from '~/api/trade'
+import { Icon, Text, XStack } from '~/components'
+import { useRequest } from '~/hooks/useRequest'
+import { useOrderStore } from '~/hooks/useStore'
+import { dayjs, formatCurrency, formatDecimal } from '~/lib/utils'
+import colors from '~/theme/colors'
+import { ListItem } from '~/widgets/(home)/position/list-item'
+import { PriceCell } from '~/widgets/shared/price-cell'
+import { ProfitCell } from '~/widgets/shared/profit-cell'
 
 export const OrderDetail = () => {
   const { t } = useTranslation()
@@ -52,7 +52,7 @@ export const OrderDetail = () => {
           <Text col="$secondary">{data?.futures?.futuresName}</Text>
           <XStack gap="$sm" ai="center">
             <XStack ai="center" gap="$xs" jc="center">
-              <Text ff="$mono">
+              <Text>
                 {formatDecimal(
                   currentPosition.price ?? 0,
                   currentPosition.volatility
@@ -114,7 +114,7 @@ export const OrderDetail = () => {
         <Text col="$secondary">{data?.futures?.futuresName}</Text>
         <XStack gap="$sm" ai="center">
           <XStack ai="center" gap="$xs" jc="center">
-            <Text ff="$mono">
+            <Text>
               {formatDecimal(
                 currentPosition.price ?? 0,
                 currentPosition.volatility
@@ -123,7 +123,7 @@ export const OrderDetail = () => {
             <XStack rotate="180deg">
               <Icon name="arrowLeft" color={colors.text} size={12} />
             </XStack>
-            <Text ff="$mono">
+            <Text>
               {formatDecimal(
                 currentPosition.overPrice ?? 0,
                 currentPosition.volatility

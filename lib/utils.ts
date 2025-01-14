@@ -1,19 +1,19 @@
-import dayjs from "dayjs"
-import "dayjs/locale/en"
-import "dayjs/locale/zh"
-import isToday from "dayjs/plugin/isToday"
-import isYesterday from "dayjs/plugin/isYesterday"
-import localeData from "dayjs/plugin/localeData"
-import relativeTime from "dayjs/plugin/relativeTime"
-import utc from "dayjs/plugin/utc"
-import * as FileSystem from "expo-file-system"
-import { router } from "expo-router"
-import i18n from "i18next"
-import _ from "lodash"
-import { Dimensions, LayoutAnimation } from "react-native"
+import dayjs from 'dayjs'
+import 'dayjs/locale/en'
+import 'dayjs/locale/zh'
+import isToday from 'dayjs/plugin/isToday'
+import isYesterday from 'dayjs/plugin/isYesterday'
+import localeData from 'dayjs/plugin/localeData'
+import relativeTime from 'dayjs/plugin/relativeTime'
+import utc from 'dayjs/plugin/utc'
+import * as FileSystem from 'expo-file-system'
+import { router } from 'expo-router'
+import i18n from 'i18next'
+import _ from 'lodash'
+import { Dimensions, LayoutAnimation } from 'react-native'
 
-import en from "~/locales/en-US/translation.json"
-import zh from "~/locales/zh-CN/translation.json"
+import en from '~/locales/en-US/translation.json'
+import zh from '~/locales/zh-CN/translation.json'
 
 dayjs.extend(localeData)
 dayjs.extend(utc)
@@ -38,7 +38,7 @@ type NestedKeyOf<ObjectType extends object> = {
     : `${Key}`
 }[keyof ObjectType & (string | number)]
 
-export type I18NResource = NestedKeyOf<(typeof resources)["en"]["translation"]>
+export type I18NResource = NestedKeyOf<(typeof resources)["zh"]["translation"]>
 
 export { i18n }
 
@@ -89,18 +89,21 @@ export const formatDecimal = (value: string | number, fraction = 0.01) => {
   }).format(_.isNaN(Number(truncated)) ? 0 : Number(truncated))
 }
 
-export const formatCurrency = (value?: number | string, decimals = 2) => {
-  const num = _.isNaN(Number(value)) ? 0 : Number(value)
-  const sign = num < 0 ? "-" : ""
+export const formatCurrency = (value?: number | string, fraction = 0.01) => {
+  const precision = fraction.toString().split(".")[1]?.length ?? 0
+  const factor = Math.pow(10, precision)
+  const truncated = Math.trunc(Number(value) * factor) / factor
+
+  const sign = truncated < 0 ? "-" : ""
   return (
     sign +
     new Intl.NumberFormat("en", {
       style: "currency",
       currency: "USD",
-      minimumFractionDigits: decimals,
-      maximumFractionDigits: decimals,
+      minimumFractionDigits: precision,
+      maximumFractionDigits: precision,
       signDisplay: "never", // 禁用默认符号显示
-    }).format(Math.abs(num))
+    }).format(Math.abs(truncated))
   ) // 使用绝对值格式化
 }
 

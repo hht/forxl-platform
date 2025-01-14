@@ -1,6 +1,6 @@
-import { request } from "~/hooks/useRequest"
-import { useFroxlStore } from "~/hooks/useStore"
-import { i18n, t } from "~/lib/utils"
+import { request } from '~/hooks/useRequest'
+import { useFroxlStore } from '~/hooks/useStore'
+import { i18n, t } from '~/lib/utils'
 
 type SignUpParams = {
   /**
@@ -69,7 +69,7 @@ export const register = async (params: SignUpParams) => {
 export const getProfile = async () => {
   return await request<Profile, undefined>("/user/getUser", "POST").then(
     (res) => {
-      useFroxlStore.setState({ account: res.user })
+      useFroxlStore.setState({ account: res.user, realName: res.realName })
       return res
     }
   )

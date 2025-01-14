@@ -1,13 +1,13 @@
-import { useUnmount } from "ahooks"
-import { router, Stack } from "expo-router"
-import { useTranslation } from "react-i18next"
-import { useSafeAreaInsets } from "react-native-safe-area-context"
+import { useUnmount } from 'ahooks'
+import { router, Stack } from 'expo-router'
+import { useTranslation } from 'react-i18next'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
-import { bindGa, getGaInfo } from "~/api/account"
-import { Button, Input, ScrollView, toast, YStack } from "~/components"
-import { CACHE_KEY, useRequest } from "~/hooks/useRequest"
-import { useGoogleAuthStore } from "~/hooks/useStore"
-import { Steps } from "~/widgets/(home)/security/steps"
+import { bindGa, getGaInfo } from '~/api/account'
+import { Button, Input, ScrollView, toast, YStack } from '~/components'
+import { CACHE_KEY, useRequest } from '~/hooks/useRequest'
+import { useGoogleAuthStore } from '~/hooks/useStore'
+import { Steps } from '~/widgets/(home)/security/steps'
 
 export default function Page() {
   const { t } = useTranslation("translation")
@@ -49,7 +49,7 @@ export default function Page() {
             run({ code: checkCode, secret: data?.secret! })
           }}
         >
-          {t("security.enable")}
+          {t("action.enable")}
         </Button>
       </YStack>
     </YStack>

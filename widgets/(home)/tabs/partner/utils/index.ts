@@ -1,6 +1,4 @@
-import { Dimensions } from "react-native"
-
-import { IconType } from "~/components"
+import { IconType } from '~/components'
 
 export type Level = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8
 

@@ -1,7 +1,7 @@
-import { FC, Fragment, ReactNode, useState } from "react"
-import { useTranslation } from "react-i18next"
+import { FC, Fragment, ReactNode, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
-import { Button, Dialog, Popup, Text, XStack } from "~/components"
+import { Button, Dialog, Popup, Text, XStack } from '~/components'
 
 export const SupportTip: FC<{ children: ReactNode }> = ({ children }) => {
   const [visible, setVisible] = useState(false)
@@ -17,8 +17,8 @@ export const SupportTip: FC<{ children: ReactNode }> = ({ children }) => {
           <Text col="$secondary">{dict.desc}</Text>
           <XStack w="100%" gap={12} pt={12}>
             <Button
-              f={1}
               size="$md"
+              f={0.9}
               type="accent"
               onPress={() => {
                 setVisible(false)
@@ -31,6 +31,7 @@ export const SupportTip: FC<{ children: ReactNode }> = ({ children }) => {
             <Button
               f={1}
               size="$md"
+              px={0}
               onPress={() => {
                 setVisible(false)
               }}

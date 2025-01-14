@@ -1,27 +1,18 @@
-import { BottomSheetModal } from "@gorhom/bottom-sheet"
-import { router, Stack } from "expo-router"
-import { useRef } from "react"
-import { useTranslation } from "react-i18next"
-import { useSafeAreaInsets } from "react-native-safe-area-context"
+import { BottomSheetModal } from '@gorhom/bottom-sheet'
+import { router, Stack } from 'expo-router'
+import { useRef } from 'react'
+import { useTranslation } from 'react-i18next'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
-import { getAttestationFlag, getProfile } from "~/api/account"
+import { getAttestationFlag, getProfile } from '~/api/account'
 import {
-  BottomSheet,
-  Button,
-  Card,
-  Copyable,
-  Figure,
-  Icon,
-  Image,
-  ListItem,
-  ScrollView,
-  Text,
-  XStack,
-  YStack,
-} from "~/components"
-import { CACHE_KEY, useRequest } from "~/hooks/useRequest"
-import { useFroxlStore } from "~/hooks/useStore"
-import { SupportTip } from "~/widgets/(home)/profile/suppirt-tip"
+    BottomSheet, Button, Card, Copyable, Figure, Icon, Image, ListItem, ScrollView, Text, XStack,
+    YStack
+} from '~/components'
+import { CACHE_KEY, useRequest } from '~/hooks/useRequest'
+import { useFroxlStore } from '~/hooks/useStore'
+import { SupportTip } from '~/widgets/(home)/profile/suppirt-tip'
+import { VerificationTrigger } from '~/widgets/shared/validation-card'
 
 const LEVEL_ICON = ["lv0", "lv1", "lv2"] as const
 
@@ -95,13 +86,8 @@ export default function Page() {
         <ListItem
           icon="identity"
           title={dict.identityVerification}
-          addonAfter={
-            <Text col={certificated ? "$primary" : "$warning"}>
-              {certificated
-                ? t("settings.certificated")
-                : t("profile.unCertified")}
-            </Text>
-          }
+          isLink={false}
+          addonAfter={<VerificationTrigger data={profile?.realName} />}
         />
         <ListItem
           icon="shield"
