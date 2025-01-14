@@ -1,31 +1,20 @@
-import { useBoolean } from "ahooks"
-import _ from "lodash"
-import { MotiText as AnimatedText, MotiView as AnimatedView } from "moti"
-import React, {
-  FC,
-  Fragment,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from "react"
-import { Platform, StyleSheet, TextInput, TextInputProps } from "react-native"
+import { useBoolean } from 'ahooks'
+import _ from 'lodash'
+import { MotiText as AnimatedText, MotiView as AnimatedView } from 'moti'
+import React, { FC, Fragment, useCallback, useEffect, useRef, useState } from 'react'
+import { Keyboard, Platform, StyleSheet, TextInput, TextInputProps } from 'react-native'
 import Animated, {
-  useAnimatedStyle,
-  useSharedValue,
-  withRepeat,
-  withSequence,
-  withTiming,
-} from "react-native-reanimated"
-import { XStack, YStack } from "tamagui"
+    useAnimatedStyle, useSharedValue, withRepeat, withSequence, withTiming
+} from 'react-native-reanimated'
+import { XStack, YStack } from 'tamagui'
 
-import { Button } from "./button"
-import { Icon } from "./icon"
-import { Text } from "./text"
-import { toast } from "./toast"
+import { Button } from './button'
+import { Icon } from './icon'
+import { Text } from './text'
+import { toast } from './toast'
 
-import { DEVICE_WIDTH, t } from "~/lib/utils"
-import colors from "~/theme/colors"
+import { DEVICE_WIDTH, t } from '~/lib/utils'
+import colors from '~/theme/colors'
 
 interface InputProps extends TextInputProps {
   addonAfter?: React.ReactNode
@@ -232,11 +221,23 @@ const OTP = ({
 
   const onPress = useCallback(() => {
     if (!disabled) {
-      setFocused(true)
       inputRef.current?.focus()
     }
   }, [disabled])
+  useEffect(() => {
+    const showSubscription = Keyboard.addListener("keyboardDidShow", () => {
+      setFocused(true)
+    })
+    const hideSubscription = Keyboard.addListener("keyboardDidHide", () => {
+      setFocused(false)
+      inputRef.current?.blur()
+    })
 
+    return () => {
+      showSubscription.remove()
+      hideSubscription.remove()
+    }
+  }, [setFocused])
   return (
     <Fragment>
       <TextInput
@@ -247,8 +248,12 @@ const OTP = ({
         maxLength={1}
         keyboardType="number-pad"
         style={styles.hidden}
-        onFocus={() => setFocused(true)}
-        onBlur={() => setFocused(false)}
+        onFocus={() => {
+          setFocused(true)
+        }}
+        onBlur={() => {
+          setFocused(false)
+        }}
       />
       <XStack gap="$md" onPress={onPress}>
         {digits.map((digit, index) => (
