@@ -1,5 +1,12 @@
 import { MotiView } from "moti"
-import { ReactNode, useCallback, useContext, useEffect } from "react"
+import {
+  ReactNode,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+} from "react"
 import { BackHandler, Platform, StyleSheet, ViewStyle } from "react-native"
 
 import { PortalContext } from "./portal"
@@ -20,6 +27,7 @@ export const Popup = ({
   closeOnTouchOutside = false,
   style,
 }: PopupProps) => {
+  const hasMounted = useRef(false)
   const { mount, unmount } = useContext(PortalContext)
   // 处理返回按钮
   const handleBackButton = useCallback(() => {
@@ -39,56 +47,32 @@ export const Popup = ({
     return () => subscription.remove()
   }, [handleBackButton])
 
+  const animatedContent = useMemo(
+    () => (
+      <MotiView
+        from={{ opacity: 0, translateY: 100 }}
+        animate={{ opacity: 1, scale: 1, translateY: 0 }}
+        exit={{ opacity: 0, translateY: 100 }}
+        transition={{
+          type: "spring",
+          damping: 20,
+          stiffness: 300,
+        }}
+        style={[styles.content, style]}
+      >
+        {children}
+      </MotiView>
+    ),
+    [children, style]
+  )
+
   useEffect(() => {
-    if (visible) {
-      mount(
-        <MotiView
-          from={{
-            opacity: 0,
-            translateY: 100,
-          }}
-          animate={{
-            opacity: 1,
-            scale: 1,
-            translateY: 0,
-          }}
-          exit={{
-            opacity: 0,
-            translateY: 100,
-          }}
-          transition={{
-            type: "spring",
-            damping: 20,
-            stiffness: 300,
-          }}
-          style={[styles.content, style]}
-        >
-          {children}
-        </MotiView>
-      )
+    if (visible && !hasMounted.current) {
+      mount(animatedContent)
     } else {
       unmount()
     }
-
-    return () => unmount()
-  }, [
-    visible,
-    children,
-    position,
-    style,
-    mount,
-    closeOnTouchOutside,
-    onClose,
-    unmount,
-  ])
-
-  useEffect(() => {
-    const subscription = BackHandler.addEventListener(
-      "hardwareBackPress",
-      handleBackButton
-    )
-    return () => subscription.remove()
-  }, [handleBackButton])
+  }, [visible, mount, animatedContent, unmount])
 
   return null
 }

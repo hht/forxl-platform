@@ -1,8 +1,8 @@
 // components/Portal.tsx
-import { AnimatePresence, MotiView } from 'moti'
-import { createContext, useEffect, useState } from 'react'
-import { StyleSheet } from 'react-native'
-import { YStack } from 'tamagui'
+import { AnimatePresence, MotiView } from "moti"
+import { createContext, useEffect, useState } from "react"
+import { StyleSheet } from "react-native"
+import { YStack } from "tamagui"
 
 export const PortalContext = createContext<{
   mount: (children: React.ReactNode) => void
