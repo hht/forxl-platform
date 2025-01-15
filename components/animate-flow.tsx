@@ -1,13 +1,20 @@
-import _ from 'lodash'
-import { FC, memo, useEffect, useRef, useState } from 'react'
-import { Platform } from 'react-native'
+import _ from "lodash"
+import { FC, memo, useEffect, useRef, useState } from "react"
+import { Platform } from "react-native"
 import Animated, {
-    makeMutable, SharedValue, useAnimatedStyle, useDerivedValue, useSharedValue, withSpring
-} from 'react-native-reanimated'
-import { XStack, YStack } from 'tamagui'
+  makeMutable,
+  SharedValue,
+  useAnimatedStyle,
+  useDerivedValue,
+  useSharedValue,
+  withSpring,
+} from "react-native-reanimated"
+import { XStack, YStack } from "tamagui"
 
-import { formatCurrency, formatDecimal } from '~/lib/utils'
-import colors from '~/theme/colors'
+import { Text } from "./text"
+
+import { formatCurrency, formatDecimal } from "~/lib/utils"
+import colors from "~/theme/colors"
 
 const numbers = "0123456789".split("").join("\n")
 
@@ -42,6 +49,7 @@ const DigitRow: FC<{
       ],
     }
   })
+  console.log("Rerender")
   if (isNaN(parseInt(value.value))) {
     return (
       <YStack h={fontSize * RATIO}>
@@ -82,6 +90,13 @@ export const AnimatedFlow = ({
   color?: string
 }) => {
   const [length, setLength] = useState(0)
+  return (
+    <Text
+      col={color}
+      fos={fontSize}
+      bold={bold}
+    >{`${addonsBefore.replace("$", "")}${addonsBefore.includes("$") ? formatCurrency(value, fraction) : formatDecimal(value, fraction)}${addonsAfter}`}</Text>
+  )
   const digits = useRef<SharedValue<string>[]>([])
   const col = useSharedValue("$text")
   useDerivedValue(() => {
