@@ -11,8 +11,8 @@ import colors from '~/theme/colors'
 
 const numbers = "0123456789".split("").join("\n")
 
-const RATIO = 1.5
-const TWEAK = Platform.OS === "android" ? 1.0102 : 1
+const RATIO = 1.2
+const TWEAK = Platform.OS === "android" ? 0.99 : 1
 
 const DigitRow: FC<{
   value: SharedValue<string>
@@ -43,7 +43,11 @@ const DigitRow: FC<{
     }
   })
   if (isNaN(parseInt(value.value))) {
-    return <Animated.Text style={animatedStyle}>{value.value}</Animated.Text>
+    return (
+      <YStack h={fontSize * RATIO}>
+        <Animated.Text style={animatedStyle}>{value.value}</Animated.Text>
+      </YStack>
+    )
   }
   return (
     <YStack h={fontSize * RATIO} ov="hidden">

@@ -52,7 +52,7 @@ const Momentum: FC<{
         </XStack>
       ) : null}
       <AnimatedFlow
-        value={momentum}
+        value={momentum || 0}
         fraction={0.01}
         addonsBefore={momentum > 0 ? "+" : ""}
         addonsAfter="%"
@@ -94,6 +94,7 @@ const ListItem: FC<{ data: Future }> = ({ data }) => {
         boc="$border"
         br="$sm"
         bw={1}
+        gap="$xs"
         onPress={() => {
           if (available) {
             useQuotesStore.setState({

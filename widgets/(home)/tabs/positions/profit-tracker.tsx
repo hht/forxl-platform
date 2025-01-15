@@ -26,11 +26,11 @@ export const ProfitTracker: FC<{
     }
   )
   return (
-    <XStack gap="$sm">
+    <XStack gap="$sm" ai="center">
       <Text col="$secondary" caption>
         {t("trade.profit")}:
       </Text>
-      <XStack>
+      <XStack ai="center">
         <AnimatedFlow
           value={_.floor(profit, 2)}
           fraction={0.01}

@@ -37,7 +37,7 @@ const ListItem: FC<{ label: string; value: number; onPress: () => void }> = ({
           bs="dashed"
         ></XStack>
       </XStack>
-      <AnimatedFlow value={value} addonsBefore={`$`} />
+      <AnimatedFlow value={value} fontSize={11} addonsBefore="$" />
     </YStack>
   )
 }
@@ -104,11 +104,11 @@ const Summary: FC<{
       />
       <Separator orientation="vertical" h="50%" />
       <ListItem
-        label={t("wallet.freeMargin")}
+        label={t("wallet.margin")}
         value={freezeMoney}
         onPress={() => {
           usePromptStore.setState({
-            title: t("wallet.freeMargin"),
+            title: t("wallet.margin"),
             desc: t("wallet.marginDesc", {
               returnObjects: true,
             }),

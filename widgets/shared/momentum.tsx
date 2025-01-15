@@ -10,8 +10,8 @@ export const Momentum: FC<{
     return null
   }
   const momentum =
-    ((quotes.Bid - data.lastClosePrice) / data.lastClosePrice) * 100
-  if (momentum) {
+    ((quotes.Bid - data.lastClosePrice) / data.lastClosePrice) * 100 || 0
+  if (!isNaN(momentum)) {
     return (
       <XStack>
         <Icon name="arrow" />

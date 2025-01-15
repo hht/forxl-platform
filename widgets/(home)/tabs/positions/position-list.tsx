@@ -150,34 +150,44 @@ const ListEmptyComponent: FC<{
   type: "open" | "orders" | "closed"
 }> = ({ loading, type }) => {
   const { t } = useTranslation()
-  const filtered = useOrderStore(
-    (state) => state.from || state.to || state.options,
-    shallow
-  )
+  const { from, to, options } = useOrderStore((state) => state, shallow)
   if (loading) {
     return null
   }
+  const filtered = from || to || options
   return (
     <YStack ai="center" jc="center" h="100%" gap="$md" px={48}>
       <Figure name="empty" width={90} height={90} />
-      <Text>
+      <Text ta="center">
         {t(
           type === "open"
             ? "trade.openPositionEmptyTitle"
             : type === "orders"
               ? "trade.pendingPositionEmptyTitle"
-              : "trade.closedPositionEmptyTitle"
+              : "trade.closedPositionEmptyTitle",
+          {
+            period:
+              type === "closed" && options
+                ? options === "customPeriod"
+                  ? `${dayjs(from).format(
+                      "MM/DD/YYYY"
+                    )} - ${dayjs(to).format("MM/DD/YYYY")}`
+                  : t(`positions.${options}`)
+                : t("positions.lastYear"),
+          }
         )}
       </Text>
-      <Text caption ta="center" col="$tertiary">
-        {t(
-          type === "open"
-            ? "trade.openPositionEmptyDesc"
-            : type === "orders"
-              ? "trade.pendingPositionEmptyDesc"
-              : "trade.closedPositionEmptyTitle"
-        )}
-      </Text>
+      {type === "closed" && filtered ? null : (
+        <Text caption ta="center" col="$tertiary">
+          {t(
+            type === "open"
+              ? "trade.openPositionEmptyDesc"
+              : type === "closed"
+                ? "trade.closedPositionEmptyDesc"
+                : "trade.pendingPositionEmptyDesc"
+          )}
+        </Text>
+      )}
       {type === "closed" && filtered ? (
         <XStack
           hitSlop={16}
@@ -335,7 +345,7 @@ export const ClosedOrders = () => {
       })
     },
     {
-      reloadDeps: [isFocused, reloadKey],
+      reloadDeps: [reloadKey],
       isNoMore: (d) => d?.nextId === undefined,
     }
   )

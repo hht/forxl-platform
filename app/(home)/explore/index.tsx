@@ -1,25 +1,19 @@
-import { useDebounce, useInfiniteScroll } from "ahooks"
-import { router, Stack } from "expo-router"
-import _ from "lodash"
-import { FC, useCallback, useState } from "react"
-import { useTranslation } from "react-i18next"
-import {
-  ActivityIndicator,
-  FlatList,
-  Platform,
-  StyleSheet,
-  TextInput,
-} from "react-native"
-import { useSafeAreaInsets } from "react-native-safe-area-context"
-import { shallow } from "zustand/shallow"
+import { useDebounce, useInfiniteScroll } from 'ahooks'
+import { router, Stack } from 'expo-router'
+import _ from 'lodash'
+import { FC, useCallback, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { ActivityIndicator, FlatList, Platform, StyleSheet, TextInput } from 'react-native'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { shallow } from 'zustand/shallow'
 
-import { getFutures, toggleFavorite } from "~/api/trade"
-import { Icon, Text, XStack, YStack } from "~/components"
-import { useRequest } from "~/hooks/useRequest"
-import { useFroxlStore, useQuotesStore, useSymbolStore } from "~/hooks/useStore"
-import { subscribeQuotes } from "~/hooks/useWebsocket"
-import colors from "~/theme/colors"
-import { ListEmptyComponent, ListFooterComponent } from "~/widgets/shared/list"
+import { getExploreHistories, getFutures, toggleFavorite } from '~/api/trade'
+import { Icon, Text, XStack, YStack } from '~/components'
+import { useRequest } from '~/hooks/useRequest'
+import { useFroxlStore, useQuotesStore, useSymbolStore } from '~/hooks/useStore'
+import { subscribeQuotes } from '~/hooks/useWebsocket'
+import colors from '~/theme/colors'
+import { ListEmptyComponent, ListFooterComponent } from '~/widgets/shared/list'
 
 const onPress = (data: Future) => {
   if (!useQuotesStore.getState().quotes[data.futuresCode!]) {
@@ -150,6 +144,11 @@ export default function Page() {
     },
     [mutate, data]
   )
+  useRequest(getExploreHistories, {
+    onSuccess: (data) => {
+      console.log(JSON.stringify(data))
+    },
+  })
   return (
     <YStack px="$md" pt={top + 16} f={1}>
       <Stack.Screen options={{ headerShown: false }} />

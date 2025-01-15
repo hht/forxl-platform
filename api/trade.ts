@@ -1,11 +1,10 @@
-import axios from "axios"
-import _ from "lodash"
+import axios from 'axios'
+import _ from 'lodash'
 
-import { getDate } from "~/hooks/useLocale"
-import { BASE_URL, request } from "~/hooks/useRequest"
-import { useFroxlStore, useOrderStore, useQuotesStore } from "~/hooks/useStore"
-import { subscribeQuotes } from "~/hooks/useWebsocket"
-import { i18n, toInfinite, waitFor } from "~/lib/utils"
+import { getDate } from '~/hooks/useLocale'
+import { BASE_URL, request } from '~/hooks/useRequest'
+import { useFroxlStore, useOrderStore, useQuotesStore } from '~/hooks/useStore'
+import { i18n, toInfinite, waitFor } from '~/lib/utils'
 
 export const getFutures = async (params: GetFuturesParams) => {
   return await request<PaginationResponse<Future>, GetFuturesParams>(
@@ -277,4 +276,16 @@ export const toggleFavorite = async (params: {
   } else {
     return await request("/futures/addSelect", "POST", params)
   }
+}
+
+export const getExploreHistories = async () => {
+  return await request("/futures/searchHistoryList", "POST")
+}
+
+export const updateExploreHistories = async (futuresId: string[]) => {
+  return await request(
+    "/futures/searchHistoryUpdate",
+    "POST",
+    futuresId.join(",")
+  )
 }
