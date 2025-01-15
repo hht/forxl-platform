@@ -103,9 +103,9 @@ export const useQuotesStore = createWithEqualityFn<QuotesStore>((set, get) => ({
       produce((state: QuotesStore) => {
         const previous = get().quotes[quotes.Symbol]
         const LastUpdated = Date.now()
-        // if (LastUpdated - previous?.LastUpdated < 1000) {
-        //   return
-        // }
+        if (LastUpdated - previous?.LastUpdated < 500) {
+          return
+        }
 
         state.quotes[quotes.Symbol] = {
           ...quotes,
