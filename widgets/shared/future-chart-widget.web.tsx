@@ -60,24 +60,26 @@ export const getDate = (date?: dayjs.ConfigType) => {
   return dayjs(date).utcOffset(0)
 }
 
-export const FutureChart: FC<{
-  data: FuturesDetail
+export const FutureChartWidget: FC<{
+  futuresCode?: string
+  volatility?: number
   resolution?: number | string
-}> = ({ data, resolution }) => {
+  height: number
+}> = ({ futuresCode, volatility, resolution, height }) => {
   const chartContainerRef = useRef<HTMLDivElement>(null)
   const seriesRef = useRef<ISeriesApi<"Candlestick"> | null>(null)
   const loadingRef = useRef(false)
   const fetchedRef = useRef(false)
   const params = useMemo(
     () => ({
-      symbol: data.futures?.futuresCode!,
-      volatility: data.futuresParam?.volatility!,
+      symbol: futuresCode!,
+      volatility: volatility!,
       resolution: resolution!,
     }),
-    [data, resolution]
+    [futuresCode, volatility, resolution]
   )
   useEffect(() => {
-    if (!data.futures?.futuresCode) {
+    if (!params.symbol) {
       return
     }
     const chart = createChart(chartContainerRef.current!, {
@@ -91,7 +93,7 @@ export const FutureChart: FC<{
         horzLines: { color: "#30363A66" },
       },
       width: window.innerWidth,
-      height: window.innerHeight,
+      height,
       timeScale: {
         timeVisible: true,
         secondsVisible: params?.resolution === 1 || params?.resolution === 5,
@@ -175,18 +177,13 @@ export const FutureChart: FC<{
     return () => {
       chart.remove()
     }
-  }, [
-    data.futures?.futuresCode,
-    params.symbol,
-    params.volatility,
-    params.resolution,
-  ])
+  }, [params.symbol, params.volatility, params.resolution, height])
 
   return (
     <div
       style={{
         width: "100%",
-        height: 400,
+        height,
         backgroundColor: "black",
         display: "flex",
       }}

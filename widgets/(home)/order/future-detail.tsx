@@ -5,7 +5,6 @@ import { useTranslation } from 'react-i18next'
 import { shallow } from 'zustand/shallow'
 
 import { Action, CurrentPrice } from './current-price'
-import { FutureChart } from './future-chart'
 import { FutureInfo } from './future-info'
 import { OrderActions } from './order-actions'
 import { PendingCard } from './pending'

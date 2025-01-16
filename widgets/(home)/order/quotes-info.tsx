@@ -1,7 +1,6 @@
 import { FC, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { FutureChart } from './future-chart'
 import { MarketInfo } from './market-info'
 
 import { getFutureHistories } from '~/api/trade'
@@ -10,6 +9,7 @@ import { useRequest } from '~/hooks/useRequest'
 import { useQuotesStore } from '~/hooks/useStore'
 import { dayjs, formatDecimal } from '~/lib/utils'
 import colors from '~/theme/colors'
+import { FutureChartWidget } from '~/widgets/shared/future-chart-widget'
 
 const PriceIndicator: FC<{
   min?: number
@@ -273,7 +273,12 @@ export const QuotesInfo: FC<{ data: FuturesDetail; onPress: () => void }> = ({
   return (
     <YStack ov="hidden">
       <YStack ov="hidden">
-        <FutureChart data={data} resolution={resolution} />
+        <FutureChartWidget
+          futuresCode={data.futures?.futuresCode}
+          volatility={data.futuresParam?.volatility}
+          resolution={resolution}
+          height={360}
+        />
       </YStack>
       <YStack>
         <XStack p="$md" gap="$md">

@@ -6,6 +6,8 @@ import _ from 'lodash'
 import React, { useEffect, useRef, useState } from 'react'
 import { emit, useNativeMessage, webViewRender } from 'react-native-react-bridge/lib/web'
 
+import './webview.css'
+
 const getFutureHistories = async (params: {
   symbol: string
   resolution: string | number

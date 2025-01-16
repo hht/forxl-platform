@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next'
 import { MarketInfo } from './market-info'
 
 import { Text, XStack, YStack } from '~/components'
-import { useQuotesStore } from '~/hooks/useStore'
 import { formatDecimal } from '~/lib/utils'
 
 const ListItem: FC<{ title: string; value: string; desc?: string }> = ({
