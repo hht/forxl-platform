@@ -1,12 +1,9 @@
-import { FC } from "react"
-import { useTranslation } from "react-i18next"
-import {
-  ActivityIndicator,
-  RefreshControl as RefreshControlBase,
-} from "react-native"
+import { FC } from 'react'
+import { useTranslation } from 'react-i18next'
+import { ActivityIndicator } from 'react-native'
 
-import { Figure, Text, XStack, YStack } from "~/components"
-import colors from "~/theme/colors"
+import { Figure, Text, XStack, YStack } from '~/components'
+import colors from '~/theme/colors'
 
 export const ListEmptyComponent: FC<{ loading: boolean; title?: string }> = ({
   loading,

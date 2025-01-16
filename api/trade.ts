@@ -281,13 +281,20 @@ export const toggleFavorite = async (params: {
 }
 
 export const getExploreHistories = async () => {
-  return await request("/futures/searchHistoryList", "POST")
+  return await request<Future[] | null, undefined>(
+    "/futures/searchHistoryList",
+    "POST"
+  )
+    .then((res) => res ?? [])
+    .then((res) => {
+      useFroxlStore.setState({
+        histories: res,
+      })
+    })
 }
 
 export const updateExploreHistories = async (futuresId: string[]) => {
-  return await request(
-    "/futures/searchHistoryUpdate",
-    "POST",
-    futuresId.join(",")
-  )
+  return await request("/futures/searchHistoryUpdate", "POST", {
+    futuresIds: futuresId.join(","),
+  }).then(getExploreHistories)
 }

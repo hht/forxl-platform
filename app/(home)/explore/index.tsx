@@ -1,15 +1,17 @@
-import { useDebounce, useInfiniteScroll } from 'ahooks'
+import { useDebounce, useInfiniteScroll, useUnmount } from 'ahooks'
 import { router, Stack } from 'expo-router'
-import _ from 'lodash'
+import _, { update } from 'lodash'
 import { FC, useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ActivityIndicator, FlatList, Platform, StyleSheet, TextInput } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { shallow } from 'zustand/shallow'
 
-import { getExploreHistories, getFutures, toggleFavorite } from '~/api/trade'
+import {
+    getExploreHistories, getFutures, toggleFavorite, updateExploreHistories
+} from '~/api/trade'
 import { Icon, Text, XStack, YStack } from '~/components'
-import { useRequest } from '~/hooks/useRequest'
+import { CACHE_KEY, useRequest } from '~/hooks/useRequest'
 import { useFroxlStore, useQuotesStore, useSymbolStore } from '~/hooks/useStore'
 import { subscribeQuotes } from '~/hooks/useWebsocket'
 import colors from '~/theme/colors'
@@ -19,18 +21,25 @@ const onPress = (data: Future) => {
   if (!useQuotesStore.getState().quotes[data.futuresCode!]) {
     subscribeQuotes([data.futuresCode!])
   }
-  useFroxlStore.setState({
-    histories: _.takeRight(
-      [
-        ...(useFroxlStore
-          .getState()
-          .histories?.filter((item) => item.futuresId !== data.futuresId) ??
-          []),
-        data,
-      ],
-      10
-    ),
-  })
+  if (
+    !useFroxlStore
+      .getState()
+      .histories?.find((it) => it.futuresId === data.futuresId)
+  ) {
+    updateExploreHistories(
+      _.takeRight(
+        [
+          ...(useFroxlStore
+            .getState()
+            .histories?.filter((item) => item.futuresId !== data.futuresId) ??
+            []),
+          data,
+        ],
+        10
+      ).map((it) => `${it.futuresId}`)
+    )
+  }
+
   useQuotesStore.setState({
     currentFuture: data,
     action: "buy",
@@ -96,8 +105,9 @@ export default function Page() {
 
   const debouncedCodeOrName = useDebounce(codeOrName, {
     wait: 500,
+    trailing: true,
   })
-  const { data, loadingMore, mutate } = useInfiniteScroll<{
+  const { data, loadingMore, mutate, loading } = useInfiniteScroll<{
     list: Future[]
     nextId?: number
   }>(
@@ -105,6 +115,7 @@ export default function Page() {
       if (!codeOrName) {
         return Promise.resolve({
           list: useFroxlStore.getState().histories ?? [],
+          nextId: undefined,
         })
       }
       return getFutures({
@@ -129,25 +140,16 @@ export default function Page() {
               : it
           ),
         })
-        useFroxlStore.setState({
-          histories: useFroxlStore.getState().histories?.map((item) => {
-            if (item.futuresId === params.futuresId) {
-              return {
-                ...item,
-                selected: params.selected,
-              }
-            }
-            return item
-          }),
-        })
       }
+      getExploreHistories()
     },
     [mutate, data]
   )
   useRequest(getExploreHistories, {
-    onSuccess: (data) => {
-      console.log(JSON.stringify(data))
-    },
+    cacheKey: CACHE_KEY.HISTORIES,
+  })
+  useUnmount(() => {
+    useSymbolStore.setState({ codeOrName: "" })
   })
   return (
     <YStack px="$md" pt={top + 16} f={1}>
@@ -164,7 +166,13 @@ export default function Page() {
           px="$md"
           f={1}
         >
-          <Icon name="search" size={20} />
+          <XStack>
+            {loading || loadingMore ? (
+              <ActivityIndicator size="small" />
+            ) : (
+              <Icon name="search" size={20} />
+            )}
+          </XStack>
           <TextInput
             placeholderTextColor="transparent"
             underlineColorAndroid={undefined}
@@ -198,7 +206,9 @@ export default function Page() {
         }}
         ListHeaderComponent={
           !codeOrName ? (
-            <Text col="$secondary">{t("trade.lastSeen")}</Text>
+            <YStack py="$md">
+              <Text col="$secondary">{t("trade.lastSeen")}</Text>
+            </YStack>
           ) : null
         }
         ListEmptyComponent={ListEmptyComponent}

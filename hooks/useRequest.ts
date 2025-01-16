@@ -20,6 +20,7 @@ export const CACHE_KEY = {
   FUTURE_CATEGORIES: "/futures/typeList",
   CACHE_SIZE: "/other/v3/getCacheSize",
   GOOGLE_AUTH: "/user/getGoogleAuth",
+  HISTORIES: "/order/v2/historyPositionList",
 }
 
 // @ts-ignore next-line
