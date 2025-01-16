@@ -4,6 +4,9 @@ import dayjs from 'dayjs'
 import { ColorType, createChart, ISeriesApi, UTCTimestamp } from 'lightweight-charts'
 import _ from 'lodash'
 import React, { FC, useEffect, useMemo, useRef } from 'react'
+import { shallow } from 'zustand/shallow'
+
+import { useQuotesStore } from '~/hooks/useStore'
 
 const getFutureHistories = async (params: {
   symbol: string
@@ -70,6 +73,7 @@ export const FutureChartWidget: FC<{
   const seriesRef = useRef<ISeriesApi<"Candlestick"> | null>(null)
   const loadingRef = useRef(false)
   const fetchedRef = useRef(false)
+  const quotes = useQuotesStore((state) => state.quotes[futuresCode!], shallow)
   const params = useMemo(
     () => ({
       symbol: futuresCode!,
@@ -179,6 +183,41 @@ export const FutureChartWidget: FC<{
     }
   }, [params.symbol, params.volatility, params.resolution, height])
 
+  useEffect(() => {
+    if (quotes && seriesRef.current && seriesRef.current.data().length) {
+      const current = seriesRef.current.dataByIndex(
+        seriesRef.current.data().length - 1
+      )
+      if (
+        current &&
+        quotes.LastTime - (current.time as number) <
+          (_.isString(resolution) ? 24 * 60 : (resolution ?? 1)) * 60
+      ) {
+        const previous = current as {
+          time: number
+          open: number
+          high: number
+          low: number
+          close: number
+        }
+        seriesRef.current?.update({
+          time: current.time as UTCTimestamp,
+          open: previous.open,
+          high: Math.max(quotes.High, previous.high),
+          low: Math.min(quotes.Low, previous.low),
+          close: quotes.Bid,
+        })
+      } else {
+        seriesRef.current?.update({
+          time: quotes.LastTime as UTCTimestamp,
+          open: quotes.Bid,
+          high: quotes.High,
+          low: quotes.Low,
+          close: quotes.Bid,
+        })
+      }
+    }
+  }, [quotes, resolution])
   return (
     <div
       style={{
