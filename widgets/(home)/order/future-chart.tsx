@@ -10,7 +10,6 @@ import ChartHTML from '~/widgets/shared/future-chart'
 
 export const FutureChart: FC<{
   data: FuturesDetail
-
   resolution?: number | string
 }> = ({ data, resolution }) => {
   const quotes = useQuotesStore(
