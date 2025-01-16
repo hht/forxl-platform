@@ -237,13 +237,15 @@
     "highLow": "High/Low",
     "currentSellPrice": "Current sell price: ${{amount}}",
     "priceChange": "Price change",
+    "priceChangeDesc": "Compared to previous session",
     "mins": "{{count}} min",
     "hours": "{{count}} hour",
     "days": "{{count}} day",
     "lots": "{{amount}} lots",
     "perLot": "{{amount}} USD per lot",
     "openOn": "Market open on {{date}}",
-    "newPosition": "New Position"
+    "newPosition": "New Position",
+    "more": "More"
   },
   "wallet": {
     "scanDesc": "Scan the QR code to verification",
@@ -391,7 +393,7 @@
     "selectChannel": "Select Channel",
     "selectMonth": "Select Month(s)",
     "email": "E-Mail",
-    "title": "Title",
+    "title": "Wallet",
     "orderId": "Order ID",
     "date": "Date",
     "type": "Type",

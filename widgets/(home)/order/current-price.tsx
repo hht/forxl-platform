@@ -1,6 +1,5 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import { TextProps } from 'tamagui'
 import { shallow } from 'zustand/shallow'
 
 import { AnimatedFlow, Text, XStack, YStack } from '~/components'

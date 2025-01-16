@@ -175,6 +175,10 @@ export const useStatisticsStore = createWithEqualityFn<{
 export const useSymbolStore = createWithEqualityFn<{
   codeOrName: string
   currentFuture?: Awaited<ReturnType<typeof getFutureCategories>>[number]
+  currentSymbol?: {
+    symbol: string
+    volatility: number
+  }
   mutationFuture?: {
     futuresId: number
     selected: 0 | 1

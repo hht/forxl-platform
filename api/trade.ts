@@ -4,7 +4,7 @@ import _ from 'lodash'
 import { getDate } from '~/hooks/useLocale'
 import { BASE_URL, request } from '~/hooks/useRequest'
 import { useFroxlStore, useOrderStore, useQuotesStore } from '~/hooks/useStore'
-import { i18n, toInfinite, waitFor } from '~/lib/utils'
+import { dayjs, i18n, toInfinite, waitFor } from '~/lib/utils'
 
 export const getFutures = async (params: GetFuturesParams) => {
   return await request<PaginationResponse<Future>, GetFuturesParams>(
@@ -233,12 +233,14 @@ export const getFutureCategories = async () => {
 export const getFutureHistories = async (params: {
   symbol: string
   resolution: string | number
+  from?: number
   to?: number
 }) => {
-  const to = params.to ?? getDate().unix()
+  const to = params.to ?? dayjs().unix()
   const from =
+    params.from ??
     to -
-    200 * (_.isString(params.resolution) ? 24 * 60 : params.resolution) * 60
+      200 * (_.isString(params.resolution) ? 24 * 60 : params.resolution) * 60
   return await request<
     {
       c: number[] | null

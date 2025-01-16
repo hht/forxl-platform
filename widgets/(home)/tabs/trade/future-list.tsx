@@ -102,13 +102,29 @@ const BuyPriceCell: FC<{ data: Future; diff: number }> = ({ data, diff }) => {
 }
 
 const ListItem: FC<{ data: Future }> = ({ data }) => {
+  const currentSymbol = useSymbolStore((state) => state.currentSymbol, shallow)
   const diff = useMemo(
     () => ((data.volatility ?? 0) * (data.clazzSpread ?? 0)) / 2,
     [data.volatility, data.clazzSpread]
   )
   const available = data.isDeal
   return (
-    <XStack gap="$sm" p="$md" bbc="$border" bbw={1} ai="center">
+    <XStack
+      gap="$sm"
+      p="$md"
+      bbc="$border"
+      bc={currentSymbol?.symbol === data.futuresCode ? "$card" : "$background"}
+      bbw={1}
+      ai="center"
+      onPress={() => {
+        useSymbolStore.setState({
+          currentSymbol:
+            currentSymbol?.symbol === data.futuresCode
+              ? undefined
+              : { symbol: data.futuresCode!, volatility: data.volatility! },
+        })
+      }}
+    >
       <YStack f={1} gap="$xs">
         <XStack gap="$sm" ai="center">
           <Text>{data.futuresShow}</Text>
@@ -175,6 +191,7 @@ const ListItem: FC<{ data: Future }> = ({ data }) => {
         <BuyPriceCell data={data} diff={diff} />
       </YStack>
       <XStack
+        hitSlop={16}
         onPress={() => {
           const price =
             (useQuotesStore.getState().quotes[data.futuresCode!]?.Bid ??

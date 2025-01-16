@@ -5,9 +5,11 @@ import { useTranslation } from 'react-i18next'
 import { shallow } from 'zustand/shallow'
 
 import { Action, CurrentPrice } from './current-price'
+import { FutureChart } from './future-chart'
 import { FutureInfo } from './future-info'
 import { OrderActions } from './order-actions'
 import { PendingCard } from './pending'
+import { QuotesInfo } from './quotes-info'
 import { StopLossCard } from './stop-loss'
 import { StopProfitCard } from './stop-profit'
 import { ToggleFavorite } from './toggle-favorite'
@@ -150,7 +152,14 @@ export const FutureDetail = () => {
           </YStack>
         </ScrollView>
         <ScrollView f={1} w={DEVICE_WIDTH} showsVerticalScrollIndicator={false}>
-          <YStack p="$md" gap="$sm" w="100%" />
+          {future ? (
+            <QuotesInfo
+              data={future}
+              onPress={() => {
+                setActiveIndex(0)
+              }}
+            />
+          ) : null}
         </ScrollView>
         <ScrollView f={1} w={DEVICE_WIDTH} showsVerticalScrollIndicator={false}>
           <FutureInfo

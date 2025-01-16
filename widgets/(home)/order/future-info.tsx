@@ -1,11 +1,11 @@
-import { FC, Fragment } from "react"
-import { useTranslation } from "react-i18next"
+import { FC, Fragment } from 'react'
+import { useTranslation } from 'react-i18next'
 
-import { MarketInfo } from "./market-info"
+import { MarketInfo } from './market-info'
 
-import { Text, XStack, YStack } from "~/components"
-import { useQuotesStore } from "~/hooks/useStore"
-import { formatDecimal } from "~/lib/utils"
+import { Text, XStack, YStack } from '~/components'
+import { useQuotesStore } from '~/hooks/useStore'
+import { formatDecimal } from '~/lib/utils'
 
 const ListItem: FC<{ title: string; value: string; desc?: string }> = ({
   title,
@@ -32,7 +32,6 @@ export const FutureInfo: FC<{
   onPress: () => void
 }> = ({ future, onPress }) => {
   const { t } = useTranslation()
-  const currentFuture = useQuotesStore((state) => state.currentFuture)
   if (!future) {
     return null
   }
@@ -94,11 +93,7 @@ export const FutureInfo: FC<{
           desc={future.futures?.remark ?? ""}
         />
       </YStack>
-      <MarketInfo
-        future={future}
-        currentFuture={currentFuture}
-        onPress={onPress}
-      />
+      <MarketInfo future={future} onPress={onPress} />
     </Fragment>
   )
 }

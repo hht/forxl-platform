@@ -100,12 +100,12 @@ const FutureInfo: FC<{ onPress?: () => void }> = ({ onPress }) => {
 export const MarketInfo: FC<
   {
     future: FuturesDetail
-    currentFuture?: Future
     onPress?: () => void
   } & Omit<XStackProps, "onPress">
-> = ({ future, currentFuture, onPress, ...rest }) => {
+> = ({ future, onPress, ...rest }) => {
   const { bottom } = useSafeAreaInsets()
   const { t } = useTranslation()
+  const currentFuture = useQuotesStore((state) => state.currentFuture)
 
   if (currentFuture?.isDeal) {
     return (
@@ -115,15 +115,7 @@ export const MarketInfo: FC<
     )
   }
   return (
-    <YStack
-      bc="$card"
-      ai="center"
-      p="$md"
-      gap={12}
-      pb={bottom + 16}
-      w="100%"
-      {...rest}
-    >
+    <YStack bc="$card" ai="center" p="$md" gap={12} pb={bottom + 16} {...rest}>
       <XStack ai="center" gap="$xs">
         <Icon name="moon" size={12}></Icon>
         <Text caption col="$secondary">
