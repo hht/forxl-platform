@@ -15,20 +15,13 @@ import { DEVICE_WIDTH, t } from "~/lib/utils"
 import colors from "~/theme/colors"
 import { ListEmptyComponent, ListFooterComponent } from "~/widgets/shared/list"
 
-const INITIAL = {
-  Ask: 0,
-  Bid: 0,
-  High: 0,
-  Low: 0,
-  AskDiff: 0,
-  BidDiff: 0,
-  LastUpdate: Date.now(),
-}
-
 const Momentum: FC<{
   data?: Future
-  quotes: Pick<Quotes, "Bid"> & { BidDiff: number }
-}> = ({ data, quotes }) => {
+}> = ({ data }) => {
+  const quotes = useQuotesStore(
+    (state) => state.quotes[data?.futuresCode!],
+    shallow
+  )
   if (!data || !data.isDeal || !data.lastClosePrice || !quotes?.Bid) {
     return (
       <XStack>
@@ -39,7 +32,7 @@ const Momentum: FC<{
     )
   }
   const momentum =
-    ((quotes.Bid - data.lastClosePrice) / data.lastClosePrice) * 100
+    (((quotes?.Bid ?? 0) - data.lastClosePrice) / data.lastClosePrice) * 100
   return (
     <XStack ai="center">
       {momentum !== 0 ? (
@@ -63,18 +56,56 @@ const Momentum: FC<{
   )
 }
 
-const ListItem: FC<{ data: Future }> = ({ data }) => {
+const SellPriceCell: FC<{ data: Future; diff: number }> = ({ data, diff }) => {
   const quotes = useQuotesStore(
-    (state) => state.quotes[data.futuresCode!] ?? INITIAL,
+    (state) => state.quotes[data?.futuresCode!],
     shallow
   )
+  const sellPrice = (quotes?.Bid ?? data.sellPrice) - diff
+  return (
+    <AnimatedFlow
+      color={
+        quotes?.BidDiff > 0
+          ? colors.primary
+          : quotes?.BidDiff < 0
+            ? colors.destructive
+            : colors.secondary
+      }
+      bold
+      value={quotes?.Bid ? sellPrice : Number(data.sellPrice)}
+      fraction={data.volatility}
+    />
+  )
+}
 
+const BuyPriceCell: FC<{ data: Future; diff: number }> = ({ data, diff }) => {
+  const quotes = useQuotesStore(
+    (state) => state.quotes[data?.futuresCode!],
+    shallow
+  )
+  const buyPrice = (quotes?.Ask ?? data.buyPrice) + diff
+
+  return (
+    <AnimatedFlow
+      value={quotes?.Ask ? buyPrice : Number(data.buyPrice)}
+      fraction={data.volatility}
+      bold
+      color={
+        quotes?.AskDiff > 0
+          ? colors.primary
+          : quotes?.AskDiff < 0
+            ? colors.destructive
+            : colors.secondary
+      }
+    />
+  )
+}
+
+const ListItem: FC<{ data: Future }> = ({ data }) => {
   const diff = useMemo(
     () => ((data.volatility ?? 0) * (data.clazzSpread ?? 0)) / 2,
     [data.volatility, data.clazzSpread]
   )
-  const buyPrice = (quotes?.Ask ?? data.buyPrice) + diff
-  const sellPrice = (quotes?.Bid ?? data.sellPrice) - diff
   const available = data.isDeal
   return (
     <XStack gap="$sm" p="$md" bbc="$border" bbw={1} ai="center">
@@ -84,7 +115,7 @@ const ListItem: FC<{ data: Future }> = ({ data }) => {
           {data.selected ? <Icon name="starFilled" size={12} /> : null}
           {!data.isDeal ? <Icon name="moon" size={12} /> : null}
         </XStack>
-        <Momentum data={data} quotes={quotes} />
+        <Momentum data={data} />
       </YStack>
       <YStack
         p="$sm"
@@ -98,12 +129,15 @@ const ListItem: FC<{ data: Future }> = ({ data }) => {
         gap="$xs"
         onPress={() => {
           if (available) {
+            const price =
+              (useQuotesStore.getState().quotes[data.futuresCode!]?.Bid ??
+                data.sellPrice) - diff
             useQuotesStore.setState({
               currentFuture: data,
               action: "sell",
               order: {
                 position: 0.01,
-                price: sellPrice,
+                price,
               },
             })
             router.push("/order")
@@ -111,18 +145,7 @@ const ListItem: FC<{ data: Future }> = ({ data }) => {
         }}
       >
         <Text col={available ? "$text" : "$tertiary"}>{t("trade.sell")}</Text>
-        <AnimatedFlow
-          color={
-            quotes?.BidDiff > 0
-              ? colors.primary
-              : quotes?.BidDiff < 0
-                ? colors.destructive
-                : colors.secondary
-          }
-          bold
-          value={quotes.Bid ? sellPrice : Number(data.sellPrice)}
-          fraction={data.volatility}
-        />
+        <SellPriceCell data={data} diff={diff} />
       </YStack>
       <YStack
         p="$sm"
@@ -132,38 +155,34 @@ const ListItem: FC<{ data: Future }> = ({ data }) => {
         h={40}
         boc="$border"
         br="$sm"
+        gap="$xs"
         bw={1}
         onPress={() => {
           if (available) {
+            const price =
+              (useQuotesStore.getState().quotes[data.futuresCode!]?.Ask ??
+                data.buyPrice) + diff
             useQuotesStore.setState({
               currentFuture: data,
               action: "buy",
-              order: { position: 0.01, price: buyPrice },
+              order: { position: 0.01, price: price },
             })
             router.push("/order")
           }
         }}
       >
         <Text col={available ? "$text" : "$tertiary"}>{t("trade.buy")}</Text>
-        <AnimatedFlow
-          value={quotes.Ask ? buyPrice : Number(data.buyPrice)}
-          fraction={data.volatility}
-          bold
-          color={
-            quotes?.AskDiff > 0
-              ? colors.primary
-              : quotes?.AskDiff < 0
-                ? colors.destructive
-                : colors.secondary
-          }
-        />
+        <BuyPriceCell data={data} diff={diff} />
       </YStack>
       <XStack
         onPress={() => {
+          const price =
+            (useQuotesStore.getState().quotes[data.futuresCode!]?.Bid ??
+              data.sellPrice) - diff
           useQuotesStore.setState({
             currentFuture: data,
             action: "buy",
-            order: { position: 0.01, price: sellPrice },
+            order: { position: 0.01, price },
           })
           router.push("/order")
         }}
