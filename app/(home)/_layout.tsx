@@ -1,12 +1,15 @@
-import { Stack } from 'expo-router/stack'
-import { Fragment } from 'react'
-import 'react-native-reanimated'
+import { Stack } from "expo-router/stack"
+import { Fragment } from "react"
+import "react-native-reanimated"
 
-import { useWallet } from '~/hooks/useWallet'
-import colors from '~/theme/colors'
-import { TwoFactorNotifier } from '~/widgets/(home)/tabs/dashboard/two-factor-dialog'
-import { DefaultScreenOptions, NativeStackNavigationOptions } from '~/widgets/shared/header'
-import { VerificationPrompt } from '~/widgets/shared/kyc-prompt'
+import { useWallet } from "~/hooks/useWallet"
+import colors from "~/theme/colors"
+import { TwoFactorNotifier } from "~/widgets/(home)/tabs/dashboard/two-factor-dialog"
+import {
+  DefaultScreenOptions,
+  NativeStackNavigationOptions,
+} from "~/widgets/shared/header"
+import { VerificationPrompt } from "~/widgets/shared/kyc-prompt"
 
 export const unstable_settings = {
   initialRouteName: "tabs",

@@ -3,13 +3,9 @@ import Animated, {
   useAnimatedStyle,
   useDerivedValue,
   useSharedValue,
-  withRepeat,
   withSequence,
   withSpring,
-  withTiming,
 } from "react-native-reanimated"
-
-import { Text } from "./text"
 
 import { formatCurrency, formatDecimal } from "~/lib/utils"
 import colors from "~/theme/colors"
