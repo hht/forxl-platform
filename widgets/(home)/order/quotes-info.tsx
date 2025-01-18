@@ -1,3 +1,4 @@
+import { AnimatePresence } from "moti"
 import { FC, useMemo, useState } from "react"
 import { useTranslation } from "react-i18next"
 
@@ -8,6 +9,7 @@ import {
   AnimatedFlow,
   Icon,
   Justified,
+  Moti,
   Text,
   XStack,
   YStack,
@@ -316,7 +318,13 @@ export const QuotesInfo: FC<{ data: FuturesDetail; onPress: () => void }> = ({
             </XStack>
           </XStack>
         </XStack>
-        {visible && <MoreInfo future={data} />}
+        <AnimatePresence>
+          {visible && (
+            <Moti from={{ opacity: 0 }} animate={{ opacity: 1 }}>
+              <MoreInfo future={data} />
+            </Moti>
+          )}
+        </AnimatePresence>
         <YStack bc={visible ? "transparent" : "$card"}>
           <MarketInfo future={data} onPress={onPress} />
         </YStack>

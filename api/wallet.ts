@@ -209,7 +209,12 @@ export const withdraw = async (params: {
   channelCode: string
   money: number
   recordType: number
+  sign: string
+  spId: string
+  timestamp: number
   wdAccount: string
+  emailCode: string
+  gaCode: string
 }) => {
   return await request("/pay/applyWithdrawMoney", "POST", params)
 }
@@ -263,4 +268,12 @@ export const upload = async () => {
       throw error
     }
   }
+}
+
+export const sendEmailCode = async () => {
+  return request("/notice/sendWithdrawalVerifyCode", "POST", undefined).then(
+    () => {
+      toast.show(t("wallet.emailSent"))
+    }
+  )
 }

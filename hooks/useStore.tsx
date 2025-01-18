@@ -288,6 +288,8 @@ export const useWalletStore = createWithEqualityFn<{
   withdrawRequest: {
     address: string
     amount?: number
+    gaCode?: string
+    emailCode?: string
   }
   depositRequest: {
     payBank: string

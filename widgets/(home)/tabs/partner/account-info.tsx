@@ -1,6 +1,8 @@
 import _ from "lodash"
+import { AnimatePresence } from "moti"
 import { Fragment, useState } from "react"
 import { useTranslation } from "react-i18next"
+import { ActivityIndicator } from "react-native"
 import { shallow } from "zustand/shallow"
 
 import { LEVELS } from "./utils"
@@ -18,6 +20,7 @@ import {
   Figure,
   Icon,
   Justified,
+  Moti,
   Popup,
   Row,
   ScrollView,
@@ -27,7 +30,7 @@ import {
   YStack,
 } from "~/components"
 import { formatDate } from "~/hooks/useLocale"
-import { useRequest } from "~/hooks/useRequest"
+import { CACHE_KEY, useRequest } from "~/hooks/useRequest"
 import { useFroxlStore, usePartnerStore } from "~/hooks/useStore"
 import { DEVICE_WIDTH, formatCurrency, formatDecimal } from "~/lib/utils"
 
@@ -41,7 +44,8 @@ export const AccountInfo = () => {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [visible, setVisible] = useState(false)
   const { data: referral } = useRequest(getReferralList)
-  const { data } = useRequest(getPartnerInfo, {
+  const { loading, data } = useRequest(getPartnerInfo, {
+    cacheKey: CACHE_KEY.PARTNER,
     onSuccess: (data) => {
       usePartnerStore.setState({
         currentLevel: data?.level,
@@ -56,76 +60,95 @@ export const AccountInfo = () => {
       })
     },
   })
+  if (loading) {
+    return (
+      <YStack f={1} ai="center" jc="center">
+        <ActivityIndicator />
+      </YStack>
+    )
+  }
   return (
     <Fragment>
-      <Card gap="$md">
-        <XStack gap={12}>
-          <Figure name={LEVELS[currentLevel]} width={48} height={50} />
-          <YStack gap="$sm">
-            <Text col="$secondary">{dict.level}</Text>
-            <XStack ai="center" gap="$sm">
-              <Text subject>{_.upperCase(dict.children[currentLevel])}</Text>
-              <XStack hitSlop={10} onPress={() => setVisible(true)}>
-                <Icon name="info" size={16} />
+      <AnimatePresence>
+        {data && (
+          <Moti
+            from={{ opacity: 0, scale: 0.5 }}
+            animate={{ opacity: 1, scale: 1 }}
+          >
+            <Card gap="$md">
+              <XStack gap={12}>
+                <Figure name={LEVELS[currentLevel]} width={48} height={50} />
+                <YStack gap="$sm">
+                  <Text col="$secondary">{dict.level}</Text>
+                  <XStack ai="center" gap="$sm">
+                    <Text subject>
+                      {_.upperCase(dict.children[currentLevel])}
+                    </Text>
+                    <XStack hitSlop={10} onPress={() => setVisible(true)}>
+                      <Icon name="info" size={16} />
+                    </XStack>
+                  </XStack>
+                </YStack>
               </XStack>
-            </XStack>
-          </YStack>
-        </XStack>
-        <Justified>
-          <Statistics label={t("referral.accounts")}>
-            <Row gap="$sm">
-              <Text heading bold>
-                {`${data?.activeDirectNum ?? 0}/${data?.allDirectNum ?? 0}`}
-              </Text>
-              <XStack hitSlop={10} onPress={() => setVisible(true)}>
-                <Icon name="info" size={16} />
-              </XStack>
-            </Row>
-          </Statistics>
-          <Statistics label={t("partner.earnBonuses")} jc="flex-end">
-            <Button
-              h={24}
-              onPress={() => {
-                copyToClipboard(
-                  `https://www.FORXLMARKETS.COM/CODE=${account?.inviteCode}`
-                )
-              }}
-            >
-              <Text bold col="$background">
-                {t("action.share")}
-              </Text>
-            </Button>
-          </Statistics>
-        </Justified>
-        <Justified>
-          <Statistics label={dict.size}>
-            <Text bold>
-              {t("partner.personCount", { count: data?.teamSize })}
-            </Text>
-          </Statistics>
-          <Statistics label={dict.volume} ai="flex-end">
-            <Text>{formatCurrency(data?.teamVolume ?? 0)}</Text>
-          </Statistics>
-        </Justified>
-        <Justified>
-          <Statistics label={t("referral.earned")}>
-            <Row gap="$xs">
-              <Text bold>{formatDecimal(data?.earned ?? 0)}</Text>
-              <Button h={18} px="$xs" br="$xs" onPress={() => {}}>
-                <Text caption col="$background">
-                  {t("action.query")}
-                </Text>
-              </Button>
-            </Row>
-          </Statistics>
-          <Statistics label={dict.updated} ai="flex-end">
-            <Text>
-              {data?.lastUpdateTime ? formatDate(data?.lastUpdateTime) : ""}
-            </Text>
-          </Statistics>
-        </Justified>
-      </Card>
-
+              <Justified>
+                <Statistics label={t("referral.accounts")}>
+                  <Row gap="$sm">
+                    <Text heading bold>
+                      {`${data?.activeDirectNum ?? 0}/${data?.allDirectNum ?? 0}`}
+                    </Text>
+                    <XStack hitSlop={10} onPress={() => setVisible(true)}>
+                      <Icon name="info" size={16} />
+                    </XStack>
+                  </Row>
+                </Statistics>
+                <Statistics label={t("partner.earnBonuses")} jc="flex-end">
+                  <Button
+                    h={24}
+                    onPress={() => {
+                      copyToClipboard(
+                        `https://www.FORXLMARKETS.COM/CODE=${account?.inviteCode}`
+                      )
+                    }}
+                  >
+                    <Text bold col="$background">
+                      {t("action.share")}
+                    </Text>
+                  </Button>
+                </Statistics>
+              </Justified>
+              <Justified>
+                <Statistics label={dict.size}>
+                  <Text bold>
+                    {t("partner.personCount", { count: data?.teamSize })}
+                  </Text>
+                </Statistics>
+                <Statistics label={dict.volume} ai="flex-end">
+                  <Text>{formatCurrency(data?.teamVolume ?? 0)}</Text>
+                </Statistics>
+              </Justified>
+              <Justified>
+                <Statistics label={t("referral.earned")}>
+                  <Row gap="$xs">
+                    <Text bold>{formatDecimal(data?.earned ?? 0)}</Text>
+                    <Button h={18} px="$xs" br="$xs" onPress={() => {}}>
+                      <Text caption col="$background">
+                        {t("action.query")}
+                      </Text>
+                    </Button>
+                  </Row>
+                </Statistics>
+                <Statistics label={dict.updated} ai="flex-end">
+                  <Text>
+                    {data?.lastUpdateTime
+                      ? formatDate(data?.lastUpdateTime)
+                      : ""}
+                  </Text>
+                </Statistics>
+              </Justified>
+            </Card>
+          </Moti>
+        )}
+      </AnimatePresence>
       <Popup visible={visible} onClose={() => setVisible(false)}>
         <Dialog py="$md" px="$md" w={DEVICE_WIDTH - 32}>
           <Text heading>{dict.partnerList}</Text>

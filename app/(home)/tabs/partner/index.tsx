@@ -1,16 +1,27 @@
-import { Stack } from 'expo-router'
-import { useTranslation } from 'react-i18next'
+import { Stack } from "expo-router"
+import { AnimatePresence } from "moti"
+import { useTranslation } from "react-i18next"
 
-import { Figure, Screen, ScrollView, Text, XStack, YStack } from '~/components'
-import { usePartnerStore } from '~/hooks/useStore'
-import { AccountInfo } from '~/widgets/(home)/tabs/partner/account-info'
-import { LevelCard } from '~/widgets/(home)/tabs/partner/level-card'
-import { LevelInfo } from '~/widgets/(home)/tabs/partner/level-info'
-import { format, Level } from '~/widgets/(home)/tabs/partner/utils'
 import {
-    BrandTitle, DefaultScreenOptions, NativeStackNavigationOptions
-} from '~/widgets/shared/header'
-import { Gradient } from '~/widgets/shared/shape'
+  Figure,
+  Moti,
+  Screen,
+  ScrollView,
+  Text,
+  XStack,
+  YStack,
+} from "~/components"
+import { usePartnerStore } from "~/hooks/useStore"
+import { AccountInfo } from "~/widgets/(home)/tabs/partner/account-info"
+import { LevelCard } from "~/widgets/(home)/tabs/partner/level-card"
+import { LevelInfo } from "~/widgets/(home)/tabs/partner/level-info"
+import { format, Level } from "~/widgets/(home)/tabs/partner/utils"
+import {
+  BrandTitle,
+  DefaultScreenOptions,
+  NativeStackNavigationOptions,
+} from "~/widgets/shared/header"
+import { Gradient } from "~/widgets/shared/shape"
 
 const ScreenOptions: NativeStackNavigationOptions = {
   ...DefaultScreenOptions,
@@ -43,62 +54,85 @@ export default function Page() {
       <Gradient />
       <ScrollView f={1} px="$md" showsVerticalScrollIndicator={false}>
         <AccountInfo />
-        <YStack py="$md" gap={12}>
-          <Text col="$secondary">{t("partner.level")}</Text>
-          <XStack w="100%" ai="center" jc="space-between">
-            <XStack
-              pos="absolute"
-              l={0}
-              r={0}
-              t={8}
-              h="$xs"
-              bc="$border"
-            ></XStack>
-            {dict.children.map((it, index) => (
-              <YStack ai="center" jc="center" key={index} f={1} gap="$xs">
-                <YStack>
-                  <XStack h={24} w={32} ai="center" jc="center">
-                    <Figure
-                      name={index === partnerLevel ? "triangleL" : "triangleS"}
-                      width={index === partnerLevel ? 32 : 24}
-                      height={index === partnerLevel ? 28 : 20}
-                    ></Figure>
-                  </XStack>
-                  {index === partnerLevel ? (
+        <AnimatePresence>
+          {config && (
+            <Moti
+              from={{ opacity: 0, translateY: 20 }}
+              animate={{ opacity: 1, translateY: 0 }}
+            >
+              <YStack>
+                <YStack py="$md" gap={12}>
+                  <Text col="$secondary">{t("partner.level")}</Text>
+                  <XStack w="100%" ai="center" jc="space-between">
                     <XStack
                       pos="absolute"
                       l={0}
                       r={0}
-                      t={0}
-                      b={0}
-                      ai="center"
-                      jc="center"
-                    >
-                      <Text bold mb={8} fos={10}>
-                        {index}
-                      </Text>
-                    </XStack>
-                  ) : null}
+                      t={8}
+                      h="$xs"
+                      bc="$border"
+                    ></XStack>
+                    {dict.children.map((it, index) => (
+                      <YStack
+                        ai="center"
+                        jc="center"
+                        key={index}
+                        f={1}
+                        gap="$xs"
+                      >
+                        <YStack>
+                          <XStack h={24} w={32} ai="center" jc="center">
+                            <Figure
+                              name={
+                                index === partnerLevel
+                                  ? "triangleL"
+                                  : "triangleS"
+                              }
+                              width={index === partnerLevel ? 32 : 24}
+                              height={index === partnerLevel ? 28 : 20}
+                            ></Figure>
+                          </XStack>
+                          {index === partnerLevel ? (
+                            <XStack
+                              pos="absolute"
+                              l={0}
+                              r={0}
+                              t={0}
+                              b={0}
+                              ai="center"
+                              jc="center"
+                            >
+                              <Text bold mb={8} fos={10}>
+                                {index}
+                              </Text>
+                            </XStack>
+                          ) : null}
+                        </YStack>
+                        <Text caption>
+                          {format(config?.[index].market ?? 0)}
+                        </Text>
+                      </YStack>
+                    ))}
+                  </XStack>
                 </YStack>
-                <Text caption>{format(config?.[index].market ?? 0)}</Text>
+                <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                  <XStack gap="$sm" py="$md">
+                    {dict.children.map((it, index) => (
+                      <LevelCard
+                        level={index as Level}
+                        key={index}
+                        locked={index > partnerLevel}
+                        active={index === currentLevel}
+                      />
+                    ))}
+                  </XStack>
+                </ScrollView>
+                <LevelInfo />
+                <XStack h="$md"></XStack>
               </YStack>
-            ))}
-          </XStack>
-        </YStack>
-        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-          <XStack gap="$sm" py="$md">
-            {dict.children.map((it, index) => (
-              <LevelCard
-                level={index as Level}
-                key={index}
-                locked={index > partnerLevel}
-                active={index === currentLevel}
-              />
-            ))}
-          </XStack>
-        </ScrollView>
-        <LevelInfo />
-        <XStack h="$md"></XStack>
+            </Moti>
+          )}
+        </AnimatePresence>
       </ScrollView>
     </Screen>
   )

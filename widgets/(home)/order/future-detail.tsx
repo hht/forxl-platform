@@ -1,29 +1,41 @@
-import { useRequest, useUnmount } from 'ahooks'
-import { router } from 'expo-router'
-import { useEffect, useMemo, useRef, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import { shallow } from 'zustand/shallow'
+import { useMount, useRequest, useUnmount } from "ahooks"
+import { router } from "expo-router"
+import { AnimatePresence } from "moti"
+import { useEffect, useMemo, useRef, useState } from "react"
+import { useTranslation } from "react-i18next"
+import { ActivityIndicator } from "react-native"
+import { shallow } from "zustand/shallow"
 
-import { Action, CurrentPrice } from './current-price'
-import { FutureInfo } from './future-info'
-import { OrderActions } from './order-actions'
-import { PendingCard } from './pending'
-import { QuotesInfo } from './quotes-info'
-import { StopLossCard } from './stop-loss'
-import { StopProfitCard } from './stop-profit'
-import { ToggleFavorite } from './toggle-favorite'
-import { TradeVolume } from './volume'
+import { Action, CurrentPrice } from "./current-price"
+import { FutureInfo } from "./future-info"
+import { OrderActions } from "./order-actions"
+import { PendingCard } from "./pending"
+import { QuotesInfo } from "./quotes-info"
+import { StopLossCard } from "./stop-loss"
+import { StopProfitCard } from "./stop-profit"
+import { ToggleFavorite } from "./toggle-favorite"
+import { TradeVolume } from "./volume"
 
-import { getFuture } from '~/api/trade'
-import { Card, Icon, ScrollView, Tabs, Text, XStack, YStack } from '~/components'
-import { CACHE_KEY } from '~/hooks/useRequest'
-import { useQuotesStore } from '~/hooks/useStore'
-import { subscribeQuotes } from '~/hooks/useWebsocket'
-import { DEVICE_WIDTH } from '~/lib/utils'
-import colors from '~/theme/colors'
+import { getFuture } from "~/api/trade"
+import {
+  Card,
+  Icon,
+  Moti,
+  ScrollView,
+  Tabs,
+  Text,
+  XStack,
+  YStack,
+} from "~/components"
+import { CACHE_KEY } from "~/hooks/useRequest"
+import { useQuotesStore } from "~/hooks/useStore"
+import { subscribeQuotes } from "~/hooks/useWebsocket"
+import { DEVICE_WIDTH } from "~/lib/utils"
+import colors from "~/theme/colors"
 
 export const FutureDetail = () => {
   const { t } = useTranslation()
+  const [mounted, setMounted] = useState(false)
   const dict = t("trade", {
     returnObjects: true,
   })
@@ -37,7 +49,11 @@ export const FutureDetail = () => {
     }),
     shallow
   )
-
+  useMount(() => {
+    requestAnimationFrame(() => {
+      setMounted(true)
+    })
+  })
   const { data: future } = useRequest(
     () => getFuture(currentFuture?.futuresCode!),
     {
@@ -85,6 +101,12 @@ export const FutureDetail = () => {
   useEffect(() => {
     ref.current?.scrollTo({ x: activeIndex * DEVICE_WIDTH, animated: true })
   }, [activeIndex])
+  if (!future)
+    return (
+      <YStack f={1} ai="center" jc="center">
+        <ActivityIndicator />
+      </YStack>
+    )
   return (
     <YStack
       f={1}
@@ -120,55 +142,76 @@ export const FutureDetail = () => {
           onChange={setActiveIndex}
         />
       </XStack>
-
-      <ScrollView
-        ref={ref}
-        f={1}
-        horizontal
-        w={DEVICE_WIDTH}
-        showsHorizontalScrollIndicator={false}
-        pagingEnabled
-        scrollEnabled={false}
-      >
-        <ScrollView f={1} w={DEVICE_WIDTH} showsVerticalScrollIndicator={false}>
-          <YStack p="$md" gap="$sm" w="100%">
-            <Card bw={0}>
-              <XStack ai="center" jc="space-between">
-                <CurrentPrice action={action} />
-                <Action />
-              </XStack>
-            </Card>
-            <TradeVolume future={future} />
-            <PendingCard
-              step={(futuresOrder.volatility ?? 0.01) * 100}
-              precision={
-                futuresOrder.volatility!.toString().split(".")[1]?.length
-              }
-            />
-            <StopProfitCard futuresOrder={futuresOrder} />
-            <StopLossCard futuresOrder={futuresOrder} />
-            <OrderActions />
-          </YStack>
-        </ScrollView>
-        <ScrollView f={1} w={DEVICE_WIDTH} showsVerticalScrollIndicator={false}>
-          {future ? (
-            <QuotesInfo
-              data={future}
-              onPress={() => {
-                setActiveIndex(0)
-              }}
-            />
-          ) : null}
-        </ScrollView>
-        <ScrollView f={1} w={DEVICE_WIDTH} showsVerticalScrollIndicator={false}>
-          <FutureInfo
-            future={future}
-            onPress={() => {
-              setActiveIndex(0)
-            }}
-          />
-        </ScrollView>
-      </ScrollView>
+      <AnimatePresence>
+        {mounted && (
+          <Moti
+            style={{ flex: 1 }}
+            from={{ opacity: 0, translateY: 10 }}
+            animate={{ opacity: 1, translateY: 0 }}
+          >
+            <ScrollView
+              ref={ref}
+              f={1}
+              horizontal
+              w={DEVICE_WIDTH}
+              showsHorizontalScrollIndicator={false}
+              pagingEnabled
+              scrollEnabled={false}
+            >
+              <ScrollView
+                f={1}
+                w={DEVICE_WIDTH}
+                showsVerticalScrollIndicator={false}
+              >
+                <YStack p="$md" gap="$sm" w="100%">
+                  <Card bw={0}>
+                    <XStack ai="center" jc="space-between">
+                      <CurrentPrice action={action} />
+                      <Action />
+                    </XStack>
+                  </Card>
+                  <TradeVolume future={future} />
+                  <PendingCard
+                    step={(futuresOrder.volatility ?? 0.01) * 100}
+                    precision={
+                      futuresOrder.volatility!.toString().split(".")[1]?.length
+                    }
+                  />
+                  <StopProfitCard futuresOrder={futuresOrder} />
+                  <StopLossCard futuresOrder={futuresOrder} />
+                  <OrderActions />
+                </YStack>
+              </ScrollView>
+              <ScrollView
+                f={1}
+                w={DEVICE_WIDTH}
+                showsVerticalScrollIndicator={false}
+              >
+                {future ? (
+                  <QuotesInfo
+                    data={future}
+                    onPress={() => {
+                      setActiveIndex(0)
+                    }}
+                  />
+                ) : null}
+              </ScrollView>
+              <ScrollView
+                f={1}
+                w={DEVICE_WIDTH}
+                showsVerticalScrollIndicator={false}
+              >
+                <FutureInfo
+                  future={future}
+                  onPress={() => {
+                    setActiveIndex(0)
+                  }}
+                />
+              </ScrollView>
+            </ScrollView>
+          </Moti>
+        )}
+      </AnimatePresence>
     </YStack>
   )
 }

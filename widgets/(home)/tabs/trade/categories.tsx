@@ -1,6 +1,7 @@
 import { BottomSheetModal } from "@gorhom/bottom-sheet"
 import { FC, Fragment, useEffect, useRef, useState } from "react"
 import { useTranslation } from "react-i18next"
+import { ActivityIndicator } from "react-native"
 import { useSafeAreaInsets } from "react-native-safe-area-context"
 import { shallow } from "zustand/shallow"
 
@@ -70,7 +71,7 @@ export const FutureCategories: FC = () => {
   const { t } = useTranslation()
   const { bottom } = useSafeAreaInsets()
   const currentFuture = useSymbolStore((state) => state.currentFuture, shallow)
-  const { data } = useRequest(getFutureCategories, {
+  const { loading, data } = useRequest(getFutureCategories, {
     cacheKey: CACHE_KEY.FUTURE_CATEGORIES,
     staleTime: 1000 * 60 * 60,
     onSuccess: (data) => {
@@ -102,9 +103,13 @@ export const FutureCategories: FC = () => {
         gap="$xs"
       >
         <Text subject>{currentFuture?.name}</Text>
-        <XStack rotate="90deg">
-          <Icon name="chevronRight" size={16}></Icon>
-        </XStack>
+        {loading ? (
+          <ActivityIndicator />
+        ) : (
+          <XStack rotate="90deg">
+            <Icon name="chevronRight" size={16}></Icon>
+          </XStack>
+        )}
       </XStack>
       <BottomSheet index={0} title={t("trade.categories")} ref={ref}>
         <YStack pb={bottom}>

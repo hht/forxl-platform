@@ -1,20 +1,28 @@
-import { BottomSheetModal } from '@gorhom/bottom-sheet'
-import { useIsFocused } from '@react-navigation/native'
-import { router } from 'expo-router'
-import { AnimatePresence, useAnimationState } from 'moti'
-import { FC, Fragment, useEffect, useRef, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import { shallow } from 'zustand/shallow'
+import { BottomSheetModal } from "@gorhom/bottom-sheet"
+import { useIsFocused } from "@react-navigation/native"
+import { router } from "expo-router"
+import { AnimatePresence, useAnimationState } from "moti"
+import { FC, Fragment, useEffect, useRef, useState } from "react"
+import { useTranslation } from "react-i18next"
+import { useSafeAreaInsets } from "react-native-safe-area-context"
+import { shallow } from "zustand/shallow"
 
-import { Notifier } from './header'
+import { Notifier } from "./header"
 
 import {
-    AnimatedFlow, BottomSheet, Button, Icon, Moti, Separator, Text, XStack, YStack
-} from '~/components'
-import { usePromptStore, useStatisticsStore } from '~/hooks/useStore'
-import { formatCurrency, uuid } from '~/lib/utils'
-import colors, { toRGBA } from '~/theme/colors'
+  AnimatedFlow,
+  BottomSheet,
+  Button,
+  Icon,
+  Moti,
+  Separator,
+  Text,
+  XStack,
+  YStack,
+} from "~/components"
+import { usePromptStore, useStatisticsStore } from "~/hooks/useStore"
+import { formatCurrency, uuid } from "~/lib/utils"
+import colors, { toRGBA } from "~/theme/colors"
 
 const ListItem: FC<{ label: string; value: number; onPress: () => void }> = ({
   label,
@@ -211,13 +219,13 @@ export const WalletStatistics: FC = () => {
             <Notifier icon="ring" type={1} />
           </XStack>
         </XStack>
-        <AnimatePresence>
+        <AnimatePresence initial={false}>
           {visible ? (
             <Moti
               from={{ opacity: 0, translateY: -20, height: 0 }}
               animate={{ opacity: 1, translateY: 0, height: 64 }}
               exit={{ opacity: 0, translateY: -20, height: 0 }}
-              transition={{ type: "timing", duration: 100 }}
+              transition={{ type: "timing" }}
             >
               <Summary onChange={setState} />
             </Moti>

@@ -325,31 +325,33 @@ export const FutureList = () => {
           <Icon name="search" size={20}></Icon>
         </XStack>
       </XStack>
-      <FlatList
-        data={data?.list}
-        renderItem={renderItem}
-        keyExtractor={keyExtractor}
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={{
-          flexGrow: 1,
-        }}
-        refreshing={loading}
-        refreshControl={
-          <RefreshControl
-            colors={[colors.tertiary]}
-            progressBackgroundColor={colors.card}
-            refreshing={loading}
-            onRefresh={reload}
-          />
-        }
-        ListEmptyComponent={() => (
-          <ListEmptyComponent loading={loadingMore || loading} />
-        )}
-        onEndReached={loadMore}
-        ListFooterComponent={() => (
-          <ListFooterComponent loading={loadingMore} />
-        )}
-      ></FlatList>
+      {currentFuture ? (
+        <FlatList
+          data={data?.list}
+          renderItem={renderItem}
+          keyExtractor={keyExtractor}
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{
+            flexGrow: 1,
+          }}
+          refreshing={loading}
+          refreshControl={
+            <RefreshControl
+              colors={[colors.tertiary]}
+              progressBackgroundColor={colors.card}
+              refreshing={loading}
+              onRefresh={reload}
+            />
+          }
+          ListEmptyComponent={() => (
+            <ListEmptyComponent loading={loadingMore || loading} />
+          )}
+          onEndReached={loadMore}
+          ListFooterComponent={() => (
+            <ListFooterComponent loading={loadingMore} />
+          )}
+        ></FlatList>
+      ) : null}
     </YStack>
   )
 }

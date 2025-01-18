@@ -117,7 +117,8 @@
     "closePositionSuccess": "Position closed successfully",
     "orderSuccess": "Order placed successfully",
     "changePositionSuccess": "Position changed successfully",
-    "accessMedia": "Sorry, we need camera roll permissions to make this work!"
+    "accessMedia": "Sorry, we need camera roll permissions to make this work!",
+    "verificationCodePrompt": "Please enter the correct verification code"
   },
   "home": {
     "news": "Market News",

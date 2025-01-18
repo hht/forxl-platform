@@ -1,9 +1,12 @@
+import * as Clipboard from "expo-clipboard"
 import { router, Stack } from "expo-router"
+import { useMemo } from "react"
 import { useTranslation } from "react-i18next"
 import { useSafeAreaInsets } from "react-native-safe-area-context"
+import { z } from "zod"
 import { shallow } from "zustand/shallow"
 
-import { withdraw } from "~/api/wallet"
+import { sendEmailCode, withdraw } from "~/api/wallet"
 import { Button, Input, Text, toast, YStack } from "~/components"
 import { useRequest } from "~/hooks/useRequest"
 import { useFroxlStore, useWalletStore } from "~/hooks/useStore"
@@ -12,8 +15,34 @@ import { InputSuffix } from "~/widgets/shared/input-suffix"
 export default function Page() {
   const { t } = useTranslation()
   const email = useFroxlStore((state) => state.account?.email, shallow)
+  const { gaCode, emailCode } = useWalletStore(
+    (state) => state.withdrawRequest,
+    shallow
+  )
   const { withdrawRequest } = useWalletStore()
   const { bottom } = useSafeAreaInsets()
+
+  const scheme = useMemo(
+    () =>
+      z.object({
+        gaCode: z
+          .string()
+          .regex(/^\d{6}$/, t("message.verificationCodePrompt"))
+          .length(6, t("message.verificationCodePrompt")),
+
+        emailCode: z
+          .string()
+          .regex(/^\d{6}$/, t("message.verificationCodePrompt"))
+          .length(6, t("message.verificationCodePrompt")),
+      }),
+    [t]
+  )
+
+  const { success, error } = scheme.safeParse({
+    gaCode,
+    emailCode,
+  })
+  const errors = error?.formErrors?.fieldErrors
   const { run, loading } = useRequest(withdraw, {
     manual: true,
     onSuccess: () => {
@@ -36,11 +65,20 @@ export default function Page() {
         </Text>
         <Input
           label={t("wallet.verificationCode")}
-          value={""}
-          disableValidation
-          onChange={(verificationCode) => {}}
+          value={emailCode}
+          message={errors?.emailCode?.[0]}
+          onChangeText={(emailCode) => {
+            useWalletStore.setState({
+              withdrawRequest: { ...withdrawRequest, emailCode },
+            })
+          }}
           addonAfter={
-            <InputSuffix col="$primary" onPress={() => {}}>
+            <InputSuffix
+              col="$primary"
+              onPress={() => {
+                sendEmailCode()
+              }}
+            >
               {t("settings.getVerificationCode")}
             </InputSuffix>
           }
@@ -50,15 +88,30 @@ export default function Page() {
         <Text>{t("security.googleAuthCodeDesc")}</Text>
         <Input
           label={t("wallet.verificationCode")}
-          value={""}
-          disableValidation
-          onChange={(googleAuthCode) => {}}
+          value={gaCode}
+          message={errors?.gaCode?.[0]}
+          onChangeText={(gaCode) => {
+            useWalletStore.setState({
+              withdrawRequest: { ...withdrawRequest, gaCode },
+            })
+          }}
           addonAfter={
-            <InputSuffix col="$primary">{t("action.paste")}</InputSuffix>
+            <InputSuffix
+              col="$primary"
+              onPress={() => {
+                Clipboard.getStringAsync().then((gaCode) => {
+                  useWalletStore.setState({
+                    withdrawRequest: { ...withdrawRequest, gaCode },
+                  })
+                })
+              }}
+            >
+              {t("action.paste")}
+            </InputSuffix>
           }
         ></Input>
       </YStack>
-      <Button disabled={loading} onPress={() => {}}>
+      <Button disabled={loading || !success} onPress={() => {}}>
         {t("wallet.confirmWithdraw")}
       </Button>
     </YStack>
