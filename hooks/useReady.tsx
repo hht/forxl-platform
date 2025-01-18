@@ -33,7 +33,7 @@ export const useReady = () => {
         await Updates.reloadAsync()
       }
     } catch (error) {
-      console.log("Error checking updates:", error)
+      // console.log("Error checking updates:", error)
     }
   }, [])
   const initI18Next = useCallback(async () => {

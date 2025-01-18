@@ -374,6 +374,7 @@
     "updatedAt": "Updated at {{time}}",
     "verificationCode": "Enter the verification code",
     "withdraw": "Withdraw",
+    "emailSent": "Verification code has been sent to your email, please check it.",
     "withdrawal": "Withdrawal",
     "withdrawAmount": "Withdraw Amount",
     "withdrawDetails": "Withdraw Details",
