@@ -1,15 +1,22 @@
-import { FC, useMemo, useState } from 'react'
-import { useTranslation } from 'react-i18next'
+import { FC, useMemo, useState } from "react"
+import { useTranslation } from "react-i18next"
 
-import { MarketInfo } from './market-info'
+import { MarketInfo } from "./market-info"
 
-import { getFutureHistories } from '~/api/trade'
-import { AnimatedFlow, Icon, Justified, Text, XStack, YStack } from '~/components'
-import { useRequest } from '~/hooks/useRequest'
-import { useQuotesStore } from '~/hooks/useStore'
-import { dayjs, formatDecimal } from '~/lib/utils'
-import colors from '~/theme/colors'
-import { FutureChartWidget } from '~/widgets/shared/future-chart-widget'
+import { getFutureHistories } from "~/api/trade"
+import {
+  AnimatedFlow,
+  Icon,
+  Justified,
+  Text,
+  XStack,
+  YStack,
+} from "~/components"
+import { useRequest } from "~/hooks/useRequest"
+import { useQuotesStore } from "~/hooks/useStore"
+import { dayjs, formatDecimal } from "~/lib/utils"
+import colors from "~/theme/colors"
+import { FutureChartWidget } from "~/widgets/shared/future-chart-widget"
 
 const PriceIndicator: FC<{
   min?: number
@@ -18,11 +25,12 @@ const PriceIndicator: FC<{
   unit: string
   volatility?: number
 }> = ({ min = 0, max = 0, value = 0, unit, volatility }) => {
-  const percentage = ((value - min) / (max - min || 1)) * 100
-
+  const _min = Math.min(min, value)
+  const _max = Math.max(max, value)
+  const percentage = ((value - _min) / (_max - _min || 1)) * 100
   return (
     <Justified w="100%" gap="$sm">
-      <Text f={1}>{`$${formatDecimal(min, volatility)}`}</Text>
+      <Text f={1}>{`$${formatDecimal(_min, volatility)}`}</Text>
       <XStack
         bc="$card"
         br="$xs"
@@ -40,14 +48,15 @@ const PriceIndicator: FC<{
           t={0}
           b={0}
           w={3}
+          br={1}
           bc="$primary"
           style={{
             left: `${percentage}%`,
-            transform: [{ translateX: "-50%" }],
+            transform: [{ translateX: -1.5 }],
           }}
         />
       </XStack>
-      <Text f={1} ta="right">{`$${formatDecimal(max, volatility)}`}</Text>
+      <Text f={1} ta="right">{`$${formatDecimal(_max, volatility)}`}</Text>
     </Justified>
   )
 }
