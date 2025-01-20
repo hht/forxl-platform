@@ -152,6 +152,7 @@ const Root = () => {
       })
       return
     }
+
     const chart = createChart(chartContainerRef.current!, {
       layout: {
         background: { type: ColorType.Solid, color: "black" },
@@ -248,8 +249,44 @@ const Root = () => {
         }
       }
     })
+    const tooltipEl = document.createElement("div")
+    tooltipEl.style.position = "absolute"
+    tooltipEl.style.fontFamily = "Arial"
+    tooltipEl.style.fontSize = "12px"
+    tooltipEl.style.display = "none"
+    tooltipEl.style.zIndex = "100"
+    tooltipEl.style.top = "8px"
+    tooltipEl.style.left = "8px"
+    tooltipEl.style.padding = "8px"
+    tooltipEl.style.backgroundColor = "rgba(255, 255, 255, 0.1)"
+    tooltipEl.style.color = "white"
+    tooltipEl.style.borderRadius = "4px"
+    chartContainerRef.current!.appendChild(tooltipEl)
+
+    // 监听crosshair移动
+    chart.subscribeCrosshairMove((param) => {
+      if (
+        param.point === undefined ||
+        !param.time ||
+        param.point.x < 0 ||
+        param.point.y < 0
+      ) {
+        tooltipEl.style.display = "none"
+        return
+      }
+
+      const dateStr = _.isString(params?.resolution)
+        ? dayjs((param.time as number) * 1000).format("YYYY-MM-DD")
+        : dayjs((param.time as number) * 1000).format("YYYY-MM-DD HH:mm:ss")
+
+      tooltipEl.style.display = "block"
+      tooltipEl.innerHTML = `
+    <div>${dateStr}</div>
+  `
+    })
     return () => {
       chart.remove()
+      tooltipEl.remove()
     }
   }, [params])
 
