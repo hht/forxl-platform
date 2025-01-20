@@ -55,7 +55,7 @@ export default function Layout() {
         <ListItem
           title={dict.ver}
           isLink={false}
-          addonAfter={<Text col="$secondary">v2.1456(23123213123)</Text>}
+          addonAfter={<Text col="$secondary">v1.1456(202501201030)</Text>}
         />
       </ScrollView>
       <BottomSheet ref={timeSheetRef}>

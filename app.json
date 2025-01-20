@@ -41,12 +41,12 @@
         "origin": false
       },
       "eas": {
-        "projectId": "f9ba398b-53b1-424d-843e-d6dfd0259367"
+        "projectId": "a5599c5d-4e0c-408b-b64c-b0e1507fe9a0"
       }
     },
     "runtimeVersion": "1.0.0",
     "updates": {
-      "url": "https://u.expo.dev/f9ba398b-53b1-424d-843e-d6dfd0259367",
+      "url": "https://u.expo.dev/a5599c5d-4e0c-408b-b64c-b0e1507fe9a0",
       "channel": "production",
       "requestHeaders": {
         "expo-runtime-version": "1.0.0",
