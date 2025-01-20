@@ -16,8 +16,8 @@ export const WithdrawSummary: FC = () => {
         <Text col="$secondary">{t("wallet.youWillGet")}</Text>
         <Text subject>
           {formatCurrency(
-            withdrawRequest?.amount
-              ? withdrawRequest.amount - (method.feeValue ?? 0)
+            withdrawRequest?.money
+              ? withdrawRequest.money - (method.feeValue ?? 0)
               : 0
           )}
         </Text>
