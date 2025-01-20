@@ -1,21 +1,38 @@
-import _ from 'lodash'
-import { AnimatePresence } from 'moti'
-import { Fragment, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import { ActivityIndicator } from 'react-native'
-import { shallow } from 'zustand/shallow'
+import _ from "lodash"
+import { AnimatePresence } from "moti"
+import { Fragment, useState } from "react"
+import { useTranslation } from "react-i18next"
+import { ActivityIndicator } from "react-native"
+import { shallow } from "zustand/shallow"
 
-import { LEVELS } from './utils'
+import { LEVELS } from "./utils"
 
-import { getPartnerConfig, getPartnerInfo, getReferralList } from '~/api/partner'
 import {
-    Button, Card, copyToClipboard, Dialog, Figure, Icon, Justified, Moti, Popup, Row, ScrollView,
-    Statistics, Text, XStack, YStack
-} from '~/components'
-import { formatDate } from '~/hooks/useLocale'
-import { CACHE_KEY, useRequest } from '~/hooks/useRequest'
-import { useForxlStore, usePartnerStore } from '~/hooks/useStore'
-import { DEVICE_WIDTH, formatCurrency, formatDecimal } from '~/lib/utils'
+  getPartnerConfig,
+  getPartnerInfo,
+  getReferralList,
+} from "~/api/partner"
+import {
+  Button,
+  Card,
+  copyToClipboard,
+  Dialog,
+  Figure,
+  Icon,
+  Justified,
+  Moti,
+  Popup,
+  Row,
+  ScrollView,
+  Statistics,
+  Text,
+  XStack,
+  YStack,
+} from "~/components"
+import { formatDate } from "~/hooks/useLocale"
+import { CACHE_KEY, useRequest } from "~/hooks/useRequest"
+import { useForxlStore, usePartnerStore } from "~/hooks/useStore"
+import { DEVICE_WIDTH, formatCurrency, formatDecimal } from "~/lib/utils"
 
 export const AccountInfo = () => {
   const { account } = useForxlStore()
@@ -215,7 +232,7 @@ export const AccountInfo = () => {
                 </YStack>
               ))
             ) : (
-              <YStack h="100%" ai="center" jc="center">
+              <YStack h="100%" w={DEVICE_WIDTH - 32} ai="center" jc="center">
                 <Figure name="empty" width={120} height={120} />
               </YStack>
             )}

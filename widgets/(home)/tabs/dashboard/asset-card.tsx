@@ -1,3 +1,4 @@
+import { router } from "expo-router"
 import { FC } from "react"
 import { useTranslation } from "react-i18next"
 
@@ -20,7 +21,14 @@ export const AssetCard: FC = () => {
           <Text>USD</Text>
         </XStack>
       </YStack>
-      <Icon name="chevronRight" />
+      <YStack
+        hitSlop={16}
+        onPress={() => {
+          router.push("/(home)/tabs/wallet")
+        }}
+      >
+        <Icon name="chevronRight" />
+      </YStack>
     </Card>
   )
 }
