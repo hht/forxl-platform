@@ -1,27 +1,20 @@
-import { Fragment } from "react"
-import { Trans, useTranslation } from "react-i18next"
+import { Fragment } from 'react'
+import { Trans, useTranslation } from 'react-i18next'
 
-import { getBonusInfo, getPartnerInfo } from "~/api/partner"
+import { getBonusInfo, getPartnerInfo } from '~/api/partner'
 import {
-  Button,
-  Card,
-  copyToClipboard,
-  Figure,
-  Statistics,
-  Text,
-  XStack,
-  YStack,
-} from "~/components"
-import { useRequest } from "~/hooks/useRequest"
-import { useFroxlStore, usePartnerStore } from "~/hooks/useStore"
-import { formatCurrency } from "~/lib/utils"
+    Button, Card, copyToClipboard, Figure, Statistics, Text, XStack, YStack
+} from '~/components'
+import { useRequest } from '~/hooks/useRequest'
+import { useForxlStore, usePartnerStore } from '~/hooks/useStore'
+import { formatCurrency } from '~/lib/utils'
 
 export const ReferralInfo = () => {
   const { t } = useTranslation()
   const dict = t("referral", {
     returnObjects: true,
   })
-  const { account } = useFroxlStore()
+  const { account } = useForxlStore()
   const { data } = useRequest(getPartnerInfo, {
     onSuccess: (data) => {
       usePartnerStore.setState({

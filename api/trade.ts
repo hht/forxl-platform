@@ -3,7 +3,7 @@ import _ from 'lodash'
 
 import { getDate } from '~/hooks/useLocale'
 import { BASE_URL, request } from '~/hooks/useRequest'
-import { useFroxlStore, useOrderStore, useQuotesStore } from '~/hooks/useStore'
+import { useForxlStore, useOrderStore, useQuotesStore } from '~/hooks/useStore'
 import { dayjs, i18n, toInfinite, waitFor } from '~/lib/utils'
 
 export const getFutures = async (params: GetFuturesParams) => {
@@ -167,7 +167,7 @@ export const exportClosedPositions = async ({
       {
         startTime,
         endTime,
-        userNumber: useFroxlStore.getState().userNumber,
+        userNumber: useForxlStore.getState().userNumber,
       },
       {
         headers: {
@@ -287,7 +287,7 @@ export const getExploreHistories = async () => {
   )
     .then((res) => res ?? [])
     .then((res) => {
-      useFroxlStore.setState({
+      useForxlStore.setState({
         histories: res,
       })
     })

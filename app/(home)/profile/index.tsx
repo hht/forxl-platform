@@ -10,7 +10,7 @@ import {
     YStack
 } from '~/components'
 import { CACHE_KEY, useRequest } from '~/hooks/useRequest'
-import { useFroxlStore } from '~/hooks/useStore'
+import { useForxlStore } from '~/hooks/useStore'
 import { SupportTip } from '~/widgets/(home)/profile/suppirt-tip'
 import { VerificationTrigger } from '~/widgets/shared/validation-card'
 
@@ -21,7 +21,7 @@ export default function Page() {
   const dict = t("profile", {
     returnObjects: true,
   })
-  const account = useFroxlStore((state) => state.account)
+  const account = useForxlStore((state) => state.account)
   const { bottom } = useSafeAreaInsets()
   const bottomSheetRef = useRef<BottomSheetModal>(null)
   const { data: profile } = useRequest(getProfile, {
@@ -131,7 +131,7 @@ export default function Page() {
         <Button
           type="ghost"
           onPress={() => {
-            useFroxlStore.setState({ userNumber: undefined })
+            useForxlStore.setState({ userNumber: undefined })
           }}
         >
           {dict.logout}

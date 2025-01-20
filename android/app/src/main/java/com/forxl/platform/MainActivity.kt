@@ -1,4 +1,4 @@
-package com.froxl.platform
+package com.forxl.platform
 import expo.modules.splashscreen.SplashScreenManager
 
 import android.os.Build

@@ -1,11 +1,11 @@
-import { useRequest as useRequestBase } from "ahooks"
-import { Options, Plugin, Service } from "ahooks/lib/useRequest/src/types"
-import axios from "axios"
+import { useRequest as useRequestBase } from 'ahooks'
+import { Options, Plugin, Service } from 'ahooks/lib/useRequest/src/types'
+import axios from 'axios'
 
-import { useFroxlStore } from "./useStore"
+import { useForxlStore } from './useStore'
 
-import { toast } from "~/components"
-import { i18n } from "~/lib/utils"
+import { toast } from '~/components'
+import { i18n } from '~/lib/utils'
 
 export const CACHE_KEY = {
   USER: "/user/getUser",
@@ -52,18 +52,18 @@ export const request = async <T, U>(
         ? {
             params: {
               ...body,
-              userNumber: useFroxlStore.getState().userNumber,
+              userNumber: useForxlStore.getState().userNumber,
             },
           }
         : {
-            data: { ...body, userNumber: useFroxlStore.getState().userNumber },
+            data: { ...body, userNumber: useForxlStore.getState().userNumber },
           }),
     })
     .then((res) => res.data)
     .then((res) => {
       if (typeof res === "object" && res !== null && "code" in res) {
         if (res.code === 502) {
-          useFroxlStore.setState({ userNumber: "" })
+          useForxlStore.setState({ userNumber: "" })
           throw new Error(res.msg)
         }
         if (res.code !== 100) {

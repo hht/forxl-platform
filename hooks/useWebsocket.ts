@@ -3,7 +3,7 @@ import _ from 'lodash'
 import { useCallback, useEffect, useRef } from 'react'
 import { createWithEqualityFn } from 'zustand/traditional'
 
-import { useFroxlStore, useQuotesStore } from './useStore'
+import { useForxlStore, useQuotesStore } from './useStore'
 
 import { getOpenPositions } from '~/api/trade'
 
@@ -60,7 +60,7 @@ export const useWebSocket = () => {
       }
       sendMessage({
         type: "watchAccount",
-        data: { userNumber: useFroxlStore.getState().userNumber },
+        data: { userNumber: useForxlStore.getState().userNumber },
       })
     }
 

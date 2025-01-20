@@ -1,11 +1,11 @@
-import { AnimatePresence } from "moti"
-import { FC } from "react"
-import { useTranslation } from "react-i18next"
+import { AnimatePresence } from 'moti'
+import { FC } from 'react'
+import { useTranslation } from 'react-i18next'
 
-import { getAttestationFlag } from "~/api/account"
-import { Card, Icon, Moti, Separator, Text, XStack, YStack } from "~/components"
-import { CACHE_KEY, useRequest } from "~/hooks/useRequest"
-import colors, { toRGBA } from "~/theme/colors"
+import { getAttestationFlag } from '~/api/account'
+import { Card, Icon, Moti, Separator, Text, XStack, YStack } from '~/components'
+import { CACHE_KEY, useRequest } from '~/hooks/useRequest'
+import colors, { toRGBA } from '~/theme/colors'
 
 export const TwoFactorCard: FC = () => {
   const { t } = useTranslation()
@@ -16,9 +16,9 @@ export const TwoFactorCard: FC = () => {
     <AnimatePresence>
       {attestation && !attestation?.ga ? (
         <Moti
-          from={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
+          from={{ opacity: 0, scale: 0.6 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 0.6 }}
         >
           <Card p="$md" bc={toRGBA(colors.warning, 0.2)}>
             <YStack gap="$sm">

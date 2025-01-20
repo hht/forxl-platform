@@ -1,19 +1,19 @@
-import { useIsFocused } from "@react-navigation/native"
-import { useInfiniteScroll } from "ahooks"
-import { router } from "expo-router"
-import { FC, useCallback, useEffect, useMemo } from "react"
-import { FlatList, Platform, RefreshControl } from "react-native"
-import { shallow } from "zustand/shallow"
+import { useIsFocused } from '@react-navigation/native'
+import { useInfiniteScroll } from 'ahooks'
+import { router } from 'expo-router'
+import { FC, useCallback, useEffect, useMemo } from 'react'
+import { FlatList, Platform, RefreshControl } from 'react-native'
+import { shallow } from 'zustand/shallow'
 
-import { FutureCategories } from "./categories"
+import { FutureCategories } from './categories'
 
-import { getFutures } from "~/api/trade"
-import { AnimatedFlow, Icon, Text, XStack, YStack } from "~/components"
-import { useFroxlStore, useQuotesStore, useSymbolStore } from "~/hooks/useStore"
-import { subscribeQuotes } from "~/hooks/useWebsocket"
-import { DEVICE_WIDTH, t } from "~/lib/utils"
-import colors from "~/theme/colors"
-import { ListEmptyComponent, ListFooterComponent } from "~/widgets/shared/list"
+import { getFutures } from '~/api/trade'
+import { AnimatedFlow, Icon, Text, XStack, YStack } from '~/components'
+import { useForxlStore, useQuotesStore, useSymbolStore } from '~/hooks/useStore'
+import { subscribeQuotes } from '~/hooks/useWebsocket'
+import { DEVICE_WIDTH, t } from '~/lib/utils'
+import colors from '~/theme/colors'
+import { ListEmptyComponent, ListFooterComponent } from '~/widgets/shared/list'
 
 const Momentum: FC<{
   data?: Future
@@ -291,8 +291,8 @@ export const FutureList = () => {
       useSymbolStore.setState({
         mutationFuture: undefined,
       })
-      useFroxlStore.setState({
-        histories: useFroxlStore.getState().histories?.map((item) => {
+      useForxlStore.setState({
+        histories: useForxlStore.getState().histories?.map((item) => {
           if (item.futuresId === params.futuresId) {
             return {
               ...item,

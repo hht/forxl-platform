@@ -1,16 +1,13 @@
-import { useUnmount } from "ahooks"
-import { router, Stack } from "expo-router"
-import { useMemo } from "react"
-import { Trans, useTranslation } from "react-i18next"
-import { z } from "zod"
-import { createWithEqualityFn } from "zustand/traditional"
+import { useUnmount } from 'ahooks'
+import { router, Stack } from 'expo-router'
+import { useMemo } from 'react'
+import { Trans, useTranslation } from 'react-i18next'
+import { z } from 'zod'
+import { createWithEqualityFn } from 'zustand/traditional'
 
-import { Button, Input, Screen, Text, YStack } from "~/components"
-import {
-  LiveSupport,
-  NativeStackNavigationOptions,
-} from "~/widgets/shared/header"
-import { WebLink } from "~/widgets/shared/link"
+import { Button, Input, Screen, Text, YStack } from '~/components'
+import { LiveSupport, NativeStackNavigationOptions } from '~/widgets/shared/header'
+import { WebLink } from '~/widgets/shared/link'
 
 const ScreenOptions: NativeStackNavigationOptions = {
   title: "",
@@ -25,7 +22,7 @@ interface Store {
 }
 
 const INITIAL = {
-  email: "froxl-test@snapmail.cc",
+  email: "forxl-test@snapmail.cc",
   password: "",
   confirm: "",
   inviteCode: "LY869960",

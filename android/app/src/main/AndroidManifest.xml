@@ -29,8 +29,8 @@
         <action android:name="android.intent.action.VIEW"/>
         <category android:name="android.intent.category.DEFAULT"/>
         <category android:name="android.intent.category.BROWSABLE"/>
-        <data android:scheme="froxl"/>
-        <data android:scheme="com.froxl.platform"/>
+        <data android:scheme="forxl"/>
+        <data android:scheme="com.forxl.platform"/>
       </intent-filter>
     </activity>
   </application>

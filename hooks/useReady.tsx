@@ -1,18 +1,15 @@
-import { useMount } from "ahooks"
-import { useFonts } from "expo-font"
-import * as Localization from "expo-localization"
-import * as SplashScreen from "expo-splash-screen"
-import * as Updates from "expo-updates"
-import { useCallback, useState } from "react"
-import { initReactI18next } from "react-i18next"
-import {
-  configureReanimatedLogger,
-  ReanimatedLogLevel,
-} from "react-native-reanimated"
+import { useMount } from 'ahooks'
+import { useFonts } from 'expo-font'
+import * as Localization from 'expo-localization'
+import * as SplashScreen from 'expo-splash-screen'
+import * as Updates from 'expo-updates'
+import { useCallback, useState } from 'react'
+import { initReactI18next } from 'react-i18next'
+import { configureReanimatedLogger, ReanimatedLogLevel } from 'react-native-reanimated'
 
-import { useFroxlStore } from "./useStore"
+import { useForxlStore } from './useStore'
 
-import { i18n, resources } from "~/lib/utils"
+import { i18n, resources } from '~/lib/utils'
 
 configureReanimatedLogger({
   level: ReanimatedLogLevel.warn,
@@ -41,7 +38,7 @@ export const useReady = () => {
     await i18n.use(initReactI18next).init({
       debug: false,
       resources: resources,
-      lng: useFroxlStore.getState().language ?? locale ?? "en",
+      lng: useForxlStore.getState().language ?? locale ?? "en",
       defaultNS: "translation",
       interpolation: {
         escapeValue: false,

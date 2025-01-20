@@ -1,13 +1,13 @@
-import { BottomSheetModal } from "@gorhom/bottom-sheet"
-import { router, Stack } from "expo-router"
-import _ from "lodash"
-import { Fragment, useMemo, useRef } from "react"
-import { useTranslation } from "react-i18next"
+import { BottomSheetModal } from '@gorhom/bottom-sheet'
+import { router, Stack } from 'expo-router'
+import _ from 'lodash'
+import { Fragment, useMemo, useRef } from 'react'
+import { useTranslation } from 'react-i18next'
 
-import { BottomSheet, ListItem, Picker, ScrollView, Text } from "~/components"
-import { useFroxlStore } from "~/hooks/useStore"
-import { LANGUAGES, TIMEZONES } from "~/lib/constants"
-import { ClearCacheItem } from "~/widgets/(home)/settings/clear-cache"
+import { BottomSheet, ListItem, Picker, ScrollView, Text } from '~/components'
+import { useForxlStore } from '~/hooks/useStore'
+import { LANGUAGES, TIMEZONES } from '~/lib/constants'
+import { ClearCacheItem } from '~/widgets/(home)/settings/clear-cache'
 
 const TIMEZONE_LIST = _.uniqBy(
   TIMEZONES.map((it) => ({
@@ -19,7 +19,7 @@ const TIMEZONE_LIST = _.uniqBy(
 
 export default function Layout() {
   const { t } = useTranslation()
-  const { timezone, language } = useFroxlStore((state) => state)
+  const { timezone, language } = useForxlStore((state) => state)
   const dict = t("settings", {
     returnObjects: true,
   })
@@ -63,7 +63,7 @@ export default function Layout() {
           data={TIMEZONE_LIST}
           value={timezone}
           onValueChanged={(timezone) => {
-            useFroxlStore.setState({ timezone: timezone as number })
+            useForxlStore.setState({ timezone: timezone as number })
           }}
         />
       </BottomSheet>

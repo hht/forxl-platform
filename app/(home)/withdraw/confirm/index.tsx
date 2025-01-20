@@ -1,20 +1,20 @@
-import * as Clipboard from "expo-clipboard"
-import { router, Stack } from "expo-router"
-import { useMemo } from "react"
-import { useTranslation } from "react-i18next"
-import { useSafeAreaInsets } from "react-native-safe-area-context"
-import { z } from "zod"
-import { shallow } from "zustand/shallow"
+import * as Clipboard from 'expo-clipboard'
+import { router, Stack } from 'expo-router'
+import { useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { z } from 'zod'
+import { shallow } from 'zustand/shallow'
 
-import { sendEmailCode, withdraw } from "~/api/wallet"
-import { Button, Input, Text, toast, YStack } from "~/components"
-import { useRequest } from "~/hooks/useRequest"
-import { useFroxlStore, useWalletStore } from "~/hooks/useStore"
-import { InputSuffix } from "~/widgets/shared/input-suffix"
+import { sendEmailCode, withdraw } from '~/api/wallet'
+import { Button, Input, Text, toast, YStack } from '~/components'
+import { useRequest } from '~/hooks/useRequest'
+import { useForxlStore, useWalletStore } from '~/hooks/useStore'
+import { InputSuffix } from '~/widgets/shared/input-suffix'
 
 export default function Page() {
   const { t } = useTranslation()
-  const email = useFroxlStore((state) => state.account?.email, shallow)
+  const email = useForxlStore((state) => state.account?.email, shallow)
   const { gaCode, emailCode } = useWalletStore(
     (state) => state.withdrawRequest,
     shallow

@@ -63,9 +63,9 @@ export const VerificationCard: FC = () => {
     <AnimatePresence>
       {attestation && !certificated && profile ? (
         <Moti
-          from={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
+          from={{ opacity: 0, scale: 0.6 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 0.6 }}
         >
           <Card p="$md" bc={toRGBA(colors.warning, 0.2)}>
             <YStack gap="$sm">

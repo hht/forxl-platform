@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "froxl.app"
-               BlueprintName = "froxl"
-               ReferencedContainer = "container:froxl.xcodeproj">
+               BuildableName = "forxl.app"
+               BlueprintName = "forxl"
+               ReferencedContainer = "container:forxl.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "froxlTests.xctest"
-               BlueprintName = "froxlTests"
-               ReferencedContainer = "container:froxl.xcodeproj">
+               BuildableName = "forxlTests.xctest"
+               BlueprintName = "forxlTests"
+               ReferencedContainer = "container:forxl.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -55,9 +55,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "froxl.app"
-            BlueprintName = "froxl"
-            ReferencedContainer = "container:froxl.xcodeproj">
+            BuildableName = "forxl.app"
+            BlueprintName = "forxl"
+            ReferencedContainer = "container:forxl.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -72,9 +72,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "froxl.app"
-            BlueprintName = "froxl"
-            ReferencedContainer = "container:froxl.xcodeproj">
+            BuildableName = "forxl.app"
+            BlueprintName = "forxl"
+            ReferencedContainer = "container:forxl.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

@@ -1,11 +1,11 @@
-import axios from "axios"
-import * as ImagePicker from "expo-image-picker"
-import { Platform } from "react-native"
+import axios from 'axios'
+import * as ImagePicker from 'expo-image-picker'
+import { Platform } from 'react-native'
 
-import { toast } from "~/components"
-import { BASE_URL, request } from "~/hooks/useRequest"
-import { DepositResult, useFroxlStore } from "~/hooks/useStore"
-import { i18n, t, toInfinite } from "~/lib/utils"
+import { toast } from '~/components'
+import { BASE_URL, request } from '~/hooks/useRequest'
+import { DepositResult, useForxlStore } from '~/hooks/useStore'
+import { i18n, t, toInfinite } from '~/lib/utils'
 
 export const getPaymentMethods = async () => {
   return await request<PaymentMethod[], undefined>(
@@ -110,7 +110,7 @@ export const getAssets = async () => {
     },
     { account?: number }
   >("/user/userWallet", "POST", {
-    account: useFroxlStore.getState().account?.type ?? 0,
+    account: useForxlStore.getState().account?.type ?? 0,
   })
 }
 

@@ -1,12 +1,12 @@
-import { useEffect } from "react"
-import { useTranslation } from "react-i18next"
+import { useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
 
-import { useFroxlStore } from "./useStore"
+import { useForxlStore } from './useStore'
 
-import { dayjs, i18n, t } from "~/lib/utils"
+import { dayjs, i18n, t } from '~/lib/utils'
 
 export const getDate = (date?: dayjs.ConfigType) => {
-  return dayjs(date).utcOffset(useFroxlStore.getState().timezone)
+  return dayjs(date).utcOffset(useForxlStore.getState().timezone)
 }
 
 const formatDateOptions: Intl.DateTimeFormatOptions = {
@@ -43,7 +43,7 @@ export const useLocaleCalendar = () => {
   const { i18n } = useTranslation()
   useEffect(() => {
     dayjs.locale(i18n.language)
-    useFroxlStore.setState({
+    useForxlStore.setState({
       language: i18n.resolvedLanguage ?? i18n.language,
     })
   }, [i18n.language, i18n.resolvedLanguage])

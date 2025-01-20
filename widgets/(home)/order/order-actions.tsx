@@ -7,7 +7,7 @@ import { shallow } from 'zustand/shallow'
 import { getOpenPositions, getPendingPositions, proceedOrder } from '~/api/trade'
 import { Button, toast } from '~/components'
 import { useRequest } from '~/hooks/useRequest'
-import { useFroxlStore, useQuotesStore } from '~/hooks/useStore'
+import { useForxlStore, useQuotesStore } from '~/hooks/useStore'
 
 export const OrderActions: FC = () => {
   const { t } = useTranslation()
@@ -122,7 +122,7 @@ export const OrderActions: FC = () => {
             futuresId: useQuotesStore.getState().currentFuture!.futuresId!,
             byOrSell: enablePending ? 7 : 0,
             positions: {
-              spId: useFroxlStore.getState().account!.spId!,
+              spId: useForxlStore.getState().account!.spId!,
               position: order!.position!,
               price: currentPrice,
               isOverNight: 1,

@@ -12,7 +12,7 @@ import {
     BottomSheet, Button, Card, Dialog, Figure, Icon, Popup, Text, XStack, YStack
 } from '~/components'
 import { CACHE_KEY } from '~/hooks/useRequest'
-import { useFroxlStore, useKYCStore } from '~/hooks/useStore'
+import { useForxlStore, useKYCStore } from '~/hooks/useStore'
 import { i18n } from '~/lib/utils'
 import colors, { toRGBA } from '~/theme/colors'
 
@@ -53,7 +53,7 @@ export const VerificationPrompt: FC = () => {
   const { bottom } = useSafeAreaInsets()
   const { t } = useTranslation()
   const ref = useRef<BottomSheetModal>(null)
-  const data = useFroxlStore((state) => state.realName)
+  const data = useForxlStore((state) => state.realName)
   const [visible, setVisible] = useState(false)
   const { refreshKey } = useKYCStore()
   const dict = t("security", {
@@ -64,7 +64,7 @@ export const VerificationPrompt: FC = () => {
   })
   useEffect(() => {
     if (refreshKey) {
-      const data = useFroxlStore.getState().realName
+      const data = useForxlStore.getState().realName
       if (
         !data?.status ||
         !["PROCESS", "RETRY", "FINAL"].includes(data.status)

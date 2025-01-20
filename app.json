@@ -1,12 +1,12 @@
 {
   "expo": {
-    "name": "froxl",
-    "displayName": "Froxl Markets",
-    "slug": "froxl",
+    "name": "forxl",
+    "displayName": "Forxl Markets",
+    "slug": "forxl",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "froxl",
+    "scheme": "forxl",
     "userInterfaceStyle": "dark",
     "newArchEnabled": false,
     "jsEngine": "hermes",
@@ -17,14 +17,14 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.froxl.platform"
+      "bundleIdentifier": "com.forxl.platform"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#000000"
       },
-      "package": "com.froxl.platform"
+      "package": "com.forxl.platform"
     },
     "web": {
       "bundler": "metro",

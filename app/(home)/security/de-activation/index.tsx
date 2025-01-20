@@ -1,23 +1,13 @@
-import { useUnmount } from "ahooks"
-import { router, Stack } from "expo-router"
-import { useTranslation } from "react-i18next"
-import { createWithEqualityFn } from "zustand/traditional"
+import { useUnmount } from 'ahooks'
+import { router, Stack } from 'expo-router'
+import { useTranslation } from 'react-i18next'
+import { createWithEqualityFn } from 'zustand/traditional'
 
-import { deleteAccount } from "~/api/account"
-import {
-  Button,
-  Card,
-  Figure,
-  Icon,
-  Screen,
-  Text,
-  toast,
-  XStack,
-  YStack,
-} from "~/components"
-import { useRequest } from "~/hooks/useRequest"
-import { useFroxlStore } from "~/hooks/useStore"
-import colors, { toRGBA } from "~/theme/colors"
+import { deleteAccount } from '~/api/account'
+import { Button, Card, Figure, Icon, Screen, Text, toast, XStack, YStack } from '~/components'
+import { useRequest } from '~/hooks/useRequest'
+import { useForxlStore } from '~/hooks/useStore'
+import colors, { toRGBA } from '~/theme/colors'
 
 interface Store {
   agreed: boolean
@@ -38,7 +28,7 @@ export default function Page() {
     manual: true,
     onSuccess: () => {
       toast.show(t("settings.deleteAccountSuccess"))
-      useFroxlStore.setState({ account: undefined, userNumber: undefined })
+      useForxlStore.setState({ account: undefined, userNumber: undefined })
     },
   })
   useUnmount(() => {

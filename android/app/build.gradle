@@ -87,9 +87,9 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
 
-    namespace 'com.froxl.platform'
+    namespace 'com.forxl.platform'
     defaultConfig {
-        applicationId 'com.froxl.platform'
+        applicationId 'com.forxl.platform'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

@@ -1,11 +1,11 @@
-import AsyncStorage from "@react-native-async-storage/async-storage"
-import { produce } from "immer"
-import { createJSONStorage, persist } from "zustand/middleware"
-import { createWithEqualityFn } from "zustand/traditional"
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import { produce } from 'immer'
+import { createJSONStorage, persist } from 'zustand/middleware'
+import { createWithEqualityFn } from 'zustand/traditional'
 
-import { getPartnerConfig } from "~/api/partner"
-import { getFutureCategories } from "~/api/trade"
-import { dayjs, i18n } from "~/lib/utils"
+import { getPartnerConfig } from '~/api/partner'
+import { getFutureCategories } from '~/api/trade'
+import { dayjs, i18n } from '~/lib/utils'
 
 interface Store {
   account?: Account
@@ -16,14 +16,14 @@ interface Store {
   realName?: Certification
 }
 
-export const useFroxlStore = createWithEqualityFn<Store>()(
+export const useForxlStore = createWithEqualityFn<Store>()(
   persist(
     (set) => ({
       timezone: dayjs().utcOffset(),
       language: "en",
     }),
     {
-      name: "froxl",
+      name: "forxl",
       storage: createJSONStorage(() => AsyncStorage),
     }
   )

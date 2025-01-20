@@ -3,13 +3,13 @@ import { Fragment } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { Icon, ListItem, ScrollView } from '~/components'
-import { useFroxlStore } from '~/hooks/useStore'
+import { useForxlStore } from '~/hooks/useStore'
 import { LANGUAGES } from '~/lib/constants'
 import { dayjs, i18n } from '~/lib/utils'
 
 export default function Layout() {
   const { t } = useTranslation()
-  const language = useFroxlStore((state) => state.language)
+  const language = useForxlStore((state) => state.language)
   return (
     <Fragment>
       <Stack.Screen options={{ title: t("settings.language") }}></Stack.Screen>
@@ -21,7 +21,7 @@ export default function Layout() {
             onPress={() => {
               i18n.changeLanguage(it.value as string)
               dayjs.locale(it.value as string)
-              useFroxlStore.setState({ language: it.value as string })
+              useForxlStore.setState({ language: it.value as string })
             }}
             isLink={false}
             addonAfter={

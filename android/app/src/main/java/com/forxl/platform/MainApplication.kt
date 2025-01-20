@@ -1,4 +1,4 @@
-package com.froxl.platform
+package com.forxl.platform
 
 import android.app.Application
 import android.content.res.Configuration

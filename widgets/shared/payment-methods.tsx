@@ -1,19 +1,12 @@
-import { router } from "expo-router"
-import { FC, Fragment } from "react"
+import { router } from 'expo-router'
+import { AnimatePresence } from 'moti'
+import { FC, Fragment } from 'react'
 
-import { getPaymentMethods, getWithdrawalMethods } from "~/api/wallet"
-import {
-  Card,
-  Icon,
-  Image,
-  Separator,
-  Text,
-  XStack,
-  YStack,
-} from "~/components"
-import { CACHE_KEY, useRequest } from "~/hooks/useRequest"
-import { useWalletStore } from "~/hooks/useStore"
-import { formatDecimal, t } from "~/lib/utils"
+import { getPaymentMethods, getWithdrawalMethods } from '~/api/wallet'
+import { Card, Icon, Image, Moti, Separator, Text, XStack, YStack } from '~/components'
+import { CACHE_KEY, useRequest } from '~/hooks/useRequest'
+import { useWalletStore } from '~/hooks/useStore'
+import { formatDecimal, t } from '~/lib/utils'
 
 export const PaymentMethodDescription: FC<{
   method: PaymentMethod
@@ -138,11 +131,20 @@ export const PaymentMethods: FC = () => {
     cacheKey: CACHE_KEY.IN_USE_PAYMENT,
   })
   return (
-    <Fragment>
-      {data?.map((method) => (
-        <PaymentMethodCard key={method.id} method={method} />
-      ))}
-    </Fragment>
+    <AnimatePresence>
+      {data && (
+        <Moti
+          from={{ opacity: 0, translateY: 20 }}
+          animate={{ opacity: 1, translateY: 0 }}
+        >
+          <YStack gap="$md">
+            {data?.map((method) => (
+              <PaymentMethodCard key={method.id} method={method} />
+            ))}
+          </YStack>
+        </Moti>
+      )}
+    </AnimatePresence>
   )
 }
 
@@ -151,10 +153,19 @@ export const WithdrawMethods: FC = () => {
     cacheKey: CACHE_KEY.IN_USE_WITHDRAW,
   })
   return (
-    <Fragment>
-      {data?.map((method) => (
-        <WithdrawMethodCard key={method.id} method={method} />
-      ))}
-    </Fragment>
+    <AnimatePresence>
+      {data && (
+        <Moti
+          from={{ opacity: 0, translateY: 20 }}
+          animate={{ opacity: 1, translateY: 0 }}
+        >
+          <YStack gap="$md">
+            {data?.map((method) => (
+              <WithdrawMethodCard key={method.id} method={method} />
+            ))}
+          </YStack>
+        </Moti>
+      )}
+    </AnimatePresence>
   )
 }

@@ -1,20 +1,17 @@
-import { useUnmount } from "ahooks"
-import { Stack } from "expo-router"
-import { useMemo } from "react"
-import { useTranslation } from "react-i18next"
-import { useSafeAreaInsets } from "react-native-safe-area-context"
-import { z } from "zod"
-import { createWithEqualityFn } from "zustand/traditional"
+import { useUnmount } from 'ahooks'
+import { Stack } from 'expo-router'
+import { useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { z } from 'zod'
+import { createWithEqualityFn } from 'zustand/traditional'
 
-import { changePassword } from "~/api/account"
-import { Button, Input, ScrollView, Text, toast, YStack } from "~/components"
-import { useRequest } from "~/hooks/useRequest"
-import { useFroxlStore } from "~/hooks/useStore"
-import {
-  LiveSupport,
-  NativeStackNavigationOptions,
-} from "~/widgets/shared/header"
-import { PasswordValidator } from "~/widgets/shared/password-validator"
+import { changePassword } from '~/api/account'
+import { Button, Input, ScrollView, Text, toast, YStack } from '~/components'
+import { useRequest } from '~/hooks/useRequest'
+import { useForxlStore } from '~/hooks/useStore'
+import { LiveSupport, NativeStackNavigationOptions } from '~/widgets/shared/header'
+import { PasswordValidator } from '~/widgets/shared/password-validator'
 
 const ScreenOptions: NativeStackNavigationOptions = {
   title: "",
@@ -68,7 +65,7 @@ export default function Page() {
     manual: true,
     onSuccess: () => {
       toast.show(t("settings.passwordChangedSuccessful"))
-      useFroxlStore.setState({ userNumber: undefined })
+      useForxlStore.setState({ userNumber: undefined })
     },
   })
   useUnmount(() => {

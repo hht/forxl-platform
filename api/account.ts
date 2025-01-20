@@ -1,5 +1,5 @@
 import { request } from '~/hooks/useRequest'
-import { useFroxlStore } from '~/hooks/useStore'
+import { useForxlStore } from '~/hooks/useStore'
 import { i18n, t } from '~/lib/utils'
 
 type SignUpParams = {
@@ -31,7 +31,7 @@ export const signIn = async (params: { email: string; password: string }) => {
   >("/other/userLogin", "POST", {
     user: { code: params.email, pwd: params.password },
   })
-  useFroxlStore.setState({ userNumber, account: user })
+  useForxlStore.setState({ userNumber, account: user })
   await getProfile()
 }
 
@@ -70,7 +70,7 @@ export const register = async (params: SignUpParams) => {
 export const getProfile = async () => {
   return await request<Profile, undefined>("/user/getUser", "POST").then(
     (res) => {
-      useFroxlStore.setState({ account: res.user, realName: res.realName })
+      useForxlStore.setState({ account: res.user, realName: res.realName })
       return res
     }
   )
@@ -164,7 +164,7 @@ export const getEmailCode = async (params: { email: string; type: 3 | 7 }) => {
  */
 export const verifyEmailCode = async (code: string) => {
   return await request("/user/verificationCode", "POST", {
-    code: useFroxlStore.getState().account?.email,
+    code: useForxlStore.getState().account?.email,
     type: 7,
     verificationCode: code,
   })
