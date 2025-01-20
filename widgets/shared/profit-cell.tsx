@@ -1,8 +1,8 @@
-import { FC } from 'react'
-import { shallow } from 'zustand/shallow'
+import { FC } from "react"
+import { shallow } from "zustand/shallow"
 
-import { AnimatedFlow } from '~/components'
-import { computeProfit, useQuotesStore } from '~/hooks/useStore'
+import { AnimatedFlow } from "~/components"
+import { computeProfit, useQuotesStore } from "~/hooks/useStore"
 
 export const ProfitCell: FC<{
   data: Position
@@ -14,7 +14,7 @@ export const ProfitCell: FC<{
     (state) => state.quotes[data.futuresCode!],
     shallow
   )
-  const profit = computeProfit(data)
+  const profit = computeProfit({ ...data, tradingFee: 0, overNightFee: 0 })
   return (
     <AnimatedFlow
       value={profit}

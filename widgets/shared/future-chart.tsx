@@ -1,12 +1,21 @@
 "use dom"
-import axios from 'axios'
-import dayjs from 'dayjs'
-import { ColorType, createChart, ISeriesApi, UTCTimestamp } from 'lightweight-charts'
-import _ from 'lodash'
-import React, { useEffect, useRef, useState } from 'react'
-import { emit, useNativeMessage, webViewRender } from 'react-native-react-bridge/lib/web'
+import axios from "axios"
+import dayjs from "dayjs"
+import {
+  ColorType,
+  createChart,
+  ISeriesApi,
+  UTCTimestamp,
+} from "lightweight-charts"
+import _ from "lodash"
+import React, { useEffect, useRef, useState } from "react"
+import {
+  emit,
+  useNativeMessage,
+  webViewRender,
+} from "react-native-react-bridge/lib/web"
 
-import './webview.css'
+import "./webview.css"
 
 const getFutureHistories = async (params: {
   symbol: string
@@ -169,7 +178,7 @@ const Root = () => {
         timeFormatter: (time: UTCTimestamp) => {
           return _.isString(params?.resolution)
             ? dayjs(time * 1000).format("YY-MM-DD")
-            : dayjs(time * 1000).format("HH:mm")
+            : getDate(time * 1000).format("YY-MM-DD HH:mm")
         },
       },
     })

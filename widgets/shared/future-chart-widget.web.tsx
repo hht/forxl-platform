@@ -1,12 +1,17 @@
 "use dom"
-import axios from 'axios'
-import dayjs from 'dayjs'
-import { ColorType, createChart, ISeriesApi, UTCTimestamp } from 'lightweight-charts'
-import _ from 'lodash'
-import React, { FC, useEffect, useMemo, useRef } from 'react'
-import { shallow } from 'zustand/shallow'
+import axios from "axios"
+import dayjs from "dayjs"
+import {
+  ColorType,
+  createChart,
+  ISeriesApi,
+  UTCTimestamp,
+} from "lightweight-charts"
+import _ from "lodash"
+import React, { FC, useEffect, useMemo, useRef } from "react"
+import { shallow } from "zustand/shallow"
 
-import { useQuotesStore } from '~/hooks/useStore'
+import { useQuotesStore } from "~/hooks/useStore"
 
 const getFutureHistories = async (params: {
   symbol: string
@@ -112,7 +117,7 @@ export const FutureChartWidget: FC<{
         timeFormatter: (time: UTCTimestamp) => {
           return _.isString(params?.resolution)
             ? dayjs(time * 1000).format("YY-MM-DD")
-            : dayjs(time * 1000).format("HH:mm")
+            : getDate(time * 1000).format("YY-MM-DD HH:mm")
         },
       },
     })
