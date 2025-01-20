@@ -67,9 +67,11 @@ export default function Page() {
           value={withdrawRequest.emailCode}
           message={errors?.emailCode?.[0]}
           onChangeText={(emailCode) => {
-            useWalletStore.setState({
-              withdrawRequest: { ...withdrawRequest, emailCode },
-            })
+            if (/^[0-9]{0,6}$/.test(emailCode ?? "")) {
+              useWalletStore.setState({
+                withdrawRequest: { ...withdrawRequest, emailCode },
+              })
+            }
           }}
           addonAfter={
             <InputSuffix
@@ -90,9 +92,11 @@ export default function Page() {
           value={withdrawRequest.gaCode}
           message={errors?.gaCode?.[0]}
           onChangeText={(gaCode) => {
-            useWalletStore.setState({
-              withdrawRequest: { ...withdrawRequest, gaCode },
-            })
+            if (/^[0-9]{0,6}$/.test(gaCode ?? "")) {
+              useWalletStore.setState({
+                withdrawRequest: { ...withdrawRequest, gaCode },
+              })
+            }
           }}
           addonAfter={
             <InputSuffix
