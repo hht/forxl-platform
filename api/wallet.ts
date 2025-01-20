@@ -209,7 +209,6 @@ export const withdraw = async (params: {
   channelCode: string
   money: number
   recordType: number
-  sign: string
   spId: string
   timestamp: number
   wdAccount: string

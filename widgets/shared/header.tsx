@@ -1,12 +1,13 @@
+import { useIsFocused } from "@react-navigation/native"
 import { NativeStackNavigationOptions } from "@react-navigation/native-stack"
 import { router } from "expo-router"
-import { FC } from "react"
+import { FC, useEffect } from "react"
 import { useTranslation } from "react-i18next"
 import { Platform } from "react-native"
 
 import { getNewMessageCount } from "~/api/notifications"
 import { Figure, Icon, IconType, Text, XStack } from "~/components"
-import { useRequest } from "~/hooks/useRequest"
+import { CACHE_KEY, useRequest } from "~/hooks/useRequest"
 import colors from "~/theme/colors"
 
 export const HeaderLeft: FC<{ onPress?: () => void }> = ({ onPress }) => {
@@ -53,7 +54,15 @@ export const Notifier: FC<{ icon?: IconType; type?: number }> = ({
   icon = "email",
   type = 0,
 }) => {
-  const { data: count } = useRequest(() => getNewMessageCount(type))
+  const { data: count, refresh } = useRequest(() => getNewMessageCount(type), {
+    cacheKey: type === 0 ? CACHE_KEY.SYSTEM_MESSAGES : CACHE_KEY.TRADE_MESSAGES,
+  })
+  const isFocused = useIsFocused()
+  useEffect(() => {
+    if (isFocused) {
+      refresh()
+    }
+  }, [isFocused, refresh])
   return (
     <XStack onPress={() => router.push(`/(home)/notifications/${type}`)}>
       <Icon name={icon} size={20} />

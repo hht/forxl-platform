@@ -1,25 +1,23 @@
-import * as Clipboard from 'expo-clipboard'
-import { router, Stack } from 'expo-router'
-import { useMemo } from 'react'
-import { useTranslation } from 'react-i18next'
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import { z } from 'zod'
-import { shallow } from 'zustand/shallow'
+import dayjs from "dayjs"
+import * as Clipboard from "expo-clipboard"
+import { router, Stack } from "expo-router"
+import { useMemo } from "react"
+import { useTranslation } from "react-i18next"
+import { useSafeAreaInsets } from "react-native-safe-area-context"
+import { z } from "zod"
+import { shallow } from "zustand/shallow"
 
-import { sendEmailCode, withdraw } from '~/api/wallet'
-import { Button, Input, Text, toast, YStack } from '~/components'
-import { useRequest } from '~/hooks/useRequest'
-import { useForxlStore, useWalletStore } from '~/hooks/useStore'
-import { InputSuffix } from '~/widgets/shared/input-suffix'
+import { sendEmailCode, withdraw } from "~/api/wallet"
+import { Button, Input, Text, toast, YStack } from "~/components"
+import { useRequest } from "~/hooks/useRequest"
+import { useForxlStore, useWalletStore } from "~/hooks/useStore"
+import { InputSuffix } from "~/widgets/shared/input-suffix"
 
 export default function Page() {
   const { t } = useTranslation()
   const email = useForxlStore((state) => state.account?.email, shallow)
-  const { gaCode, emailCode } = useWalletStore(
-    (state) => state.withdrawRequest,
-    shallow
-  )
-  const { withdrawRequest } = useWalletStore()
+
+  const { withdrawRequest, withdrawMethod } = useWalletStore()
   const { bottom } = useSafeAreaInsets()
 
   const scheme = useMemo(
@@ -39,14 +37,15 @@ export default function Page() {
   )
 
   const { success, error } = scheme.safeParse({
-    gaCode,
-    emailCode,
+    gaCode: withdrawRequest.gaCode,
+    emailCode: withdrawRequest.emailCode,
   })
   const errors = error?.formErrors?.fieldErrors
   const { run, loading } = useRequest(withdraw, {
     manual: true,
     onSuccess: () => {
       router.back()
+      useWalletStore.getState().clean()
       toast.show(t("wallet.withdrawSuccessful"))
     },
   })
@@ -65,7 +64,7 @@ export default function Page() {
         </Text>
         <Input
           label={t("wallet.verificationCode")}
-          value={emailCode}
+          value={withdrawRequest.emailCode}
           message={errors?.emailCode?.[0]}
           onChangeText={(emailCode) => {
             useWalletStore.setState({
@@ -88,7 +87,7 @@ export default function Page() {
         <Text>{t("security.googleAuthCodeDesc")}</Text>
         <Input
           label={t("wallet.verificationCode")}
-          value={gaCode}
+          value={withdrawRequest.gaCode}
           message={errors?.gaCode?.[0]}
           onChangeText={(gaCode) => {
             useWalletStore.setState({
@@ -111,7 +110,21 @@ export default function Page() {
           }
         ></Input>
       </YStack>
-      <Button disabled={loading || !success} onPress={() => {}}>
+      <Button
+        disabled={loading || !success}
+        onPress={() => {
+          run({
+            wdAccount: withdrawRequest?.wdAccount!,
+            emailCode: withdrawRequest?.emailCode!,
+            gaCode: withdrawRequest?.gaCode!,
+            money: withdrawRequest?.money!,
+            recordType: withdrawMethod?.channelType!,
+            channelCode: withdrawMethod?.channelCode!,
+            spId: `${withdrawMethod?.id}`,
+            timestamp: dayjs().unix(),
+          })
+        }}
+      >
         {t("wallet.confirmWithdraw")}
       </Button>
     </YStack>

@@ -19,8 +19,8 @@ import { AccountDetector, LocaleDetector } from "~/widgets/shared/detector"
 import { PromptSheet } from "~/widgets/shared/prompt-sheet"
 
 enableScreens(true)
-enableFreeze(Platform.OS === "android")
-// enableFreeze(true)
+// enableFreeze(Platform.OS === "android")
+enableFreeze(false)
 
 export { ErrorBoundary } from "expo-router"
 

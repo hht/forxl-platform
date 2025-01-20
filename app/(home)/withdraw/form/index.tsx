@@ -36,37 +36,39 @@ export default function Page() {
         <WithdrawMethod />
         <Input
           label={t("wallet.walletAddress")}
-          value={withdrawRequest.address}
+          value={withdrawRequest.wdAccount}
           disableValidation
-          onChangeText={(address) =>
+          onChangeText={(wdAccount) =>
             useWalletStore.setState({
-              withdrawRequest: { ...withdrawRequest, address },
+              withdrawRequest: { ...withdrawRequest, wdAccount },
             })
           }
         />
         <Input.Decimal
           label={t("wallet.withdrawAmount")}
-          value={withdrawRequest.amount}
+          value={withdrawRequest.money}
           max={parseFloat(
             assets?.userWalletDetail.fundsAccount.available ?? "0"
           )}
           disableValidation
           addonAfter={<InputSuffix>USDT</InputSuffix>}
-          onChange={(amount) => {
+          onChange={(money) => {
             useWalletStore.setState({
-              withdrawRequest: { ...withdrawRequest, amount },
+              withdrawRequest: { ...withdrawRequest, money },
             })
           }}
         />
         <WithdrawSummary />
         <Button
           disabled={
-            !new RegExp(method.validationRegex).test(withdrawRequest.address) ||
-            (withdrawRequest.amount ?? 0) <
+            !new RegExp(method.validationRegex).test(
+              withdrawRequest.wdAccount
+            ) ||
+            (withdrawRequest.money ?? 0) <
               parseFloat(method?.minAmount ?? "-Infinity") ||
-            (withdrawRequest.amount ?? 0) >
+            (withdrawRequest.money ?? 0) >
               parseFloat(method?.maxAmount ?? "Infinity") ||
-            !withdrawRequest.address
+            !withdrawRequest.money
           }
           onPress={() => {
             router.push("/withdraw/confirm")

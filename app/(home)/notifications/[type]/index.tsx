@@ -1,16 +1,25 @@
-import { useIsFocused } from '@react-navigation/native'
-import { useInfiniteScroll } from 'ahooks'
-import dayjs from 'dayjs'
-import { Stack, useLocalSearchParams } from 'expo-router'
-import { useTranslation } from 'react-i18next'
-import { ActivityIndicator, FlatList, Platform, RefreshControl } from 'react-native'
+import { useIsFocused } from "@react-navigation/native"
+import { clearCache, useInfiniteScroll } from "ahooks"
+import dayjs from "dayjs"
+import { Stack, useLocalSearchParams } from "expo-router"
+import { useTranslation } from "react-i18next"
+import {
+  ActivityIndicator,
+  FlatList,
+  Platform,
+  RefreshControl,
+} from "react-native"
 
-import { getNotifications, readAllNotifications, readNotification } from '~/api/notifications'
-import { Screen, Text, XStack } from '~/components'
-import { useRequest } from '~/hooks/useRequest'
-import colors from '~/theme/colors'
-import { ListItem } from '~/widgets/(home)/notifications/list'
-import { ListEmptyComponent, ListFooterComponent } from '~/widgets/shared/list'
+import {
+  getNotifications,
+  readAllNotifications,
+  readNotification,
+} from "~/api/notifications"
+import { Screen, Text, XStack } from "~/components"
+import { CACHE_KEY, useRequest } from "~/hooks/useRequest"
+import colors from "~/theme/colors"
+import { ListItem } from "~/widgets/(home)/notifications/list"
+import { ListEmptyComponent, ListFooterComponent } from "~/widgets/shared/list"
 
 export default function Page() {
   const { t, i18n } = useTranslation()
@@ -37,14 +46,24 @@ export default function Page() {
   )
   const { run } = useRequest(readNotification, {
     manual: true,
-    onSuccess: reload,
+    onSuccess: () => {
+      reload()
+      clearCache(
+        type === "0" ? CACHE_KEY.SYSTEM_MESSAGES : CACHE_KEY.TRADE_MESSAGES
+      )
+    },
   })
 
   const { run: readAll, loading: readingNotifications } = useRequest(
-    () => readAllNotifications(),
+    () => readAllNotifications(type === "0" ? 0 : 1),
     {
       manual: true,
-      onSuccess: reload,
+      onSuccess: () => {
+        reload()
+        clearCache(
+          type === "0" ? CACHE_KEY.SYSTEM_MESSAGES : CACHE_KEY.TRADE_MESSAGES
+        )
+      },
     }
   )
 
