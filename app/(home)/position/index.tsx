@@ -25,6 +25,7 @@ export default function Layout() {
   useUnmount(() => {
     useOrderStore.setState({
       currentPosition: undefined,
+      activeIndex: 0,
     })
   })
   if (!currentPosition) return null

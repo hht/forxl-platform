@@ -87,11 +87,9 @@ export const OrderFilter: FC = () => {
   )
   const filters = useOrderStore(
     (state) => ({
-      current: {
-        from: state.from,
-        to: state.to,
-        options: state.options,
-      },
+      from: state.from,
+      to: state.to,
+      options: state.options,
     }),
     shallow
   )
@@ -110,6 +108,18 @@ export const OrderFilter: FC = () => {
       animated: true,
     })
   }, [range])
+  useEffect(() => {
+    if (filters.options) {
+      setCurrent(filters.options)
+    }
+    if (filters.from || filters.to) {
+      setDateRange({ from: filters.from, to: filters.to })
+    } else {
+      setDateRange({})
+      setRange(undefined)
+    }
+  }, [filters])
+  console.log(filters)
   return (
     <Fragment>
       <XStack
@@ -119,9 +129,7 @@ export const OrderFilter: FC = () => {
         hitSlop={16}
       >
         <Icon name="filter" size={20} />
-        {filters.current.from ||
-        filters.current.to ||
-        filters.current.options ? (
+        {filters.from || filters.to || filters.options ? (
           <XStack bc="$warning" pos="absolute" t={0} r={0} w={4} h={4} br={3} />
         ) : null}
       </XStack>
@@ -169,14 +177,14 @@ export const OrderFilter: FC = () => {
                   <Text
                     title
                     col={
-                      (current ?? filters.current.options) === option
+                      (current ?? filters.options) === option
                         ? "$primary"
                         : "$text"
                     }
                   >
                     {t(`positions.${option}`)}
                   </Text>
-                  {(current ?? filters.current.options) === option ? (
+                  {(current ?? filters.options) === option ? (
                     <Icon name="checked" size={16} />
                   ) : null}
                 </XStack>
@@ -195,10 +203,10 @@ export const OrderFilter: FC = () => {
                 calendarActiveDateRanges={[
                   {
                     startId:
-                      range === "from"
-                        ? toDateId(getDate(from).toDate())
-                        : range === "to"
-                          ? toDateId(getDate(to).toDate())
+                      range === "from" && (from ?? filters.from)
+                        ? toDateId(getDate(from ?? filters.from).toDate())
+                        : range === "to" && (to ?? filters.to)
+                          ? toDateId(getDate(to ?? filters.to).toDate())
                           : undefined,
                   },
                 ]}
@@ -221,7 +229,7 @@ export const OrderFilter: FC = () => {
             </YStack>
           </ScrollView>
           <YStack gap="$lg">
-            {current === "customPeriod" ? (
+            {(current ?? filters.options) === "customPeriod" ? (
               <XStack px="$md" ai="center" gap="$sm">
                 <XStack
                   boc={range === "from" ? "$text" : "$border"}
@@ -233,18 +241,16 @@ export const OrderFilter: FC = () => {
                   jc="center"
                   onPress={() => {
                     setRange("from")
-                    if (from) {
-                      setDate(toDateId(getDate(from).toDate()))
+                    if (from ?? filters.from) {
+                      setDate(toDateId(getDate(from ?? filters.from).toDate()))
                     }
                   }}
                 >
                   <Text>
-                    {from || filters.current.from
-                      ? getDate(from ?? filters.current.from).format(
-                          "MMM DD, YY"
-                        )
+                    {from || filters.from
+                      ? getDate(from ?? filters.from).format("MMM DD, YY")
                       : // eslint-disable-next-line react-compiler/react-compiler
-                        useOrderStore.getState().from}
+                        ""}
                   </Text>
                 </XStack>
                 <XStack w={7} h={1} bc="$border" />
@@ -258,14 +264,14 @@ export const OrderFilter: FC = () => {
                   jc="center"
                   onPress={() => {
                     setRange("to")
-                    if (to) {
-                      setDate(toDateId(getDate(to).toDate()))
+                    if (to ?? filters.to) {
+                      setDate(toDateId(getDate(to ?? filters.to).toDate()))
                     }
                   }}
                 >
                   <Text>
-                    {to || filters.current.to
-                      ? getDate(to || filters.current.to).format("MMM DD, YY")
+                    {to || filters.to
+                      ? getDate(to ?? filters.to).format("MMM DD, YY")
                       : ""}
                   </Text>
                 </XStack>
@@ -292,11 +298,18 @@ export const OrderFilter: FC = () => {
                 f={1}
                 size="$md"
                 disabled={
-                  current === "customPeriod" && (!from || !to || from > to)
+                  current === "customPeriod" &&
+                  (!(from ?? filters.from) ||
+                    !(to ?? filters.to) ||
+                    (from ?? filters.from)! > (to ?? filters.to)!)
                 }
                 onPress={() => {
                   useOrderStore.setState({
-                    ...getFilters({ options: current, from, to }),
+                    ...getFilters({
+                      options: current ?? filters.options,
+                      from: from ?? filters.from,
+                      to: to ?? filters.to,
+                    }),
                     reloadKey: uuid(),
                   })
                   ref.current?.dismiss()
