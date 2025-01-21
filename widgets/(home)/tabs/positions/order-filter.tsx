@@ -119,7 +119,6 @@ export const OrderFilter: FC = () => {
       setRange(undefined)
     }
   }, [filters])
-  console.log(filters)
   return (
     <Fragment>
       <XStack
