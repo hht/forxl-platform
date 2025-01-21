@@ -1,21 +1,15 @@
 "use dom"
-import axios from "axios"
-import dayjs from "dayjs"
-import {
-  ColorType,
-  createChart,
-  ISeriesApi,
-  UTCTimestamp,
-} from "lightweight-charts"
-import _ from "lodash"
-import React, { useCallback, useEffect, useRef, useState } from "react"
-import {
-  emit,
-  useNativeMessage,
-  webViewRender,
-} from "react-native-react-bridge/lib/web"
+import axios from 'axios'
+import dayjs from 'dayjs'
+import utc from 'dayjs/plugin/utc'
+import { ColorType, createChart, ISeriesApi, UTCTimestamp } from 'lightweight-charts'
+import _ from 'lodash'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
+import { emit, useNativeMessage, webViewRender } from 'react-native-react-bridge/lib/web'
 
-import "./webview.css"
+import './webview.css'
+
+dayjs.extend(utc)
 
 const getFutureHistories = async (params: {
   symbol: string
