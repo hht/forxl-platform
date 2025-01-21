@@ -2,8 +2,9 @@ import { FC } from "react"
 import { useTranslation } from "react-i18next"
 
 import { Card, Copyable, Separator, Text, XStack, YStack } from "~/components"
+import { getDate } from "~/hooks/useLocale"
 import { useWalletStore } from "~/hooks/useStore"
-import { dayjs, formatCurrency, formatDecimal } from "~/lib/utils"
+import { formatCurrency, formatDecimal } from "~/lib/utils"
 
 const AmountCard: FC = () => {
   const { t } = useTranslation()
@@ -22,7 +23,7 @@ const AmountCard: FC = () => {
           </Text>
         </XStack>
         <Text caption col="$secondary">
-          {dayjs().format("MMM DD, YYYY HH:mm:ss")}
+          {getDate().format("MMM DD, YYYY HH:mm:ss")}
         </Text>
       </YStack>
     )

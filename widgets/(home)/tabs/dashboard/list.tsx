@@ -8,6 +8,7 @@ import { Shortcuts } from "./short-cuts"
 
 import { getNews } from "~/api/dashboard"
 import { Figure, Icon, Image, Text, XStack, YStack } from "~/components"
+import { getDate } from "~/hooks/useLocale"
 import { useWebViewStore } from "~/hooks/useStore"
 import { trimHTML } from "~/lib/utils"
 import colors, { toRGBA } from "~/theme/colors"
@@ -52,7 +53,7 @@ export const ListItem = ({
               w="100%"
               aspectRatio={311 / 68}
             />
-            <Text bold>{dayjs(item.date).format("DD MMMM, YYYY")}</Text>
+            <Text bold>{getDate(item.date).format("DD MMMM, YYYY")}</Text>
           </YStack>
           <XStack pos="absolute" top={0} right={0} w="100%">
             <Figure name="r" />
@@ -62,7 +63,7 @@ export const ListItem = ({
       <YStack btw={1} gap="$sm" btc="$border" py="$md">
         <Text numberOfLines={2} bold lh={20}>
           <Text col="$tertiary" bold lh={20}>
-            {dayjs(item.date).format("HH:mm  ")}
+            {getDate(item.date).format("HH:mm  ")}
           </Text>
           {item.headline}
         </Text>

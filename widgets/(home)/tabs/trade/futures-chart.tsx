@@ -1,13 +1,12 @@
-import { AnimatePresence } from 'moti'
-import { FC, useEffect, useMemo, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import { StyleSheet } from 'react-native'
-import { shallow } from 'zustand/shallow'
+import { AnimatePresence } from "moti"
+import { FC, useEffect, useMemo, useState } from "react"
+import { useTranslation } from "react-i18next"
+import { StyleSheet } from "react-native"
+import { shallow } from "zustand/shallow"
 
-import { Icon, Moti, Text, XStack, YStack } from '~/components'
-import { useSymbolStore } from '~/hooks/useStore'
-import FutureChart from '~/widgets/shared/future-chart'
-import { FutureChartWidget } from '~/widgets/shared/future-chart-widget'
+import { Icon, Moti, Text, XStack } from "~/components"
+import { useSymbolStore } from "~/hooks/useStore"
+import { FutureChartWidget } from "~/widgets/shared/future-chart-widget"
 
 export const FuturesChart: FC = () => {
   const currentSymbol = useSymbolStore((state) => state.currentSymbol, shallow)
@@ -74,23 +73,7 @@ export const FuturesChart: FC = () => {
             ai="center"
             gap="$md"
           >
-            {visible ? (
-              TIMES.map((time) => (
-                <XStack
-                  key={time.value}
-                  hitSlop={16}
-                  onPress={() => setResolution(time.value)}
-                >
-                  <Text
-                    col={resolution === time.value ? "$primary" : "$secondary"}
-                  >
-                    {time.label}
-                  </Text>
-                </XStack>
-              ))
-            ) : (
-              <Text>{`${currentSymbol.symbol} ${t("trade.chart")}`}</Text>
-            )}
+            <Text>{`${currentSymbol.symbol} ${t("trade.chart")}`}</Text>
             <XStack f={1} />
             <XStack
               rotate={visible ? "90deg" : "270deg"}
@@ -102,6 +85,30 @@ export const FuturesChart: FC = () => {
               <Icon name="chevronRight" size={16}></Icon>
             </XStack>
           </XStack>
+          {visible ? (
+            <XStack
+              p="$md"
+              bc="$background"
+              btc="$border"
+              btw={1}
+              ai="center"
+              gap="$md"
+            >
+              {TIMES.map((time) => (
+                <XStack
+                  key={time.value}
+                  hitSlop={16}
+                  onPress={() => setResolution(time.value)}
+                >
+                  <Text
+                    col={resolution === time.value ? "$primary" : "$secondary"}
+                  >
+                    {time.label}
+                  </Text>
+                </XStack>
+              ))}
+            </XStack>
+          ) : null}
           {currentSymbol && visible && (
             <FutureChartWidget
               futuresCode={currentSymbol.symbol}

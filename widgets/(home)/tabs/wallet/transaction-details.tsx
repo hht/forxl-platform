@@ -21,7 +21,8 @@ import {
   XStack,
   YStack,
 } from "~/components"
-import { dayjs, formatCurrency, formatDecimal } from "~/lib/utils"
+import { getDate } from "~/hooks/useLocale"
+import { formatCurrency, formatDecimal } from "~/lib/utils"
 import colors, { toRGBA } from "~/theme/colors"
 
 export const useTransactionStore = createWithEqualityFn<{
@@ -164,7 +165,7 @@ export const TransactionDetails: FC = () => {
           ) : null}
           <ListItem
             title={t("wallet.created")}
-            value={dayjs(data.addTime).format("MMM DD, YYYY HH:mm")}
+            value={getDate(data.addTime).format("MMM DD, YYYY HH:mm")}
           />
         </YStack>
       </YStack>

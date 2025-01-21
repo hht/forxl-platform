@@ -1,16 +1,17 @@
-import { Fragment } from 'react'
-import { useTranslation } from 'react-i18next'
-import { shallow } from 'zustand/shallow'
+import { Fragment } from "react"
+import { useTranslation } from "react-i18next"
+import { shallow } from "zustand/shallow"
 
-import { getFuture } from '~/api/trade'
-import { Icon, Text, XStack } from '~/components'
-import { useRequest } from '~/hooks/useRequest'
-import { useOrderStore } from '~/hooks/useStore'
-import { dayjs, formatCurrency, formatDecimal } from '~/lib/utils'
-import colors from '~/theme/colors'
-import { ListItem } from '~/widgets/(home)/position/list-item'
-import { PriceCell } from '~/widgets/shared/price-cell'
-import { ProfitCell } from '~/widgets/shared/profit-cell'
+import { getFuture } from "~/api/trade"
+import { Icon, Text, XStack } from "~/components"
+import { getDate } from "~/hooks/useLocale"
+import { useRequest } from "~/hooks/useRequest"
+import { useOrderStore } from "~/hooks/useStore"
+import { formatCurrency, formatDecimal } from "~/lib/utils"
+import colors from "~/theme/colors"
+import { ListItem } from "~/widgets/(home)/position/list-item"
+import { PriceCell } from "~/widgets/shared/price-cell"
+import { ProfitCell } from "~/widgets/shared/profit-cell"
 
 export const OrderDetail = () => {
   const { t } = useTranslation()
@@ -79,7 +80,7 @@ export const OrderDetail = () => {
         </ListItem>
         <ListItem
           label={dict.openTime}
-        >{`${dayjs(currentPosition.createTime).format("MMM DD, YYYY HH:mm")}`}</ListItem>
+        >{`${getDate(currentPosition.createTime).format("MMM DD, YYYY HH:mm")}`}</ListItem>
         <ListItem label={dict.id}>{`${currentPosition.orderSn}`}</ListItem>
       </Fragment>
     )
@@ -146,10 +147,10 @@ export const OrderDetail = () => {
       </ListItem>
       <ListItem
         label={dict.openTime}
-      >{`${dayjs(currentPosition.createTime).format("MMM DD, YYYY HH:mm")}`}</ListItem>
+      >{`${getDate(currentPosition.createTime).format("MMM DD, YYYY HH:mm")}`}</ListItem>
       <ListItem
         label={dict.closeTime}
-      >{`${dayjs(currentPosition.overTime).format("MMM DD, YYYY HH:mm")}`}</ListItem>
+      >{`${getDate(currentPosition.overTime).format("MMM DD, YYYY HH:mm")}`}</ListItem>
       <ListItem label={t("trade.closeAtLoss")}>
         {currentPosition.stopLossPrice
           ? formatCurrency(

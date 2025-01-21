@@ -1,11 +1,11 @@
-import { FC, Fragment, useEffect, useState } from "react"
+import { FC, useEffect, useState } from "react"
 import { ActivityIndicator } from "react-native"
 import { useWebViewMessage } from "react-native-react-bridge"
 import WebView from "react-native-webview"
 import { YStack } from "tamagui"
 import { shallow } from "zustand/shallow"
 
-import { useQuotesStore } from "~/hooks/useStore"
+import { useForxlStore, useQuotesStore } from "~/hooks/useStore"
 import { DEVICE_WIDTH } from "~/lib/utils"
 import colors from "~/theme/colors"
 import ChartHTML from "~/widgets/shared/future-chart"
@@ -26,6 +26,7 @@ export const FutureChartWidget: FC<{
           symbol: futuresCode!,
           volatility: volatility,
           resolution: resolution ?? 1,
+          utcOffset: useForxlStore.getState().timezone,
         },
       })
     }
@@ -46,6 +47,7 @@ export const FutureChartWidget: FC<{
           symbol: futuresCode!,
           volatility: volatility,
           resolution: resolution ?? 1,
+          utcOffset: useForxlStore.getState().timezone,
         },
       })
     }

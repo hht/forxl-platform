@@ -16,7 +16,7 @@ import {
 } from "~/components"
 import { getDate } from "~/hooks/useLocale"
 import { OPTIONS, useOrderStore } from "~/hooks/useStore"
-import { dayjs, DEVICE_WIDTH, t, uuid } from "~/lib/utils"
+import { DEVICE_WIDTH, t, uuid } from "~/lib/utils"
 
 const getCalendarDayFormat = (date: Date) => date.getDate().toString()
 const getCalendarWeekDayFormat = (date: Date) =>
@@ -190,15 +190,15 @@ export const OrderFilter: FC = () => {
                 getCalendarWeekDayFormat={getCalendarWeekDayFormat}
                 calendarMonthId={date}
                 onCalendarMonthChange={(v) => {
-                  setDate(toDateId(dayjs(date).add(v, "month").toDate()))
+                  setDate(toDateId(getDate(date).add(v, "month").toDate()))
                 }}
                 calendarActiveDateRanges={[
                   {
                     startId:
                       range === "from"
-                        ? toDateId(dayjs(from).toDate())
+                        ? toDateId(getDate(from).toDate())
                         : range === "to"
-                          ? toDateId(dayjs(to).toDate())
+                          ? toDateId(getDate(to).toDate())
                           : undefined,
                   },
                 ]}
@@ -234,7 +234,7 @@ export const OrderFilter: FC = () => {
                   onPress={() => {
                     setRange("from")
                     if (from) {
-                      setDate(toDateId(dayjs(from).toDate()))
+                      setDate(toDateId(getDate(from).toDate()))
                     }
                   }}
                 >
@@ -259,7 +259,7 @@ export const OrderFilter: FC = () => {
                   onPress={() => {
                     setRange("to")
                     if (to) {
-                      setDate(toDateId(dayjs(to).toDate()))
+                      setDate(toDateId(getDate(to).toDate()))
                     }
                   }}
                 >

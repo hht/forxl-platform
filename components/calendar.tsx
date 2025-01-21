@@ -10,7 +10,7 @@ import { XStack, YStack } from "tamagui"
 import { Icon } from "./icon"
 import { Text } from "./text"
 
-import { dayjs } from "~/lib/utils"
+import { getDate } from "~/hooks/useLocale"
 import colors from "~/theme/colors"
 
 const ACCENT_COLOR = "#13261E"
@@ -91,7 +91,7 @@ export const Calendar: FC<
         {/* Replaces `Calendar.Row.Month` with a custom implementation */}
         <XStack px="$md" ai="center" jc="space-between" w="100%">
           <Text heading bold>
-            {dayjs(props.calendarMonthId).format("MMMM YYYY")}
+            {getDate(props.calendarMonthId).format("MMMM YYYY")}
           </Text>
           <XStack gap="$md" ai="center">
             <XStack onPress={() => onCalendarMonthChange(-1)}>

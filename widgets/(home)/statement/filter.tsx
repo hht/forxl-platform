@@ -14,6 +14,7 @@ import {
   XStack,
   YStack,
 } from "~/components"
+import { getDate } from "~/hooks/useLocale"
 import { useStatementStore } from "~/hooks/useStore"
 import { dayjs, I18NResource } from "~/lib/utils"
 
@@ -82,7 +83,7 @@ export const Filter = () => {
           onPress={() => dateRef.current?.present()}
         >
           <Text pr="$md">{t("calendar.period")}</Text>
-          <Text>{dayjs(date ?? new Date()).format("MMM YY")}</Text>
+          <Text>{getDate(date ?? new Date()).format("MMM YY")}</Text>
           <XStack rotate="90deg">
             <Icon name="chevronRight" size={16} />
           </XStack>
@@ -114,7 +115,7 @@ export const Filter = () => {
               value={date ? dayjs(date).month() : dayjs().month()}
               onValueChanged={(index) => {
                 useStatementStore.setState({
-                  date: dayjs(date ?? new Date())
+                  date: getDate(date ?? new Date())
                     .month(index as number)
                     .toDate(),
                 })
@@ -129,7 +130,7 @@ export const Filter = () => {
               value={date ? dayjs(date).year() : dayjs().month()}
               onValueChanged={(v) => {
                 useStatementStore.setState({
-                  date: dayjs(date ?? new Date())
+                  date: getDate(date ?? new Date())
                     .year(v as number)
                     .toDate(),
                 })

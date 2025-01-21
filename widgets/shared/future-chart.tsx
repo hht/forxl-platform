@@ -8,7 +8,7 @@ import {
   UTCTimestamp,
 } from "lightweight-charts"
 import _ from "lodash"
-import React, { useEffect, useRef, useState } from "react"
+import React, { useCallback, useEffect, useRef, useState } from "react"
 import {
   emit,
   useNativeMessage,
@@ -81,10 +81,6 @@ const getFutureHistories = async (params: {
     )
 }
 
-export const getDate = (date?: dayjs.ConfigType) => {
-  return dayjs(date).utcOffset(0)
-}
-
 const Root = () => {
   const chartContainerRef = useRef<HTMLDivElement>(null)
   const [params, setParams] = useState<
@@ -92,9 +88,14 @@ const Root = () => {
         symbol: string
         volatility: number
         resolution: string | number
+        utcOffset: number
       }
     | undefined
   >(undefined)
+  const getDate = useCallback(
+    (date?: dayjs.ConfigType) => dayjs(date).utcOffset(params?.utcOffset ?? 0),
+    [params?.utcOffset]
+  )
   const seriesRef = useRef<ISeriesApi<"Candlestick"> | null>(null)
   const loadingRef = useRef(false)
   const fetchedRef = useRef(false)
@@ -170,15 +171,15 @@ const Root = () => {
         secondsVisible: params?.resolution === 1 || params?.resolution === 5,
         tickMarkFormatter: (time: UTCTimestamp) => {
           return _.isString(params?.resolution)
-            ? dayjs(time * 1000).format("YY-MM-DD")
-            : dayjs(time * 1000).format("HH:mm")
+            ? getDate(time * 1000).format("YY-MM-DD")
+            : getDate(time * 1000).format("HH:mm")
         },
       },
 
       localization: {
         timeFormatter: (time: UTCTimestamp) => {
           return _.isString(params?.resolution)
-            ? dayjs(time * 1000).format("YY-MM-DD")
+            ? getDate(time * 1000).format("YY-MM-DD")
             : getDate(time * 1000).format("YY-MM-DD HH:mm")
         },
       },
@@ -276,8 +277,8 @@ const Root = () => {
       }
 
       const dateStr = _.isString(params?.resolution)
-        ? dayjs((param.time as number) * 1000).format("YYYY-MM-DD")
-        : dayjs((param.time as number) * 1000).format("YYYY-MM-DD HH:mm:ss")
+        ? getDate((param.time as number) * 1000).format("YYYY-MM-DD")
+        : getDate((param.time as number) * 1000).format("YYYY-MM-DD HH:mm:ss")
 
       tooltipEl.style.display = "block"
       tooltipEl.innerHTML = `

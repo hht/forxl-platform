@@ -8,7 +8,7 @@ import {
   UTCTimestamp,
 } from "lightweight-charts"
 import _ from "lodash"
-import React, { FC, useEffect, useMemo, useRef } from "react"
+import React, { FC, useCallback, useEffect, useMemo, useRef } from "react"
 import { shallow } from "zustand/shallow"
 
 import { useQuotesStore } from "~/hooks/useStore"
@@ -64,16 +64,19 @@ const getFutureHistories = async (params: {
     )
 }
 
-export const getDate = (date?: dayjs.ConfigType) => {
-  return dayjs(date).utcOffset(0)
-}
-
 export const FutureChartWidget: FC<{
   futuresCode?: string
   volatility?: number
   resolution?: number | string
   height: number
-}> = ({ futuresCode, volatility, resolution, height }) => {
+  utcOffset: string | number
+}> = ({ futuresCode, volatility, resolution, height, utcOffset }) => {
+  const getDate = useCallback(
+    (date?: dayjs.ConfigType) => {
+      return dayjs(date).utcOffset(utcOffset)
+    },
+    [utcOffset]
+  )
   const chartContainerRef = useRef<HTMLDivElement>(null)
   const seriesRef = useRef<ISeriesApi<"Candlestick"> | null>(null)
   const loadingRef = useRef(false)

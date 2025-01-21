@@ -1,14 +1,14 @@
 import { useIsFocused } from "@react-navigation/native"
 import { useInfiniteScroll } from "ahooks"
-import dayjs from "dayjs"
 import { router, Stack } from "expo-router"
 import { useTranslation } from "react-i18next"
 import { FlatList, Platform } from "react-native"
 
 import { getNews } from "~/api/dashboard"
 import { Icon, Image, Text, XStack, YStack } from "~/components"
+import { getDate } from "~/hooks/useLocale"
 import { useWebViewStore } from "~/hooks/useStore"
-import { trimHTML } from "~/lib/utils"
+import { dayjs, trimHTML } from "~/lib/utils"
 import colors, { toRGBA } from "~/theme/colors"
 import { ListEmptyComponent, ListFooterComponent } from "~/widgets/shared/list"
 
@@ -26,7 +26,7 @@ const ListItem = ({
       <YStack btw={1} gap="$sm" btc="$border" py="$md">
         <Text numberOfLines={2} bold lh={20}>
           <Text col="$tertiary" bold lh={20}>
-            {dayjs(item.date).format("HH:mm  ")}
+            {getDate(item.date).format("HH:mm  ")}
           </Text>
           {item.headline}
         </Text>
@@ -76,7 +76,7 @@ const ListHeaderComponent = () => {
         aspectRatio={311 / 68}
       />
       <Text subject bold>
-        {dayjs().format("DD MMMM, YYYY")}
+        {getDate().format("DD MMMM, YYYY")}
       </Text>
     </YStack>
   )
@@ -109,7 +109,7 @@ export default function Page() {
       }
       return getNews({
         page: d?.nextId ?? 1,
-        date: dayjs().subtract(3, "days").format("YYYY-MM-DD"),
+        date: dayjs().format("YYYY-MM-DD"),
       })
     },
     {
