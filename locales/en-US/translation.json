@@ -583,12 +583,12 @@
   },
   "documents": {
     "children": [
+      "Product Disclosure Statement",
       "Terms and Conditions",
       "Privacy Policy",
-      "Risk Warning",
-      "Client Agreement",
-      "Conflict Policy",
-      "Handling Policy"
+      "Execution Policy",
+      "Compliant Handling Policy",
+      "AML CFT"
     ]
   },
   "support": {

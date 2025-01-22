@@ -66,6 +66,7 @@ export default function Page() {
       ) : (
         <WebView
           forceDarkOn
+          containerStyle={{ backgroundColor: "#000" }}
           style={{ backgroundColor: "#000" }}
           source={uri ? { uri } : { html: wrappedHtml ?? "" }}
         />
