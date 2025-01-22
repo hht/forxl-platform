@@ -2,6 +2,7 @@ import { useIsFocused } from "@react-navigation/native"
 import { useInfiniteScroll, useMount } from "ahooks"
 import { useMemo } from "react"
 import { useTranslation } from "react-i18next"
+import { Platform } from "react-native"
 import { Tabs as CollapsibleTabs } from "react-native-collapsible-tab-view"
 import { useSafeAreaInsets } from "react-native-safe-area-context"
 
@@ -68,7 +69,7 @@ export const Statement = () => {
       renderHeader={AccountCard}
       pagerProps={{ scrollEnabled: false }}
       snapThreshold={null}
-      containerStyle={{ flex: 1 }}
+      cancelLazyFadeIn={true}
       headerContainerStyle={{
         backgroundColor: colors.background,
       }}
@@ -100,7 +101,7 @@ export const Statement = () => {
           renderItem={renderItem}
           contentContainerStyle={{
             padding: 16,
-            paddingTop: 0,
+            // paddingTop: Platform.OS === "ios" ? 0 : 280,
           }}
           keyExtractor={keyExtractor}
           onEndReached={loadMore}
@@ -112,7 +113,6 @@ export const Statement = () => {
       </CollapsibleTabs.Tab>
       <CollapsibleTabs.Tab name={t("wallet.requestStatement")}>
         <CollapsibleTabs.ScrollView
-          contentContainerStyle={{ padding: 16, paddingTop: 0 }}
           overScrollMode="never"
           showsVerticalScrollIndicator={false}
         >

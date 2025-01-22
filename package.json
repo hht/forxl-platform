@@ -8,7 +8,8 @@
     "ios": "expo run:ios",
     "web": "expo start --web",
     "test": "jest --watchAll",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "postinstall": "npx patch-package"
   },
   "jest": {
     "preset": "jest-expo"

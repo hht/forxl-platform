@@ -15,12 +15,13 @@ export const RequestStatement: FC = () => {
   return (
     <YStack px="$md" gap="$md">
       <Text col="$secondary">{t("wallet.statementLanguage")}</Text>
-      <XStack gap={32} fw="wrap" pb="$sm">
+      <XStack fw="wrap" pb="$sm">
         {LANGUAGES.map((it) => (
           <Row
             key={it.value}
             gap="$sm"
             pb="$md"
+            pr={32}
             onPress={() => {
               useStatementStore.setState({ language: it.value as string })
             }}

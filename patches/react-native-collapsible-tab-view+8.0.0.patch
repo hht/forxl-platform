@@ -1,0 +1,86 @@
+diff --git a/node_modules/react-native-collapsible-tab-view/lib/commonjs/Container.js b/node_modules/react-native-collapsible-tab-view/lib/commonjs/Container.js
+index 87c6727..474be3d 100644
+--- a/node_modules/react-native-collapsible-tab-view/lib/commonjs/Container.js
++++ b/node_modules/react-native-collapsible-tab-view/lib/commonjs/Container.js
+@@ -337,7 +337,9 @@ const Container = /*#__PURE__*/_react.default.memo( /*#__PURE__*/_react.default.
+     style: [pagerProps === null || pagerProps === void 0 ? void 0 : pagerProps.style, _reactNative.StyleSheet.absoluteFill]
+   }), tabNamesArray.map((tabName, i) => {
+     return /*#__PURE__*/_react.default.createElement(_reactNative.View, {
+-      key: i
++      key: i,
++      collapsable: false,
++      style: {height: '100%', width: '100%',flex:1}
+     }, /*#__PURE__*/_react.default.createElement(_Context.TabNameContext.Provider, {
+       value: tabName
+     }, /*#__PURE__*/_react.default.createElement(_Lazy.Lazy, {
+diff --git a/node_modules/react-native-collapsible-tab-view/lib/module/Container.js b/node_modules/react-native-collapsible-tab-view/lib/module/Container.js
+index 1a41213..cbb0ff0 100644
+--- a/node_modules/react-native-collapsible-tab-view/lib/module/Container.js
++++ b/node_modules/react-native-collapsible-tab-view/lib/module/Container.js
+@@ -304,7 +304,9 @@ export const Container = /*#__PURE__*/React.memo( /*#__PURE__*/React.forwardRef(
+     style: [pagerProps === null || pagerProps === void 0 ? void 0 : pagerProps.style, StyleSheet.absoluteFill]
+   }), tabNamesArray.map((tabName, i) => {
+     return /*#__PURE__*/React.createElement(View, {
+-      key: i
++      key: i,
++      collapsable: false,
++      style: {height: '100%', width: '100%',flex:1}
+     }, /*#__PURE__*/React.createElement(TabNameContext.Provider, {
+       value: tabName
+     }, /*#__PURE__*/React.createElement(Lazy, {
+diff --git a/node_modules/react-native-collapsible-tab-view/src/Container.tsx b/node_modules/react-native-collapsible-tab-view/src/Container.tsx
+index bf9729a..35993db 100644
+--- a/node_modules/react-native-collapsible-tab-view/src/Container.tsx
++++ b/node_modules/react-native-collapsible-tab-view/src/Container.tsx
+@@ -2,35 +2,20 @@ import React from 'react'
+ import { StyleSheet, useWindowDimensions, View } from 'react-native'
+ import PagerView from 'react-native-pager-view'
+ import Animated, {
+-  runOnJS,
+-  runOnUI,
+-  useAnimatedReaction,
+-  useAnimatedStyle,
+-  useDerivedValue,
+-  useSharedValue,
+-  withDelay,
+-  withTiming,
+-  useFrameCallback,
++    runOnJS, runOnUI, useAnimatedReaction, useAnimatedStyle, useDerivedValue, useFrameCallback,
++    useSharedValue, withDelay, withTiming
+ } from 'react-native-reanimated'
+ 
+ import { Context, TabNameContext } from './Context'
+-import { Lazy } from './Lazy'
+-import { MaterialTabBar, TABBAR_HEIGHT } from './MaterialTabBar'
+-import { Tab } from './Tab'
+ import { IS_IOS, ONE_FRAME_MS, scrollToImpl } from './helpers'
+ import {
+-  useAnimatedDynamicRefs,
+-  useContainerRef,
+-  usePageScrollHandler,
+-  useTabProps,
+-  useLayoutHeight,
++    useAnimatedDynamicRefs, useContainerRef, useLayoutHeight, usePageScrollHandler, useTabProps
+ } from './hooks'
++import { Lazy } from './Lazy'
++import { MaterialTabBar, TABBAR_HEIGHT } from './MaterialTabBar'
++import { Tab } from './Tab'
+ import {
+-  CollapsibleProps,
+-  CollapsibleRef,
+-  ContextType,
+-  IndexChangeEventData,
+-  TabName,
++    CollapsibleProps, CollapsibleRef, ContextType, IndexChangeEventData, TabName
+ } from './types'
+ 
+ const AnimatedPagerView = Animated.createAnimatedComponent(PagerView)
+@@ -436,7 +421,7 @@ export const Container = React.memo(
+             >
+               {tabNamesArray.map((tabName, i) => {
+                 return (
+-                  <View key={i}>
++                  <View key={i} collapsable={false} style={{height: '100%', width: '100%',flex:1}}>
+                     <TabNameContext.Provider value={tabName}>
+                       <Lazy
+                         startMounted={lazy ? undefined : true}
