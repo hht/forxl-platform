@@ -98,7 +98,10 @@ export const Statement = () => {
         <CollapsibleTabs.FlatList
           data={data?.list ?? []}
           renderItem={renderItem}
-          contentContainerStyle={{ padding: 16, paddingTop: 0 }}
+          contentContainerStyle={{
+            padding: 16,
+            paddingTop: 0,
+          }}
           keyExtractor={keyExtractor}
           onEndReached={loadMore}
           overScrollMode="never"
@@ -109,7 +112,7 @@ export const Statement = () => {
       </CollapsibleTabs.Tab>
       <CollapsibleTabs.Tab name={t("wallet.requestStatement")}>
         <CollapsibleTabs.ScrollView
-          style={{ flex: 1 }}
+          contentContainerStyle={{ padding: 16, paddingTop: 0 }}
           overScrollMode="never"
           showsVerticalScrollIndicator={false}
         >

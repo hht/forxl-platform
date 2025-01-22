@@ -1,6 +1,6 @@
-import { request } from '~/hooks/useRequest'
-import { useForxlStore } from '~/hooks/useStore'
-import { getLocaleLanguage, i18n } from '~/lib/utils'
+import { request } from "~/hooks/useRequest"
+import { useForxlStore } from "~/hooks/useStore"
+import { getLocaleLanguage, i18n } from "~/lib/utils"
 
 export const getBanners = async () => {
   return request<Banner[], undefined>(
@@ -24,7 +24,7 @@ export const getNews = async (params: {
   }[]
 }> => {
   return await fetch(
-    `https://news.usd.lt/get_news.php?date=${params.date}&page=${params.page}&limit=${10}&lang=${getLocaleLanguage(useForxlStore.getState().language || "en")}`
+    `https://news.forxlmarkets.com/get_news.php?date=${params.date}&page=${params.page}&limit=${10}&lang=${getLocaleLanguage(useForxlStore.getState().language || "en")}`
   )
     .then((res) => res.json())
     .then((res) => {

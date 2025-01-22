@@ -1,11 +1,11 @@
-import { useInterval } from 'ahooks'
-import _ from 'lodash'
-import { useCallback, useEffect, useRef } from 'react'
-import { createWithEqualityFn } from 'zustand/traditional'
+import { useInterval } from "ahooks"
+import _ from "lodash"
+import { useCallback, useEffect, useRef } from "react"
+import { createWithEqualityFn } from "zustand/traditional"
 
-import { useForxlStore, useQuotesStore } from './useStore'
+import { useForxlStore, useQuotesStore } from "./useStore"
 
-import { getOpenPositions } from '~/api/trade'
+import { getOpenPositions } from "~/api/trade"
 
 export enum ReadyState {
   Connecting = 0,
@@ -25,7 +25,7 @@ type FutureMessage =
     }
   | { type: "watchPositionChange" }
 
-const WS_URL = "wss://ws2.usd.lt/datafeed"
+const WS_URL = "wss://ws.forxlmarkets.com/datafeed"
 
 type WebSocketState = {
   quotes: string[]

@@ -24,7 +24,7 @@ const getFutureHistories = async (params: {
     200 * (_.isString(params.resolution) ? 24 * 60 : params.resolution) * 60
   return await axios
     .request({
-      url: `https://api2.usd.lt/global/history`,
+      url: `https://api.forxlmarkets.com/global/history`,
       method: "GET",
       params: {
         symbol: params.symbol,

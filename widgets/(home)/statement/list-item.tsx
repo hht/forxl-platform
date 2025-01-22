@@ -1,9 +1,11 @@
+import _ from "lodash"
 import { FC, useState } from "react"
 import { useTranslation } from "react-i18next"
 import { YStack } from "tamagui"
 
 import { getWalletStatement } from "~/api/wallet"
 import { Card, Icon, Justified, Text, XStack } from "~/components"
+import { getDate } from "~/hooks/useLocale"
 import { formatCurrency } from "~/lib/utils"
 
 export const StatementItem: FC<{
@@ -21,7 +23,7 @@ export const StatementItem: FC<{
       </Justified>
       <Justified>
         <Text caption col="$secondary">
-          {data.time}
+          {getDate(data.time).format("MMM DD, YYYY HH:mm")}
         </Text>
         <XStack
           rotate={visible ? "270deg" : "90deg"}
@@ -37,7 +39,7 @@ export const StatementItem: FC<{
         <YStack gap="$sm" btc="$border" btw={1} pt="$sm">
           <Justified>
             <Text col="$secondary">{t("wallet.type")}</Text>
-            <Text>{data.type}</Text>
+            <Text>{t(`wallet.${_.lowerFirst(data.typeName)}` as any)}</Text>
           </Justified>
           <Justified>
             <Text col="$secondary">{t("order.id")}</Text>

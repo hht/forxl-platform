@@ -27,7 +27,7 @@ export const CACHE_KEY = {
 }
 
 // @ts-ignore next-line
-export const BASE_URL = "https://api2.usd.lt"
+export const BASE_URL = "https://api.forxlmarkets.com"
 
 type Response<T> =
   | {

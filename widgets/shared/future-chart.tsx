@@ -1,13 +1,22 @@
 "use dom"
-import axios from 'axios'
-import dayjs from 'dayjs'
-import utc from 'dayjs/plugin/utc'
-import { ColorType, createChart, ISeriesApi, UTCTimestamp } from 'lightweight-charts'
-import _ from 'lodash'
-import React, { useCallback, useEffect, useRef, useState } from 'react'
-import { emit, useNativeMessage, webViewRender } from 'react-native-react-bridge/lib/web'
+import axios from "axios"
+import dayjs from "dayjs"
+import utc from "dayjs/plugin/utc"
+import {
+  ColorType,
+  createChart,
+  ISeriesApi,
+  UTCTimestamp,
+} from "lightweight-charts"
+import _ from "lodash"
+import React, { useCallback, useEffect, useRef, useState } from "react"
+import {
+  emit,
+  useNativeMessage,
+  webViewRender,
+} from "react-native-react-bridge/lib/web"
 
-import './webview.css'
+import "./webview.css"
 
 dayjs.extend(utc)
 
@@ -31,7 +40,7 @@ const getFutureHistories = async (params: {
   })
   return await axios
     .request({
-      url: `https://api2.usd.lt/global/history`,
+      url: `https://api.forxlmarkets.com/global/history`,
       method: "GET",
       params: {
         symbol: params.symbol,
