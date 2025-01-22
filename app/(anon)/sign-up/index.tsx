@@ -1,13 +1,17 @@
-import { useUnmount } from 'ahooks'
-import { router, Stack } from 'expo-router'
-import { useMemo } from 'react'
-import { Trans, useTranslation } from 'react-i18next'
-import { z } from 'zod'
-import { createWithEqualityFn } from 'zustand/traditional'
+import { useUnmount } from "ahooks"
+import { router, Stack } from "expo-router"
+import { useMemo } from "react"
+import { Trans, useTranslation } from "react-i18next"
+import { z } from "zod"
+import { createWithEqualityFn } from "zustand/traditional"
 
-import { Button, Input, Screen, Text, YStack } from '~/components'
-import { LiveSupport, NativeStackNavigationOptions } from '~/widgets/shared/header'
-import { WebLink } from '~/widgets/shared/link'
+import { Button, Input, Screen, Text, YStack } from "~/components"
+import { i18n } from "~/lib/utils"
+import {
+  LiveSupport,
+  NativeStackNavigationOptions,
+} from "~/widgets/shared/header"
+import { WebLink } from "~/widgets/shared/link"
 
 const ScreenOptions: NativeStackNavigationOptions = {
   title: "",
@@ -86,7 +90,7 @@ export default function Page() {
             components={{
               1: (
                 <WebLink
-                  href="http://www.google.com"
+                  href={`https://www.forxlmarkets.com/#/help/documents/terms-and-conditions?language=${i18n.language}`}
                   col="$primary"
                   fos={11}
                   lh={14}
@@ -95,7 +99,7 @@ export default function Page() {
               ),
               2: (
                 <WebLink
-                  href="http://www.baidu.com"
+                  href={`https://www.forxlmarkets.com/#/help/documents/privacy-policy?language=${i18n.language}`}
                   col="$primary"
                   fos={11}
                   lh={14}

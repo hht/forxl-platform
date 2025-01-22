@@ -1,12 +1,13 @@
 import { router, Stack } from "expo-router"
 import { useMemo } from "react"
 import { useTranslation } from "react-i18next"
+import { useSafeAreaInsets } from "react-native-safe-area-context"
 import { z } from "zod"
 
 import { useStore } from "../sign-up"
 
 import { register } from "~/api/account"
-import { Button, Input, Screen, Text, YStack } from "~/components"
+import { Button, Input, Screen, ScrollView, Text, YStack } from "~/components"
 import { useRequest } from "~/hooks/useRequest"
 import { i18n, popToTop } from "~/lib/utils"
 import {
@@ -21,6 +22,7 @@ const ScreenOptions: NativeStackNavigationOptions = {
 }
 
 export default function Page() {
+  const { bottom } = useSafeAreaInsets()
   const { email, inviteCode, password, confirm } = useStore()
   const { t } = useTranslation("translation")
   const matches = t("anon.matches", {
@@ -63,32 +65,36 @@ export default function Page() {
   )
 
   return (
-    <Screen gap={32}>
+    <ScrollView f={1} contentContainerStyle={{ flexGrow: 1, gap: 32 }}>
       <Stack.Screen options={ScreenOptions} />
-      <YStack gap={12}>
-        <Text subject>{t("anon.signUp")}</Text>
-        <Text col="$secondary">{t("anon.passwordDesc")}</Text>
+      <YStack f={1} gap={32} p="$md">
+        <YStack gap={12}>
+          <Text subject>{t("anon.signUp")}</Text>
+          <Text col="$secondary">{t("anon.passwordDesc")}</Text>
+        </YStack>
+        <YStack gap="$lg" f={1}>
+          <Input.Password
+            label={t("anon.password")}
+            value={password}
+            status={errors?.password ? "error" : "success"}
+            onChangeText={(password) => useStore.setState({ password })}
+            message={errors?.password?.[0]}
+          />
+          <Input.Password
+            label={t("anon.confirmPassword")}
+            value={confirm}
+            status={errors?.confirm ? "error" : "success"}
+            onChangeText={(confirm) => useStore.setState({ confirm })}
+            message={errors?.confirm?.[0]}
+          />
+          <PasswordValidator password={password} />
+        </YStack>
       </YStack>
-      <YStack gap="$lg" f={1}>
-        <Input.Password
-          label={t("anon.password")}
-          value={password}
-          status={errors?.password ? "error" : "success"}
-          onChangeText={(password) => useStore.setState({ password })}
-          message={errors?.password?.[0]}
-        />
-        <Input.Password
-          label={t("anon.confirmPassword")}
-          value={confirm}
-          status={errors?.confirm ? "error" : "success"}
-          onChangeText={(confirm) => useStore.setState({ confirm })}
-          message={errors?.confirm?.[0]}
-        />
-        <PasswordValidator password={password} />
+      <YStack p="$md" pb={bottom + 16} bc="$background">
+        <Button disabled={!success} isLoading={loading} onPress={run} mb={32}>
+          {t("anon.signUp")}
+        </Button>
       </YStack>
-      <Button disabled={!success} isLoading={loading} onPress={run} mb={32}>
-        {t("anon.signUp")}
-      </Button>
-    </Screen>
+    </ScrollView>
   )
 }
