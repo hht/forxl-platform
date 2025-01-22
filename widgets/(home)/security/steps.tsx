@@ -1,5 +1,5 @@
 import { useUnmount } from "ahooks"
-import { FC } from "react"
+import { FC, ReactNode } from "react"
 import { useTranslation } from "react-i18next"
 
 import { getGaInfo } from "~/api/account"
@@ -14,7 +14,7 @@ import {
 import { CACHE_KEY, useRequest } from "~/hooks/useRequest"
 import { useGoogleAuthStore } from "~/hooks/useStore"
 
-export const Steps: FC = () => {
+export const Steps: FC<{ children?: ReactNode }> = ({ children }) => {
   const { t } = useTranslation("translation")
   const { data } = useRequest(getGaInfo, {
     cacheKey: CACHE_KEY.GOOGLE_AUTH,
@@ -25,6 +25,7 @@ export const Steps: FC = () => {
   return (
     <Stepper>
       <Text col="$secondary">{t("security.twoFactorStepOne")}</Text>
+      {children}
       <YStack gap="$md">
         <Text col="$secondary">{t("security.twoFactorStepTwo")}</Text>
         <YStack ai="center" gap="$md">
