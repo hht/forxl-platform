@@ -6,6 +6,10 @@ interface ItemProps {
 export const LANGUAGES: ItemProps[] = [
   { label: "中文", value: "zh" },
   { label: "English", value: "en" },
+  { label: "Español", value: "es" },
+  { label: "Türkçe", value: "tr" },
+  { label: "Bahasa Melayu", value: "ms" },
+  { label: "Português", value: "pt" },
   { label: "日本語", value: "ja" },
   { label: "한국어", value: "ko" },
 ]

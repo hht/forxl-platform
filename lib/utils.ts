@@ -13,6 +13,12 @@ import _ from "lodash"
 import { Dimensions, LayoutAnimation } from "react-native"
 
 import en from "~/locales/en-US/translation.json"
+import es from "~/locales/es-ES/translation.json"
+import ja from "~/locales/ja-JP/translation.json"
+import ko from "~/locales/ko-KR/translation.json"
+import ms from "~/locales/ms-MY/translation.json"
+import pt from "~/locales/pt-PT/translation.json"
+import tr from "~/locales/tr-TR/translation.json"
 import zh from "~/locales/zh-CN/translation.json"
 
 dayjs.extend(localeData)
@@ -29,6 +35,24 @@ export const resources = {
   },
   zh: {
     translation: zh,
+  },
+  ja: {
+    translation: ja,
+  },
+  ko: {
+    translation: ko,
+  },
+  ms: {
+    translation: ms,
+  },
+  pt: {
+    translation: pt,
+  },
+  tr: {
+    translation: tr,
+  },
+  es: {
+    translation: es,
   },
 } as const
 
