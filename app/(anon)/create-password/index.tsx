@@ -59,7 +59,7 @@ export default function Page() {
       manual: true,
       onSuccess: () => {
         popToTop()
-        router.push("/(anon)/verify-email")
+        router.push(`/(anon)/verify-email?email=${email}`)
       },
     }
   )

@@ -1,3 +1,4 @@
+import { router } from "expo-router"
 import _ from "lodash"
 import { AnimatePresence } from "moti"
 import { Fragment, useState } from "react"
@@ -130,7 +131,14 @@ export const AccountInfo = () => {
                 <Statistics label={t("referral.earned")}>
                   <Row gap="$xs">
                     <Text bold>{formatDecimal(data?.earned ?? 0)}</Text>
-                    <Button h={18} px="$xs" br="$xs" onPress={() => {}}>
+                    <Button
+                      h={18}
+                      px="$xs"
+                      br="$xs"
+                      onPress={() => {
+                        router.push("/statement")
+                      }}
+                    >
                       <Text caption col="$background">
                         {t("action.query")}
                       </Text>

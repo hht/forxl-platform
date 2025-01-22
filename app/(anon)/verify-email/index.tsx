@@ -1,5 +1,5 @@
 import * as Linking from "expo-linking"
-import { router, Stack } from "expo-router"
+import { router, Stack, useLocalSearchParams } from "expo-router"
 import { useTranslation } from "react-i18next"
 
 import { Button, Figure, Screen, Text, toast, YStack } from "~/components"
@@ -14,22 +14,10 @@ const ScreenOptions: NativeStackNavigationOptions = {
   headerLeft: () => null,
 }
 
-const openInbox = async () => {
+const openInbox = async (email: string) => {
   try {
-    const schemes = [
-      "message://",
-      "inbox://",
-      "gmail://",
-      "email://",
-      "mailto:",
-    ]
-    for (const scheme of schemes) {
-      const canOpen = await Linking.canOpenURL(scheme)
-      if (canOpen) {
-        await Linking.openURL(scheme)
-        break
-      }
-    }
+    if (!email) return
+    Linking.openURL(`http://${email.split("@")[1]}`)
   } catch (error) {
     toast.show(t("message.openEmailError"))
   }
@@ -37,6 +25,7 @@ const openInbox = async () => {
 
 export default function Page() {
   const { t } = useTranslation()
+  const { email } = useLocalSearchParams()
   return (
     <Screen gap={32}>
       <Stack.Screen options={ScreenOptions} />
@@ -50,7 +39,7 @@ export default function Page() {
         </Text>
       </YStack>
       <YStack gap="$md" ai="center" pb={32}>
-        <Button w="100%" onPress={openInbox}>
+        <Button w="100%" onPress={() => openInbox(email as string)}>
           {t("action.openEmailApp")}
         </Button>
         <Button w="100%" type="accent" onPress={router.back}>
