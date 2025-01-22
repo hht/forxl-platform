@@ -1,7 +1,8 @@
-import { FC, Fragment, ReactNode, useState } from 'react'
-import { useTranslation } from 'react-i18next'
+import * as Linking from "expo-linking"
+import { FC, Fragment, ReactNode, useState } from "react"
+import { useTranslation } from "react-i18next"
 
-import { Button, Dialog, Popup, Text, XStack } from '~/components'
+import { Button, Dialog, Popup, Text, XStack } from "~/components"
 
 export const SupportTip: FC<{ children: ReactNode }> = ({ children }) => {
   const [visible, setVisible] = useState(false)
@@ -33,6 +34,7 @@ export const SupportTip: FC<{ children: ReactNode }> = ({ children }) => {
               size="$md"
               px={0}
               onPress={() => {
+                Linking.openURL("mailto:support@forxlmarkets.com")
                 setVisible(false)
               }}
             >
