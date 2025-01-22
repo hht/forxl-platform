@@ -129,7 +129,11 @@ export const Statement = () => {
           <FlatList
             style={{ width: DEVICE_WIDTH }}
             data={data?.list ?? []}
-            contentContainerStyle={{ flexGrow: 1, flex: 1 }}
+            contentContainerStyle={{
+              flexGrow: 1,
+              flex: 1,
+              paddingHorizontal: 16,
+            }}
             renderItem={renderItem}
             keyExtractor={keyExtractor}
             centerContent={data?.list.length === 0}
