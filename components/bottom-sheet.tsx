@@ -45,7 +45,7 @@ export const BottomSheet = forwardRef<
       onDismiss={onDismiss}
       {...rest}
     >
-      <BottomSheetView>
+      <BottomSheetView style={styles.content}>
         <XStack
           px="$md"
           py={title ? "$lg" : "$md"}
@@ -88,5 +88,8 @@ const styles = StyleSheet.create({
     borderColor: colors.border,
     borderTopLeftRadius: 16,
     borderTopRightRadius: 16,
+  },
+  content: {
+    height: "100%",
   },
 })
