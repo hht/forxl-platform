@@ -1,15 +1,22 @@
-import { BottomSheetModal } from '@gorhom/bottom-sheet'
-import { FC, Fragment, useRef } from 'react'
-import { useTranslation } from 'react-i18next'
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import { shallow } from 'zustand/shallow'
+import { BottomSheetModal } from "@gorhom/bottom-sheet"
+import { FC, Fragment, useRef } from "react"
+import { useTranslation } from "react-i18next"
+import { ScrollView } from "react-native-gesture-handler"
+import { useSafeAreaInsets } from "react-native-safe-area-context"
+import { shallow } from "zustand/shallow"
 
 import {
-    AnimatedFlow, BottomSheet, Card, Icon, ScrollView, Text, XStack, YStack
-} from '~/components'
-import { useStatisticsStore } from '~/hooks/useStore'
-import { DEVICE_HEIGHT } from '~/lib/utils'
-import colors from '~/theme/colors'
+  AnimatedFlow,
+  BottomSheet,
+  Card,
+  Icon,
+  Text,
+  XStack,
+  YStack,
+} from "~/components"
+import { useStatisticsStore } from "~/hooks/useStore"
+import { DEVICE_HEIGHT } from "~/lib/utils"
+import colors from "~/theme/colors"
 
 export const AssetCard: FC = () => {
   const { t } = useTranslation()

@@ -1,9 +1,10 @@
 import { BottomSheetModal } from "@gorhom/bottom-sheet"
 import _ from "lodash"
 import { FC, useEffect, useRef } from "react"
+import { ScrollView } from "react-native-gesture-handler"
 import { useSafeAreaInsets } from "react-native-safe-area-context"
 
-import { BottomSheet, ScrollView, Text, YStack } from "~/components"
+import { BottomSheet, Text, YStack } from "~/components"
 import { usePromptStore } from "~/hooks/useStore"
 
 export const PromptSheet: FC = () => {

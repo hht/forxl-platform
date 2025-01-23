@@ -2,6 +2,7 @@ import { BottomSheetModal } from "@gorhom/bottom-sheet"
 import { router, Stack } from "expo-router"
 import { useRef } from "react"
 import { useTranslation } from "react-i18next"
+import { ScrollView as GHScrollView } from "react-native-gesture-handler"
 import { useSafeAreaInsets } from "react-native-safe-area-context"
 
 import { getAttestationFlag, getProfile } from "~/api/account"
@@ -148,7 +149,10 @@ export default function Page() {
         </Button>
       </YStack>
       <BottomSheet title={dict.verificationLevel} ref={bottomSheetRef}>
-        <ScrollView px="$md" gap="$md" showsVerticalScrollIndicator={false}>
+        <GHScrollView
+          style={{ padding: 16, gap: 16 }}
+          showsVerticalScrollIndicator={false}
+        >
           {dict.levels.map((level, index) => (
             <YStack key={index} gap={12} py="$md">
               <XStack ai="center" gap="$sm">
@@ -158,7 +162,7 @@ export default function Page() {
               <Text col="$secondary">{level.desc}</Text>
             </YStack>
           ))}
-        </ScrollView>
+        </GHScrollView>
         <YStack p="$md" pb={bottom + 16}>
           <Button
             onPress={() => {
