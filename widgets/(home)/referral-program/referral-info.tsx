@@ -1,13 +1,21 @@
-import { Fragment } from 'react'
-import { Trans, useTranslation } from 'react-i18next'
+import { router } from "expo-router"
+import { Fragment } from "react"
+import { Trans, useTranslation } from "react-i18next"
 
-import { getBonusInfo, getPartnerInfo } from '~/api/partner'
+import { getBonusInfo, getPartnerInfo } from "~/api/partner"
 import {
-    Button, Card, copyToClipboard, Figure, Statistics, Text, XStack, YStack
-} from '~/components'
-import { useRequest } from '~/hooks/useRequest'
-import { useForxlStore, usePartnerStore } from '~/hooks/useStore'
-import { formatCurrency } from '~/lib/utils'
+  Button,
+  Card,
+  copyToClipboard,
+  Figure,
+  Statistics,
+  Text,
+  XStack,
+  YStack,
+} from "~/components"
+import { useRequest } from "~/hooks/useRequest"
+import { useForxlStore, usePartnerStore } from "~/hooks/useStore"
+import { formatCurrency } from "~/lib/utils"
 
 export const ReferralInfo = () => {
   const { t } = useTranslation()
@@ -63,7 +71,16 @@ export const ReferralInfo = () => {
               <Text heading bold>
                 {formatCurrency(bonus?.earned ?? 0)}
               </Text>
-              <Button mah={18} px={4} br={2} ai="center" jc="center">
+              <Button
+                mah={18}
+                px={4}
+                br={2}
+                ai="center"
+                jc="center"
+                onPress={() => {
+                  router.push("/statement")
+                }}
+              >
                 <Text caption col="$background">
                   {t("action.query")}
                 </Text>
