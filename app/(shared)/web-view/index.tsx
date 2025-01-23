@@ -1,6 +1,6 @@
 import { useUnmount } from "ahooks"
 import { Stack } from "expo-router"
-import { Platform } from "react-native"
+import { ActivityIndicator, Platform } from "react-native"
 import { WebView } from "react-native-webview"
 
 import { YStack } from "~/components"
@@ -38,7 +38,9 @@ export default function Page() {
     <html>
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-        <style>${darkModeCSS}</style>
+        <meta name="color-scheme" content="dark">
+        <meta name="theme-color" content="#000000">
+      <style>${darkModeCSS}</style>
       </head>
       <body>
         ${html}
@@ -69,6 +71,22 @@ export default function Page() {
           containerStyle={{ backgroundColor: "#000" }}
           style={{ backgroundColor: "#000" }}
           source={uri ? { uri } : { html: wrappedHtml ?? "" }}
+          startInLoadingState={true}
+          renderLoading={() => (
+            <YStack
+              f={1}
+              pos="absolute"
+              l={0}
+              r={0}
+              t={0}
+              b={0}
+              ai="center"
+              jc="center"
+              bc="$background"
+            >
+              <ActivityIndicator />
+            </YStack>
+          )}
         />
       )}
     </YStack>

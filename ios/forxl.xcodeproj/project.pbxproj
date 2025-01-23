@@ -361,7 +361,7 @@
 				CODE_SIGN_ENTITLEMENTS = forxl/forxl.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = JK42BA9P28;
 				ENABLE_BITCODE = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -408,7 +408,7 @@
 				CODE_SIGN_ENTITLEMENTS = forxl/forxl.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = JK42BA9P28;
 				INFOPLIST_FILE = forxl/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Forxl Markets";

@@ -8,6 +8,7 @@ import { Platform } from "react-native"
 import { getNewMessageCount } from "~/api/notifications"
 import { Figure, Icon, IconType, Text, XStack } from "~/components"
 import { CACHE_KEY, useRequest } from "~/hooks/useRequest"
+import { useWebViewStore } from "~/hooks/useStore"
 import colors from "~/theme/colors"
 
 export const HeaderLeft: FC<{ onPress?: () => void }> = ({ onPress }) => {
@@ -98,7 +99,19 @@ export const CustomerService: FC = () => {
 export const LiveSupport: FC = () => {
   const { t } = useTranslation()
   return (
-    <XStack gap="$xs" hitSlop={10} ai="center" px={12}>
+    <XStack
+      gap="$xs"
+      hitSlop={10}
+      ai="center"
+      px={12}
+      onPress={() => {
+        useWebViewStore.setState({
+          uri: "https://tawk.to/chat/6790da9c825083258e09206f/1ii6tbtqd",
+          title: t("anon.liveSupport"),
+        })
+        router.push("/web-view")
+      }}
+    >
       <Icon name="bubble" size={18} />
       <Text>{t("anon.liveSupport")}</Text>
     </XStack>
