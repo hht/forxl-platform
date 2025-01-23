@@ -10,8 +10,8 @@ export const LANGUAGES: ItemProps[] = [
   { label: "Türkçe", value: "tr" },
   { label: "Bahasa Melayu", value: "ms" },
   { label: "Português", value: "pt" },
-  { label: "日本語", value: "ja" },
-  { label: "한국어", value: "ko" },
+  // { label: "日本語", value: "ja" },
+  // { label: "한국어", value: "ko" },
 ]
 
 export type LocaleProps = {
