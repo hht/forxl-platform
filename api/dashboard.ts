@@ -24,7 +24,7 @@ export const getNews = async (params: {
   }[]
 }> => {
   return await fetch(
-    `https://news.forxlmarkets.com/get_news.php?date=${params.date}&page=${params.page}&limit=${10}&lang=${getLocaleLanguage(useForxlStore.getState().language || "en")}`
+    `https://news.usd.lt/get_news.php?date=${params.date}&page=${params.page}&limit=${10}&lang=${getLocaleLanguage(useForxlStore.getState().language || "en")}`
   )
     .then((res) => res.json())
     .then((res) => {
