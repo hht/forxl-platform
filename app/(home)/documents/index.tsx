@@ -28,15 +28,13 @@ export default function Layout() {
             title={it}
             key={index}
             onPress={() => {
+              const uri = `https://www.forxlmarkets.com/#/help/documents/${LINKS[index]}?language=${i18n.language}`
               if (Platform.OS === "web") {
-                window.open(
-                  `https://www.forxlmarkets.com/#/help/documents/${LINKS[index]}?language=${i18n.language}`,
-                  "_blank"
-                )
+                window.open(uri, "_blank")
                 return
               }
               useWebViewStore.setState({
-                uri: `https://www.forxlmarkets.com/#/help/documents/${LINKS[index]}?language=${i18n.language}`,
+                uri,
                 title: it,
               })
               router.push("/web-view")

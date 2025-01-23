@@ -1,4 +1,5 @@
 import { router } from "expo-router"
+import * as Sharing from "expo-sharing"
 import { Fragment } from "react"
 import { Trans, useTranslation } from "react-i18next"
 
@@ -10,12 +11,30 @@ import {
   Figure,
   Statistics,
   Text,
+  toast,
   XStack,
   YStack,
 } from "~/components"
 import { useRequest } from "~/hooks/useRequest"
 import { useForxlStore, usePartnerStore } from "~/hooks/useStore"
-import { formatCurrency } from "~/lib/utils"
+import { formatCurrency, t } from "~/lib/utils"
+
+const share = async () => {
+  if (!(await Sharing.isAvailableAsync())) {
+    copyToClipboard(
+      `https://www.forxlmarkets.com/#/?code=${useForxlStore.getState().account?.inviteCode}`
+    )
+    toast.show(t("message.copiedSuccess"))
+    return
+  } else {
+    await Sharing.shareAsync(
+      `https://www.forxlmarkets.com/#/?code=${useForxlStore.getState().account?.inviteCode}`,
+      {
+        dialogTitle: t("anon.title"),
+      }
+    )
+  }
+}
 
 export const ReferralInfo = () => {
   const { t } = useTranslation()
@@ -117,7 +136,9 @@ export const ReferralInfo = () => {
               <Text col="$primary">{t("action.copy")}</Text>
             </XStack>
           </XStack>
-          <Button size="$md">{dict.share}</Button>
+          <Button size="$md" onPress={share}>
+            {dict.share}
+          </Button>
         </YStack>
       </Card>
     </Fragment>

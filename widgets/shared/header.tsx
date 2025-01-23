@@ -9,6 +9,7 @@ import { getNewMessageCount } from "~/api/notifications"
 import { Figure, Icon, IconType, Text, XStack } from "~/components"
 import { CACHE_KEY, useRequest } from "~/hooks/useRequest"
 import { useWebViewStore } from "~/hooks/useStore"
+import { TAWK_TO } from "~/lib/constants"
 import colors from "~/theme/colors"
 
 export const HeaderLeft: FC<{ onPress?: () => void }> = ({ onPress }) => {
@@ -94,7 +95,7 @@ export const CustomerService: FC = () => {
     <XStack
       onPress={() => {
         useWebViewStore.setState({
-          uri: "https://tawk.to/chat/6790da9c825083258e09206f/1ii6tbtqd",
+          uri: TAWK_TO,
           title: t("anon.liveSupport"),
         })
         router.push("/web-view")
@@ -115,7 +116,7 @@ export const LiveSupport: FC = () => {
       px={12}
       onPress={() => {
         useWebViewStore.setState({
-          uri: "https://tawk.to/chat/6790da9c825083258e09206f/1ii6tbtqd",
+          uri: TAWK_TO,
           title: t("anon.liveSupport"),
         })
         router.push("/web-view")

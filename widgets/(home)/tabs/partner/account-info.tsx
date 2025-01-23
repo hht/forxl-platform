@@ -107,7 +107,7 @@ export const AccountInfo = () => {
                     h={24}
                     onPress={() => {
                       copyToClipboard(
-                        `https://www.FORXLMARKETS.COM/CODE=${account?.inviteCode}`
+                        `https://www.forxlmarkets.com/#/?code=${account?.inviteCode}`
                       )
                     }}
                   >

@@ -7,7 +7,7 @@ import { z } from "zod"
 import { useStore } from "../sign-up"
 
 import { register } from "~/api/account"
-import { Button, Input, Screen, ScrollView, Text, YStack } from "~/components"
+import { Button, Input, ScrollView, Text, YStack } from "~/components"
 import { useRequest } from "~/hooks/useRequest"
 import { i18n, popToTop } from "~/lib/utils"
 import {

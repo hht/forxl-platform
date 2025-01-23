@@ -22,7 +22,7 @@ import {
 } from "~/components"
 import { CACHE_KEY, useRequest } from "~/hooks/useRequest"
 import { useForxlStore } from "~/hooks/useStore"
-import { SupportTip } from "~/widgets/(home)/profile/suppirt-tip"
+import { SupportTip } from "~/widgets/(home)/profile/support-tip"
 import { VerificationTrigger } from "~/widgets/shared/validation-card"
 
 const LEVEL_ICON = ["lv0", "lv1", "lv2"] as const

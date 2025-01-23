@@ -21,6 +21,8 @@ export type LocaleProps = {
   timezone: string
 }
 
+export const TAWK_TO = "https://tawk.to/chat/6790da9c825083258e09206f/1ii6tbtqd"
+
 export const LOCALES: LocaleProps[] = [
   { country: "中国", flag: "🇨🇳", code: "+86", timezone: "UTC+08:00" },
   { country: "United States", flag: "🇺🇸", code: "+1", timezone: "UTC-05:00" },

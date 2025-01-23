@@ -1,5 +1,6 @@
 import { router, Stack } from "expo-router"
 import { useTranslation } from "react-i18next"
+import { Platform } from "react-native"
 
 import {
   Figure,
@@ -9,7 +10,8 @@ import {
   XStack,
   YStack,
 } from "~/components"
-import { useWebViewStore } from "~/hooks/useStore"
+import { useForxlStore, useWebViewStore } from "~/hooks/useStore"
+import { TAWK_TO } from "~/lib/constants"
 
 export default function Layout() {
   const { t } = useTranslation()
@@ -37,9 +39,21 @@ export default function Layout() {
             title={item}
             onPress={() => {
               switch (index) {
+                case 2:
+                  const uri = `https://www.forxlmarkets.com/#/help/faq?language=${useForxlStore.getState().language}`
+                  if (Platform.OS === "web") {
+                    window.open(uri, "_blank")
+                    return
+                  }
+                  useWebViewStore.setState({
+                    uri,
+                    title: item,
+                  })
+                  router.push("/web-view")
+                  return
                 case 3:
                   useWebViewStore.setState({
-                    uri: "https://tawk.to/chat/6790da9c825083258e09206f/1ii6tbtqd",
+                    uri: TAWK_TO,
                     title: t("anon.liveSupport"),
                   })
                   router.push("/web-view")
