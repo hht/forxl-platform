@@ -89,8 +89,17 @@ export const Notifier: FC<{ icon?: IconType; type?: number }> = ({
 }
 
 export const CustomerService: FC = () => {
+  const { t } = useTranslation()
   return (
-    <XStack onPress={() => router.push("/(home)/customer-service")}>
+    <XStack
+      onPress={() => {
+        useWebViewStore.setState({
+          uri: "https://tawk.to/chat/6790da9c825083258e09206f/1ii6tbtqd",
+          title: t("anon.liveSupport"),
+        })
+        router.push("/web-view")
+      }}
+    >
       <Icon name="service" size={20} />
     </XStack>
   )
