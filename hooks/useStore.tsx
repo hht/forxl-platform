@@ -56,6 +56,7 @@ interface QuotesStore {
   >
   futures: Record<string, FuturesDetail>
   currentFuture?: Future
+  activeIndex: number
   action: "buy" | "sell"
   order?: Partial<Order>
   updateQuotes: (quotes: Quotes) => void
@@ -71,6 +72,7 @@ interface QuotesStore {
 
 export const useQuotesStore = createWithEqualityFn<QuotesStore>((set, get) => ({
   action: "buy" as const,
+  activeIndex: 0,
   quotes: {},
   futures: {},
   order: {

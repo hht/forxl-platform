@@ -39,16 +39,17 @@ export const FutureDetail = () => {
   const dict = t("trade", {
     returnObjects: true,
   })
-  const [activeIndex, setActiveIndex] = useState(0)
-  const { action, order, currentFuture, futureParams } = useQuotesStore(
-    (state) => ({
-      currentFuture: state.currentFuture,
-      action: state.action,
-      order: state.order,
-      futureParams: state.futures[state.currentFuture?.futuresShow!],
-    }),
-    shallow
-  )
+  const { action, order, currentFuture, futureParams, activeIndex } =
+    useQuotesStore(
+      (state) => ({
+        currentFuture: state.currentFuture,
+        action: state.action,
+        order: state.order,
+        futureParams: state.futures[state.currentFuture?.futuresShow!],
+        activeIndex: state.activeIndex,
+      }),
+      shallow
+    )
   useMount(() => {
     requestAnimationFrame(() => {
       setMounted(true)
@@ -91,6 +92,7 @@ export const FutureDetail = () => {
   const ref = useRef<ScrollView>(null)
   useUnmount(() => {
     useQuotesStore.setState({
+      activeIndex: 0,
       currentFuture: undefined,
       enableCloseLoss: false,
       enableCloseProfit: false,
@@ -107,6 +109,7 @@ export const FutureDetail = () => {
         <ActivityIndicator />
       </YStack>
     )
+
   return (
     <YStack
       f={1}
@@ -139,7 +142,9 @@ export const FutureDetail = () => {
         <Tabs
           data={[dict.newPosition, dict.chart, dict.info]}
           activeIndex={activeIndex}
-          onChange={setActiveIndex}
+          onChange={(activeIndex) => {
+            useQuotesStore.setState({ activeIndex })
+          }}
         />
       </XStack>
       <AnimatePresence>
@@ -157,6 +162,12 @@ export const FutureDetail = () => {
               showsHorizontalScrollIndicator={false}
               pagingEnabled
               scrollEnabled={false}
+              onLayout={() => {
+                ref.current?.scrollTo({
+                  x: activeIndex * DEVICE_WIDTH,
+                  animated: false,
+                })
+              }}
             >
               <ScrollView
                 f={1}
@@ -191,7 +202,7 @@ export const FutureDetail = () => {
                   <QuotesInfo
                     data={future}
                     onPress={() => {
-                      setActiveIndex(0)
+                      useQuotesStore.setState({ activeIndex: 0 })
                     }}
                   />
                 ) : null}
@@ -204,7 +215,7 @@ export const FutureDetail = () => {
                 <FutureInfo
                   future={future}
                   onPress={() => {
-                    setActiveIndex(0)
+                    useQuotesStore.setState({ activeIndex: 0 })
                   }}
                 />
               </ScrollView>

@@ -197,6 +197,7 @@ const ListItem: FC<{ data: Future }> = ({ data }) => {
             (useQuotesStore.getState().quotes[data.futuresCode!]?.Bid ??
               data.sellPrice) - diff
           useQuotesStore.setState({
+            activeIndex: 1,
             currentFuture: data,
             action: "buy",
             order: { position: 0.01, price },
