@@ -1,14 +1,17 @@
-import { useUnmount } from 'ahooks'
-import { Link, Stack } from 'expo-router'
-import { useMemo } from 'react'
-import { useTranslation } from 'react-i18next'
-import { z } from 'zod'
-import { createWithEqualityFn } from 'zustand/traditional'
+import { useUnmount } from "ahooks"
+import { Link, Stack } from "expo-router"
+import { useMemo } from "react"
+import { useTranslation } from "react-i18next"
+import { z } from "zod"
+import { createWithEqualityFn } from "zustand/traditional"
 
-import { signIn } from '~/api/account'
-import { Button, Input, Screen, Text, XStack, YStack } from '~/components'
-import { useRequest } from '~/hooks/useRequest'
-import { LiveSupport, NativeStackNavigationOptions } from '~/widgets/shared/header'
+import { signIn } from "~/api/account"
+import { Button, Input, Screen, Text, XStack, YStack } from "~/components"
+import { useRequest } from "~/hooks/useRequest"
+import {
+  LiveSupport,
+  NativeStackNavigationOptions,
+} from "~/widgets/shared/header"
 
 const ScreenOptions: NativeStackNavigationOptions = {
   title: "",
@@ -23,8 +26,8 @@ interface Store {
 }
 
 const INITIAL = {
-  email: "1300000013",
-  password: "123456",
+  email: "",
+  password: "",
   confirm: "",
   inviteCode: "",
 }

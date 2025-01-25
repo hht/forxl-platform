@@ -26,10 +26,10 @@ interface Store {
 }
 
 const INITIAL = {
-  email: "forxl-test@snapmail.cc",
+  email: "",
   password: "",
   confirm: "",
-  inviteCode: "LY869960",
+  inviteCode: "",
 }
 
 export const useStore = createWithEqualityFn<Store>()((set) => INITIAL)
