@@ -59,11 +59,7 @@ export const DepositSummary: FC = () => {
           <Card.Item title={t("wallet.order")}>
             <Copyable>{depositResult?.orderNo ?? "124"}</Copyable>
           </Card.Item>
-        ) : (
-          <Card.Item title={t("wallet.paymentAddress")}>
-            <Copyable>{depositResult?.address ?? ""}</Copyable>
-          </Card.Item>
-        )}
+        ) : null}
       </YStack>
     </Card>
   )

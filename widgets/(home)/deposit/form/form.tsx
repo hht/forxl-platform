@@ -57,10 +57,6 @@ export const DepositForm: FC = () => {
       </InfoCard>
       {method?.remark ? <InfoCard>{trimHTML(method.remark)}</InfoCard> : null}
       <PaymentMethod />
-      <YStack gap="$sm">
-        <Text heading>{t("wallet.addressPrompt")}</Text>
-        <Text col="$secondary">{t("wallet.addressPromptDesc")}</Text>
-      </YStack>
     </Fragment>
   )
 }

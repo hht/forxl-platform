@@ -9,7 +9,6 @@ import {
   Button,
   Dialog,
   Figure,
-  Icon,
   Popup,
   ScrollView,
   Text,
@@ -19,16 +18,18 @@ import {
 } from "~/components"
 import { useRequest } from "~/hooks/useRequest"
 import { useWalletStore } from "~/hooks/useStore"
-import { formatDecimal } from "~/lib/utils"
+import { formatDecimal, trimHTML } from "~/lib/utils"
 import colors from "~/theme/colors"
 import { DepositSteps } from "~/widgets/(home)/deposit/confirm/steps"
 import { DepositSummary } from "~/widgets/(home)/deposit/confirm/summary"
+import { AccountCard } from "~/widgets/shared/account-card"
 import { AttentionCard } from "~/widgets/shared/attention-card"
+import { InfoCard } from "~/widgets/shared/info-card"
 
 export default function Page() {
   const { t } = useTranslation()
   const { bottom } = useSafeAreaInsets()
-  const { depositResult, image } = useWalletStore()
+  const { depositResult, image, depositMethod } = useWalletStore()
   const [visible, setVisible] = useState(false)
   const { run, loading } = useRequest(confirmDeposit, {
     manual: true,
@@ -45,50 +46,83 @@ export default function Page() {
       router.back()
     },
   })
+  useUnmount(() => {
+    useWalletStore.setState({ image: undefined })
+  })
   return (
     <Fragment>
       <ScrollView f={1} showsVerticalScrollIndicator={false}>
         <Stack.Screen options={{ title: t("wallet.deposit") }} />
         <YStack p="$md" gap={20} pb={bottom + 16}>
-          <AttentionCard>
-            {t("wallet.depositPaymentPrompt", {
-              amount: formatDecimal(
-                (depositResult?.payType === 3
-                  ? depositResult?.transferAmount
-                  : depositResult?.price) ?? 0
-              ),
-              unit:
-                depositResult?.payType === 3 ? depositResult?.currency : "USDT",
-            })}
-          </AttentionCard>
-          <DepositSummary />
-          <Text subject bold>
-            {t("wallet.depositSteps")}
-          </Text>
+          {depositResult?.payType === 3 ? (
+            <Fragment>
+              <AttentionCard>
+                {t("wallet.depositPaymentPrompt", {
+                  amount: formatDecimal(depositResult?.transferAmount),
+                  unit: depositResult?.currency,
+                })}
+              </AttentionCard>
+              <DepositSummary />
+              <Text subject bold>
+                {t("wallet.depositSteps")}
+              </Text>
+            </Fragment>
+          ) : (
+            <Fragment>
+              <AccountCard />
+              <InfoCard>
+                {t("wallet.minimumDepositPrompt", {
+                  min: `${depositMethod?.incomeMoneyMin}`,
+                })}
+              </InfoCard>
+              {depositMethod?.remark ? (
+                <InfoCard>{trimHTML(depositMethod.remark)}</InfoCard>
+              ) : null}
+              <YStack gap="$sm">
+                <Text heading>{t("wallet.addressPrompt")}</Text>
+                <Text col="$secondary">{t("wallet.addressPromptDesc")}</Text>
+              </YStack>
+            </Fragment>
+          )}
+
           <DepositSteps />
-          <XStack gap="$md">
-            <Button
-              type="accent"
-              f={1}
-              disabled={cancelling || loading}
-              onPress={() => {
-                if (depositResult?.orderNo) {
-                  cancel(depositResult)
-                }
-              }}
-            >
-              {t("wallet.cancelOrder")}
-            </Button>
-            <Button
-              f={1}
-              disabled={loading || !image || cancelling}
-              onPress={() => {
-                setVisible(true)
-              }}
-            >
-              {t("action.submit")}
-            </Button>
-          </XStack>
+          {depositResult?.payType === 3 ? (
+            <XStack gap="$md">
+              <Button
+                type="accent"
+                f={1}
+                disabled={cancelling || loading}
+                onPress={() => {
+                  if (depositResult?.orderNo) {
+                    cancel(depositResult)
+                  }
+                }}
+              >
+                {t("wallet.cancelOrder")}
+              </Button>
+              <Button
+                f={1}
+                disabled={loading || !image || cancelling}
+                onPress={() => {
+                  setVisible(true)
+                }}
+              >
+                {t("action.submit")}
+              </Button>
+            </XStack>
+          ) : (
+            <XStack>
+              <Button
+                f={1}
+                onPress={() => {
+                  router.back()
+                  router.back()
+                }}
+              >
+                {t("action.done")}
+              </Button>
+            </XStack>
+          )}
         </YStack>
       </ScrollView>
       <Popup visible={visible} onClose={() => setVisible(false)}>

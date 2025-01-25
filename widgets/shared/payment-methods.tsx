@@ -1,12 +1,22 @@
-import { router } from 'expo-router'
-import { AnimatePresence } from 'moti'
-import { FC, Fragment } from 'react'
+import { router } from "expo-router"
+import { AnimatePresence } from "moti"
+import { FC, Fragment } from "react"
 
-import { getPaymentMethods, getWithdrawalMethods } from '~/api/wallet'
-import { Card, Icon, Image, Moti, Separator, Text, XStack, YStack } from '~/components'
-import { CACHE_KEY, useRequest } from '~/hooks/useRequest'
-import { useWalletStore } from '~/hooks/useStore'
-import { formatDecimal, t } from '~/lib/utils'
+import { getPaymentMethods, getWithdrawalMethods } from "~/api/wallet"
+import {
+  Card,
+  Icon,
+  Image,
+  Moti,
+  Row,
+  Separator,
+  Text,
+  XStack,
+  YStack,
+} from "~/components"
+import { CACHE_KEY, useRequest } from "~/hooks/useRequest"
+import { useWalletStore } from "~/hooks/useStore"
+import { formatDecimal, t } from "~/lib/utils"
 
 export const PaymentMethodDescription: FC<{
   method: PaymentMethod
@@ -19,18 +29,20 @@ export const PaymentMethodDescription: FC<{
       <Card.Item title={t("wallet.processingTime")}>
         {method.arrivalTimeDesc || t("wallet.instantly")}
       </Card.Item>
-      {/* <ListItem title={t("wallet.limit")}>
-        <Text className="text-white">
-          {method.incomeMoneyMin
-            ? `${t("wallet.from")} ${formatDecimal(method.incomeMoneyMin)} USD`
-            : ""}
-        </Text>
-        <Text className="text-white">
-          {method.incomeMoneyMax
-            ? `${t("wallet.to")} ${formatDecimal(method.incomeMoneyMax)} USD `
-            : ""}
-        </Text>
-      </ListItem> */}
+      <Card.Item title={t("wallet.limit")}>
+        <Row f={1} gap={4} jc="flex-end" fw="wrap">
+          <Text className="text-white">
+            {method.incomeMoneyMin
+              ? `${t("wallet.from")} ${formatDecimal(method.incomeMoneyMin)} USD`
+              : ""}
+          </Text>
+          <Text className="text-white">
+            {method.incomeMoneyMax
+              ? `${t("wallet.to")} ${formatDecimal(method.incomeMoneyMax)} USD`
+              : ""}
+          </Text>
+        </Row>
+      </Card.Item>
     </Fragment>
   )
 }
