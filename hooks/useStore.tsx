@@ -57,6 +57,7 @@ interface QuotesStore {
   futures: Record<string, FuturesDetail>
   currentFuture?: Future
   activeIndex: number
+
   action: "buy" | "sell"
   order?: Partial<Order>
   updateQuotes: (quotes: Quotes) => void
@@ -166,12 +167,14 @@ export const useStatisticsStore = createWithEqualityFn<{
   freezeMoney: number
   supFreezeMoney: number
   profit: number
+  expended: boolean
 }>()((set) => ({
   totalMoney: 0,
   available: 0,
   freezeMoney: 0,
   supFreezeMoney: 0,
   profit: 0,
+  expended: true,
 }))
 
 export const useSymbolStore = createWithEqualityFn<{

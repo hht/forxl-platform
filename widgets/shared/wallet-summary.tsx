@@ -146,14 +146,16 @@ export const WalletStatistics: FC = () => {
   // eslint-disable-next-line react-compiler/react-compiler
   "use no memo"
   const { top, bottom } = useSafeAreaInsets()
-  const profit = useStatisticsStore((state) => state.profit, shallow)
+  const { profit, expended } = useStatisticsStore(
+    (state) => ({ profit: state.profit, expended: state.expended }),
+    shallow
+  )
   const [{ title, desc, reloadKey }, setState] = useState<{
     title?: string
     desc?: string[]
     reloadKey?: string
   }>({})
   const ref = useRef<BottomSheetModal>(null)
-  const [visible, setVisible] = useState(true)
   const state = useAnimationState(
     {
       from: {
@@ -167,7 +169,7 @@ export const WalletStatistics: FC = () => {
       },
     },
     {
-      from: visible ? "expand" : "collapse",
+      from: expended ? "expand" : "collapse",
     }
   )
   const color = profit > 0 ? colors.primary : colors.destructive
@@ -180,17 +182,17 @@ export const WalletStatistics: FC = () => {
   }, [reloadKey, title])
 
   useEffect(() => {
-    if (visible) {
+    if (expended) {
       state.transitionTo("expand")
     } else {
       state.transitionTo("collapse")
     }
-  }, [visible, state])
+  }, [expended, state])
   useEffect(() => {
-    if (isFocused && visible) {
+    if (isFocused && expended) {
       state.transitionTo("expand")
     }
-  }, [isFocused, visible, state])
+  }, [isFocused, expended, state])
   return (
     <Fragment>
       <YStack pt={top} ov="hidden">
@@ -205,7 +207,7 @@ export const WalletStatistics: FC = () => {
             py={6}
             zIndex={10}
             onPress={() => {
-              setVisible((v) => !v)
+              useStatisticsStore.setState({ expended: !expended })
             }}
           >
             <Text col={color} bold>
@@ -220,7 +222,7 @@ export const WalletStatistics: FC = () => {
           </XStack>
         </XStack>
         <AnimatePresence initial={false}>
-          {visible ? (
+          {expended ? (
             <Moti
               from={{ opacity: 0, translateY: -20, height: 0 }}
               animate={{ opacity: 1, translateY: 0, height: 64 }}
