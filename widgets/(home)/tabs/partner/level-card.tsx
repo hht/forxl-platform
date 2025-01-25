@@ -48,7 +48,11 @@ export const LevelCard: FC<{
         </Text>
         {locked ? (
           <XStack pos="absolute" r={8} t={8}>
-            <Icon name="lock" color="#5E5D5C" size={16} />
+            <Icon
+              name="lock"
+              color={active ? LEVEL_COLORS[level] : "#5E5D5C"}
+              size={16}
+            />
           </XStack>
         ) : null}
       </YStack>

@@ -1,4 +1,4 @@
-import { IconType } from '~/components'
+import { IconType } from "~/components"
 
 export type Level = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8
 
@@ -9,8 +9,8 @@ export const LEVELS: IconType[] = [
   "platinum",
   "diamond",
   "emerald",
-  "ruby",
   "sapphire",
+  "ruby",
   "crown",
 ]
 

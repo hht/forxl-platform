@@ -1,11 +1,12 @@
-import { AnimatePresence } from 'moti'
-import { FC } from 'react'
-import { useTranslation } from 'react-i18next'
+import { router } from "expo-router"
+import { AnimatePresence } from "moti"
+import { FC } from "react"
+import { useTranslation } from "react-i18next"
 
-import { getAttestationFlag } from '~/api/account'
-import { Card, Icon, Moti, Separator, Text, XStack, YStack } from '~/components'
-import { CACHE_KEY, useRequest } from '~/hooks/useRequest'
-import colors, { toRGBA } from '~/theme/colors'
+import { getAttestationFlag } from "~/api/account"
+import { Card, Icon, Moti, Separator, Text, XStack, YStack } from "~/components"
+import { CACHE_KEY, useRequest } from "~/hooks/useRequest"
+import colors, { toRGBA } from "~/theme/colors"
 
 export const TwoFactorCard: FC = () => {
   const { t } = useTranslation()
@@ -33,7 +34,12 @@ export const TwoFactorCard: FC = () => {
                 <Icon name="twoFactor" size={24} />
                 <Text title>2FA</Text>
               </XStack>
-              <XStack gap="$xs">
+              <XStack
+                gap="$xs"
+                onPress={() => {
+                  router.push("/security/2fa")
+                }}
+              >
                 <Text col="$warning">{t("security.notEnabled")}</Text>
                 <Icon name="chevronRight" size={16} />
               </XStack>
