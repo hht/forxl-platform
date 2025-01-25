@@ -16,7 +16,11 @@ import {
   YStack,
 } from "~/components"
 import { useRequest } from "~/hooks/useRequest"
-import { useForxlStore, usePartnerStore } from "~/hooks/useStore"
+import {
+  useForxlStore,
+  usePartnerStore,
+  useStatementStore,
+} from "~/hooks/useStore"
 import { formatCurrency, t } from "~/lib/utils"
 
 const share = async () => {
@@ -42,7 +46,7 @@ export const ReferralInfo = () => {
     returnObjects: true,
   })
   const { account } = useForxlStore()
-  const { data } = useRequest(getPartnerInfo, {
+  useRequest(getPartnerInfo, {
     onSuccess: (data) => {
       usePartnerStore.setState({
         currentLevel: data?.level,
@@ -97,6 +101,9 @@ export const ReferralInfo = () => {
                 ai="center"
                 jc="center"
                 onPress={() => {
+                  useStatementStore.setState({
+                    current: 6,
+                  })
                   router.push("/statement")
                 }}
               >

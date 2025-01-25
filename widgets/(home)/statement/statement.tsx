@@ -101,7 +101,6 @@ export const Statement = () => {
           renderItem={renderItem}
           contentContainerStyle={{
             padding: 16,
-            // paddingTop: Platform.OS === "ios" ? 0 : 280,
           }}
           keyExtractor={keyExtractor}
           onEndReached={loadMore}

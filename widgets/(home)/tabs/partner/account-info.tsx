@@ -32,7 +32,11 @@ import {
 } from "~/components"
 import { formatDate } from "~/hooks/useLocale"
 import { CACHE_KEY, useRequest } from "~/hooks/useRequest"
-import { useForxlStore, usePartnerStore } from "~/hooks/useStore"
+import {
+  useForxlStore,
+  usePartnerStore,
+  useStatementStore,
+} from "~/hooks/useStore"
 import { DEVICE_WIDTH, formatCurrency, formatDecimal } from "~/lib/utils"
 
 export const AccountInfo = () => {
@@ -136,6 +140,9 @@ export const AccountInfo = () => {
                       px="$xs"
                       br="$xs"
                       onPress={() => {
+                        useStatementStore.setState({
+                          current: 7,
+                        })
                         router.push("/statement")
                       }}
                     >

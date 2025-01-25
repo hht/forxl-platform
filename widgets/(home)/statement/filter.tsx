@@ -58,7 +58,6 @@ export const Filter = () => {
   const { t } = useTranslation()
   const { date, current, activeIndex } = useStatementStore()
   const { data } = useRequest(getWalletCategories, {})
-
   const dateRef = useRef<BottomSheetModal>(null)
   const typeRef = useRef<BottomSheetModal>(null)
   if (activeIndex === 1) {
@@ -127,7 +126,7 @@ export const Filter = () => {
           </YStack>
           <YStack f={1}>
             <Picker
-              value={date ? dayjs(date).year() : dayjs().month()}
+              value={date ? dayjs(date).year() : dayjs().year()}
               onValueChanged={(v) => {
                 useStatementStore.setState({
                   date: getDate(date ?? new Date())
