@@ -100,6 +100,13 @@ export const DepositSteps: FC = () => {
           <PaymentMethodDescription method={depositMethod} />
         </YStack>
       ) : null}
+      <YStack w="100%">
+        <Text col="$secondary" fos={11}>
+          {depositMethod?.payType === 0 || depositMethod?.payType === 102
+            ? t("wallet.depositTrc20Prompt")
+            : t("wallet.depositBepPrompt")}
+        </Text>
+      </YStack>
     </Card>
   )
 }

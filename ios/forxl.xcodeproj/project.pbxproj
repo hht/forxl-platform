@@ -369,7 +369,7 @@
 					"FB_SONARKIT_ENABLED=1",
 				);
 				INFOPLIST_FILE = forxl/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "Forxl Markets";
+				INFOPLIST_KEY_CFBundleDisplayName = "FORXL MARKETS";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.finance";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.1;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -411,7 +411,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = JK42BA9P28;
 				INFOPLIST_FILE = forxl/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "Forxl Markets";
+				INFOPLIST_KEY_CFBundleDisplayName = "FORXL MARKETS";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.finance";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.1;
 				LD_RUNPATH_SEARCH_PATHS = (
