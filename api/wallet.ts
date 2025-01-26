@@ -277,3 +277,10 @@ export const sendEmailCode = async () => {
     }
   )
 }
+
+export const getWalletRecordDate = async () => {
+  return await request<Record<string, string[]>, undefined>(
+    "/walletRecord/queryRecordDate",
+    "POST"
+  )
+}
