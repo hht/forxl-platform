@@ -16,6 +16,7 @@ import {
 } from "~/components"
 import { CACHE_KEY, useRequest } from "~/hooks/useRequest"
 import { useWalletStore } from "~/hooks/useStore"
+import { useVerification } from "~/hooks/useWallet"
 import { formatDecimal, t } from "~/lib/utils"
 
 export const PaymentMethodDescription: FC<{
@@ -142,6 +143,7 @@ export const PaymentMethods: FC = () => {
   const { data } = useRequest(getPaymentMethods, {
     cacheKey: CACHE_KEY.IN_USE_PAYMENT,
   })
+  const verified = useVerification()
   return (
     <AnimatePresence>
       {data && (
@@ -150,9 +152,11 @@ export const PaymentMethods: FC = () => {
           animate={{ opacity: 1, translateY: 0 }}
         >
           <YStack gap="$md">
-            {data?.map((method) => (
-              <PaymentMethodCard key={method.id} method={method} />
-            ))}
+            {data
+              ?.filter((it) => (verified ? true : it.payType !== 3))
+              .map((method) => (
+                <PaymentMethodCard key={method.id} method={method} />
+              ))}
           </YStack>
         </Moti>
       )}
@@ -164,6 +168,7 @@ export const WithdrawMethods: FC = () => {
   const { data } = useRequest(getWithdrawalMethods, {
     cacheKey: CACHE_KEY.IN_USE_WITHDRAW,
   })
+  const verified = useVerification()
   return (
     <AnimatePresence>
       {data && (
@@ -172,9 +177,11 @@ export const WithdrawMethods: FC = () => {
           animate={{ opacity: 1, translateY: 0 }}
         >
           <YStack gap="$md">
-            {data?.map((method) => (
-              <WithdrawMethodCard key={method.id} method={method} />
-            ))}
+            {data
+              ?.filter((it) => (verified ? true : it.channelType !== 3))
+              ?.map((method) => (
+                <WithdrawMethodCard key={method.id} method={method} />
+              ))}
           </YStack>
         </Moti>
       )}

@@ -7,6 +7,7 @@ import { CACHE_KEY, useRequest } from "./useRequest"
 import { computeProfit, useOrderStore, useStatisticsStore } from "./useStore"
 import { subscribeQuotes, useWebSocket } from "./useWebsocket"
 
+import { getAttestationFlag, getProfile } from "~/api/account"
 import { getOpenPositions } from "~/api/trade"
 
 export const useWallet = () => {
@@ -68,4 +69,19 @@ export const useWallet = () => {
     })
     return
   }, 500)
+}
+
+export const useVerification = () => {
+  const { data: attestation } = useRequest(getAttestationFlag, {
+    cacheKey: CACHE_KEY.ATTESTATION,
+  })
+  const { data: profile } = useRequest(getProfile, {
+    cacheKey: CACHE_KEY.USER,
+  })
+  if (!attestation || !profile) {
+    return false
+  }
+  return (
+    attestation.ga && (attestation.kyc || profile.realName.status === "GREEN")
+  )
 }
