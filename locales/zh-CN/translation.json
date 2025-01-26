@@ -84,7 +84,7 @@
     "tradeWeeks": "交易周",
     "profitTrades": "盈利交易",
     "lossTrades": "亏损交易",
-    "won": "胜率 %", 
+    "won": "胜率 %",
     "averageProfit": "平均利润",
     "averageLoss": "平均亏损",
     "averageOpenTime": "平均持仓时间",
@@ -438,7 +438,6 @@
     "youWillGet": "您将收到",
     "sendStatementSuccessful": "您的账户报表已发送到您的邮箱。请查收。"
   },
-  {
   "tools": {
     "news": "市场新闻",
     "calendar": "经济日历",
@@ -478,8 +477,8 @@
     },
     "closePosition": "关闭持仓",
     "clear": "清除筛选"
-  }
-}
+  },
+
   "partner": {
     "level": "您的级别",
     "children": [
@@ -595,12 +594,7 @@
   "support": {
     "header": "全天候客户支持",
     "desc": "我们的代理每天24小时，全年365天通过电子邮件、聊天和电话提供服务。",
-    "children": [
-      "支持中心",
-      "support@forxlmarkets.com",
-      "常见问题",
-      "实时支持"
-    ]
+    "children": ["支持中心", "support@forxlmarkets.com", "常见问题", "实时支持"]
   },
   "security": {
     "title": "安全",
@@ -621,11 +615,7 @@
     "twoFactorStepTwo": "使用应用扫描二维码或复制粘贴密钥",
     "twoFactorStepThree": "输入应用中的 6 位认证码。",
     "twoFactorStepAdditional": "输入应用中的前一个认证码。",
-    "children": [
-      "重置密码",
-      "双因素认证",
-      "账户停用"
-    ],
+    "children": ["重置密码", "双因素认证", "账户停用"],
     "uncertified": "上传文件并证明您的身份。",
     "uncertifiedDesc": [
       "实时交易",
