@@ -57,14 +57,18 @@ export default function Page() {
         }}
       />
       {Platform.OS === "web" ? (
-        <div
-          style={{
-            flex: 1,
-            padding: 16,
-            overflowY: "auto",
-          }}
-          dangerouslySetInnerHTML={{ __html: wrappedHtml ?? "" }}
-        ></div>
+        uri ? (
+          <iframe src={uri} style={{ flex: 1, border: 0 }}></iframe>
+        ) : (
+          <div
+            style={{
+              flex: 1,
+              padding: 16,
+              overflowY: "auto",
+            }}
+            dangerouslySetInnerHTML={{ __html: wrappedHtml ?? "" }}
+          ></div>
+        )
       ) : (
         <WebView
           forceDarkOn
