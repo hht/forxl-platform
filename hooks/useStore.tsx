@@ -21,7 +21,7 @@ export const useForxlStore = createWithEqualityFn<Store>()(
   persist(
     (set) => ({
       timezone: dayjs().utcOffset(),
-      language: Localization.getLocales()[0].languageCode ?? "en",
+      language: Localization.getLocales()[0]?.languageCode ?? "en",
     }),
     {
       name: "forxl",

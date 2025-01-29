@@ -180,7 +180,6 @@ export const clearCache = async (): Promise<void> => {
       idempotent: true,
     })
   } catch (error) {
-    console.log(error)
     return
   }
 }
