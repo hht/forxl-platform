@@ -1,4 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage"
+import * as Localization from "expo-localization"
 import { produce } from "immer"
 import { createJSONStorage, persist } from "zustand/middleware"
 import { createWithEqualityFn } from "zustand/traditional"
@@ -20,7 +21,7 @@ export const useForxlStore = createWithEqualityFn<Store>()(
   persist(
     (set) => ({
       timezone: dayjs().utcOffset(),
-      language: "en",
+      language: Localization.getLocales()[0].languageCode ?? "en",
     }),
     {
       name: "forxl",
