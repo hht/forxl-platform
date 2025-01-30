@@ -143,7 +143,7 @@ export const Filter = () => {
         <YStack p="$md">
           {data?.map((it) => (
             <ListItem
-              title={it.desc as string}
+              title={t(`${getLocaleLabel(it.category)}` as any)}
               key={it.category}
               col={it.category === current ? "$primary" : "$text"}
               onPress={() => {
