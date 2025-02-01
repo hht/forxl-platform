@@ -164,6 +164,10 @@ interface PaymentMethod {
    * 实名认证 ：0 不需要 1 需要
    */
   userAuth?: number
+  /**
+   * 实名认证 ：0 不需要 1 需要
+   */
+  gaAuth?: number
 }
 
 interface WithdrawMethod {
@@ -193,4 +197,5 @@ interface WithdrawMethod {
   updateTime: number
   userAuth: number
   validationRegex: string
+  gaAuth: number
 }

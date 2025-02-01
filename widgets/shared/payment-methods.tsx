@@ -143,7 +143,7 @@ export const PaymentMethods: FC = () => {
   const { data } = useRequest(getPaymentMethods, {
     cacheKey: CACHE_KEY.IN_USE_PAYMENT,
   })
-  const verified = useVerification()
+  const { ga, kyc } = useVerification()
   return (
     <AnimatePresence>
       {data && (
@@ -153,7 +153,11 @@ export const PaymentMethods: FC = () => {
         >
           <YStack gap="$md">
             {data
-              ?.filter((it) => (verified ? true : it.payType !== 3))
+              ?.filter((it) =>
+                it.payType === 3 && it.status !== "0"
+                  ? (it.gaAuth === 0 || ga) && (it.userAuth === 0 || kyc)
+                  : true
+              )
               .map((method) => (
                 <PaymentMethodCard key={method.id} method={method} />
               ))}
@@ -168,7 +172,8 @@ export const WithdrawMethods: FC = () => {
   const { data } = useRequest(getWithdrawalMethods, {
     cacheKey: CACHE_KEY.IN_USE_WITHDRAW,
   })
-  const verified = useVerification()
+  const { ga, kyc } = useVerification()
+  console.log(data)
   return (
     <AnimatePresence>
       {data && (
@@ -178,7 +183,11 @@ export const WithdrawMethods: FC = () => {
         >
           <YStack gap="$md">
             {data
-              ?.filter((it) => (verified ? true : it.channelType !== 3))
+              ?.filter((it) =>
+                it.channelType === 3 && it.state !== 0
+                  ? (it.gaAuth === 0 || ga) && (it.userAuth === 0 || kyc)
+                  : true
+              )
               ?.map((method) => (
                 <WithdrawMethodCard key={method.id} method={method} />
               ))}

@@ -78,10 +78,8 @@ export const useVerification = () => {
   const { data: profile } = useRequest(getProfile, {
     cacheKey: CACHE_KEY.USER,
   })
-  if (!attestation || !profile) {
-    return false
+  return {
+    ga: attestation?.ga,
+    kyc: attestation?.kyc || profile?.realName.status === "GREEN",
   }
-  return (
-    attestation.ga && (attestation.kyc || profile.realName.status === "GREEN")
-  )
 }
