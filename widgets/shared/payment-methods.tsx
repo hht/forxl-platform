@@ -173,7 +173,6 @@ export const WithdrawMethods: FC = () => {
     cacheKey: CACHE_KEY.IN_USE_WITHDRAW,
   })
   const { ga, kyc } = useVerification()
-  console.log(data)
   return (
     <AnimatePresence>
       {data && (
