@@ -7,9 +7,9 @@ import { createWithEqualityFn } from "zustand/traditional"
 
 import {
   CHANNEL_DESCRIPTION,
-  DEPOSIT_STATUS,
   getStatusColor,
-  WITHDRAW_STATUS,
+  OPERATION_DESCRIPTION,
+  STATUS_DESCRIPTION,
 } from "./utils"
 
 import { getFundHistory } from "~/api/wallet"
@@ -68,7 +68,9 @@ export const TransactionDetails: FC = () => {
       ref.current?.present()
     }
   }, [reloadKey])
-  const isDeposit = data?.operationType === 9001
+  const isDeposit = [
+    9001, 9004, 9006, 8007, 8008, 8011, 8013, 8014, 8015, 8016, 8017,
+  ].includes(data?.operationType ?? -1)
   const isCrypto = data?.recordType === 0 || data?.recordType === 1
   if (!data) return null
   return (
@@ -91,14 +93,10 @@ export const TransactionDetails: FC = () => {
             ></Icon>
           </XStack>
           <Text subject>
-            {t(isDeposit ? "wallet.addFunds" : "wallet.withdraw")}
+            {t(OPERATION_DESCRIPTION[data.operationType] as any)}
           </Text>
           <Text col={getStatusColor(data.status)}>
-            {t(
-              isDeposit
-                ? (DEPOSIT_STATUS[data.status] as any)
-                : WITHDRAW_STATUS[data.status]
-            )}
+            {t(STATUS_DESCRIPTION[data.status] as any)}
           </Text>
           <XStack px="$md" py="$sm" br="$sm" boc="$border" bw={1}>
             <Text col="$secondary">
@@ -120,9 +118,7 @@ export const TransactionDetails: FC = () => {
         </YStack>
         <YStack py="$md">
           <ListItem
-            title={t(
-              isDeposit ? "wallet.depositAmount" : "wallet.withdrawAmount"
-            )}
+            title={t("wallet.amount")}
             value={formatCurrency(data.realAmount)}
           />
           {isDeposit ? null : (

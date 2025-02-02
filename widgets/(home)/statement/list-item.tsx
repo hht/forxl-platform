@@ -3,6 +3,8 @@ import { FC, useState } from "react"
 import { useTranslation } from "react-i18next"
 import { YStack } from "tamagui"
 
+import { OPERATION_DESCRIPTION } from "../tabs/wallet/utils"
+
 import { getWalletStatement } from "~/api/wallet"
 import { Card, Icon, Justified, Text, XStack } from "~/components"
 import { getDate } from "~/hooks/useLocale"
@@ -16,7 +18,7 @@ export const StatementItem: FC<{
   return (
     <Card gap="$sm" mb="$md">
       <Justified>
-        <Text title>{data.title}</Text>
+        <Text title>{t(OPERATION_DESCRIPTION[data.type] as any)}</Text>
         <Text title col={data.amount < 0 ? "$destructive" : "$primary"}>
           {formatCurrency(data.amount)}
         </Text>

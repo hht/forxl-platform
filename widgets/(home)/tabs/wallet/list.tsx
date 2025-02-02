@@ -4,9 +4,9 @@ import { useTranslation } from "react-i18next"
 import { Shortcuts } from "./short-cuts"
 import {
   CHANNEL_DESCRIPTION,
-  DEPOSIT_STATUS,
   getStatusColor,
-  WITHDRAW_STATUS,
+  OPERATION_DESCRIPTION,
+  STATUS_DESCRIPTION,
 } from "./utils"
 
 import { getFundHistory } from "~/api/wallet"
@@ -56,18 +56,10 @@ export const ListItem: FC<{
         </XStack>
         <YStack f={1} gap="$sm">
           <Text bold>
-            {t(
-              data.operationType === 9001
-                ? "wallet.addFunds"
-                : "wallet.withdraw"
-            )}
+            {t(OPERATION_DESCRIPTION[data.operationType] as any)}
           </Text>
           <Text col={getStatusColor(data.status)}>
-            {t(
-              data.operationType === 9001
-                ? (DEPOSIT_STATUS[data.status] as any)
-                : WITHDRAW_STATUS[data.status]
-            )}
+            {t(STATUS_DESCRIPTION[data.status] as any)}
           </Text>
         </YStack>
         <YStack gap="$sm" ai="flex-end">

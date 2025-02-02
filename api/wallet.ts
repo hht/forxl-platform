@@ -51,7 +51,7 @@ export const getFundHistory = async (params: {
       id: number
       addTime: number
       recordId: number
-      operationType: 9001 | 9002
+      operationType: number
       realAmount: number
       recordType: number
       selectAmount: number
