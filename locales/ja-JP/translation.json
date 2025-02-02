@@ -119,8 +119,8 @@
     "changePositionSuccess": "Position changed successfully",
     "accessMedia": "Sorry, we need camera roll permissions to make this work!",
     "verificationCodePrompt": "Please enter the correct verification code",
-    "gaRequired": "Please complete the Google verification first",
-    "kycRequired": "Please complete the real-name authentication first."
+    "gaRequired": "まずGoogle認証を完了してください",
+    "kycRequired": "まずは実名認証を完了してください."
   },
   "home": {
     "news": "Market News",

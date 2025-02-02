@@ -119,8 +119,8 @@
     "changePositionSuccess": "Posição alterada com sucesso",
     "accessMedia": "Desculpe, precisamos de permissões da rolagem da câmera para fazer isso funcionar!",
     "verificationCodePrompt": "Por favor, insira o código de verificação correto",
-    "gaRequired": "Please complete the Google verification first",
-    "kycRequired": "Please complete the real-name authentication first."
+    "gaRequired": "Por favor, conclua primeiro a verificação do Google",
+    "kycRequired": "Por favor, conclua primeiro a autenticação do nome real."
   },
   "home": {
     "news": "Notícias do Mercado",

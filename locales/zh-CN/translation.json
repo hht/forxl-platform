@@ -119,8 +119,8 @@
     "changePositionSuccess": "持仓已成功更改",
     "accessMedia": "抱歉，我们需要相册权限才能正常工作！",
     "verificationCodePrompt": "请输入正确的验证码",
-    "gaRequired": "Please complete the Google verification first",
-    "kycRequired": "Please complete the real-name authentication first."
+    "gaRequired": "请先完成 Google 验证",
+    "kycRequired": "请先完成实名认证."
   },
   "home": {
     "news": "市场新闻",
