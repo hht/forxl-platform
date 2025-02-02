@@ -118,7 +118,9 @@
     "orderSuccess": "Emir başarıyla yerleştirildi",
     "changePositionSuccess": "Pozisyon başarıyla değiştirildi",
     "accessMedia": "Üzgünüz, bunu çalıştırmak için kamera rulosu izinlerine ihtiyacımız var!",
-    "verificationCodePrompt": "Lütfen doğru doğrulama kodunu girin"
+    "verificationCodePrompt": "Lütfen doğru doğrulama kodunu girin",
+    "gaRequired": "Please complete the Google verification first",
+    "kycRequired": "Please complete the real-name authentication first."
   },
   "home": {
     "news": "Piyasa Haberleri",

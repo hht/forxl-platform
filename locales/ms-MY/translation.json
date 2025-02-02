@@ -118,7 +118,9 @@
     "orderSuccess": "Pesanan ditempatkan dengan jayanya",
     "changePositionSuccess": "Posisi diubah dengan jayanya",
     "accessMedia": "Maaf, kami memerlukan kebenaran gulungan kamera untuk membuat ini berfungsi!",
-    "verificationCodePrompt": "Sila masukkan kod pengesahan yang betul"
+    "verificationCodePrompt": "Sila masukkan kod pengesahan yang betul",
+    "gaRequired": "Please complete the Google verification first",
+    "kycRequired": "Please complete the real-name authentication first."
   },
   "home": {
     "news": "Berita Pasaran",

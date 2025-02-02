@@ -118,7 +118,9 @@
     "orderSuccess": "Order placed successfully",
     "changePositionSuccess": "Position changed successfully",
     "accessMedia": "Sorry, we need camera roll permissions to make this work!",
-    "verificationCodePrompt": "Please enter the correct verification code"
+    "verificationCodePrompt": "Please enter the correct verification code",
+    "gaRequired": "Please complete the Google verification first",
+    "kycRequired": "Please complete the real-name authentication first."
   },
   "home": {
     "news": "Market News",

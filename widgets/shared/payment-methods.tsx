@@ -11,6 +11,7 @@ import {
   Row,
   Separator,
   Text,
+  toast,
   XStack,
   YStack,
 } from "~/components"
@@ -80,10 +81,21 @@ export const WithdrawMethodDescription: FC<{
 export const PaymentMethodCard: FC<{
   method: PaymentMethod
 }> = ({ method }) => {
+  const { ga, kyc } = useVerification()
   return (
     <Card
       gap="$md"
       onPress={() => {
+        if (method.payType === 3 && method.status === "0") {
+          if (!ga) {
+            toast.show(t("message.gaRequired"))
+            return
+          }
+          if (!kyc) {
+            toast.show(t("message.kycRequired"))
+            return
+          }
+        }
         useWalletStore.setState({
           depositMethod: method,
         })
@@ -111,10 +123,22 @@ export const PaymentMethodCard: FC<{
 export const WithdrawMethodCard: FC<{
   method: WithdrawMethod
 }> = ({ method }) => {
+  const { ga, kyc } = useVerification()
+
   return (
     <Card
       gap="$md"
       onPress={() => {
+        if (method.channelType === 3 && method.state === 0) {
+          if (!ga) {
+            toast.show(t("message.gaRequired"))
+            return
+          }
+          if (!kyc) {
+            toast.show(t("message.kycRequired"))
+            return
+          }
+        }
         useWalletStore.setState({
           withdrawMethod: method,
         })
@@ -143,7 +167,6 @@ export const PaymentMethods: FC = () => {
   const { data } = useRequest(getPaymentMethods, {
     cacheKey: CACHE_KEY.IN_USE_PAYMENT,
   })
-  const { ga, kyc } = useVerification()
   return (
     <AnimatePresence>
       {data && (
@@ -152,15 +175,9 @@ export const PaymentMethods: FC = () => {
           animate={{ opacity: 1, translateY: 0 }}
         >
           <YStack gap="$md">
-            {data
-              ?.filter((it) =>
-                it.payType === 3 && it.status !== "0"
-                  ? (it.gaAuth === 0 || ga) && (it.userAuth === 0 || kyc)
-                  : true
-              )
-              .map((method) => (
-                <PaymentMethodCard key={method.id} method={method} />
-              ))}
+            {data?.map((method) => (
+              <PaymentMethodCard key={method.id} method={method} />
+            ))}
           </YStack>
         </Moti>
       )}
@@ -172,7 +189,6 @@ export const WithdrawMethods: FC = () => {
   const { data } = useRequest(getWithdrawalMethods, {
     cacheKey: CACHE_KEY.IN_USE_WITHDRAW,
   })
-  const { ga, kyc } = useVerification()
   return (
     <AnimatePresence>
       {data && (
@@ -181,15 +197,9 @@ export const WithdrawMethods: FC = () => {
           animate={{ opacity: 1, translateY: 0 }}
         >
           <YStack gap="$md">
-            {data
-              ?.filter((it) =>
-                it.channelType === 3 && it.state !== 0
-                  ? (it.gaAuth === 0 || ga) && (it.userAuth === 0 || kyc)
-                  : true
-              )
-              ?.map((method) => (
-                <WithdrawMethodCard key={method.id} method={method} />
-              ))}
+            {data?.map((method) => (
+              <WithdrawMethodCard key={method.id} method={method} />
+            ))}
           </YStack>
         </Moti>
       )}
