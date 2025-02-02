@@ -129,7 +129,7 @@ export const WithdrawMethodCard: FC<{
     <Card
       gap="$md"
       onPress={() => {
-        if (method.channelType === 3 && method.state === 0) {
+        if (method.channelType === 3 && method.state === 1) {
           if (!ga) {
             toast.show(t("message.gaRequired"))
             return
