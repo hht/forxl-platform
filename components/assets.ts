@@ -80,6 +80,9 @@ export { default as checkboxChecked } from "~/assets/images/icon/checkbox-checke
 export { default as userCircle } from "~/assets/images/icon/user-circle.svg"
 export { default as passport } from "~/assets/images/icon/passport.svg"
 export { default as sn } from "~/assets/images/icon/sn.svg"
+export { default as us } from "~/assets/images/icon/us.svg"
+export { default as gbp } from "~/assets/images/icon/gbp.svg"
+export { default as eu } from "~/assets/images/icon/eu.svg"
 // 图片
 export { default as logo } from "~/assets/images/widgets/logo.svg"
 export { default as verifyEmail } from "~/assets/images/widgets/verify-email.svg"

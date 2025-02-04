@@ -1,15 +1,15 @@
-import { BottomSheetModal } from "@gorhom/bottom-sheet"
-import { FC, Fragment, useEffect, useRef, useState } from "react"
-import { useTranslation } from "react-i18next"
-import { ActivityIndicator } from "react-native"
-import { useSafeAreaInsets } from "react-native-safe-area-context"
-import { shallow } from "zustand/shallow"
+import { BottomSheetModal } from '@gorhom/bottom-sheet'
+import { FC, Fragment, useEffect, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { ActivityIndicator } from 'react-native'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { shallow } from 'zustand/shallow'
 
-import { getFutureCategories } from "~/api/trade"
-import { BottomSheet, Icon, IconType, Text, XStack, YStack } from "~/components"
-import { CACHE_KEY, useRequest } from "~/hooks/useRequest"
-import { useSymbolStore } from "~/hooks/useStore"
-import colors from "~/theme/colors"
+import { getFutureCategories } from '~/api/trade'
+import { BottomSheet, Icon, IconType, Text, XStack, YStack } from '~/components'
+import { CACHE_KEY, useRequest } from '~/hooks/useRequest'
+import { useSymbolStore } from '~/hooks/useStore'
+import colors from '~/theme/colors'
 
 const getItemIcon = (
   data: Awaited<ReturnType<typeof getFutureCategories>>[number]
@@ -27,9 +27,12 @@ const getItemIcon = (
     case "SHARES":
       return "indices"
     case "US_EQUITY":
+      return "us"
+    case "UK Storks":
+      return "gbp"
+    case "European Stocks":
+      return "eu"
     case "HK_EQUITY":
-    case "UK_EQUITY":
-    case "EU_EQUITY":
     case "AU_EQUITY":
       return "stocks"
     case "OILFUT":

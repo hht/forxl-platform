@@ -37,6 +37,8 @@ interface GetFuturesParams {
     | "AU_EQUITY"
     | "BASKETS"
     | "COMMODITY"
+    | "European Stocks"
+    | "UK Storks"
     | ""
 }
 
