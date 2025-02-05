@@ -28,7 +28,7 @@ export const TwoFactorNotifier: FC = () => {
     fetched: false,
   })
   const [visible, toggleVisible] = useState(false)
-  const { data } = useRequest(() => getBanners(1), {
+  useRequest(() => getBanners(1), {
     cacheKey: `${CACHE_KEY.BANNERS}.${1}`,
     onSuccess: (data) => {
       setBanner({
@@ -62,6 +62,11 @@ export const TwoFactorNotifier: FC = () => {
           r={8}
           t={24}
           hitSlop={16}
+          bc="$card/60"
+          br={50}
+          ai="center"
+          jc="center"
+          p="$xs"
           onPress={() => {
             setBanner({ ...banner, visible: false })
           }}

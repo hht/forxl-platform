@@ -3,18 +3,58 @@ import { router } from "expo-router"
 import _ from "lodash"
 import { FC, useCallback, useEffect, useMemo, useRef, useState } from "react"
 import {
+  ActivityIndicator,
   Dimensions,
+  Image,
   NativeScrollEvent,
   NativeSyntheticEvent,
 } from "react-native"
 
 import { getBanners } from "~/api/dashboard"
-import { Icon, Image, ScrollView, XStack } from "~/components"
+import { Icon, ScrollView, XStack } from "~/components"
 import { CACHE_KEY, useRequest } from "~/hooks/useRequest"
 import { useWebViewStore } from "~/hooks/useStore"
 import colors from "~/theme/colors"
 
 export const CAROUSEL_WIDTH = Dimensions.get("window").width - 32
+
+const AspectImage: FC<{ uri?: string; onPress: () => void }> = ({
+  uri,
+  ...rest
+}) => {
+  const [ratio, setRatio] = useState(343 / 160)
+  const [loaded, setLoaded] = useState(false)
+  return (
+    <XStack>
+      <Image
+        onLoad={(e) =>
+          setRatio(e.nativeEvent.source.width / e.nativeEvent.source.height)
+        }
+        style={{
+          width: CAROUSEL_WIDTH,
+          aspectRatio: ratio,
+        }}
+        onLoadEnd={() => setLoaded(true)}
+        source={{ uri }}
+        {...rest}
+      />
+      {loaded ? null : (
+        <XStack
+          pos="absolute"
+          t={0}
+          r={0}
+          l={0}
+          b={0}
+          ai="center"
+          jc="center"
+          bc="$card"
+        >
+          <ActivityIndicator />
+        </XStack>
+      )}
+    </XStack>
+  )
+}
 
 export const Banners: FC<{ position: number }> = ({ position }) => {
   const { data } = useRequest(() => getBanners(position), {
@@ -102,11 +142,9 @@ export const Banners: FC<{ position: number }> = ({ position }) => {
         contentOffset={{ x: CAROUSEL_WIDTH, y: 0 }}
       >
         {banners?.map((banner, index) => (
-          <Image
+          <AspectImage
             key={index}
-            aspectRatio={343 / 160}
-            w={CAROUSEL_WIDTH}
-            source={{ uri: banner.img }}
+            uri={banner.img}
             onPress={() => {
               if (!banner.jumpUrl) {
                 return
