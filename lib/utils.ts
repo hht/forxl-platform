@@ -1,25 +1,25 @@
-import dayjs from "dayjs"
-import "dayjs/locale/en"
-import "dayjs/locale/zh"
-import isToday from "dayjs/plugin/isToday"
-import isYesterday from "dayjs/plugin/isYesterday"
-import localeData from "dayjs/plugin/localeData"
-import relativeTime from "dayjs/plugin/relativeTime"
-import utc from "dayjs/plugin/utc"
-import * as FileSystem from "expo-file-system"
-import { router } from "expo-router"
-import i18n from "i18next"
-import _ from "lodash"
-import { Dimensions, LayoutAnimation } from "react-native"
+import dayjs from 'dayjs'
+import 'dayjs/locale/en'
+import 'dayjs/locale/zh'
+import isToday from 'dayjs/plugin/isToday'
+import isYesterday from 'dayjs/plugin/isYesterday'
+import localeData from 'dayjs/plugin/localeData'
+import relativeTime from 'dayjs/plugin/relativeTime'
+import utc from 'dayjs/plugin/utc'
+import * as FileSystem from 'expo-file-system'
+import { router } from 'expo-router'
+import i18n from 'i18next'
+import _ from 'lodash'
+import { Dimensions, LayoutAnimation } from 'react-native'
 
-import en from "~/locales/en-US/translation.json"
-import es from "~/locales/es-ES/translation.json"
-import ja from "~/locales/ja-JP/translation.json"
-import ko from "~/locales/ko-KR/translation.json"
-import ms from "~/locales/ms-MY/translation.json"
-import pt from "~/locales/pt-PT/translation.json"
-import tr from "~/locales/tr-TR/translation.json"
-import zh from "~/locales/zh-CN/translation.json"
+import en from '~/locales/en-US/translation.json'
+import es from '~/locales/es-ES/translation.json'
+import ja from '~/locales/ja-JP/translation.json'
+import ko from '~/locales/ko-KR/translation.json'
+import ms from '~/locales/ms-MY/translation.json'
+import pt from '~/locales/pt-PT/translation.json'
+import tr from '~/locales/tr-TR/translation.json'
+import zh from '~/locales/zh-CN/translation.json'
 
 dayjs.extend(localeData)
 dayjs.extend(utc)
@@ -105,7 +105,7 @@ export const uuid = () =>
 export const formatDecimal = (value: string | number, fraction = 0.01) => {
   const precision = fraction.toString().split(".")[1]?.length ?? 0
   const factor = Math.pow(10, precision)
-  const truncated = Math.trunc(Number(value) * factor) / factor
+  const truncated = Math.trunc(Number(value || 0) * factor) / factor
   return new Intl.NumberFormat("en", {
     style: "decimal",
     minimumFractionDigits: precision,
@@ -116,7 +116,7 @@ export const formatDecimal = (value: string | number, fraction = 0.01) => {
 export const formatCurrency = (value?: number | string, fraction = 0.01) => {
   const precision = fraction.toString().split(".")[1]?.length ?? 0
   const factor = Math.pow(10, precision)
-  const truncated = Math.trunc(Number(value) * factor) / factor
+  const truncated = Math.trunc(Number(value || 0) * factor) / factor
 
   const sign = truncated < 0 ? "-" : ""
   return (

@@ -1,3 +1,4 @@
+import * as Linking from "expo-linking"
 import { router } from "expo-router"
 import _ from "lodash"
 import { AnimatePresence } from "moti"
@@ -89,7 +90,14 @@ export const AccountInfo = () => {
                     <Text subject>
                       {_.upperCase(dict.children[currentLevel])}
                     </Text>
-                    <XStack hitSlop={10} onPress={() => setVisible(true)}>
+                    <XStack
+                      hitSlop={10}
+                      onPress={() =>
+                        Linking.openURL(
+                          "https://www.forxlmarkets.com/#/partnership/become-a-partner"
+                        )
+                      }
+                    >
                       <Icon name="info" size={16} />
                     </XStack>
                   </XStack>
