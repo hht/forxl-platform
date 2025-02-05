@@ -2,11 +2,11 @@ import { request } from "~/hooks/useRequest"
 import { useForxlStore } from "~/hooks/useStore"
 import { getLocaleLanguage, i18n } from "~/lib/utils"
 
-export const getBanners = async () => {
+export const getBanners = async (position: number) => {
   return request<Banner[], undefined>(
-    `/banner/v3/list?language=${i18n.resolvedLanguage}&position=0`,
+    `/banner/v3/list?language=${i18n.resolvedLanguage}&position=${position}`,
     "GET"
-  )
+  ).then((res) => res.filter((it) => it.status === 1 && it.isDel === 0))
 }
 
 export const getNews = async (params: {

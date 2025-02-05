@@ -105,7 +105,7 @@ export const ListItem = ({
 
 export const ListHeaderComponent = () => (
   <YStack gap="$md">
-    <Banners />
+    <Banners position={0} />
     <Shortcuts />
   </YStack>
 )

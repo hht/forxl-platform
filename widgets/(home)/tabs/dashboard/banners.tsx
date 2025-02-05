@@ -1,6 +1,7 @@
-import { useInterval } from "ahooks"
-import _, { set } from "lodash"
-import { useCallback, useEffect, useMemo, useRef, useState } from "react"
+import * as Linking from "expo-linking"
+import { router } from "expo-router"
+import _ from "lodash"
+import { FC, useCallback, useEffect, useMemo, useRef, useState } from "react"
 import {
   Dimensions,
   NativeScrollEvent,
@@ -9,13 +10,16 @@ import {
 
 import { getBanners } from "~/api/dashboard"
 import { Icon, Image, ScrollView, XStack } from "~/components"
-import { useRequest } from "~/hooks/useRequest"
+import { CACHE_KEY, useRequest } from "~/hooks/useRequest"
+import { useWebViewStore } from "~/hooks/useStore"
 import colors from "~/theme/colors"
 
-const CAROUSEL_WIDTH = Dimensions.get("window").width - 32
+export const CAROUSEL_WIDTH = Dimensions.get("window").width - 32
 
-export const Banners = () => {
-  const { data } = useRequest(getBanners)
+export const Banners: FC<{ position: number }> = ({ position }) => {
+  const { data } = useRequest(() => getBanners(position), {
+    cacheKey: `${CACHE_KEY.BANNERS}.${position}`,
+  })
   const ref = useRef<ScrollView>(null)
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isScrolling, setIsScrolling] = useState(false)
@@ -82,7 +86,9 @@ export const Banners = () => {
       }
     }
   }, [currentIndex, isScrolling, banners])
-
+  if (!data || data.length === 0) {
+    return null
+  }
   return (
     <XStack w="100%" br="$sm" ov="hidden" mt="$md">
       <ScrollView
@@ -101,6 +107,25 @@ export const Banners = () => {
             aspectRatio={343 / 160}
             w={CAROUSEL_WIDTH}
             source={{ uri: banner.img }}
+            onPress={() => {
+              if (!banner.jumpUrl) {
+                return
+              }
+              switch (banner.jumpType) {
+                case 0:
+                  router.push(banner.jumpUrl as any)
+                  return
+                case 1:
+                  useWebViewStore.setState({
+                    title: banner.name,
+                    uri: banner.jumpUrl as string,
+                  })
+                  router.push("/web-view")
+                  return
+                case 2:
+                  Linking.openURL(banner.jumpUrl)
+              }
+            }}
           />
         ))}
       </ScrollView>

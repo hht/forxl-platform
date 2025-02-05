@@ -1,6 +1,7 @@
 import { FC, Fragment } from "react"
 import { useTranslation } from "react-i18next"
 
+import { Banners } from "../dashboard/banners"
 import { Shortcuts } from "./short-cuts"
 import {
   CHANNEL_DESCRIPTION,
@@ -10,7 +11,7 @@ import {
 } from "./utils"
 
 import { getFundHistory } from "~/api/wallet"
-import { Icon, Image, Text, XStack, YStack } from "~/components"
+import { Icon, Text, XStack, YStack } from "~/components"
 import { getRecentDate } from "~/hooks/useLocale"
 import { formatCurrency } from "~/lib/utils"
 
@@ -75,8 +76,9 @@ export const ListItem: FC<{
   )
 }
 export const ListHeaderComponent = () => (
-  <YStack gap="$md" py="$md">
+  <YStack py="$md">
     <Shortcuts />
+    <Banners position={2} />
   </YStack>
 )
 
@@ -85,12 +87,6 @@ export const ListEmptyComponent: FC<{ loading: boolean }> = ({ loading }) => {
   if (loading) return null
   return (
     <YStack gap="$md" py="$md" f={1}>
-      <Image
-        w="100%"
-        br="$sm"
-        aspectRatio={343 / 120}
-        source={require("~/assets/images/widgets/bonus.jpg")}
-      />
       <YStack f={1} ai="center" jc="center">
         <Text col="$tertiary">{t("wallet.empty")}</Text>
       </YStack>
