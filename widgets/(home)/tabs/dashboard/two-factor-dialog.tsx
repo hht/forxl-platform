@@ -39,16 +39,16 @@ export const TwoFactorNotifier: FC = () => {
             <Text col="$secondary" ta="center">
               {t("security.twoFactorDescription")}
             </Text>
-            <XStack
-              bc={toRGBA(colors.primary, 0.1)}
-              w="100%"
-              px={12}
-              py="$sm"
-              br="$xs"
-            >
-              <Text col="$primary">{t("security.twoFactorMemo")}</Text>
-            </XStack>
           </YStack>
+          <XStack
+            bc={toRGBA(colors.primary, 0.1)}
+            w="100%"
+            px={12}
+            py="$sm"
+            br="$xs"
+          >
+            <Text col="$primary">{t("security.twoFactorMemo")}</Text>
+          </XStack>
           <XStack w="100%" gap={12} pt={12}>
             <Button
               f={1}
