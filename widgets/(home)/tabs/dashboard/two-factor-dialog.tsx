@@ -1,13 +1,21 @@
-import { router } from 'expo-router'
-import { FC, useState } from 'react'
-import { useTranslation } from 'react-i18next'
+import { router } from "expo-router"
+import { FC, useState } from "react"
+import { useTranslation } from "react-i18next"
 
-import { getAttestationFlag } from '~/api/account'
-import { Button, Dialog, Figure, Popup, Text, XStack, YStack } from '~/components'
-import { PortalProvider } from '~/components/portal'
-import { CACHE_KEY, useRequest } from '~/hooks/useRequest'
-import { waitFor } from '~/lib/utils'
-import colors from '~/theme/colors'
+import { getAttestationFlag } from "~/api/account"
+import {
+  Button,
+  Dialog,
+  Figure,
+  Popup,
+  Text,
+  XStack,
+  YStack,
+} from "~/components"
+import { PortalProvider } from "~/components/portal"
+import { CACHE_KEY, useRequest } from "~/hooks/useRequest"
+import { waitFor } from "~/lib/utils"
+import colors, { toRGBA } from "~/theme/colors"
 
 export const TwoFactorNotifier: FC = () => {
   const { t } = useTranslation()
@@ -27,10 +35,19 @@ export const TwoFactorNotifier: FC = () => {
         <Dialog br="$md">
           <YStack ai="center" px="$md" gap={12}>
             <Figure name="suspension" width={148} color={colors.background} />
-            <Text subject>{t("wallet.tips")}</Text>
+            <Text subject>{t("security.twoFactorPrompt")}</Text>
             <Text col="$secondary" ta="center">
-              {t("wallet.depositConfirmPrompt")}
+              {t("security.twoFactorDescription")}
             </Text>
+            <XStack
+              bc={toRGBA(colors.primary, 0.1)}
+              w="100%"
+              px={12}
+              py="$sm"
+              br="$xs"
+            >
+              <Text col="$primary">{t("security.twoFactorMemo")}</Text>
+            </XStack>
           </YStack>
           <XStack w="100%" gap={12} pt={12}>
             <Button
