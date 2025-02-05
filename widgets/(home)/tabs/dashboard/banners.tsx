@@ -66,6 +66,7 @@ export const Banners: FC<{ position: number }> = ({ position }) => {
   const timerRef = useRef<NodeJS.Timeout>()
   const banners = useMemo(() => {
     if (!data?.length) return []
+    if (data?.length === 1) return data
     return [data[data.length - 1], ...data, data[0]]
   }, [data])
 
@@ -98,7 +99,7 @@ export const Banners: FC<{ position: number }> = ({ position }) => {
   )
 
   useEffect(() => {
-    if (isScrolling || !banners.length) return
+    if (isScrolling || !banners.length || banners.length === 1) return
     timerRef.current = setInterval(() => {
       const next = (currentIndex + 1) % banners.length
       if (next === 0) {
@@ -135,7 +136,7 @@ export const Banners: FC<{ position: number }> = ({ position }) => {
         ref={ref}
         horizontal
         w="100%"
-        pagingEnabled
+        scrollEnabled={data.length > 1}
         showsHorizontalScrollIndicator={false}
         onScrollBeginDrag={() => setIsScrolling(true)}
         onMomentumScrollEnd={onScrollEnd}
