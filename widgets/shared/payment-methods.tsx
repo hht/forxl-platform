@@ -1,24 +1,13 @@
-import { router } from "expo-router"
-import { AnimatePresence } from "moti"
-import { FC, Fragment } from "react"
+import { router } from 'expo-router'
+import { AnimatePresence } from 'moti'
+import { FC, Fragment } from 'react'
 
-import { getPaymentMethods, getWithdrawalMethods } from "~/api/wallet"
-import {
-  Card,
-  Icon,
-  Image,
-  Moti,
-  Row,
-  Separator,
-  Text,
-  toast,
-  XStack,
-  YStack,
-} from "~/components"
-import { CACHE_KEY, useRequest } from "~/hooks/useRequest"
-import { useWalletStore } from "~/hooks/useStore"
-import { useVerification } from "~/hooks/useWallet"
-import { formatDecimal, t } from "~/lib/utils"
+import { getPaymentMethods, getWithdrawalMethods } from '~/api/wallet'
+import { Card, Icon, Image, Moti, Row, Separator, Text, toast, XStack, YStack } from '~/components'
+import { CACHE_KEY, useRequest } from '~/hooks/useRequest'
+import { useWalletStore } from '~/hooks/useStore'
+import { useVerification } from '~/hooks/useWallet'
+import { formatDecimal, t } from '~/lib/utils'
 
 export const PaymentMethodDescription: FC<{
   method: PaymentMethod
@@ -86,7 +75,7 @@ export const PaymentMethodCard: FC<{
     <Card
       gap="$md"
       onPress={() => {
-        if (method.payType === 3 && method.status === "0") {
+        if (method.status === "0") {
           if (!ga) {
             toast.show(t("message.gaRequired"))
             return
@@ -129,7 +118,7 @@ export const WithdrawMethodCard: FC<{
     <Card
       gap="$md"
       onPress={() => {
-        if (method.channelType === 3 && method.state === 1) {
+        if (method.state === 1) {
           if (!ga) {
             toast.show(t("message.gaRequired"))
             return
