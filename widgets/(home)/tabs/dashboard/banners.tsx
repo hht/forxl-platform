@@ -142,7 +142,6 @@ export const Banners: FC<{ position: number }> = ({ position }) => {
             key={index}
             uri={banner.img}
             onPress={() => {
-              console.log(banner)
               if (!banner.jumpUrl) {
                 return
               }

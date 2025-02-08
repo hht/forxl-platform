@@ -28,7 +28,6 @@ export const OrderDetail = () => {
   const { data } = useRequest(() => {
     return getFuture(currentPosition?.futuresCode!)
   })
-  console.log(currentPosition)
   if (!currentPosition) return null
   if (activeIndex !== 2) {
     return (
