@@ -1,17 +1,26 @@
-import { router } from 'expo-router'
-import { FC, useState } from 'react'
-import { useTranslation } from 'react-i18next'
+import { router } from "expo-router"
+import { FC, useState } from "react"
+import { useTranslation } from "react-i18next"
 
-import { Banners, CAROUSEL_WIDTH } from './banners'
+import { Banners, CAROUSEL_WIDTH } from "./banners"
 
-import { getAttestationFlag } from '~/api/account'
-import { getBanners } from '~/api/dashboard'
-import { Button, Dialog, Figure, Icon, Popup, Text, XStack, YStack } from '~/components'
-import { PortalProvider } from '~/components/portal'
-import { CACHE_KEY, useRequest } from '~/hooks/useRequest'
-import { useForxlStore } from '~/hooks/useStore'
-import { dayjs, waitFor } from '~/lib/utils'
-import colors, { toRGBA } from '~/theme/colors'
+import { getAttestationFlag } from "~/api/account"
+import { getBanners } from "~/api/dashboard"
+import {
+  Button,
+  Dialog,
+  Figure,
+  Icon,
+  Popup,
+  Text,
+  XStack,
+  YStack,
+} from "~/components"
+import { PortalProvider } from "~/components/portal"
+import { CACHE_KEY, useRequest } from "~/hooks/useRequest"
+import { useForxlStore } from "~/hooks/useStore"
+import { dayjs, waitFor } from "~/lib/utils"
+import colors, { toRGBA } from "~/theme/colors"
 
 export const TwoFactorNotifier: FC = () => {
   const { t } = useTranslation()
@@ -19,7 +28,7 @@ export const TwoFactorNotifier: FC = () => {
     visible: false,
     fetched: false,
   })
-  const { popAt } = useForxlStore()
+  const popAt = useForxlStore((state) => state.popAt[state.userNumber ?? ""])
   const [visible, toggleVisible] = useState(false)
   useRequest(() => getBanners(1), {
     cacheKey: `${CACHE_KEY.BANNERS}.${1}`,
@@ -39,7 +48,13 @@ export const TwoFactorNotifier: FC = () => {
       (banner.fetched && !banner.visible) ||
       dayjs().format("YYYY-MM-DD") === popAt,
     onSuccess: (data) => {
-      useForxlStore.setState({ popAt: dayjs().format("YYYY-MM-DD") })
+      const userNumber = useForxlStore.getState().userNumber!
+      useForxlStore.setState({
+        popAt: {
+          ...useForxlStore.getState().popAt,
+          [userNumber]: dayjs().format("YYYY-MM-DD"),
+        },
+      })
       if (!data?.ga) {
         toggleVisible(true)
       }
