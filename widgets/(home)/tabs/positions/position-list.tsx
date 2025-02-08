@@ -1,23 +1,33 @@
-import { useIsFocused } from '@react-navigation/native'
-import { useInfiniteScroll } from 'ahooks'
-import { router } from 'expo-router'
-import { FC, Fragment, ReactNode } from 'react'
-import { useTranslation } from 'react-i18next'
-import { FlatList, Platform, RefreshControl } from 'react-native'
-import { XStackProps } from 'tamagui'
-import { shallow } from 'zustand/shallow'
+import { useIsFocused } from "@react-navigation/native"
+import { useInfiniteScroll } from "ahooks"
+import { router } from "expo-router"
+import { FC, Fragment, ReactNode } from "react"
+import { useTranslation } from "react-i18next"
+import { FlatList, Platform, RefreshControl } from "react-native"
+import { XStackProps } from "tamagui"
+import { shallow } from "zustand/shallow"
 
-import { getClosedPositions, getOpenPositions, getPendingPositions } from '~/api/trade'
-import { AnimatedFlow, Figure, Icon, Text, XStack, YStack } from '~/components'
-import { getDate, getRecentDate } from '~/hooks/useLocale'
-import { CACHE_KEY, useRequest } from '~/hooks/useRequest'
-import { useOrderStore } from '~/hooks/useStore'
-import { subscribeQuotes } from '~/hooks/useWebsocket'
-import { dayjs, DEVICE_WIDTH, formatDecimal, formatProfit, uuid } from '~/lib/utils'
-import colors, { toRGBA } from '~/theme/colors'
-import { ListFooterComponent } from '~/widgets/shared/list'
-import { PriceCell } from '~/widgets/shared/price-cell'
-import { ProfitCell } from '~/widgets/shared/profit-cell'
+import {
+  getClosedPositions,
+  getOpenPositions,
+  getPendingPositions,
+} from "~/api/trade"
+import { AnimatedFlow, Figure, Icon, Text, XStack, YStack } from "~/components"
+import { getDate, getRecentDate } from "~/hooks/useLocale"
+import { CACHE_KEY, useRequest } from "~/hooks/useRequest"
+import { useOrderStore } from "~/hooks/useStore"
+import { subscribeQuotes } from "~/hooks/useWebsocket"
+import {
+  dayjs,
+  DEVICE_WIDTH,
+  formatDecimal,
+  formatProfit,
+  uuid,
+} from "~/lib/utils"
+import colors, { toRGBA } from "~/theme/colors"
+import { ListFooterComponent } from "~/widgets/shared/list"
+import { PriceCell } from "~/widgets/shared/price-cell"
+import { ProfitCell } from "~/widgets/shared/profit-cell"
 
 const ListItem: FC<
   {
@@ -126,15 +136,15 @@ const ArchivedListItem: FC<{ data: Position; dateVisible?: boolean }> = ({
           <Text
             bold
             col={
-              data.profit! > 0
+              data.priceProfit! > 0
                 ? "$primary"
-                : data.profit! < 0
+                : data.priceProfit! < 0
                   ? "$destructive"
                   : "$secondary"
             }
           >
-            {data.profit! > 0 ? "+" : ""}
-            {formatProfit(data.profit ?? 0)}
+            {data.priceProfit! > 0 ? "+" : ""}
+            {formatProfit(data.priceProfit ?? 0)}
           </Text>
           <Text col="$secondary">{`${t(data.openSafe ? "trade.sell" : "trade.buy")} ${data.position} ${t("trade.lots", { amount: "" })}`}</Text>
         </YStack>

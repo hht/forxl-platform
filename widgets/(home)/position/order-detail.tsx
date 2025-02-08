@@ -104,7 +104,11 @@ export const OrderDetail = () => {
           heading
           bold
           col={
-            (currentPosition.priceProfit ?? 0) > 0 ? "$primary" : "$destructive"
+            (currentPosition.priceProfit ?? 0) > 0
+              ? "$primary"
+              : currentPosition.priceProfit! < 0
+                ? "$destructive"
+                : "$secondary"
           }
         >
           {formatProfit(currentPosition.priceProfit ?? 0)}
