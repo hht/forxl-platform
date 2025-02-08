@@ -1,12 +1,15 @@
-import { FC, Fragment } from "react"
-import { useTranslation } from "react-i18next"
+import { FC, Fragment } from 'react'
+import { useTranslation } from 'react-i18next'
 
-import { Input, Text, YStack } from "~/components"
-import { useWalletStore } from "~/hooks/useStore"
-import { trimHTML } from "~/lib/utils"
-import { PaymentMethod } from "~/widgets/(home)/deposit/form/payment-method"
-import { AttentionCard } from "~/widgets/shared/attention-card"
-import { InfoCard } from "~/widgets/shared/info-card"
+import { DepositSummary } from './summary'
+
+import { Card, Input, Text, YStack } from '~/components'
+import { useWalletStore } from '~/hooks/useStore'
+import { formatCurrency, trimHTML } from '~/lib/utils'
+import { PaymentMethod } from '~/widgets/(home)/deposit/form/payment-method'
+import { AttentionCard } from '~/widgets/shared/attention-card'
+import { InfoCard } from '~/widgets/shared/info-card'
+import { InputSuffix } from '~/widgets/shared/input-suffix'
 
 export const DepositForm: FC = () => {
   const { t } = useTranslation()
@@ -46,6 +49,28 @@ export const DepositForm: FC = () => {
             }
           />
         </YStack>
+        <Card>
+          <Text>
+            {t("wallet.depositRangePrompt", {
+              min: formatCurrency(method?.incomeMoneyMin ?? 0),
+              max: formatCurrency(method?.incomeMoneyMax ?? 0),
+              unit: "USD",
+            })}
+          </Text>
+        </Card>
+        <Input.Decimal
+          label={t("wallet.depositAmount")}
+          value={depositRequest.amount}
+          max={method?.incomeMoneyMax ?? 9999999}
+          addonAfter={<InputSuffix>USD</InputSuffix>}
+          disableValidation
+          onChange={(amount) =>
+            useWalletStore.setState({
+              depositRequest: { ...depositRequest, amount },
+            })
+          }
+        />
+        <DepositSummary />
       </Fragment>
     )
   }

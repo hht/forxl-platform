@@ -1,22 +1,25 @@
-import { useUnmount } from "ahooks"
-import { router, Stack } from "expo-router"
-import { useTranslation } from "react-i18next"
-import { useSafeAreaInsets } from "react-native-safe-area-context"
+import { useUnmount } from 'ahooks'
+import { router, Stack } from 'expo-router'
+import { useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
-import { deposit } from "~/api/wallet"
-import { Button, Card, Input, ScrollView, Text, YStack } from "~/components"
-import { useRequest } from "~/hooks/useRequest"
-import { DepositResult, useWalletStore } from "~/hooks/useStore"
-import { formatCurrency } from "~/lib/utils"
-import { DepositForm } from "~/widgets/(home)/deposit/form/form"
-import { DepositSummary } from "~/widgets/(home)/deposit/form/summary"
-import { AccountCard } from "~/widgets/shared/account-card"
-import { InputSuffix } from "~/widgets/shared/input-suffix"
+import { deposit } from '~/api/wallet'
+import { Button, ScrollView, YStack } from '~/components'
+import { useRequest } from '~/hooks/useRequest'
+import { DepositResult, useWalletStore } from '~/hooks/useStore'
+import { DepositSteps } from '~/widgets/(home)/deposit/confirm/steps'
+import { DepositForm } from '~/widgets/(home)/deposit/form/form'
+import { AccountCard } from '~/widgets/shared/account-card'
 
 export default function Page() {
   const { t } = useTranslation()
   const { bottom } = useSafeAreaInsets()
-  const { depositMethod: method, depositRequest } = useWalletStore()
+  const {
+    depositMethod: method,
+    depositRequest,
+    depositResult,
+  } = useWalletStore()
   const { run, loading } = useRequest(deposit, {
     manual: true,
     onSuccess: (data) => {
@@ -24,10 +27,26 @@ export default function Page() {
         useWalletStore.setState({
           depositResult: data as DepositResult,
         })
-        router.push("/deposit/confirm")
+        if (data.payType === 3) {
+          router.push("/deposit/confirm")
+        }
       }
     },
   })
+  useEffect(() => {
+    if (method?.payType === 0 || method?.payType === 1) {
+      const depositMethod = useWalletStore.getState().depositMethod!
+      run({
+        code: depositMethod?.code!,
+        amount:
+          ((depositMethod.incomeMoneyMin ?? 0) +
+            (depositMethod.incomeMoneyMax ?? 0)) /
+          2,
+        type: depositMethod?.payType ?? 0,
+        paymentId: depositMethod?.id,
+      })
+    }
+  }, [method?.payType, run])
   useUnmount(() => {
     useWalletStore.getState().clean()
   })
@@ -37,52 +56,44 @@ export default function Page() {
       <YStack p="$md" gap={20} pb={bottom + 16}>
         <AccountCard />
         <DepositForm />
-        <Card>
-          <Text>
-            {t("wallet.depositRangePrompt", {
-              min: formatCurrency(method?.incomeMoneyMin ?? 0),
-              max: formatCurrency(method?.incomeMoneyMax ?? 0),
-              unit: "USD",
-            })}
-          </Text>
-        </Card>
-        <Input.Decimal
-          label={t("wallet.depositAmount")}
-          value={depositRequest.amount}
-          max={method?.incomeMoneyMax ?? 9999999}
-          addonAfter={<InputSuffix>USD</InputSuffix>}
-          disableValidation
-          onChange={(amount) =>
-            useWalletStore.setState({
-              depositRequest: { ...depositRequest, amount },
-            })
-          }
-        />
-        <DepositSummary />
-        <Button
-          isLoading={loading}
-          disabled={
-            loading ||
-            (depositRequest.amount ?? 0) <
-              (method?.incomeMoneyMin ?? -Infinity) ||
-            (depositRequest.amount ?? 0) >
-              (method?.incomeMoneyMax ?? Infinity) ||
-            (method?.payType === 3 &&
-              (!depositRequest.payBank ||
-                !depositRequest.payName ||
-                !depositRequest.payAccount))
-          }
-          onPress={() => {
-            run({
-              code: method?.code!,
-              amount: depositRequest.amount ?? 0,
-              type: method?.payType ?? 0,
-              paymentId: method?.id,
-            })
-          }}
-        >
-          {t("wallet.deposit")}
-        </Button>
+        {method?.payType !== 3 && depositResult && !loading ? (
+          <DepositSteps />
+        ) : null}
+        {method?.payType === 3 ? (
+          <Button
+            isLoading={loading}
+            disabled={
+              loading ||
+              (depositRequest.amount ?? 0) <
+                (method?.incomeMoneyMin ?? -Infinity) ||
+              (depositRequest.amount ?? 0) >
+                (method?.incomeMoneyMax ?? Infinity) ||
+              (method?.payType === 3 &&
+                (!depositRequest.payBank ||
+                  !depositRequest.payName ||
+                  !depositRequest.payAccount))
+            }
+            onPress={() => {
+              run({
+                code: method?.code!,
+                amount: depositRequest.amount ?? 0,
+                type: method?.payType ?? 0,
+                paymentId: method?.id,
+              })
+            }}
+          >
+            {t("wallet.deposit")}
+          </Button>
+        ) : (
+          <Button
+            f={1}
+            onPress={() => {
+              router.back()
+            }}
+          >
+            {t("action.done")}
+          </Button>
+        )}
       </YStack>
     </ScrollView>
   )
