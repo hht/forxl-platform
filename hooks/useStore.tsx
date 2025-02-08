@@ -1,12 +1,12 @@
-import AsyncStorage from "@react-native-async-storage/async-storage"
-import * as Localization from "expo-localization"
-import { produce } from "immer"
-import { createJSONStorage, persist } from "zustand/middleware"
-import { createWithEqualityFn } from "zustand/traditional"
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import * as Localization from 'expo-localization'
+import { produce } from 'immer'
+import { createJSONStorage, persist } from 'zustand/middleware'
+import { createWithEqualityFn } from 'zustand/traditional'
 
-import { getPartnerConfig } from "~/api/partner"
-import { getFutureCategories } from "~/api/trade"
-import { dayjs, i18n } from "~/lib/utils"
+import { getPartnerConfig } from '~/api/partner'
+import { getFutureCategories } from '~/api/trade'
+import { dayjs, i18n } from '~/lib/utils'
 
 interface Store {
   account?: Account
@@ -15,6 +15,7 @@ interface Store {
   language: string
   histories?: Future[]
   realName?: Certification
+  popAt: string
 }
 
 export const useForxlStore = createWithEqualityFn<Store>()(
@@ -22,6 +23,7 @@ export const useForxlStore = createWithEqualityFn<Store>()(
     (set) => ({
       timezone: dayjs().utcOffset(),
       language: Localization.getLocales()[0]?.languageCode ?? "en",
+      popAt: "2000-01-01",
     }),
     {
       name: "forxl",
