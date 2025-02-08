@@ -10,7 +10,7 @@ import colors from '~/theme/colors'
 
 export const TradeVolume: FC<{ future?: FuturesDetail }> = ({ future }) => {
   const { t } = useTranslation()
-  const available = useStatisticsStore((state) => state?.available, shallow)
+  const available = useStatisticsStore((state) => state.supFreezeMoney, shallow)
   const { order, disabled } = useQuotesStore(
     (state) => ({
       order: state.order,

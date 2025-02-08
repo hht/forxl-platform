@@ -1,17 +1,17 @@
-import { Fragment } from "react"
-import { useTranslation } from "react-i18next"
-import { shallow } from "zustand/shallow"
+import { Fragment } from 'react'
+import { useTranslation } from 'react-i18next'
+import { shallow } from 'zustand/shallow'
 
-import { getFuture } from "~/api/trade"
-import { Icon, Text, XStack } from "~/components"
-import { getDate } from "~/hooks/useLocale"
-import { useRequest } from "~/hooks/useRequest"
-import { useOrderStore } from "~/hooks/useStore"
-import { formatCurrency, formatDecimal } from "~/lib/utils"
-import colors from "~/theme/colors"
-import { ListItem } from "~/widgets/(home)/position/list-item"
-import { PriceCell } from "~/widgets/shared/price-cell"
-import { ProfitCell } from "~/widgets/shared/profit-cell"
+import { getFuture } from '~/api/trade'
+import { Icon, Text, XStack } from '~/components'
+import { getDate } from '~/hooks/useLocale'
+import { useRequest } from '~/hooks/useRequest'
+import { useOrderStore } from '~/hooks/useStore'
+import { formatCurrency, formatDecimal, formatProfit } from '~/lib/utils'
+import colors from '~/theme/colors'
+import { ListItem } from '~/widgets/(home)/position/list-item'
+import { PriceCell } from '~/widgets/shared/price-cell'
+import { ProfitCell } from '~/widgets/shared/profit-cell'
 
 export const OrderDetail = () => {
   const { t } = useTranslation()
@@ -28,6 +28,7 @@ export const OrderDetail = () => {
   const { data } = useRequest(() => {
     return getFuture(currentPosition?.futuresCode!)
   })
+  console.log(currentPosition)
   if (!currentPosition) return null
   if (activeIndex !== 2) {
     return (
@@ -47,7 +48,19 @@ export const OrderDetail = () => {
               {currentPosition.futuresCode}
             </Text>
           </XStack>
-          <ProfitCell data={currentPosition} fontSize={17} bold />
+          {currentPosition.priceProfit ? (
+            <Text
+              fos={17}
+              bold
+              col={
+                currentPosition.priceProfit > 0 ? "$primary" : "$destructive"
+              }
+            >
+              {formatProfit(currentPosition.priceProfit)}
+            </Text>
+          ) : (
+            <ProfitCell data={currentPosition} fontSize={17} bold />
+          )}
         </XStack>
         <XStack ai="center" jc="space-between" py="$md" bbc="$border" bbw={1}>
           <Text col="$secondary">{data?.futures?.futuresName}</Text>

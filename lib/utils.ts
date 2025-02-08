@@ -135,6 +135,12 @@ export const formatCurrency = (value?: number | string, fraction = 0.01) => {
   ) // 使用绝对值格式化
 }
 
+export const formatProfit = (profit: number) => {
+  const sign = (profit ?? 0) < 0 ? "-$" : "$"
+
+  return sign + _.floor(Math.abs(profit), 2).toFixed(2)
+}
+
 export const popToTop = () => {
   while (router.canGoBack()) {
     router.back()

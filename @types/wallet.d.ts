@@ -35,6 +35,7 @@ interface ForexAccount {
   totalMoney?: number
   updateTime?: Date
   userId?: number
+  supMoney?: number
 }
 
 /**

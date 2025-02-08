@@ -291,6 +291,7 @@ interface Position {
    * 交易步长
    */
   volatility?: number
+  priceProfit?: number | null
 }
 
 interface OrderParams {
