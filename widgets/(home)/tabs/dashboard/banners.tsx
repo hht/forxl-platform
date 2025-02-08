@@ -1,31 +1,26 @@
-import * as Linking from "expo-linking"
-import { router } from "expo-router"
-import _ from "lodash"
-import { FC, useCallback, useEffect, useMemo, useRef, useState } from "react"
+import * as Linking from 'expo-linking'
+import _ from 'lodash'
+import { FC, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import {
-  ActivityIndicator,
-  Dimensions,
-  Image,
-  NativeScrollEvent,
-  NativeSyntheticEvent,
-} from "react-native"
+    ActivityIndicator, Dimensions, Image, NativeScrollEvent, NativeSyntheticEvent
+} from 'react-native'
 
-import { getBanners } from "~/api/dashboard"
-import { Icon, ScrollView, XStack } from "~/components"
-import { CACHE_KEY, useRequest } from "~/hooks/useRequest"
-import { useWebViewStore } from "~/hooks/useStore"
-import colors from "~/theme/colors"
+import { getBanners } from '~/api/dashboard'
+import { Icon, ScrollView, XStack } from '~/components'
+import { CACHE_KEY, useRequest } from '~/hooks/useRequest'
+import colors from '~/theme/colors'
 
 export const CAROUSEL_WIDTH = Dimensions.get("window").width - 32
 
 const AspectImage: FC<{ uri?: string; onPress: () => void }> = ({
   uri,
+  onPress,
   ...rest
 }) => {
   const [ratio, setRatio] = useState(343 / 160)
   const [loaded, setLoaded] = useState(false)
   return (
-    <XStack>
+    <XStack onPress={onPress}>
       <Image
         onLoad={(e) =>
           setRatio(e.nativeEvent.source.width / e.nativeEvent.source.height)
@@ -147,23 +142,25 @@ export const Banners: FC<{ position: number }> = ({ position }) => {
             key={index}
             uri={banner.img}
             onPress={() => {
+              console.log(banner)
               if (!banner.jumpUrl) {
                 return
               }
-              switch (banner.jumpType) {
-                case 0:
-                  router.push(banner.jumpUrl as any)
-                  return
-                case 1:
-                  useWebViewStore.setState({
-                    title: banner.name,
-                    uri: banner.jumpUrl as string,
-                  })
-                  router.push("/web-view")
-                  return
-                case 2:
-                  Linking.openURL(banner.jumpUrl)
-              }
+              Linking.openURL(banner.jumpUrl)
+              // switch (banner.jumpType) {
+              //   case 0:
+              //     router.push(banner.jumpUrl as any)
+              //     return
+              //   case 1:
+              //     useWebViewStore.setState({
+              //       title: banner.name,
+              //       uri: banner.jumpUrl as string,
+              //     })
+              //     router.push("/web-view")
+              //     return
+              //   case 2:
+              //     Linking.openURL(banner.jumpUrl)
+              // }
             }}
           />
         ))}
