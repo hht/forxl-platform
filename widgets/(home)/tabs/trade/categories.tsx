@@ -1,15 +1,15 @@
-import { BottomSheetModal } from '@gorhom/bottom-sheet'
-import { FC, Fragment, useEffect, useRef, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import { ActivityIndicator } from 'react-native'
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import { shallow } from 'zustand/shallow'
+import { BottomSheetModal } from "@gorhom/bottom-sheet"
+import { FC, Fragment, useEffect, useRef, useState } from "react"
+import { useTranslation } from "react-i18next"
+import { ActivityIndicator } from "react-native"
+import { useSafeAreaInsets } from "react-native-safe-area-context"
+import { shallow } from "zustand/shallow"
 
-import { getFutureCategories } from '~/api/trade'
-import { BottomSheet, Icon, IconType, Text, XStack, YStack } from '~/components'
-import { CACHE_KEY, useRequest } from '~/hooks/useRequest'
-import { useSymbolStore } from '~/hooks/useStore'
-import colors from '~/theme/colors'
+import { getFutureCategories } from "~/api/trade"
+import { BottomSheet, Icon, IconType, Text, XStack, YStack } from "~/components"
+import { CACHE_KEY, useRequest } from "~/hooks/useRequest"
+import { useSymbolStore } from "~/hooks/useStore"
+import colors from "~/theme/colors"
 
 const getItemIcon = (
   data: Awaited<ReturnType<typeof getFutureCategories>>[number]
@@ -71,23 +71,21 @@ const ListItem: FC<{
 }
 
 export const FutureCategories: FC = () => {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
   const { bottom } = useSafeAreaInsets()
   const currentFuture = useSymbolStore((state) => state.currentFuture, shallow)
   const { loading, data } = useRequest(getFutureCategories, {
     cacheKey: CACHE_KEY.FUTURE_CATEGORIES,
-    staleTime: 1000 * 60 * 60,
+    refreshDeps: [i18n.language],
     onSuccess: (data) => {
-      if (!useSymbolStore.getState().currentFuture) {
-        const currentFuture = data.find((item) => item.isSelect)
-        if (currentFuture?.futuresCount) {
-          useSymbolStore.setState({ currentFuture })
-          return
-        }
-        useSymbolStore.setState({
-          currentFuture: data.find((item) => item.isBest),
-        })
+      const currentFuture = data.find((item) => item.isSelect)
+      if (currentFuture?.futuresCount) {
+        useSymbolStore.setState({ currentFuture })
+        return
       }
+      useSymbolStore.setState({
+        currentFuture: data.find((item) => item.isBest),
+      })
     },
   })
   const ref = useRef<BottomSheetModal>(null)

@@ -1,6 +1,6 @@
-import { request } from '~/hooks/useRequest'
-import { useForxlStore } from '~/hooks/useStore'
-import { i18n, t } from '~/lib/utils'
+import { request } from "~/hooks/useRequest"
+import { useForxlStore } from "~/hooks/useStore"
+import { i18n } from "~/lib/utils"
 
 type SignUpParams = {
   /**

@@ -1,16 +1,17 @@
-import _ from 'lodash'
-import { FC } from 'react'
-import { XStack } from 'tamagui'
+import _ from "lodash"
+import { FC } from "react"
+import { useTranslation } from "react-i18next"
+import { XStack } from "tamagui"
 
-import { AnimatedFlow, Text } from '~/components'
-import { computeProfit } from '~/hooks/useStore'
-import { t } from '~/lib/utils'
+import { AnimatedFlow, Text } from "~/components"
+import { computeProfit } from "~/hooks/useStore"
 
 export const ProfitTracker: FC<{
   order: FuturesOrder
   current?: number
   enablePending?: boolean
 }> = ({ current, order }) => {
+  const { t } = useTranslation()
   if (!current || !order) return null
   const profit = computeProfit(
     {

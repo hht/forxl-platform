@@ -1,16 +1,17 @@
 import { ImageBackground } from "expo-image"
 import { FC } from "react"
+import { useTranslation } from "react-i18next"
 import { ActivityIndicator } from "react-native"
 
 import { upload } from "~/api/wallet"
 import { Button, Card, Icon, Text, XStack } from "~/components"
 import { useRequest } from "~/hooks/useRequest"
 import { useWalletStore } from "~/hooks/useStore"
-import { t } from "~/lib/utils"
 import colors from "~/theme/colors"
 
 export const UploadCard: FC = () => {
   const { image } = useWalletStore()
+  const { t } = useTranslation()
   const { loading, run } = useRequest(upload, {
     manual: true,
     onSuccess: (data) => {

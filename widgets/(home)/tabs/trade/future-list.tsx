@@ -2,6 +2,7 @@ import { useIsFocused } from "@react-navigation/native"
 import { useInfiniteScroll } from "ahooks"
 import { router } from "expo-router"
 import { FC, useCallback, useEffect, useMemo } from "react"
+import { useTranslation } from "react-i18next"
 import { FlatList, Platform, RefreshControl } from "react-native"
 import { shallow } from "zustand/shallow"
 
@@ -11,7 +12,7 @@ import { getFutures } from "~/api/trade"
 import { AnimatedFlow, Icon, Text, XStack, YStack } from "~/components"
 import { useForxlStore, useQuotesStore, useSymbolStore } from "~/hooks/useStore"
 import { subscribeQuotes } from "~/hooks/useWebsocket"
-import { DEVICE_WIDTH, t } from "~/lib/utils"
+import { DEVICE_WIDTH } from "~/lib/utils"
 import colors from "~/theme/colors"
 import { ListEmptyComponent, ListFooterComponent } from "~/widgets/shared/list"
 
@@ -107,6 +108,7 @@ const ListItem: FC<{ data: Future }> = ({ data }) => {
     () => ((data.volatility ?? 0) * (data.clazzSpread ?? 0)) / 2,
     [data.volatility, data.clazzSpread]
   )
+  const { t } = useTranslation()
   const available = data.isDeal
   return (
     <XStack

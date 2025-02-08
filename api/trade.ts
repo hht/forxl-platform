@@ -1,10 +1,9 @@
-import axios from 'axios'
-import _ from 'lodash'
+import axios from "axios"
+import _ from "lodash"
 
-import { getDate } from '~/hooks/useLocale'
-import { BASE_URL, request } from '~/hooks/useRequest'
-import { useForxlStore, useOrderStore, useQuotesStore } from '~/hooks/useStore'
-import { dayjs, i18n, toInfinite, waitFor } from '~/lib/utils'
+import { BASE_URL, request } from "~/hooks/useRequest"
+import { useForxlStore, useOrderStore, useQuotesStore } from "~/hooks/useStore"
+import { dayjs, i18n, toInfinite, waitFor } from "~/lib/utils"
 
 export const getFutures = async (params: GetFuturesParams) => {
   return await request<PaginationResponse<Future>, GetFuturesParams>(
