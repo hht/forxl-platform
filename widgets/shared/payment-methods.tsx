@@ -1,13 +1,24 @@
-import { router } from 'expo-router'
-import { AnimatePresence } from 'moti'
-import { FC, Fragment } from 'react'
+import { router } from "expo-router"
+import { AnimatePresence } from "moti"
+import { FC, Fragment } from "react"
 
-import { getPaymentMethods, getWithdrawalMethods } from '~/api/wallet'
-import { Card, Icon, Image, Moti, Row, Separator, Text, toast, XStack, YStack } from '~/components'
-import { CACHE_KEY, useRequest } from '~/hooks/useRequest'
-import { useWalletStore } from '~/hooks/useStore'
-import { useVerification } from '~/hooks/useWallet'
-import { formatDecimal, t } from '~/lib/utils'
+import { getPaymentMethods, getWithdrawalMethods } from "~/api/wallet"
+import {
+  Card,
+  Icon,
+  Image,
+  Moti,
+  Row,
+  Separator,
+  Text,
+  toast,
+  XStack,
+  YStack,
+} from "~/components"
+import { CACHE_KEY, useRequest } from "~/hooks/useRequest"
+import { useWalletStore } from "~/hooks/useStore"
+import { useVerification } from "~/hooks/useWallet"
+import { formatDecimal, t } from "~/lib/utils"
 
 export const PaymentMethodDescription: FC<{
   method: PaymentMethod
@@ -76,11 +87,11 @@ export const PaymentMethodCard: FC<{
       gap="$md"
       onPress={() => {
         if (method.status === "0") {
-          if (!ga) {
+          if (!ga && method.gaAuth) {
             toast.show(t("message.gaRequired"))
             return
           }
-          if (!kyc) {
+          if (!kyc && method.userAuth) {
             toast.show(t("message.kycRequired"))
             return
           }
@@ -96,10 +107,12 @@ export const PaymentMethodCard: FC<{
           <Text heading bold>
             {method.name}
           </Text>
-          <XStack ai="center" gap="$sm">
-            {method.userAuth ? <Icon name="creditCard" size={16} /> : null}
-            <Icon name="twoFactor" size={16} />
-          </XStack>
+          {method.status === "0" ? (
+            <XStack ai="center" gap="$sm">
+              {method.userAuth ? <Icon name="creditCard" size={16} /> : null}
+              {method.gaAuth ? <Icon name="twoFactor" size={16} /> : null}
+            </XStack>
+          ) : null}
         </YStack>
         <Image source={{ uri: method.picUrl }} w={40} h={40} />
       </XStack>
@@ -119,11 +132,11 @@ export const WithdrawMethodCard: FC<{
       gap="$md"
       onPress={() => {
         if (method.state === 1) {
-          if (!ga) {
+          if (!ga && method.gaAuth) {
             toast.show(t("message.gaRequired"))
             return
           }
-          if (!kyc) {
+          if (!kyc && method.userAuth) {
             toast.show(t("message.kycRequired"))
             return
           }
@@ -139,10 +152,12 @@ export const WithdrawMethodCard: FC<{
           <Text heading bold>
             {method.channelName}
           </Text>
-          <XStack ai="center" gap="$sm">
-            {method.userAuth ? <Icon name="creditCard" size={16} /> : null}
-            <Icon name="twoFactor" size={16} />
-          </XStack>
+          {method.state === 1 ? (
+            <XStack ai="center" gap="$sm">
+              {method.userAuth ? <Icon name="creditCard" size={16} /> : null}
+              {method.gaAuth ? <Icon name="twoFactor" size={16} /> : null}
+            </XStack>
+          ) : null}
         </YStack>
         <Image source={{ uri: method.picUrl }} w={40} h={40} />
       </XStack>
