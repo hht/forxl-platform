@@ -28,7 +28,7 @@ export const TwoFactorNotifier: FC = () => {
     visible: false,
     fetched: false,
   })
-  const popAt = useForxlStore((state) => state.popAt[state.userNumber ?? ""])
+  const popAt = useForxlStore((state) => state.popAt[state.account?.id ?? ""])
   const [visible, toggleVisible] = useState(false)
   useRequest(() => getBanners(1), {
     cacheKey: `${CACHE_KEY.BANNERS}.${1}`,
@@ -48,11 +48,11 @@ export const TwoFactorNotifier: FC = () => {
       (banner.fetched && !banner.visible) ||
       dayjs().format("YYYY-MM-DD") === popAt,
     onSuccess: (data) => {
-      const userNumber = useForxlStore.getState().userNumber!
+      const id = useForxlStore.getState().account?.id!
       useForxlStore.setState({
         popAt: {
           ...useForxlStore.getState().popAt,
-          [userNumber]: dayjs().format("YYYY-MM-DD"),
+          [id]: dayjs().format("YYYY-MM-DD"),
         },
       })
       if (!data?.ga) {
