@@ -60,6 +60,80 @@ const ListItem: FC<{ title: string; value: ReactNode; copyable?: boolean }> = ({
   )
 }
 
+const FundDetail: FC<{
+  data: Awaited<ReturnType<typeof getFundHistory>>["list"][number]
+}> = ({ data }) => {
+  const { t } = useTranslation()
+  switch (data.recordType) {
+    case 0:
+    case 1:
+    case 102:
+      return data.operationType === 9001 ? (
+        <ListItem
+          title={t("wallet.paymentAddress")}
+          value={data.wdAccount}
+          copyable
+        />
+      ) : data.operationType === 9002 ? (
+        <Fragment>
+          <ListItem
+            title={t("trade.commission")}
+            value={formatCurrency(data.feeAmount)}
+          />
+          <ListItem
+            title={t("wallet.youGet")}
+            value={formatCurrency(data.selectAmountUsdt)}
+          />
+          <ListItem
+            title={t("wallet.walletAddress")}
+            value={data.wdAccount}
+            copyable
+          />
+        </Fragment>
+      ) : (
+        <Fragment>
+          <ListItem
+            title={t("wallet.currency")}
+            value={data.transferCurrency}
+          />
+          <ListItem
+            title={t("wallet.localCurrency")}
+            value={formatDecimal(data.transferAmount)}
+          />
+        </Fragment>
+      )
+    default:
+      return data.operationType === 9002 ? (
+        <Fragment>
+          <ListItem
+            title={t("trade.commission")}
+            value={formatCurrency(data.feeAmount)}
+          />
+          <ListItem
+            title={t("wallet.youGet")}
+            value={formatCurrency(data.selectAmountUsdt)}
+          />
+          <ListItem
+            title={t("wallet.walletAddress")}
+            value={data.wdAccount}
+            copyable
+          />
+        </Fragment>
+      ) : (
+        <Fragment>
+          <ListItem
+            title={t("wallet.currency")}
+            value={data.transferCurrency}
+          />
+          <ListItem
+            title={t("wallet.localCurrency")}
+            value={formatDecimal(data.transferAmount)}
+          />
+        </Fragment>
+      )
+  }
+}
+
 export const TransactionDetails: FC = () => {
   const { t } = useTranslation()
   const { bottom } = useSafeAreaInsets()
@@ -124,44 +198,12 @@ export const TransactionDetails: FC = () => {
             title={t("wallet.amount")}
             value={formatCurrency(data.realAmount)}
           />
-          {isDeposit ? null : (
-            <Fragment>
-              <ListItem
-                title={t("trade.commission")}
-                value={formatCurrency(data.feeAmount)}
-              />
-              <ListItem
-                title={t("wallet.youGet")}
-                value={formatCurrency(data.selectAmountUsdt)}
-              />
-            </Fragment>
-          )}
-          {isCrypto ? null : (
-            <Fragment>
-              <ListItem
-                title={t("wallet.currency")}
-                value={data.transferCurrency}
-              />
-              <ListItem
-                title={t("wallet.localCurrency")}
-                value={formatDecimal(data.transferAmount)}
-              />
-            </Fragment>
-          )}
+          <FundDetail data={data} />
           <ListItem
             title={t("wallet.transactionId")}
             value={data.id}
             copyable
           />
-          {data.wdAccount ? (
-            <ListItem
-              title={t(
-                isDeposit ? "wallet.paymentAddress" : "wallet.walletAddress"
-              )}
-              value={data.wdAccount}
-              copyable
-            />
-          ) : null}
           <ListItem
             title={t("wallet.created")}
             value={getDate(data.addTime).format("MMM DD, YYYY HH:mm")}
