@@ -1,11 +1,11 @@
-import axios from 'axios'
-import * as ImagePicker from 'expo-image-picker'
-import { Platform } from 'react-native'
+import axios from "axios"
+import * as ImagePicker from "expo-image-picker"
+import { Platform } from "react-native"
 
-import { toast } from '~/components'
-import { BASE_URL, request } from '~/hooks/useRequest'
-import { DepositResult, useForxlStore } from '~/hooks/useStore'
-import { i18n, t, toInfinite } from '~/lib/utils'
+import { toast } from "~/components"
+import { BASE_URL, request } from "~/hooks/useRequest"
+import { DepositResult, useForxlStore } from "~/hooks/useStore"
+import { i18n, t, toInfinite } from "~/lib/utils"
 
 export const getPaymentMethods = async () => {
   return await request<PaymentMethod[], undefined>(
@@ -66,6 +66,9 @@ export const getFundHistory = async (params: {
       refuseReason: string
       trc20Address: string
       feeValue: number
+      picUrl?: string
+      wdAccount?: string
+      feeAmount?: number
     }>,
     { currentPage: number; pageSize?: number }
   >("/pay/getUserDepositRecords", "POST", {

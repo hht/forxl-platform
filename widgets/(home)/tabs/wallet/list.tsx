@@ -50,7 +50,7 @@ export const ListItem: FC<{
           bg="$card/60"
         >
           <Icon
-            name={data.operationType === 9001 ? "addFunds" : "withdraw"}
+            name={data.wdAccount ? "withdraw" : "addFunds"}
             color={getStatusColor(data.status)}
             size={24}
           />

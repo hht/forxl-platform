@@ -17,6 +17,8 @@ import {
   BottomSheet,
   copyToClipboard,
   Icon,
+  Image,
+  Row,
   Text,
   XStack,
   YStack,
@@ -42,7 +44,7 @@ const ListItem: FC<{ title: string; value: ReactNode; copyable?: boolean }> = ({
     <XStack gap={40} ai="center" py="$sm">
       <Text col="$secondary">{title}</Text>
       <XStack f={1} jc="flex-end" ai="center" gap="$xs">
-        <Text>{value}</Text>
+        <Text ta="right">{value}</Text>
         {copyable ? (
           <XStack
             hitSlop={16}
@@ -68,9 +70,7 @@ export const TransactionDetails: FC = () => {
       ref.current?.present()
     }
   }, [reloadKey])
-  const isDeposit = [
-    9001, 9004, 9006, 8007, 8008, 8011, 8013, 8014, 8015, 8016, 8017,
-  ].includes(data?.operationType ?? -1)
+  const isDeposit = !data?.wdAccount
   const isCrypto = data?.recordType === 0 || data?.recordType === 1
   if (!data) return null
   return (
@@ -98,11 +98,14 @@ export const TransactionDetails: FC = () => {
           <Text col={getStatusColor(data.status)}>
             {t(STATUS_DESCRIPTION[data.status] as any)}
           </Text>
-          <XStack px="$md" py="$sm" br="$sm" boc="$border" bw={1}>
+          <Row px="$md" py="$sm" br="$sm" boc="$border" bw={1} gap="$sm">
+            {data.picUrl ? (
+              <Image source={{ uri: data.picUrl }} w="$md" h="$md" br="$md" />
+            ) : null}
             <Text col="$secondary">
               {t(CHANNEL_DESCRIPTION[data.recordType] as any)}
             </Text>
-          </XStack>
+          </Row>
           {data.refuseReason ? (
             <XStack
               bc={toRGBA(colors.destructive, 0.1)}
@@ -125,11 +128,11 @@ export const TransactionDetails: FC = () => {
             <Fragment>
               <ListItem
                 title={t("trade.commission")}
-                value={formatCurrency(data.feeValue)}
+                value={formatCurrency(data.feeAmount)}
               />
               <ListItem
                 title={t("wallet.youGet")}
-                value={formatCurrency(data.realAmount - data.feeValue)}
+                value={formatCurrency(data.selectAmountUsdt)}
               />
             </Fragment>
           )}
@@ -150,12 +153,12 @@ export const TransactionDetails: FC = () => {
             value={data.id}
             copyable
           />
-          {isCrypto ? (
+          {data.wdAccount ? (
             <ListItem
               title={t(
                 isDeposit ? "wallet.paymentAddress" : "wallet.walletAddress"
               )}
-              value={data.trc20Address}
+              value={data.wdAccount}
               copyable
             />
           ) : null}
