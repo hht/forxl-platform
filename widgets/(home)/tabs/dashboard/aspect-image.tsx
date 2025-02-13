@@ -12,7 +12,7 @@ export const AspectImage: FC<{ uri?: string; onPress: () => void }> = ({
   const [ratio, setRatio] = useState(343 / 160)
   const [loaded, setLoaded] = useState(false)
   return (
-    <XStack onPress={onPress}>
+    <XStack w={CAROUSEL_WIDTH} onPress={onPress}>
       <Image
         onLoad={(e) => {
           setRatio(e.nativeEvent.source.width / e.nativeEvent.source.height)

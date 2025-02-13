@@ -85,7 +85,7 @@ export const Banners: FC<{ position: number }> = ({ position }) => {
     return null
   }
   return (
-    <XStack w="100%" br="$sm" ov="hidden" mt="$md">
+    <XStack w={CAROUSEL_WIDTH} br="$sm" ov="hidden" mt="$md">
       <ScrollView
         ref={ref}
         horizontal

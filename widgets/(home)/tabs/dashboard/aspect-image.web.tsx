@@ -1,5 +1,5 @@
-import { FC, useState } from "react"
-import { ActivityIndicator, Dimensions } from "react-native"
+import { FC } from "react"
+import { Dimensions } from "react-native"
 import { XStack } from "tamagui"
 
 export const CAROUSEL_WIDTH = Dimensions.get("window").width - 32

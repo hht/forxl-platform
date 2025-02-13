@@ -115,8 +115,7 @@ export default function Page() {
               <Button
                 f={1}
                 onPress={() => {
-                  router.back()
-                  router.back()
+                  router.dismissTo("/deposit")
                 }}
               >
                 {t("action.done")}
