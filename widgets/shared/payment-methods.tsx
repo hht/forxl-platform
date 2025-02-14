@@ -26,7 +26,11 @@ export const PaymentMethodDescription: FC<{
   return (
     <Fragment>
       <Card.Item title={t("trade.commission")}>
-        {method.fee ? formatDecimal(method.fee) : t("wallet.networkFeeOnly")}
+        {method.fee
+          ? formatDecimal(method.fee)
+          : method.feeDesc
+            ? method.feeDesc
+            : t("wallet.networkFeeOnly")}
       </Card.Item>
       <Card.Item title={t("wallet.processingTime")}>
         {method.arrivalTimeDesc || t("wallet.instantly")}

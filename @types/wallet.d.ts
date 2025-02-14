@@ -104,6 +104,7 @@ interface PaymentMethod {
    */
   exchangeRate?: number
   fee?: number
+  feeDesc?: string
   /**
    * ID
    */
