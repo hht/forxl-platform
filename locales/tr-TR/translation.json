@@ -120,7 +120,8 @@
     "accessMedia": "Üzgünüz, bunu çalıştırmak için kamera rulosu izinlerine ihtiyacımız var!",
     "verificationCodePrompt": "Lütfen doğru doğrulama kodunu girin",
     "gaRequired": "Lütfen önce Google doğrulamasını tamamlayın",
-    "kycRequired": "Lütfen önce gerçek ad doğrulamasını tamamlayın."
+    "kycRequired": "Lütfen önce gerçek ad doğrulamasını tamamlayın.",
+    "samePassword": "Yeni şifre eski şifreyle aynı olamaz"
   },
   "home": {
     "news": "Piyasa Haberleri",

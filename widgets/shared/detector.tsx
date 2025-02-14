@@ -7,7 +7,6 @@ import { useEffect } from "react"
 
 import { useLocaleCalendar } from "~/hooks/useLocale"
 import { useForxlStore } from "~/hooks/useStore"
-import { popToTop } from "~/lib/utils"
 
 export const AccountDetector = () => {
   const userNumber = useForxlStore((state) => state.userNumber)
@@ -17,12 +16,16 @@ export const AccountDetector = () => {
     if (!navigationState?.key || !rootNavigation.current) return
     requestAnimationFrame(() => {
       if (userNumber) {
-        popToTop()
+        if (router.canGoBack()) {
+          router.dismissAll()
+        }
         router.replace("/tabs/dashboard")
         return
       }
       if (rootNavigation.current?.getCurrentRoute()?.name !== "index") {
-        popToTop()
+        if (router.canGoBack()) {
+          router.dismissAll()
+        }
         router.replace("/")
       }
     })

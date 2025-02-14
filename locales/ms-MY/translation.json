@@ -119,8 +119,9 @@
     "changePositionSuccess": "Posisi diubah dengan jayanya",
     "accessMedia": "Maaf, kami memerlukan kebenaran gulungan kamera untuk membuat ini berfungsi!",
     "verificationCodePrompt": "Sila masukkan kod pengesahan yang betul",
-    "gaRequired": "Please complete the Google verification first",
-    "kycRequired": "Please complete the real-name authentication first."
+    "gaRequired": "Sila aktifkan 2FA terlebih dahulu",
+    "kycRequired": "Sila lengkapkan KYC terlebih dahulu",
+    "samePassword": "Kata laluan baru tidak boleh sama dengan kata laluan lama"
   },
   "home": {
     "news": "Berita Pasaran",

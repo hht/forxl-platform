@@ -8,7 +8,6 @@ import { createWithEqualityFn } from "zustand/traditional"
 import { sendPasswordChangeEmail } from "~/api/account"
 import { Button, Input, Screen, Text, YStack } from "~/components"
 import { useRequest } from "~/hooks/useRequest"
-import { popToTop } from "~/lib/utils"
 import {
   LiveSupport,
   NativeStackNavigationOptions,
@@ -49,7 +48,9 @@ export default function Page() {
     {
       manual: true,
       onSuccess: () => {
-        popToTop()
+        if (router.canGoBack()) {
+          router.dismissAll()
+        }
         router.push("/(anon)/verify-email")
       },
     }

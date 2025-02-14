@@ -1,4 +1,4 @@
-import { Stack, useLocalSearchParams } from "expo-router"
+import { router, Stack, useLocalSearchParams } from "expo-router"
 import { useMemo } from "react"
 import { useTranslation } from "react-i18next"
 import { z } from "zod"
@@ -7,7 +7,6 @@ import { createWithEqualityFn } from "zustand/traditional"
 import { resetPassword } from "~/api/account"
 import { Button, Input, Screen, Text, YStack } from "~/components"
 import { useRequest } from "~/hooks/useRequest"
-import { popToTop } from "~/lib/utils"
 import {
   LiveSupport,
   NativeStackNavigationOptions,
@@ -70,7 +69,9 @@ export default function Page() {
     {
       manual: true,
       onSuccess: () => {
-        popToTop()
+        if (router.canGoBack()) {
+          router.dismissAll()
+        }
       },
     }
   )

@@ -142,12 +142,6 @@ export const formatProfit = (profit: number) => {
   return sign + _.floor(Math.abs(profit), 2).toFixed(2)
 }
 
-export const popToTop = () => {
-  while (router.canGoBack()) {
-    router.back()
-  }
-}
-
 // 格式化文件大小
 const formatSize = (bytes: number): string => {
   if (bytes < 1024) return bytes + "B"

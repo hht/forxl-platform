@@ -120,7 +120,8 @@
     "accessMedia": "抱歉，我们需要相册权限才能正常工作！",
     "verificationCodePrompt": "请输入正确的验证码",
     "gaRequired": "请先完成 Google 验证",
-    "kycRequired": "请先完成实名认证."
+    "kycRequired": "请先完成实名认证.",
+    "samePassword": "新密码不能与旧密码相同"
   },
   "home": {
     "news": "市场新闻",

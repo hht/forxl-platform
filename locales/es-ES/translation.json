@@ -119,8 +119,9 @@
     "changePositionSuccess": "Posición cambiada exitosamente",
     "accessMedia": "¡Lo sentimos, necesitamos permisos de la galería para que esto funcione!",
     "verificationCodePrompt": "Por favor, ingresa el código de verificación correcto",
-    "gaRequired": "Please complete the Google verification first",
-    "kycRequired": "Please complete the real-name authentication first."
+    "gaRequired": "Por favor, habilita la autenticación de dos factores primero",
+    "kycRequired": "Por favor, completa tu verificación KYC primero",
+    "samePassword": "La nueva contraseña no puede ser la misma que la anterior"
   },
   "home": {
     "news": "Noticias del Mercado",

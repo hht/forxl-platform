@@ -119,8 +119,9 @@
     "changePositionSuccess": "Posição alterada com sucesso",
     "accessMedia": "Desculpe, precisamos de permissões da rolagem da câmera para fazer isso funcionar!",
     "verificationCodePrompt": "Por favor, insira o código de verificação correto",
-    "gaRequired": "Por favor, conclua primeiro a verificação do Google",
-    "kycRequired": "Por favor, conclua primeiro a autenticação do nome real."
+    "gaRequired": "Por favor, ative o Google Authenticator primeiro",
+    "kycRequired": "Por favor, complete o KYC primeiro",
+    "samePassword": "A nova senha não pode ser a mesma que a senha antiga"
   },
   "home": {
     "news": "Notícias do Mercado",

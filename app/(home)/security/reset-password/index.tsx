@@ -1,17 +1,20 @@
-import { useUnmount } from 'ahooks'
-import { Stack } from 'expo-router'
-import { useMemo } from 'react'
-import { useTranslation } from 'react-i18next'
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import { z } from 'zod'
-import { createWithEqualityFn } from 'zustand/traditional'
+import { useUnmount } from "ahooks"
+import { router, Stack } from "expo-router"
+import { useMemo } from "react"
+import { useTranslation } from "react-i18next"
+import { useSafeAreaInsets } from "react-native-safe-area-context"
+import { z } from "zod"
+import { createWithEqualityFn } from "zustand/traditional"
 
-import { changePassword } from '~/api/account'
-import { Button, Input, ScrollView, Text, toast, YStack } from '~/components'
-import { useRequest } from '~/hooks/useRequest'
-import { useForxlStore } from '~/hooks/useStore'
-import { LiveSupport, NativeStackNavigationOptions } from '~/widgets/shared/header'
-import { PasswordValidator } from '~/widgets/shared/password-validator'
+import { changePassword } from "~/api/account"
+import { Button, Input, ScrollView, Text, toast, YStack } from "~/components"
+import { useRequest } from "~/hooks/useRequest"
+import { useForxlStore } from "~/hooks/useStore"
+import {
+  LiveSupport,
+  NativeStackNavigationOptions,
+} from "~/widgets/shared/header"
+import { PasswordValidator } from "~/widgets/shared/password-validator"
 
 const ScreenOptions: NativeStackNavigationOptions = {
   title: "",
@@ -65,6 +68,8 @@ export default function Page() {
     manual: true,
     onSuccess: () => {
       toast.show(t("settings.passwordChangedSuccessful"))
+      router.dismissAll()
+      router.replace("/(anon)/sign-in")
       useForxlStore.setState({ userNumber: undefined })
     },
   })
@@ -111,12 +116,16 @@ export default function Page() {
         <Button
           disabled={!success}
           isLoading={loading}
-          onPress={() =>
+          onPress={() => {
+            if (password === useStore.getState().previous) {
+              toast.show(t("message.samePassword"))
+              return
+            }
             run({
               password,
               previous: useStore.getState().previous,
             })
-          }
+          }}
         >
           {t("settings.resetPassword")}
         </Button>

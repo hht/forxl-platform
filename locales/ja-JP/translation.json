@@ -120,7 +120,8 @@
     "accessMedia": "Sorry, we need camera roll permissions to make this work!",
     "verificationCodePrompt": "Please enter the correct verification code",
     "gaRequired": "まずGoogle認証を完了してください",
-    "kycRequired": "まずは実名認証を完了してください."
+    "kycRequired": "まずは実名認証を完了してください.",
+    "samePassword": "The new password cannot be the same as the old password"
   },
   "home": {
     "news": "Market News",
