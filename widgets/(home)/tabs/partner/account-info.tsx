@@ -36,9 +36,34 @@ import { CACHE_KEY, useRequest } from "~/hooks/useRequest"
 import {
   useForxlStore,
   usePartnerStore,
+  usePromptStore,
   useStatementStore,
 } from "~/hooks/useStore"
-import { DEVICE_WIDTH, formatCurrency, formatDecimal } from "~/lib/utils"
+import {
+  dayjs,
+  DEVICE_WIDTH,
+  formatCurrency,
+  formatDecimal,
+  uuid,
+} from "~/lib/utils"
+
+const maskEmail = (email?: string) => {
+  if (!email) return ""
+  const [username, domain] = email.split("@")
+
+  if (!domain) return email
+
+  if (username.length <= 6) {
+    return username.length === 1
+      ? `${username}@${domain}`
+      : `${username[0]}${"*".repeat(username.length - 1)}@${domain}`
+  }
+
+  const maskedPart = "*".repeat(6)
+  const visiblePart = username.slice(0, -6)
+
+  return `${visiblePart}${maskedPart}@${domain}`
+}
 
 export const AccountInfo = () => {
   const { account } = useForxlStore()
@@ -178,7 +203,7 @@ export const AccountInfo = () => {
           <ScrollView
             horizontal
             w={DEVICE_WIDTH - 32}
-            h={212}
+            h={230}
             mx={-16}
             pagingEnabled
             centerContent
@@ -198,8 +223,20 @@ export const AccountInfo = () => {
                   key={item.userId}
                 >
                   <Justified>
-                    <XStack gap="$xs" ai="center">
+                    <XStack
+                      gap="$xs"
+                      ai="center"
+                      hitSlop={10}
+                      onPress={() => {
+                        usePromptStore.setState({
+                          title: "",
+                          desc: t("partner.directAccountsDesc"),
+                          reloadKey: uuid(),
+                        })
+                      }}
+                    >
                       <Text col="$secondary">{t("partner.accountId")}</Text>
+                      <Icon name="info" size={12} />
                     </XStack>
                     <Text>{item.userId}</Text>
                   </Justified>
@@ -217,7 +254,7 @@ export const AccountInfo = () => {
                   <Justified gap="$md" ai="flex-start">
                     <Text col="$secondary">{dict.accountEmail}</Text>
                     <Text f={1} ta="right" numberOfLines={1}>
-                      {item.email}
+                      {maskEmail(item.email)}
                     </Text>
                   </Justified>
                   <Justified>
@@ -230,8 +267,12 @@ export const AccountInfo = () => {
                             ? _.padEnd(it.charAt(0), it.length, "*")
                             : it
                         )
-                        .join(" ")}
+                        .join(" ") || "-"}
                     </Text>
+                  </Justified>
+                  <Justified>
+                    <Text col="$secondary">{t("partner.fundsInvested")}</Text>
+                    <Text>{formatCurrency(`${item.invested}`)}</Text>
                   </Justified>
                   <Justified>
                     <Text col="$secondary">{dict.size}</Text>
@@ -240,16 +281,13 @@ export const AccountInfo = () => {
                     </Text>
                   </Justified>
                   <Justified>
-                    <Text col="$secondary">{t("partner.fundsInvested")}</Text>
-                    <Text>{formatDecimal(`${item.invested}`)}</Text>
+                    <Text col="$secondary">{dict.volume}</Text>
+                    <Text>{formatCurrency(item.teamVolume ?? 0)}</Text>
                   </Justified>
                   <Justified>
                     <Text col="$secondary">{t("partner.registerDate")}</Text>
                     <Text>
-                      {formatDate(item.registrationDate ?? Date.now(), {
-                        hour: undefined,
-                        minute: undefined,
-                      })}
+                      {dayjs(item.registrationDate).format("MMM DD, YYYY")}
                     </Text>
                   </Justified>
                 </YStack>
