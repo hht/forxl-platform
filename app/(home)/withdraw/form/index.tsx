@@ -47,8 +47,11 @@ export default function Page() {
         <Input.Decimal
           label={t("wallet.withdrawAmount")}
           value={withdrawRequest.money}
+          min={parseFloat(method.minAmount)}
           max={parseFloat(
-            assets?.userWalletDetail.fundsAccount.available ?? "0"
+            method.maxAmount ??
+              assets?.userWalletDetail.fundsAccount.available ??
+              "0"
           )}
           disableValidation
           addonAfter={<InputSuffix>USDT</InputSuffix>}

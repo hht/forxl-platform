@@ -17,7 +17,9 @@ export const WithdrawSummary: FC = () => {
         <Text subject>
           {formatCurrency(
             withdrawRequest?.money
-              ? withdrawRequest.money - (method.feeValue ?? 0)
+              ? method.feeType === 1
+                ? withdrawRequest.money * (1 - (method.feeValue ?? 0) / 100)
+                : withdrawRequest.money - (method.feeValue ?? 0)
               : 0
           )}
         </Text>

@@ -1,20 +1,37 @@
-import { useBoolean } from 'ahooks'
-import _ from 'lodash'
-import { MotiText as AnimatedText, MotiView as AnimatedView } from 'moti'
-import React, { FC, Fragment, useCallback, useEffect, useRef, useState } from 'react'
-import { Keyboard, Platform, StyleSheet, TextInput, TextInputProps } from 'react-native'
+import { useBoolean } from "ahooks"
+import _ from "lodash"
+import { MotiText as AnimatedText, MotiView as AnimatedView } from "moti"
+import React, {
+  FC,
+  Fragment,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react"
+import {
+  Keyboard,
+  Platform,
+  StyleSheet,
+  TextInput,
+  TextInputProps,
+} from "react-native"
 import Animated, {
-    useAnimatedStyle, useSharedValue, withRepeat, withSequence, withTiming
-} from 'react-native-reanimated'
-import { XStack, YStack } from 'tamagui'
+  useAnimatedStyle,
+  useSharedValue,
+  withRepeat,
+  withSequence,
+  withTiming,
+} from "react-native-reanimated"
+import { XStack, YStack } from "tamagui"
 
-import { Button } from './button'
-import { Icon } from './icon'
-import { Text } from './text'
-import { toast } from './toast'
+import { Button } from "./button"
+import { Icon } from "./icon"
+import { Text } from "./text"
+import { toast } from "./toast"
 
-import { DEVICE_WIDTH, t } from '~/lib/utils'
-import colors from '~/theme/colors'
+import { DEVICE_WIDTH, t } from "~/lib/utils"
+import colors from "~/theme/colors"
 
 interface InputProps extends TextInputProps {
   addonAfter?: React.ReactNode
@@ -286,8 +303,9 @@ const Decimal: FC<
     value?: number
     onChange: (v?: number) => void
     max?: number
+    min?: number
   }
-> = ({ value, onChange, max, ...props }) => {
+> = ({ value, onChange, min, max, ...props }) => {
   return (
     <InputBase
       value={`${value ?? ""}`}
@@ -309,6 +327,15 @@ const Decimal: FC<
         const v = parseFloat(e)
         if (_.isNumber(v) && !_.isNaN(v)) {
           onChange(v)
+        }
+      }}
+      onBlur={() => {
+        if (!value) {
+          return
+        }
+        if (min && value < min) {
+          toast.show(t("message.minReached"))
+          return
         }
       }}
       {...props}

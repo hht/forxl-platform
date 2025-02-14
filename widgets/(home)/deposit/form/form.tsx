@@ -1,15 +1,15 @@
-import { FC, Fragment } from 'react'
-import { useTranslation } from 'react-i18next'
+import { FC, Fragment } from "react"
+import { useTranslation } from "react-i18next"
 
-import { DepositSummary } from './summary'
+import { DepositSummary } from "./summary"
 
-import { Card, Input, Text, YStack } from '~/components'
-import { useWalletStore } from '~/hooks/useStore'
-import { formatCurrency, trimHTML } from '~/lib/utils'
-import { PaymentMethod } from '~/widgets/(home)/deposit/form/payment-method'
-import { AttentionCard } from '~/widgets/shared/attention-card'
-import { InfoCard } from '~/widgets/shared/info-card'
-import { InputSuffix } from '~/widgets/shared/input-suffix'
+import { Card, Input, Text, YStack } from "~/components"
+import { useWalletStore } from "~/hooks/useStore"
+import { formatCurrency, trimHTML } from "~/lib/utils"
+import { PaymentMethod } from "~/widgets/(home)/deposit/form/payment-method"
+import { AttentionCard } from "~/widgets/shared/attention-card"
+import { InfoCard } from "~/widgets/shared/info-card"
+import { InputSuffix } from "~/widgets/shared/input-suffix"
 
 export const DepositForm: FC = () => {
   const { t } = useTranslation()
@@ -61,6 +61,7 @@ export const DepositForm: FC = () => {
         <Input.Decimal
           label={t("wallet.depositAmount")}
           value={depositRequest.amount}
+          min={method?.incomeMoneyMin}
           max={method?.incomeMoneyMax ?? 9999999}
           addonAfter={<InputSuffix>USD</InputSuffix>}
           disableValidation

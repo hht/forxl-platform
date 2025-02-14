@@ -60,7 +60,9 @@ export const WithdrawMethodDescription: FC<{
     <Fragment>
       <Card.Item title={t("trade.commission")}>
         {method.feeValue
-          ? `${formatDecimal(method.feeValue)}%`
+          ? method.feeType === 1
+            ? `${formatDecimal(method.feeValue)}%`
+            : `$${formatDecimal(method.feeValue)}`
           : t("wallet.networkFeeOnly")}
       </Card.Item>
       <Card.Item title={t("wallet.processingTime")}>
