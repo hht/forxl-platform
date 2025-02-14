@@ -6,7 +6,7 @@ import { z } from "zod"
 import { createWithEqualityFn } from "zustand/traditional"
 
 import { sendPasswordChangeEmail } from "~/api/account"
-import { Button, Input, Screen, Text, YStack } from "~/components"
+import { Button, Input, Screen, ScrollView, Text, YStack } from "~/components"
 import { useRequest } from "~/hooks/useRequest"
 import {
   LiveSupport,
@@ -60,7 +60,10 @@ export default function Page() {
     useStore.setState({ email: "" })
   })
   return (
-    <Screen gap={32}>
+    <ScrollView
+      f={1}
+      contentContainerStyle={{ flexGrow: 1, gap: 32, padding: 16 }}
+    >
       <Stack.Screen options={ScreenOptions} />
       <YStack gap={12}>
         <Text subject bold>
@@ -80,6 +83,6 @@ export default function Page() {
       <Button disabled={!success} isLoading={loading} onPress={run} mb={32}>
         {t("anon.sendEmail")}
       </Button>
-    </Screen>
+    </ScrollView>
   )
 }

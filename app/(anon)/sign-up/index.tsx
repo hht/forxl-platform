@@ -5,7 +5,7 @@ import { Trans, useTranslation } from "react-i18next"
 import { z } from "zod"
 import { createWithEqualityFn } from "zustand/traditional"
 
-import { Button, Input, Screen, Text, YStack } from "~/components"
+import { Button, Input, Screen, ScrollView, Text, YStack } from "~/components"
 import { i18n } from "~/lib/utils"
 import {
   LiveSupport,
@@ -59,7 +59,10 @@ export default function Page() {
     useStore.setState(INITIAL)
   })
   return (
-    <Screen gap={32}>
+    <ScrollView
+      f={1}
+      contentContainerStyle={{ flexGrow: 1, gap: 32, padding: 16 }}
+    >
       <Stack.Screen options={ScreenOptions} />
       <YStack gap={12}>
         <Text subject bold>
@@ -119,6 +122,6 @@ export default function Page() {
           {t("anon.next")}
         </Button>
       </YStack>
-    </Screen>
+    </ScrollView>
   )
 }
