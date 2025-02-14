@@ -96,35 +96,37 @@ export const InputBase: FC<InputProps> = ({
           {...rest}
         />
         {addonAfter}
-        <AnimatedView
-          style={[
-            styles.label,
-            {
-              backgroundColor,
-            },
-          ]}
-          animate={{
-            top: isActive ? -12 : 16,
-          }}
-          transition={{
-            type: "timing",
-            duration: 200,
-          }}
-        >
-          <AnimatedText
+        {label ? (
+          <AnimatedView
+            style={[
+              styles.label,
+              {
+                backgroundColor,
+              },
+            ]}
             animate={{
-              // @ts-ignore next-line
-              fontSize: isActive ? 12 : 15,
+              top: isActive ? -12 : 16,
             }}
             transition={{
               type: "timing",
               duration: 200,
             }}
-            style={{ color }}
           >
-            {label}
-          </AnimatedText>
-        </AnimatedView>
+            <AnimatedText
+              animate={{
+                // @ts-ignore next-line
+                fontSize: isActive ? 12 : 15,
+              }}
+              transition={{
+                type: "timing",
+                duration: 200,
+              }}
+              style={{ color }}
+            >
+              {label}
+            </AnimatedText>
+          </AnimatedView>
+        ) : null}
       </XStack>
       {disableValidation ? null : (
         <Text col="$destructive" fos={12}>

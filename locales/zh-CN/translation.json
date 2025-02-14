@@ -748,7 +748,11 @@
     "final": "最终",
     "process": "进行中",
     "passVerification": "通过完全验证",
-    "passVerificationDesc": "用于无限制的存款和提款，银行卡交易和加密货币交易。"
+    "passVerificationDesc": "用于无限制的存款和提款，银行卡交易和加密货币交易。",
+    "confirmDeleteTitle": "Are you sure you want to delete your account?",
+    "confirmDeleteDesc": "If you delete your FORXL account, your personal information, account assets, financial records, and transaction data will be permanently deleted.Once deleted, this data cannot be recovered.Please confirm once again if you want to delete your account.",
+    "confirmDeletePrompt": "*Please enter 'DELETE' in the input box below:",
+    "confirmDeleteAction": "Confirm Delete"
   },
   "settings": {
     "title": "设置",

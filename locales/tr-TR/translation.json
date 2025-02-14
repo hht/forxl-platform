@@ -753,12 +753,14 @@
       "certificateNumber": "Sertifika Numarası"
     },
     "getVerified": "Doğrulan",
-    "final": "Final",
-    "process": "Devam Ediyor",
     "passVerification": "Tam Doğrulamayı Geç",
     "passVerificationDesc": "Sınırsız depozito ve çekim, banka kartı işlemleri ve kripto ticareti için erişim sağlamak.",
     "final": "Final",
-    "process": "Devam Ediyor"
+    "process": "Devam Ediyor",
+    "confirmDeleteTitle": "Are you sure you want to delete your account?",
+    "confirmDeleteDesc": "If you delete your FORXL account, your personal information, account assets, financial records, and transaction data will be permanently deleted.Once deleted, this data cannot be recovered.Please confirm once again if you want to delete your account.",
+    "confirmDeletePrompt": "*Please enter 'DELETE' in the input box below:",
+    "confirmDeleteAction": "Confirm Delete"
   },
   "settings": {
     "title": "Ayarlar",
