@@ -17,6 +17,9 @@ export const OrderActions = () => {
       toast.show(t("message.changePositionSuccess"))
     },
   })
+  const currentPosition = useOrderStore((state) => state.currentPosition)
+  const { stopLossPrice, stopProfitPrice } = useProfitAndLossStore()
+  console.log(stopLossPrice, stopProfitPrice, currentPosition)
   return (
     <XStack gap="$md" px="$md" pb={bottom + 16}>
       <Button
@@ -30,68 +33,72 @@ export const OrderActions = () => {
       >
         {t("positions.closePosition")}
       </Button>
-      <Button
-        f={1}
-        isLoading={loading}
-        onPress={() => {
-          const currentPosition = useOrderStore.getState().currentPosition
-          if (!currentPosition) return
-          const {
-            stopProfitPrice,
-            stopLossPrice,
-            enableCloseLoss,
-            enableCloseProfit,
-          } = useProfitAndLossStore.getState()
-          if (enableCloseProfit) {
-            if (
-              currentPosition.openSafe === 0 &&
-              stopProfitPrice &&
-              stopProfitPrice <
-                currentPosition.price! + currentPosition.volatility! * 100
-            ) {
-              toast.show(t("message.minProfitReached"))
-              return
+      {(stopLossPrice && stopLossPrice !== currentPosition?.stopLossPrice) ||
+      (stopProfitPrice &&
+        stopProfitPrice !== currentPosition?.stopProfitPrice) ? (
+        <Button
+          f={1}
+          isLoading={loading}
+          onPress={() => {
+            const currentPosition = useOrderStore.getState().currentPosition
+            if (!currentPosition) return
+            const {
+              stopProfitPrice,
+              stopLossPrice,
+              enableCloseLoss,
+              enableCloseProfit,
+            } = useProfitAndLossStore.getState()
+            if (enableCloseProfit) {
+              if (
+                currentPosition.openSafe === 0 &&
+                stopProfitPrice &&
+                stopProfitPrice <
+                  currentPosition.price! + currentPosition.volatility! * 100
+              ) {
+                toast.show(t("message.minProfitReached"))
+                return
+              }
+              if (
+                currentPosition.openSafe === 1 &&
+                stopProfitPrice &&
+                stopProfitPrice >
+                  currentPosition.price! - currentPosition.volatility! * 100
+              ) {
+                toast.show(t("message.maxProfitReached"))
+                return
+              }
             }
-            if (
-              currentPosition.openSafe === 1 &&
-              stopProfitPrice &&
-              stopProfitPrice >
-                currentPosition.price! - currentPosition.volatility! * 100
-            ) {
-              toast.show(t("message.maxProfitReached"))
-              return
-            }
-          }
 
-          if (enableCloseLoss) {
-            if (
-              currentPosition.openSafe === 0 &&
-              stopLossPrice &&
-              stopLossPrice >
-                currentPosition.price! - currentPosition.volatility! * 100
-            ) {
-              toast.show(t("message.maxLossReached"))
-              return
+            if (enableCloseLoss) {
+              if (
+                currentPosition.openSafe === 0 &&
+                stopLossPrice &&
+                stopLossPrice >
+                  currentPosition.price! - currentPosition.volatility! * 100
+              ) {
+                toast.show(t("message.maxLossReached"))
+                return
+              }
+              if (
+                currentPosition.openSafe === 1 &&
+                stopLossPrice &&
+                stopLossPrice <
+                  currentPosition.price! + currentPosition.volatility! * 100
+              ) {
+                toast.show(t("message.minLossReached"))
+                return
+              }
             }
-            if (
-              currentPosition.openSafe === 1 &&
-              stopLossPrice &&
-              stopLossPrice <
-                currentPosition.price! + currentPosition.volatility! * 100
-            ) {
-              toast.show(t("message.minLossReached"))
-              return
-            }
-          }
-          run({
-            orderId: currentPosition.id!,
-            stopProfitPrice: enableCloseProfit ? (stopProfitPrice ?? 0) : 0,
-            stopLossPrice: enableCloseLoss ? (stopLossPrice ?? 0) : 0,
-          })
-        }}
-      >
-        {t("order.apply")}
-      </Button>
+            run({
+              orderId: currentPosition.id!,
+              stopProfitPrice: enableCloseProfit ? (stopProfitPrice ?? 0) : 0,
+              stopLossPrice: enableCloseLoss ? (stopLossPrice ?? 0) : 0,
+            })
+          }}
+        >
+          {t("order.apply")}
+        </Button>
+      ) : null}
     </XStack>
   )
 }

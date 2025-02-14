@@ -70,9 +70,11 @@ export const ProfitAndLoss = () => {
         toggleExpended={(enableCloseProfit) => {
           useProfitAndLossStore.setState({
             enableCloseProfit,
-            stopProfitPrice: currentPosition?.stopProfitPrice
-              ? currentPosition.stopProfitPrice
-              : (currentPosition?.price ?? 0),
+            stopProfitPrice: enableCloseProfit
+              ? currentPosition?.stopProfitPrice
+                ? currentPosition.stopProfitPrice
+                : (currentPosition?.price ?? 0)
+              : undefined,
           })
         }}
         title={
@@ -115,9 +117,11 @@ export const ProfitAndLoss = () => {
         toggleExpended={(enableCloseLoss) => {
           useProfitAndLossStore.setState({
             enableCloseLoss,
-            stopLossPrice: currentPosition?.stopLossPrice
-              ? currentPosition.stopLossPrice
-              : (currentPosition?.price ?? 0),
+            stopLossPrice: enableCloseLoss
+              ? currentPosition?.stopLossPrice
+                ? currentPosition.stopLossPrice
+                : (currentPosition?.price ?? 0)
+              : undefined,
           })
         }}
         title={
