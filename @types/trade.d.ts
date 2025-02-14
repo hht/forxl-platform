@@ -292,6 +292,7 @@ interface Position {
    */
   volatility?: number
   priceProfit?: number | null
+  pureProfit?: number | null
 }
 
 interface OrderParams {

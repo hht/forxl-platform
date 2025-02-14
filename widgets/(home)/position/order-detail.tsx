@@ -105,30 +105,40 @@ export const OrderDetail = () => {
             heading
             bold
             col={
-              (currentPosition.priceProfit ?? 0) > 0
+              (currentPosition.pureProfit ?? currentPosition.priceProfit ?? 0) >
+              0
                 ? "$primary"
-                : currentPosition.priceProfit! < 0
+                : (currentPosition.pureProfit ??
+                    currentPosition.priceProfit! < 0)
                   ? "$destructive"
                   : "$secondary"
             }
           >
-            {formatProfit(currentPosition.priceProfit ?? 0)}
+            {formatProfit(
+              currentPosition.pureProfit ?? currentPosition.priceProfit ?? 0
+            )}
           </Text>
           <Text
             fos={14}
             lh={14}
             bold
             col={
-              (currentPosition.priceProfit ?? 0) > 0
+              (currentPosition.pureProfit ?? currentPosition.priceProfit ?? 0) >
+              0
                 ? "$primary"
-                : currentPosition.priceProfit! < 0
+                : (currentPosition.pureProfit ??
+                    currentPosition.priceProfit! < 0)
                   ? "$destructive"
                   : "$secondary"
             }
           >
             {formatDecimal(
-              ((currentPosition.priceProfit ?? 0) /
-                (currentPosition.securityDeposit ?? 1)) *
+              ((currentPosition.pureProfit ??
+                currentPosition.priceProfit ??
+                0) /
+                (currentPosition.pureProfit ??
+                  currentPosition.securityDeposit ??
+                  1)) *
                 100
             )}
             %

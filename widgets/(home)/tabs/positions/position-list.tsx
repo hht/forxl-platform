@@ -145,29 +145,29 @@ const ArchivedListItem: FC<{ data: Position; dateVisible?: boolean }> = ({
             <Text
               bold
               col={
-                data.priceProfit! > 0
+                data.pureProfit! > 0
                   ? "$primary"
-                  : data.priceProfit! < 0
+                  : data.pureProfit! < 0
                     ? "$destructive"
                     : "$secondary"
               }
             >
-              {formatProfit(data.priceProfit ?? 0)}
+              {formatProfit(data.pureProfit ?? 0)}
             </Text>
             <Text
               bold
               fos={10}
               lh={10}
               col={
-                data.priceProfit! > 0
+                data.pureProfit! > 0
                   ? "$primary"
-                  : data.priceProfit! < 0
+                  : data.pureProfit! < 0
                     ? "$destructive"
                     : "$secondary"
               }
             >
               {formatDecimal(
-                ((data.priceProfit ?? 0) / (data.securityDeposit ?? 1)) * 100
+                ((data.pureProfit ?? 0) / (data.securityDeposit ?? 1)) * 100
               )}
               %
             </Text>
