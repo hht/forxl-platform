@@ -14,6 +14,7 @@ import {
   XStack,
   YStack,
 } from "~/components"
+import { useCountDown } from "~/hooks/useCountdown"
 import { CACHE_KEY, useRequest } from "~/hooks/useRequest"
 import { useGoogleAuthStore } from "~/hooks/useStore"
 import { Steps } from "~/widgets/(home)/security/steps"
@@ -21,6 +22,7 @@ import { Steps } from "~/widgets/(home)/security/steps"
 export default function Page() {
   const { t } = useTranslation("translation")
   const { code, checkCode } = useGoogleAuthStore()
+  const { countdown, setDate } = useCountDown()
   const { data } = useRequest(getGaInfo, {
     cacheKey: CACHE_KEY.GOOGLE_AUTH,
   })
@@ -29,6 +31,9 @@ export default function Page() {
     onSuccess: () => {
       router.back()
       toast.show(t("security.twoFactorChangedSuccessfully"))
+    },
+    onFinally: () => {
+      setDate(Date.now() + 10 * 1000)
     },
   })
   useUnmount(() => {
@@ -98,12 +103,19 @@ export default function Page() {
         <Button
           w="100%"
           isLoading={loading}
-          disabled={checkCode?.length !== 6 || code.length !== 6 || loading}
+          disabled={
+            checkCode?.length !== 6 ||
+            code.length !== 6 ||
+            loading ||
+            !!countdown
+          }
           onPress={() => {
             run({ code, secret: data?.secret!, checkCode })
           }}
         >
-          {t("action.enable")}
+          {countdown
+            ? t("message.retry", { time: Math.round(countdown / 1000) })
+            : t("action.enable")}
         </Button>
       </YStack>
     </Screen>

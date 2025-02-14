@@ -1,16 +1,18 @@
-import { useUnmount } from 'ahooks'
-import { router, Stack } from 'expo-router'
-import { useTranslation } from 'react-i18next'
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { useUnmount } from "ahooks"
+import { router, Stack } from "expo-router"
+import { useTranslation } from "react-i18next"
+import { useSafeAreaInsets } from "react-native-safe-area-context"
 
-import { bindGa, getGaInfo } from '~/api/account'
-import { Button, Input, ScrollView, toast, YStack } from '~/components'
-import { CACHE_KEY, useRequest } from '~/hooks/useRequest'
-import { useGoogleAuthStore } from '~/hooks/useStore'
-import { Steps } from '~/widgets/(home)/security/steps'
+import { bindGa, getGaInfo } from "~/api/account"
+import { Button, Input, ScrollView, toast, YStack } from "~/components"
+import { useCountDown } from "~/hooks/useCountdown"
+import { CACHE_KEY, useRequest } from "~/hooks/useRequest"
+import { useGoogleAuthStore } from "~/hooks/useStore"
+import { Steps } from "~/widgets/(home)/security/steps"
 
 export default function Page() {
   const { t } = useTranslation("translation")
+  const { countdown, setDate } = useCountDown()
   const { bottom } = useSafeAreaInsets()
   const { data } = useRequest(getGaInfo, {
     cacheKey: CACHE_KEY.GOOGLE_AUTH,
@@ -21,6 +23,9 @@ export default function Page() {
     onSuccess: () => {
       router.back()
       toast.show(t("security.twoFactorEnabledSuccessfully"))
+    },
+    onFinally: () => {
+      setDate(Date.now() + 10 * 1000)
     },
   })
   useUnmount(() => {
@@ -44,12 +49,14 @@ export default function Page() {
       <YStack p="$md">
         <Button
           isLoading={loading}
-          disabled={loading || checkCode.length < 6}
+          disabled={loading || checkCode.length < 6 || !!countdown}
           onPress={() => {
             run({ code: checkCode, secret: data?.secret! })
           }}
         >
-          {t("action.enable")}
+          {countdown
+            ? t("message.retry", { time: Math.round(countdown / 1000) })
+            : t("action.enable")}
         </Button>
       </YStack>
     </YStack>

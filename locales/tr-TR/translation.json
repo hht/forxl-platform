@@ -121,7 +121,8 @@
     "verificationCodePrompt": "Lütfen doğru doğrulama kodunu girin",
     "gaRequired": "Lütfen önce Google doğrulamasını tamamlayın",
     "kycRequired": "Lütfen önce gerçek ad doğrulamasını tamamlayın.",
-    "samePassword": "Yeni şifre eski şifreyle aynı olamaz"
+    "samePassword": "Yeni şifre eski şifreyle aynı olamaz",
+    "retry": "Please try after {{time}} seconds"
   },
   "home": {
     "news": "Piyasa Haberleri",

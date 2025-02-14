@@ -121,7 +121,8 @@
     "verificationCodePrompt": "Please enter the correct verification code",
     "gaRequired": "Please complete the Google verification first",
     "kycRequired": "Please complete the real-name authentication first.",
-    "samePassword": "The new password cannot be the same as the old password"
+    "samePassword": "The new password cannot be the same as the old password",
+    "retry": "Please try after {{time}} seconds"
   },
   "home": {
     "news": "Market News",

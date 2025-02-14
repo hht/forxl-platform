@@ -121,7 +121,8 @@
     "verificationCodePrompt": "Sila masukkan kod pengesahan yang betul",
     "gaRequired": "Sila aktifkan 2FA terlebih dahulu",
     "kycRequired": "Sila lengkapkan KYC terlebih dahulu",
-    "samePassword": "Kata laluan baru tidak boleh sama dengan kata laluan lama"
+    "samePassword": "Kata laluan baru tidak boleh sama dengan kata laluan lama",
+    "retry": "Please try after {{time}} seconds"
   },
   "home": {
     "news": "Berita Pasaran",

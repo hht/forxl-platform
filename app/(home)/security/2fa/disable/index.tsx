@@ -14,17 +14,22 @@ import {
   XStack,
   YStack,
 } from "~/components"
+import { useCountDown } from "~/hooks/useCountdown"
 import { useRequest } from "~/hooks/useRequest"
 import { useGoogleAuthStore } from "~/hooks/useStore"
 
 export default function Page() {
   const { t } = useTranslation("translation")
   const { checkCode } = useGoogleAuthStore()
+  const { countdown, setDate } = useCountDown()
   const { run, loading } = useRequest(closeGa, {
     manual: true,
     onSuccess: () => {
       router.back()
       toast.show(t("security.twoFactorDisabledSuccessfully"))
+    },
+    onFinally: () => {
+      setDate(Date.now() + 10 * 1000)
     },
   })
   useUnmount(() => {
@@ -80,12 +85,14 @@ export default function Page() {
         <Button
           isLoading={loading}
           w="100%"
-          disabled={checkCode?.length !== 6}
+          disabled={checkCode?.length !== 6 || !!countdown}
           onPress={() => {
             run({ code: checkCode })
           }}
         >
-          {t("security.closeTwoFactor")}
+          {countdown
+            ? t("message.retry", { time: Math.round(countdown / 1000) })
+            : t("security.closeTwoFactor")}
         </Button>
       </YStack>
     </Screen>

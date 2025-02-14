@@ -121,7 +121,8 @@
     "verificationCodePrompt": "Please enter the correct verification code",
     "gaRequired": "まずGoogle認証を完了してください",
     "kycRequired": "まずは実名認証を完了してください.",
-    "samePassword": "The new password cannot be the same as the old password"
+    "samePassword": "The new password cannot be the same as the old password",
+    "retry": "Please try after {{time}} seconds"
   },
   "home": {
     "news": "Market News",

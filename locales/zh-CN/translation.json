@@ -121,7 +121,8 @@
     "verificationCodePrompt": "请输入正确的验证码",
     "gaRequired": "请先完成 Google 验证",
     "kycRequired": "请先完成实名认证.",
-    "samePassword": "新密码不能与旧密码相同"
+    "samePassword": "新密码不能与旧密码相同",
+    "retry": "Please try after {{time}} seconds"
   },
   "home": {
     "news": "市场新闻",

@@ -121,7 +121,8 @@
     "verificationCodePrompt": "Por favor, ingresa el código de verificación correcto",
     "gaRequired": "Por favor, habilita la autenticación de dos factores primero",
     "kycRequired": "Por favor, completa tu verificación KYC primero",
-    "samePassword": "La nueva contraseña no puede ser la misma que la anterior"
+    "samePassword": "La nueva contraseña no puede ser la misma que la anterior",
+    "retry": "Please try after {{time}} seconds"
   },
   "home": {
     "news": "Noticias del Mercado",
