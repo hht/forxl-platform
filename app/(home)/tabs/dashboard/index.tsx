@@ -11,6 +11,7 @@ import { Screen, Text, XStack } from "~/components"
 import colors from "~/theme/colors"
 import { AssetCard } from "~/widgets/(home)/tabs/dashboard/asset-card"
 import {
+  ListEmptyComponent,
   ListHeaderComponent,
   ListItem,
 } from "~/widgets/(home)/tabs/dashboard/list"
@@ -124,6 +125,7 @@ export default function Page() {
         onEndReached={loadMore}
         showsVerticalScrollIndicator={false}
         ListHeaderComponent={ListHeaderComponent}
+        ListEmptyComponent={ListEmptyComponent}
         ListFooterComponent={
           <ListFooterComponent
             isEmpty={(data?.list.length ?? 0) === 0}

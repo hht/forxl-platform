@@ -109,3 +109,43 @@ export const ListHeaderComponent = () => (
     <Shortcuts />
   </YStack>
 )
+
+export const ListEmptyComponent = () => {
+  const { t } = useTranslation()
+  return (
+    <YStack
+      px="$md"
+      bc="$card"
+      bw={1}
+      boc="$border"
+      gap="$md"
+      ov="hidden"
+      br="$sm"
+      my="$md"
+    >
+      <Fragment>
+        <YStack gap="$md" pt="$md">
+          <XStack ai="center" gap="$xs">
+            <Icon name="hot" />
+            <Text bold heading>
+              {t("home.news")}
+            </Text>
+          </XStack>
+          <Image
+            source={require("~/assets/images/widgets/news.jpg")}
+            w="100%"
+            aspectRatio={311 / 68}
+          />
+        </YStack>
+        <XStack pos="absolute" top={0} right={0} w="100%">
+          <Figure name="r" />
+        </XStack>
+      </Fragment>
+      <YStack gap="$sm" p="$lg" ai="center" jc="center">
+        <Text bold col="$secondary" lh={20}>
+          {t("message.empty")}
+        </Text>
+      </YStack>
+    </YStack>
+  )
+}
