@@ -1,7 +1,7 @@
 import { FC } from "react"
 import { shallow } from "zustand/shallow"
 
-import { AnimatedFlow } from "~/components"
+import { AnimatedFlow, Row } from "~/components"
 import { computeProfit, useQuotesStore } from "~/hooks/useStore"
 
 export const ProfitCell: FC<{
@@ -16,11 +16,20 @@ export const ProfitCell: FC<{
   )
   const profit = computeProfit({ ...data, tradingFee: 0, overNightFee: 0 })
   return (
-    <AnimatedFlow
-      value={profit}
-      fontSize={fontSize}
-      addonsBefore={`$${profit > 0 ? "+" : ""}`}
-      bold={bold}
-    ></AnimatedFlow>
+    <Row ai="baseline" gap="$xs">
+      <AnimatedFlow
+        value={profit}
+        fontSize={fontSize}
+        addonsBefore="$"
+        bold={bold}
+      ></AnimatedFlow>
+      <AnimatedFlow
+        value={(profit / (data.securityDeposit ?? 1)) * 100}
+        fontSize={fontSize * 0.8}
+        addonsBefore=""
+        addonsAfter="%"
+        bold={bold}
+      ></AnimatedFlow>
+    </Row>
   )
 }

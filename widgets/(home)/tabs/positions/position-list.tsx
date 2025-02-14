@@ -12,7 +12,15 @@ import {
   getOpenPositions,
   getPendingPositions,
 } from "~/api/trade"
-import { AnimatedFlow, Figure, Icon, Text, XStack, YStack } from "~/components"
+import {
+  AnimatedFlow,
+  Figure,
+  Icon,
+  Row,
+  Text,
+  XStack,
+  YStack,
+} from "~/components"
 import { getDate, getRecentDate } from "~/hooks/useLocale"
 import { CACHE_KEY, useRequest } from "~/hooks/useRequest"
 import { useOrderStore } from "~/hooks/useStore"
@@ -38,7 +46,7 @@ const ListItem: FC<
   return (
     <XStack h={72} ai="center" px="$md" w="100%" gap={12} {...rest}>
       {children}
-      <XStack f={1} jc="flex-end">
+      <XStack jc="flex-end">
         <XStack
           onPress={() => {
             useOrderStore.setState({
@@ -133,19 +141,37 @@ const ArchivedListItem: FC<{ data: Position; dateVisible?: boolean }> = ({
           </Text>
         </YStack>
         <YStack gap="$sm" f={1}>
-          <Text
-            bold
-            col={
-              data.priceProfit! > 0
-                ? "$primary"
-                : data.priceProfit! < 0
-                  ? "$destructive"
-                  : "$secondary"
-            }
-          >
-            {data.priceProfit! > 0 ? "+" : ""}
-            {formatProfit(data.priceProfit ?? 0)}
-          </Text>
+          <Row ai="baseline" gap="$xs">
+            <Text
+              bold
+              col={
+                data.priceProfit! > 0
+                  ? "$primary"
+                  : data.priceProfit! < 0
+                    ? "$destructive"
+                    : "$secondary"
+              }
+            >
+              {formatProfit(data.priceProfit ?? 0)}
+            </Text>
+            <Text
+              bold
+              fos={10}
+              lh={10}
+              col={
+                data.priceProfit! > 0
+                  ? "$primary"
+                  : data.priceProfit! < 0
+                    ? "$destructive"
+                    : "$secondary"
+              }
+            >
+              {formatDecimal(
+                ((data.priceProfit ?? 0) / (data.securityDeposit ?? 1)) * 100
+              )}
+              %
+            </Text>
+          </Row>
           <Text col="$secondary">{`${t(data.openSafe ? "trade.sell" : "trade.buy")} ${data.position} ${t("trade.lots", { amount: "" })}`}</Text>
         </YStack>
       </ListItem>

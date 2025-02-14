@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next"
 import { shallow } from "zustand/shallow"
 
 import { getFuture } from "~/api/trade"
-import { Icon, Text, XStack } from "~/components"
+import { Icon, Row, Text, XStack } from "~/components"
 import { getDate } from "~/hooks/useLocale"
 import { useRequest } from "~/hooks/useRequest"
 import { useOrderStore } from "~/hooks/useStore"
@@ -100,19 +100,40 @@ export const OrderDetail = () => {
             {currentPosition.futuresCode}
           </Text>
         </XStack>
-        <Text
-          heading
-          bold
-          col={
-            (currentPosition.priceProfit ?? 0) > 0
-              ? "$primary"
-              : currentPosition.priceProfit! < 0
-                ? "$destructive"
-                : "$secondary"
-          }
-        >
-          {formatProfit(currentPosition.priceProfit ?? 0)}
-        </Text>
+        <Row ai="baseline" gap="$xs">
+          <Text
+            heading
+            bold
+            col={
+              (currentPosition.priceProfit ?? 0) > 0
+                ? "$primary"
+                : currentPosition.priceProfit! < 0
+                  ? "$destructive"
+                  : "$secondary"
+            }
+          >
+            {formatProfit(currentPosition.priceProfit ?? 0)}
+          </Text>
+          <Text
+            fos={14}
+            lh={14}
+            bold
+            col={
+              (currentPosition.priceProfit ?? 0) > 0
+                ? "$primary"
+                : currentPosition.priceProfit! < 0
+                  ? "$destructive"
+                  : "$secondary"
+            }
+          >
+            {formatDecimal(
+              ((currentPosition.priceProfit ?? 0) /
+                (currentPosition.securityDeposit ?? 1)) *
+                100
+            )}
+            %
+          </Text>
+        </Row>
       </XStack>
       <XStack ai="center" jc="space-between" py="$md" bbc="$border" bbw={1}>
         <Text col="$secondary">{data?.futures?.futuresName}</Text>
