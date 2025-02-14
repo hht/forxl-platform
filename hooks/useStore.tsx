@@ -84,9 +84,9 @@ export const useQuotesStore = createWithEqualityFn<QuotesStore>((set, get) => ({
   },
   getCurrentPrice: (c?: "buy" | "sell") => {
     const { currentFuture, action, quotes } = get()
-    const currentQuote = quotes[currentFuture?.futuresShow!]
+    const currentQuote = quotes[currentFuture?.futuresCode!]
     return getCurrentFuturePrice({
-      futureCode: currentFuture?.futuresShow!,
+      futureCode: currentFuture?.futuresCode!,
       action: c ?? action,
       volatility: currentFuture?.volatility,
       clazzSpread: currentFuture?.clazzSpread,

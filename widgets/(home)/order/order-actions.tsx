@@ -1,13 +1,17 @@
-import { FC } from 'react'
-import { useTranslation } from 'react-i18next'
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import { YStack } from 'tamagui'
-import { shallow } from 'zustand/shallow'
+import { FC } from "react"
+import { useTranslation } from "react-i18next"
+import { useSafeAreaInsets } from "react-native-safe-area-context"
+import { YStack } from "tamagui"
+import { shallow } from "zustand/shallow"
 
-import { getOpenPositions, getPendingPositions, proceedOrder } from '~/api/trade'
-import { Button, toast } from '~/components'
-import { useRequest } from '~/hooks/useRequest'
-import { useForxlStore, useQuotesStore } from '~/hooks/useStore'
+import {
+  getOpenPositions,
+  getPendingPositions,
+  proceedOrder,
+} from "~/api/trade"
+import { Button, toast } from "~/components"
+import { useRequest } from "~/hooks/useRequest"
+import { useForxlStore, useQuotesStore } from "~/hooks/useStore"
 
 export const OrderActions: FC = () => {
   const { t } = useTranslation()
@@ -31,7 +35,7 @@ export const OrderActions: FC = () => {
       enablePending: state.enablePending,
       disabled:
         !state.currentFuture?.isDeal ||
-        !state.quotes[state.currentFuture?.futuresShow!],
+        !state.quotes[state.currentFuture?.futuresCode!],
     }),
     shallow
   )
@@ -63,7 +67,7 @@ export const OrderActions: FC = () => {
           } = useQuotesStore.getState()
           const quotes =
             useQuotesStore.getState().quotes[
-              useQuotesStore.getState().currentFuture!.futuresShow!
+              useQuotesStore.getState().currentFuture!.futuresCode!
             ]
           if (!currentFuture?.isDeal) {
             toast.show(t("trade.notInTradeTime"))

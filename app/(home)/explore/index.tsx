@@ -1,21 +1,30 @@
-import { useDebounce, useInfiniteScroll, useUnmount } from 'ahooks'
-import { router, Stack } from 'expo-router'
-import _, { update } from 'lodash'
-import { FC, useCallback, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import { ActivityIndicator, FlatList, Platform, StyleSheet, TextInput } from 'react-native'
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import { shallow } from 'zustand/shallow'
+import { useDebounce, useInfiniteScroll, useUnmount } from "ahooks"
+import { router, Stack } from "expo-router"
+import _, { update } from "lodash"
+import { FC, useCallback, useState } from "react"
+import { useTranslation } from "react-i18next"
+import {
+  ActivityIndicator,
+  FlatList,
+  Platform,
+  StyleSheet,
+  TextInput,
+} from "react-native"
+import { useSafeAreaInsets } from "react-native-safe-area-context"
+import { shallow } from "zustand/shallow"
 
 import {
-    getExploreHistories, getFutures, toggleFavorite, updateExploreHistories
-} from '~/api/trade'
-import { Icon, Row, Text, XStack, YStack } from '~/components'
-import { CACHE_KEY, useRequest } from '~/hooks/useRequest'
-import { useForxlStore, useQuotesStore, useSymbolStore } from '~/hooks/useStore'
-import { subscribeQuotes } from '~/hooks/useWebsocket'
-import colors from '~/theme/colors'
-import { ListEmptyComponent, ListFooterComponent } from '~/widgets/shared/list'
+  getExploreHistories,
+  getFutures,
+  toggleFavorite,
+  updateExploreHistories,
+} from "~/api/trade"
+import { Icon, Row, Text, XStack, YStack } from "~/components"
+import { CACHE_KEY, useRequest } from "~/hooks/useRequest"
+import { useForxlStore, useQuotesStore, useSymbolStore } from "~/hooks/useStore"
+import { subscribeQuotes } from "~/hooks/useWebsocket"
+import colors from "~/theme/colors"
+import { ListEmptyComponent, ListFooterComponent } from "~/widgets/shared/list"
 
 const onPress = (data: Future) => {
   if (!useQuotesStore.getState().quotes[data.futuresCode!]) {

@@ -1,11 +1,11 @@
-import { FC } from 'react'
-import { useTranslation } from 'react-i18next'
-import { shallow } from 'zustand/shallow'
+import { FC } from "react"
+import { useTranslation } from "react-i18next"
+import { shallow } from "zustand/shallow"
 
-import { AnimatedFlow, Collapse, Icon, Input, Text, XStack } from '~/components'
-import { usePromptStore, useQuotesStore } from '~/hooks/useStore'
-import { uuid } from '~/lib/utils'
-import colors from '~/theme/colors'
+import { AnimatedFlow, Collapse, Icon, Input, Text, XStack } from "~/components"
+import { usePromptStore, useQuotesStore } from "~/hooks/useStore"
+import { uuid } from "~/lib/utils"
+import colors from "~/theme/colors"
 
 const toggleExpended = (enablePending: boolean) => {
   useQuotesStore.setState({ enablePending })
@@ -69,7 +69,7 @@ export const PendingCard: FC<{ step?: number; precision: number }> = ({
       action: s.action,
       order: s.order,
       disabled:
-        !s.currentFuture?.isDeal || !s.quotes[s.currentFuture?.futuresShow!],
+        !s.currentFuture?.isDeal || !s.quotes[s.currentFuture?.futuresCode!],
     }),
     shallow
   )

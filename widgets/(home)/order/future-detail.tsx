@@ -45,7 +45,7 @@ export const FutureDetail = () => {
         currentFuture: state.currentFuture,
         action: state.action,
         order: state.order,
-        futureParams: state.futures[state.currentFuture?.futuresShow!],
+        futureParams: state.futures[state.currentFuture?.futuresCode!],
         activeIndex: state.activeIndex,
       }),
       shallow

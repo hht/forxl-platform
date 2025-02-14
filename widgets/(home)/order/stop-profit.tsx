@@ -48,7 +48,7 @@ export const StopProfitCard: FC<{ futuresOrder: FuturesOrder }> = ({
       enablePending: s.enablePending,
       order: s.order,
       disabled:
-        !s.currentFuture?.isDeal || !s.quotes[s.currentFuture?.futuresShow!],
+        !s.currentFuture?.isDeal || !s.quotes[s.currentFuture?.futuresCode!],
     }),
     shallow
   )
