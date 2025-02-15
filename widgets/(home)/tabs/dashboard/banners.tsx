@@ -91,6 +91,7 @@ export const Banners: FC<{ position: number }> = ({ position }) => {
         horizontal
         w="100%"
         scrollEnabled={data.length > 1}
+        pagingEnabled
         showsHorizontalScrollIndicator={false}
         onScrollBeginDrag={() => setIsScrolling(true)}
         onMomentumScrollEnd={onScrollEnd}
