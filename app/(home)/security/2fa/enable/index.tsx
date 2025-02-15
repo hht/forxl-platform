@@ -24,7 +24,9 @@ export default function Page() {
       router.back()
       toast.show(t("security.twoFactorEnabledSuccessfully"))
     },
-    onFinally: () => {
+    onError: (error: any) => {
+      toast.show(error)
+      useGoogleAuthStore.setState({ checkCode: "" })
       setDate(Date.now() + 10 * 1000)
     },
   })
@@ -40,6 +42,7 @@ export default function Page() {
           <Input.OTP
             length={6}
             value={checkCode}
+            disabled={loading || !!countdown}
             onChange={(checkCode) => {
               useGoogleAuthStore.setState({ checkCode })
             }}

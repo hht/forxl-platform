@@ -185,7 +185,11 @@ const OTP = ({
   const cursorStyle = useAnimatedStyle(() => ({
     opacity: cursorOpacity.value,
   }))
-
+  useEffect(() => {
+    setDigits(
+      value.split("").concat(new Array(length).fill("")).slice(0, length)
+    )
+  }, [value, setDigits, length])
   useEffect(() => {
     if (focused) {
       cursorOpacity.value = withRepeat(

@@ -32,7 +32,9 @@ export default function Page() {
       router.back()
       toast.show(t("security.twoFactorChangedSuccessfully"))
     },
-    onFinally: () => {
+    onError: (error: any) => {
+      useGoogleAuthStore.setState({ code: "", checkCode: "" })
+      toast.show(error)
       setDate(Date.now() + 10 * 1000)
     },
   })
@@ -55,6 +57,7 @@ export default function Page() {
             <Input
               label={t("wallet.verificationCode")}
               value={checkCode}
+              readOnly={loading || !!countdown}
               keyboardType="number-pad"
               onChangeText={(value) => {
                 if (!/^\d+$/.test(value) && value !== "") {
@@ -86,6 +89,7 @@ export default function Page() {
         <Input.OTP
           length={6}
           value={code}
+          disabled={loading || !!countdown}
           onChange={(code) => {
             useGoogleAuthStore.setState({ code })
           }}
