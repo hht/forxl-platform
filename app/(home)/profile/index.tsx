@@ -153,15 +153,26 @@ export default function Page() {
           style={{ padding: 16, gap: 16 }}
           showsVerticalScrollIndicator={false}
         >
-          {dict.levels.map((level, index) => (
-            <YStack key={index} gap={12} py="$md">
-              <XStack ai="center" gap="$sm">
-                <Figure name={LEVEL_ICON[index]} width={21} height={23} />
-                <Text title>{level.title}</Text>
-              </XStack>
-              <Text col="$secondary">{level.desc}</Text>
-            </YStack>
-          ))}
+          {dict.levels
+            .filter((it, index) => {
+              switch (index) {
+                case 0:
+                  return attestation?.email
+                case 1:
+                  return attestation?.ga
+                case 2:
+                  return attestation?.kyc
+              }
+            })
+            .map((level, index) => (
+              <YStack key={index} gap={12} py="$md">
+                <XStack ai="center" gap="$sm">
+                  <Figure name={LEVEL_ICON[index]} width={21} height={23} />
+                  <Text title>{level.title}</Text>
+                </XStack>
+                <Text col="$secondary">{level.desc}</Text>
+              </YStack>
+            ))}
         </GHScrollView>
         <YStack p="$md" pb={bottom + 16}>
           <Button
