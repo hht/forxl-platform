@@ -149,6 +149,9 @@ interface PaymentMethod {
    * remark
    */
   remark?: string
+  remark1?: string
+  remark2?: string
+  remark3?: string
   /**
    * sort
    */

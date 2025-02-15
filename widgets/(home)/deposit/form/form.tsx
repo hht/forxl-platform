@@ -18,7 +18,12 @@ export const DepositForm: FC = () => {
     return (
       <Fragment>
         <AttentionCard>{t("wallet.depositBankPrompt")}</AttentionCard>
-        {method?.remark ? <InfoCard>{trimHTML(method.remark)}</InfoCard> : null}
+        {method?.remark1 ? (
+          <InfoCard>{trimHTML(method.remark1)}</InfoCard>
+        ) : null}
+        {method?.remark2 ? (
+          <InfoCard>{trimHTML(method.remark2)}</InfoCard>
+        ) : null}
         <PaymentMethod />
         <YStack gap="$sm">
           <Input
@@ -78,10 +83,8 @@ export const DepositForm: FC = () => {
   return (
     <Fragment>
       <AttentionCard>{t("wallet.depositCryptoPrompt")}</AttentionCard>
-      <InfoCard>
-        {t("wallet.minimumDepositPrompt", { min: `${method?.incomeMoneyMin}` })}
-      </InfoCard>
-      {method?.remark ? <InfoCard>{trimHTML(method.remark)}</InfoCard> : null}
+      {method?.remark1 ? <InfoCard>{trimHTML(method.remark1)}</InfoCard> : null}
+      {method?.remark2 ? <InfoCard>{trimHTML(method.remark2)}</InfoCard> : null}
       <PaymentMethod />
     </Fragment>
   )
