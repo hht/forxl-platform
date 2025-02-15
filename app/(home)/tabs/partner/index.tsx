@@ -1,5 +1,7 @@
 import { Stack } from "expo-router"
+import _ from "lodash"
 import { AnimatePresence } from "moti"
+import { useEffect, useRef } from "react"
 import { useTranslation } from "react-i18next"
 
 import {
@@ -37,6 +39,7 @@ const ScreenOptions: NativeStackNavigationOptions = {
 
 export default function Page() {
   const { t } = useTranslation()
+  const ref = useRef<ScrollView>(null)
   const dict = t("partner", {
     returnObjects: true,
   })
@@ -115,8 +118,21 @@ export default function Page() {
                     ))}
                   </XStack>
                 </YStack>
-                <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                  <XStack gap="$sm" py="$md">
+                <ScrollView
+                  ref={ref}
+                  horizontal
+                  showsHorizontalScrollIndicator={false}
+                >
+                  <XStack
+                    gap="$sm"
+                    py="$md"
+                    onLayout={() =>
+                      ref.current?.scrollTo({
+                        x: 148 * (partnerLevel ?? 0),
+                        animated: true,
+                      })
+                    }
+                  >
                     {dict.children.map((it, index) => (
                       <LevelCard
                         level={index as Level}
