@@ -126,8 +126,8 @@ export const OrderDetail = () => {
               (currentPosition.pureProfit ?? currentPosition.priceProfit ?? 0) >
               0
                 ? "$primary"
-                : (currentPosition.pureProfit ??
-                    currentPosition.priceProfit! < 0)
+                : (currentPosition.pureProfit ?? currentPosition.priceProfit!) <
+                    0
                   ? "$destructive"
                   : "$secondary"
             }
@@ -136,9 +136,7 @@ export const OrderDetail = () => {
               ((currentPosition.pureProfit ??
                 currentPosition.priceProfit ??
                 0) /
-                (currentPosition.pureProfit ??
-                  currentPosition.securityDeposit ??
-                  1)) *
+                (currentPosition.securityDeposit ?? 1)) *
                 100
             )}
             %
