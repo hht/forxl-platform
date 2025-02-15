@@ -259,16 +259,7 @@ export const AccountInfo = () => {
                   </Justified>
                   <Justified>
                     <Text col="$secondary">{dict.CertificationName}</Text>
-                    <Text>
-                      {item.certificationName
-                        ?.split(" ")
-                        .map((it, index) =>
-                          index === 0
-                            ? _.padEnd(it.charAt(0), it.length, "*")
-                            : it
-                        )
-                        .join(" ") || "-"}
-                    </Text>
+                    <Text>{item.certificationName || "-"}</Text>
                   </Justified>
                   <Justified>
                     <Text col="$secondary">{t("partner.fundsInvested")}</Text>

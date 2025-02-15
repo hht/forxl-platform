@@ -10,6 +10,7 @@ import { changePassword } from "~/api/account"
 import { Button, Input, ScrollView, Text, toast, YStack } from "~/components"
 import { useRequest } from "~/hooks/useRequest"
 import { useForxlStore } from "~/hooks/useStore"
+import { dismissAll } from "~/lib/utils"
 import {
   LiveSupport,
   NativeStackNavigationOptions,
@@ -68,7 +69,7 @@ export default function Page() {
     manual: true,
     onSuccess: () => {
       toast.show(t("settings.passwordChangedSuccessful"))
-      router.dismissAll()
+      dismissAll()
       router.replace("/(anon)/sign-in")
       useForxlStore.setState({ userNumber: undefined })
     },

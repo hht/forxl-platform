@@ -6,8 +6,9 @@ import { z } from "zod"
 import { createWithEqualityFn } from "zustand/traditional"
 
 import { sendPasswordChangeEmail } from "~/api/account"
-import { Button, Input, Screen, ScrollView, Text, YStack } from "~/components"
+import { Button, Input, ScrollView, Text, YStack } from "~/components"
 import { useRequest } from "~/hooks/useRequest"
+import { dismissAll } from "~/lib/utils"
 import {
   LiveSupport,
   NativeStackNavigationOptions,
@@ -48,9 +49,7 @@ export default function Page() {
     {
       manual: true,
       onSuccess: () => {
-        if (router.canGoBack()) {
-          router.dismissAll()
-        }
+        dismissAll()
         router.push("/(anon)/verify-email")
       },
     }

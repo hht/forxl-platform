@@ -11,6 +11,7 @@ import localeData from "dayjs/plugin/localeData"
 import relativeTime from "dayjs/plugin/relativeTime"
 import utc from "dayjs/plugin/utc"
 import * as FileSystem from "expo-file-system"
+import { router } from "expo-router"
 import i18n from "i18next"
 import _ from "lodash"
 import { Dimensions, LayoutAnimation } from "react-native"
@@ -205,4 +206,10 @@ export const trimHTML = (html: string) => {
     .replace(/&nbsp;/g, " ") // 替换 HTML 空格
     .replace(/\s+/g, " ") // 合并多个空格
     .trim()
+}
+
+export const dismissAll = () => {
+  if (router.canGoBack()) {
+    router.dismissAll()
+  }
 }

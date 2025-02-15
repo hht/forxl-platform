@@ -7,6 +7,7 @@ import { useEffect } from "react"
 
 import { useLocaleCalendar } from "~/hooks/useLocale"
 import { useForxlStore } from "~/hooks/useStore"
+import { dismissAll } from "~/lib/utils"
 
 export const AccountDetector = () => {
   const userNumber = useForxlStore((state) => state.userNumber)
@@ -16,16 +17,12 @@ export const AccountDetector = () => {
     if (!navigationState?.key || !rootNavigation.current) return
     requestAnimationFrame(() => {
       if (userNumber) {
-        if (router.canGoBack()) {
-          router.dismissAll()
-        }
+        dismissAll()
         router.replace("/tabs/dashboard")
         return
       }
       if (rootNavigation.current?.getCurrentRoute()?.name !== "index") {
-        if (router.canGoBack()) {
-          router.dismissAll()
-        }
+        dismissAll()
         router.replace("/")
       }
     })
