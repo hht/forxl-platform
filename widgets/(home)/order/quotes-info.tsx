@@ -4,7 +4,6 @@ import { useTranslation } from "react-i18next"
 
 import { MarketInfo } from "./market-info"
 
-import { getFutureHistories } from "~/api/trade"
 import {
   AnimatedFlow,
   Icon,
@@ -14,9 +13,9 @@ import {
   XStack,
   YStack,
 } from "~/components"
-import { useRequest } from "~/hooks/useRequest"
-import { useQuotesStore } from "~/hooks/useStore"
-import { dayjs, formatDecimal } from "~/lib/utils"
+import { useCandlestick } from "~/hooks/useCandlestick"
+import { useCandlestickStore, useQuotesStore } from "~/hooks/useStore"
+import { formatDecimal } from "~/lib/utils"
 import colors from "~/theme/colors"
 import { FutureChartWidget } from "~/widgets/shared/future-chart-widget"
 
@@ -45,18 +44,20 @@ const PriceIndicator: FC<{
         <Text fos={11} zIndex={10} col="$secondary">
           {unit}
         </Text>
-        <XStack
-          pos="absolute"
-          t={0}
-          b={0}
-          w={3}
-          br={1}
-          bc="$primary"
-          style={{
+        <Moti
+          animate={{
             left: `${percentage}%`,
+          }}
+          style={{
+            position: "absolute",
+            top: 0,
+            bottom: 0,
+            width: 3,
+            backgroundColor: colors.primary,
+            borderRadius: 1,
             transform: [{ translateX: -1.5 }],
           }}
-        />
+        ></Moti>
       </XStack>
       <Text f={1} ta="right">{`$${formatDecimal(_max, volatility)}`}</Text>
     </Justified>
@@ -68,72 +69,13 @@ const MoreInfo: FC<{ future: FuturesDetail }> = ({ future }) => {
   const quotes = useQuotesStore(
     (state) => state.quotes[future.futures?.futuresCode!]
   )
-  const { data } = useRequest(
-    () => {
-      return getFutureHistories({
-        symbol: future?.futures?.futuresCode!,
-        resolution: 1,
-        from: dayjs().subtract(1, "day").unix(),
-        to: dayjs().unix(),
-      }).then((res) => {
-        const data = {
-          minuteFive: {
-            high: -Infinity,
-            low: Infinity,
-          },
-          hour: {
-            high: -Infinity,
-            low: Infinity,
-          },
-          day: {
-            high: -Infinity,
-            low: Infinity,
-          },
-        }
-        const minuteFiveLimit = dayjs().subtract(5, "minute").unix()
-        const hourLimit = dayjs().subtract(1, "hour").unix()
-        const dayLimit = dayjs().subtract(1, "day").unix()
-        for (let i = res.length - 1; i >= 0; i--) {
-          const item = res[i]
-          if (item.time > minuteFiveLimit) {
-            if (item.high > data.minuteFive.high) {
-              data.minuteFive.high = item.high
-            }
-            if (item.low < data.minuteFive.low) {
-              data.minuteFive.low = item.low
-            }
-          }
-          if (item.time > hourLimit) {
-            if (item.high > data.hour.high) {
-              data.hour.high = item.high
-            }
-            if (item.low < data.hour.low) {
-              data.hour.low = item.low
-            }
-          }
-          if (item.time > dayLimit) {
-            if (item.high > data.day.high) {
-              data.day.high = item.high
-            }
-            if (item.low < data.day.low) {
-              data.day.low = item.low
-            }
-          }
-        }
-        return data
-      })
-    },
-    {
-      ready: !!future?.futures?.futuresCode,
-      refreshDeps: [future?.futures?.futuresCode],
-    }
-  )
-
+  useCandlestick(future.futures?.futuresCode)
+  const { minuteFive, hour, day } = useCandlestickStore()
   if (!future) {
     return null
   }
   const momentum =
-    ((Number(quotes.Bid ?? future.market?.sellPrice ?? 0) -
+    ((Number(quotes?.Bid ?? future.market?.sellPrice ?? 0) -
       (future.lastClosePrice ?? 1)) /
       (future.lastClosePrice ?? 1)) *
     100
@@ -177,9 +119,8 @@ const MoreInfo: FC<{ future: FuturesDetail }> = ({ future }) => {
             </Text>
             <Text>
               {(
-                (((data?.minuteFive.high ?? 0) - (data?.minuteFive?.low ?? 0)) /
-                  (data?.minuteFive?.low || 1)) *
-                  100 || 0
+                ((minuteFive.high - minuteFive.low) / (minuteFive.low || 1)) *
+                100
               ).toFixed(2)}
               %
             </Text>
@@ -189,12 +130,7 @@ const MoreInfo: FC<{ future: FuturesDetail }> = ({ future }) => {
               {t("trade.hours", { count: 1 })}
             </Text>
             <Text>
-              {(
-                (((data?.hour?.high ?? 0) - (data?.hour?.low ?? 0)) /
-                  (data?.hour?.low || 1)) *
-                100
-              ).toFixed(2)}
-              %
+              {(((hour.high - hour.low) / (hour.low || 1)) * 100).toFixed(2)}%
             </Text>
           </YStack>
           <YStack ai="center">
@@ -202,12 +138,7 @@ const MoreInfo: FC<{ future: FuturesDetail }> = ({ future }) => {
               {t("trade.days", { count: 1 })}
             </Text>
             <Text>
-              {(
-                (((data?.day?.high ?? 0) - (data?.day?.low ?? 0)) /
-                  (data?.day?.low || 1)) *
-                100
-              ).toFixed(2)}
-              %
+              {(((day.high - day.low) / (day.low || 1)) * 100).toFixed(2)}%
             </Text>
           </YStack>
         </XStack>
@@ -216,27 +147,31 @@ const MoreInfo: FC<{ future: FuturesDetail }> = ({ future }) => {
         <Text heading>{t("trade.highLow")}</Text>
         <Text>
           {t("trade.currentSellPrice", {
-            amount: formatDecimal(quotes.Bid ?? 0),
+            amount: formatDecimal(
+              quotes?.Bid ?? 0 ?? future.market?.sellPrice ?? 0
+            ),
           })}
         </Text>
         <PriceIndicator
-          min={data?.minuteFive?.low}
-          max={data?.minuteFive?.high}
-          value={parseFloat(future.market?.sellPrice ?? "0")}
+          min={minuteFive?.low}
+          max={minuteFive?.high}
+          value={
+            minuteFive.current ?? parseFloat(future.market?.sellPrice ?? "0")
+          }
           unit={t("trade.mins", { count: 5 })}
           volatility={future.futuresParam?.volatility}
         />
         <PriceIndicator
-          min={data?.hour?.low}
-          max={data?.hour?.high}
-          value={parseFloat(future.market?.sellPrice ?? "0")}
+          min={hour?.low}
+          max={hour?.high}
+          value={hour.current ?? parseFloat(future.market?.sellPrice ?? "0")}
           unit={t("trade.hours", { count: 1 })}
           volatility={future.futuresParam?.volatility}
         />
         <PriceIndicator
-          min={data?.day?.low}
-          max={data?.day?.high}
-          value={parseFloat(future.market?.sellPrice ?? "0")}
+          min={day?.low}
+          max={day?.high}
+          value={day.current ?? parseFloat(future.market?.sellPrice ?? "0")}
           unit={t("trade.days", { count: 1 })}
           volatility={future.futuresParam?.volatility}
         />

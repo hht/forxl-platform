@@ -424,3 +424,20 @@ const getCurrentFuturePrice = (params: {
       : (Bid ?? Number(sellPrice)) - diff
   return price
 }
+
+interface Candlestick {
+  low: number
+  high: number
+  time: number
+  current?: number
+}
+
+export const useCandlestickStore = createWithEqualityFn<{
+  minuteFive: Candlestick
+  hour: Candlestick
+  day: Candlestick
+}>((set) => ({
+  minuteFive: { low: 0, high: 0, time: 0 },
+  hour: { low: 0, high: 0, time: 0 },
+  day: { low: 0, high: 0, time: 0 },
+}))
