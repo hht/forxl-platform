@@ -598,10 +598,10 @@
       "Taç"
     ],
     "bonusDesc": {
-      "title": "Kaskad Dağıtım Kuralları",
+      "title": "Basamaklı tahsis kuralları",
       "description": [
-        "Bonus dağıtım sistemimizde, müşteri işlemlerinden elde edilen bonuslar, kaskadlı bir seviye sistemi aracılığıyla dağıtılır. İlk olarak, dağıtım kriterlerini karşılayan doğrudan promotörler hak ettikleri bonusları alır. Ardından, kalan bonuslar, belirlenen yüzdeye göre promosyonla ilgilenen yukarı hattaki üyelere dağıtılır. Bu kaskadlı seviye mekanizması, sadece doğrudan katkıda bulunanların ödüllendirilmesini değil, aynı zamanda yukarı hattaki üyelerin ekiplerinin genel performansından faydalanmasını sağlar. Bu yapı, ekip çalışmasını ve performans iyileştirmeyi teşvik etmeyi ve ödüllendirmeyi, böylece genel iş büyümesini sağlamayı amaçlamaktadır.",
-        "Bir yukarı hattaki üye ile bir aşağı hattaki üye aynı seviyedeyse, yukarı hattaki üye aşağı hattaki üyenin bonus gelirlerinin %10'unu alacaktır. Birden fazla üye aynı seviyedeyse, seviye eşleştirme bonusu sadece bir kez verilir."
+        "Bonus dağıtım sistemimizde, müşteri işlemlerinden elde edilen bonuslar kademeli bir kademe sistemine göre tahsis edilir. İlk olarak, dağıtım kriterlerini karşılayan doğrudan destekçiler hak ettikleri bonusları alırlar. Daha sonra, kalan bonuslar promosyona dahil olan üst hat üyelerine önceden belirlenmiş bir yüzdeye göre dağıtılır. Bu kademeli kademe mekanizması, yalnızca doğrudan katkıda bulunanların ödüllendirilmesini değil, aynı zamanda üst hat üyelerinin de ekiplerinin genel performansından faydalanmasını sağlar. Bu yapı, ekip çalışmasını ve performans iyileştirmesini teşvik etmeyi ve ödüllendirmeyi, böylece genel işletme büyümesini sağlamayı amaçlar..",
+        "Bir üst hat üyesi ve bir alt hat üyesinin aynı seviyede olduğu durumlarda, üst hat üyesi alt hat üyesinin bonus kazançlarının %10'unu alır. Birden fazla üye aynı seviyedeyse, seviye eşleştirme bonusu yalnızca bir kez verilir."
       ]
     },
     "directAccountsDesc": "Hesap fonları $100'ü aşan kullanıcılar aktif kullanıcılar olarak kabul edilir. Ancak, $100'ün altında fonu olan hesapların yaptığı işlemlerden referans bonusu kazanmaya devam edebilirsiniz.",

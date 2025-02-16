@@ -757,10 +757,10 @@
     "process": "En Proceso",
     "passVerification": "Pasar verificación completa",
     "passVerificationDesc": "Para acceder a depósitos y retiros ilimitados, transacciones con tarjeta bancaria y comercio de criptomonedas.",
-    "confirmDeleteTitle": "Are you sure you want to delete your account?",
-    "confirmDeleteDesc": "If you delete your FORXL account, your personal information, account assets, financial records, and transaction data will be permanently deleted.Once deleted, this data cannot be recovered.Please confirm once again if you want to delete your account.",
-    "confirmDeletePrompt": "*Please enter 'DELETE' in the input box below:",
-    "confirmDeleteAction": "Confirm Delete"
+    "confirmDeleteTitle": "¿Estás seguro de que quieres eliminar tu cuenta??",
+    "confirmDeleteDesc": "Si elimina su cuenta de FORXL, su información personal, activos de la cuenta, registros financieros y datos de transacciones se eliminarán de forma permanente. Una vez eliminados, estos datos no se pueden recuperar. Confirme una vez más si desea eliminar su cuenta.",
+    "confirmDeletePrompt": "*Por favor, introduzca 'DELETE' en el cuadro de entrada que aparece a continuación:",
+    "confirmDeleteAction": "Confirmar eliminación"
   },
   "settings": {
     "title": "Configuraciones",
