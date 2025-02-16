@@ -1,12 +1,12 @@
-import AsyncStorage from '@react-native-async-storage/async-storage'
-import * as Localization from 'expo-localization'
-import { produce } from 'immer'
-import { createJSONStorage, persist } from 'zustand/middleware'
-import { createWithEqualityFn } from 'zustand/traditional'
+import AsyncStorage from "@react-native-async-storage/async-storage"
+import * as Localization from "expo-localization"
+import { produce } from "immer"
+import { createJSONStorage, persist } from "zustand/middleware"
+import { createWithEqualityFn } from "zustand/traditional"
 
-import { getPartnerConfig } from '~/api/partner'
-import { getFutureCategories } from '~/api/trade'
-import { dayjs, i18n } from '~/lib/utils'
+import { getPartnerConfig } from "~/api/partner"
+import { getFutureCategories } from "~/api/trade"
+import { dayjs, i18n } from "~/lib/utils"
 
 interface Store {
   account?: Account
@@ -335,7 +335,7 @@ export const computeProfit = (
   const quotes =
     currentQuotes ?? useQuotesStore.getState().quotes[futures.futuresCode!]
   if (!quotes) {
-    return futures.pureProfit ?? futures.positionsProfit ?? 0
+    return futures.positionsProfit ?? 0
   }
   const linkedRate =
     (futures.linkFuturesCode
