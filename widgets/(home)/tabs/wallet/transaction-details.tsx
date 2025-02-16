@@ -144,8 +144,7 @@ export const TransactionDetails: FC = () => {
       ref.current?.present()
     }
   }, [reloadKey])
-  const isDeposit = !data?.wdAccount
-  const isCrypto = data?.recordType === 0 || data?.recordType === 1
+  const isDeposit = data?.operationType !== 9002
   if (!data) return null
   return (
     <BottomSheet ref={ref} index={0} title="    ">
