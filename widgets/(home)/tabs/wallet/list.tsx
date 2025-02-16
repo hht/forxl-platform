@@ -50,7 +50,11 @@ export const ListItem: FC<{
           bg="$card/60"
         >
           <Icon
-            name={data.operationType === 9002 ? "withdraw" : "addFunds"}
+            name={
+              [9002, 9005].includes(data.operationType)
+                ? "withdraw"
+                : "addFunds"
+            }
             color={getStatusColor(data.status)}
             size={24}
           />

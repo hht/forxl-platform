@@ -144,7 +144,7 @@ export const TransactionDetails: FC = () => {
       ref.current?.present()
     }
   }, [reloadKey])
-  const isDeposit = data?.operationType !== 9002
+  const isDeposit = ![9002, 9005].includes(data?.operationType ?? 0)
   if (!data) return null
   return (
     <BottomSheet ref={ref} index={0} title="    ">
