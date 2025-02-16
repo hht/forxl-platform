@@ -1,29 +1,23 @@
-import { useIsFocused } from "@react-navigation/native"
-import { useInfiniteScroll } from "ahooks"
-import dayjs from "dayjs"
-import { Stack } from "expo-router"
-import { FC, Fragment } from "react"
-import { useTranslation } from "react-i18next"
-import { ActivityIndicator, FlatList, Platform } from "react-native"
+import { useIsFocused } from '@react-navigation/native'
+import { useInfiniteScroll } from 'ahooks'
+import dayjs from 'dayjs'
+import { Stack } from 'expo-router'
+import { FC, Fragment } from 'react'
+import { useTranslation } from 'react-i18next'
+import { ActivityIndicator, FlatList, Platform } from 'react-native'
 
-import { getNews } from "~/api/dashboard"
-import { Screen, Text, XStack } from "~/components"
-import colors from "~/theme/colors"
-import { AssetCard } from "~/widgets/(home)/tabs/dashboard/asset-card"
+import { getNews } from '~/api/dashboard'
+import { Screen, Text, XStack } from '~/components'
+import colors from '~/theme/colors'
+import { AssetCard } from '~/widgets/(home)/tabs/dashboard/asset-card'
 import {
-  ListEmptyComponent,
-  ListHeaderComponent,
-  ListItem,
-} from "~/widgets/(home)/tabs/dashboard/list"
+    ListEmptyComponent, ListHeaderComponent, ListItem
+} from '~/widgets/(home)/tabs/dashboard/list'
 import {
-  BrandTitle,
-  BreadCrumb,
-  CustomerService,
-  DefaultScreenOptions,
-  NativeStackNavigationOptions,
-  Notifier,
-} from "~/widgets/shared/header"
-import { Gradient } from "~/widgets/shared/shape"
+    BrandTitle, BreadCrumb, CustomerService, DefaultScreenOptions, NativeStackNavigationOptions,
+    Notifier
+} from '~/widgets/shared/header'
+import { Gradient } from '~/widgets/shared/shape'
 
 const ScreenOptions: NativeStackNavigationOptions = {
   ...DefaultScreenOptions,
@@ -40,16 +34,6 @@ const ScreenOptions: NativeStackNavigationOptions = {
       <CustomerService />
     </XStack>
   ),
-}
-
-const renderItem = ({
-  item,
-  index,
-}: {
-  item: Awaited<ReturnType<typeof getNews>>["list"][number]
-  index: number
-}) => {
-  return <ListItem item={item} index={index} />
 }
 
 const ListFooterComponent: FC<{ loading: boolean; isEmpty?: boolean }> = ({
@@ -120,7 +104,25 @@ export default function Page() {
       <AssetCard />
       <FlatList
         data={data?.list}
-        renderItem={renderItem}
+        renderItem={({
+          item,
+          index,
+        }: {
+          item: Awaited<ReturnType<typeof getNews>>["list"][number]
+          index: number
+        }) => {
+          return (
+            <ListItem
+              item={item}
+              index={index}
+              dateVisible={
+                index === 0 ||
+                dayjs(item.date).format("YYYY-MM-DD") !==
+                  dayjs(data?.list?.[index - 1]?.date).format("YYYY-MM-DD")
+              }
+            />
+          )
+        }}
         keyExtractor={(item) => `${item.id}`}
         onEndReached={loadMore}
         showsVerticalScrollIndicator={false}
