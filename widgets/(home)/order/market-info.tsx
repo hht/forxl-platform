@@ -115,18 +115,19 @@ export const MarketInfo: FC<
       </XStack>
     )
   }
+  const openTime = future.futuresTimeList?.[0]?.openTimestamp
   return (
     <YStack bc="$card" ai="center" p="$md" gap={12} pb={bottom + 16} {...rest}>
-      <XStack ai="center" gap="$xs">
-        <Icon name="moon" size={12}></Icon>
-        <Text caption col="$secondary">
-          {t("trade.openOn", {
-            date: getDate(
-              future.market?.futuresDate ?? getDate().add(1, "day")
-            ).format("YYYY/MM/DD HH:mm"),
-          })}
-        </Text>
-      </XStack>
+      {openTime ? (
+        <XStack ai="center" gap="$xs">
+          <Icon name="moon" size={12}></Icon>
+          <Text caption col="$secondary">
+            {t("trade.openOn", {
+              date: getDate(openTime).format("YYYY/MM/DD HH:mm"),
+            })}
+          </Text>
+        </XStack>
+      ) : null}
       <XStack gap={12} w="100%">
         <Button type="accent" disabled f={1}>
           <YStack ai="center" jc="center">
