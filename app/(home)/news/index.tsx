@@ -15,14 +15,23 @@ import { ListEmptyComponent, ListFooterComponent } from "~/widgets/shared/list"
 const ListItem = ({
   item,
   index,
+  dateVisible,
 }: {
   item: Awaited<ReturnType<typeof getNews>>["list"][number]
   index: number
+  dateVisible?: boolean
 }) => {
   const { t } = useTranslation()
   const html = trimHTML(item.content)
   return (
-    <YStack px="$md" bbc="$border" bbw={1} gap="$md" ov="hidden">
+    <YStack px="$md" gap="$md" ov="hidden">
+      {dateVisible ? (
+        <YStack pt="$md" w="100%" btc="$border" btw={index === 0 ? 0 : 1}>
+          <Text subject bold>
+            {getDate(dayjs(item.date)).format("DD MMMM, YYYY")}
+          </Text>
+        </YStack>
+      ) : null}
       <YStack btw={1} gap="$sm" btc="$border" py="$md">
         <Text numberOfLines={2} bold lh={20}>
           <Text col="$tertiary" bold lh={20}>
@@ -67,7 +76,6 @@ const ListItem = ({
 }
 
 const ListHeaderComponent = () => {
-  const { t } = useTranslation()
   return (
     <YStack gap="$md" p="$md">
       <Image
@@ -75,9 +83,6 @@ const ListHeaderComponent = () => {
         w="100%"
         aspectRatio={311 / 68}
       />
-      <Text subject bold>
-        {getDate().format("DD MMMM, YYYY")}
-      </Text>
     </YStack>
   )
 }
@@ -85,16 +90,6 @@ const ListHeaderComponent = () => {
 const keyExtractor = (
   item: Awaited<ReturnType<typeof getNews>>["list"][number]
 ) => item.id.toString()
-
-const renderItem = ({
-  item,
-  index,
-}: {
-  item: Awaited<ReturnType<typeof getNews>>["list"][number]
-  index: number
-}) => {
-  return <ListItem item={item} index={index} />
-}
 
 export default function Page() {
   const { t } = useTranslation()
@@ -126,7 +121,25 @@ export default function Page() {
       />
       <FlatList
         data={data?.list}
-        renderItem={renderItem}
+        renderItem={({
+          item,
+          index,
+        }: {
+          item: Awaited<ReturnType<typeof getNews>>["list"][number]
+          index: number
+        }) => {
+          return (
+            <ListItem
+              item={item}
+              index={index}
+              dateVisible={
+                index === 0 ||
+                dayjs(item.date).format("YYYY-MM-DD") !==
+                  dayjs(data?.list?.[index - 1]?.date).format("YYYY-MM-DD")
+              }
+            />
+          )
+        }}
         keyExtractor={keyExtractor}
         ListHeaderComponent={ListHeaderComponent}
         ListEmptyComponent={ListEmptyComponent}

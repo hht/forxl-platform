@@ -1,17 +1,17 @@
-import dayjs from 'dayjs'
-import { router } from 'expo-router'
-import { Fragment } from 'react'
-import { useTranslation } from 'react-i18next'
+import dayjs from "dayjs"
+import { router } from "expo-router"
+import { Fragment } from "react"
+import { useTranslation } from "react-i18next"
 
-import { Banners } from './banners'
-import { Shortcuts } from './short-cuts'
+import { Banners } from "./banners"
+import { Shortcuts } from "./short-cuts"
 
-import { getNews } from '~/api/dashboard'
-import { Figure, Icon, Image, Text, XStack, YStack } from '~/components'
-import { getDate } from '~/hooks/useLocale'
-import { useWebViewStore } from '~/hooks/useStore'
-import { trimHTML } from '~/lib/utils'
-import colors, { toRGBA } from '~/theme/colors'
+import { getNews } from "~/api/dashboard"
+import { Figure, Icon, Image, Text, XStack, YStack } from "~/components"
+import { getDate } from "~/hooks/useLocale"
+import { useWebViewStore } from "~/hooks/useStore"
+import { trimHTML } from "~/lib/utils"
+import colors, { toRGBA } from "~/theme/colors"
 
 export const ListItem = ({
   item,
@@ -20,7 +20,7 @@ export const ListItem = ({
 }: {
   item: Awaited<ReturnType<typeof getNews>>["list"][number]
   dateVisible?: boolean
-  index: number
+  index?: number
 }) => {
   const { t } = useTranslation()
   const html = trimHTML(item.content)
@@ -63,7 +63,9 @@ export const ListItem = ({
       ) : null}
       {dateVisible ? (
         <YStack pt="$md" w="100%" btc="$border" btw={index === 0 ? 0 : 1}>
-          <Text bold>{getDate(dayjs(item.date)).format("DD MMMM, YYYY")}</Text>
+          <Text subject bold>
+            {getDate(dayjs(item.date)).format("DD MMMM, YYYY")}
+          </Text>
         </YStack>
       ) : null}
       <YStack btw={1} gap="$sm" btc="$border" py="$md">
