@@ -1,14 +1,14 @@
-import { useInterval } from 'ahooks'
-import _ from 'lodash'
-import { useEffect } from 'react'
-import { shallow } from 'zustand/shallow'
+import { useInterval } from "ahooks"
+import _ from "lodash"
+import { useEffect } from "react"
+import { shallow } from "zustand/shallow"
 
-import { CACHE_KEY, useRequest } from './useRequest'
-import { computeProfit, useOrderStore, useStatisticsStore } from './useStore'
-import { subscribeQuotes, useWebSocket } from './useWebsocket'
+import { CACHE_KEY, useRequest } from "./useRequest"
+import { computeProfit, useOrderStore, useStatisticsStore } from "./useStore"
+import { subscribeQuotes, useWebSocket } from "./useWebsocket"
 
-import { getAttestationFlag, getProfile } from '~/api/account'
-import { getOpenPositions } from '~/api/trade'
+import { getAttestationFlag, getProfile } from "~/api/account"
+import { getOpenPositions } from "~/api/trade"
 
 export const useWallet = () => {
   useWebSocket()

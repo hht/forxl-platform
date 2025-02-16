@@ -328,6 +328,7 @@ export const computeProfit = (
     | "overPrice"
     | "computeType"
     | "positionsProfit"
+    | "pureProfit"
   >,
   currentQuotes?: Pick<Quotes, "Ask" | "Bid">
 ) => {
