@@ -444,6 +444,7 @@
     "usdtTransfer": "USDT transfer",
     "recharge": "Administrator recharge",
     "reissue": "Commission reissue",
+    "deduction": "Administrator deduction",
     "youWillGet": "You will get",
     "systemRecharge": "System recharge",
     "sendStatementSuccessful": "Your statement of account has been sent to your email. Please check it.",

@@ -1,5 +1,5 @@
-import { I18NResource } from "~/lib/utils"
-import colors from "~/theme/colors"
+import { I18NResource } from '~/lib/utils'
+import colors from '~/theme/colors'
 
 export const STATUS_DESCRIPTION: Record<number, I18NResource> = {
   0: "wallet.pending",
@@ -26,6 +26,7 @@ export const CHANNEL_DESCRIPTION: Record<number, I18NResource> = {
   7: "wallet.hntwq",
   10: "wallet.recharge",
   11: "wallet.reissue",
+  12: "wallet.deduction",
   101: "wallet.thirdParty",
   102: "wallet.usdtTransfer",
   103: "wallet.systemRecharge",

@@ -1,31 +1,19 @@
-import { BottomSheetModal } from "@gorhom/bottom-sheet"
-import { FC, Fragment, ReactNode, useEffect, useRef } from "react"
-import { useTranslation } from "react-i18next"
-import { useSafeAreaInsets } from "react-native-safe-area-context"
-import { shallow } from "zustand/shallow"
-import { createWithEqualityFn } from "zustand/traditional"
+import { BottomSheetModal } from '@gorhom/bottom-sheet'
+import { FC, Fragment, ReactNode, useEffect, useRef } from 'react'
+import { useTranslation } from 'react-i18next'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { shallow } from 'zustand/shallow'
+import { createWithEqualityFn } from 'zustand/traditional'
 
 import {
-  CHANNEL_DESCRIPTION,
-  getStatusColor,
-  OPERATION_DESCRIPTION,
-  STATUS_DESCRIPTION,
-} from "./utils"
+    CHANNEL_DESCRIPTION, getStatusColor, OPERATION_DESCRIPTION, STATUS_DESCRIPTION
+} from './utils'
 
-import { getFundHistory } from "~/api/wallet"
-import {
-  BottomSheet,
-  copyToClipboard,
-  Icon,
-  Image,
-  Row,
-  Text,
-  XStack,
-  YStack,
-} from "~/components"
-import { getDate } from "~/hooks/useLocale"
-import { formatCurrency, formatDecimal } from "~/lib/utils"
-import colors, { toRGBA } from "~/theme/colors"
+import { getFundHistory } from '~/api/wallet'
+import { BottomSheet, copyToClipboard, Icon, Image, Row, Text, XStack, YStack } from '~/components'
+import { getDate } from '~/hooks/useLocale'
+import { formatCurrency, formatDecimal } from '~/lib/utils'
+import colors, { toRGBA } from '~/theme/colors'
 
 export const useTransactionStore = createWithEqualityFn<{
   data?: Awaited<ReturnType<typeof getFundHistory>>["list"][number]
@@ -176,7 +164,9 @@ export const TransactionDetails: FC = () => {
               <Image source={{ uri: data.picUrl }} w="$md" h="$md" br="$md" />
             ) : null}
             <Text col="$secondary">
-              {t(CHANNEL_DESCRIPTION[data.recordType] as any)}
+              {data.recordType < 3
+                ? data.channelName
+                : t(CHANNEL_DESCRIPTION[data.recordType] as any)}
             </Text>
           </Row>
           {data.refuseReason ? (
@@ -200,7 +190,7 @@ export const TransactionDetails: FC = () => {
           <FundDetail data={data} />
           <ListItem
             title={t("wallet.transactionId")}
-            value={data.id}
+            value={data.recordType !== 5 ? data.id : data.recordId}
             copyable
           />
           <ListItem

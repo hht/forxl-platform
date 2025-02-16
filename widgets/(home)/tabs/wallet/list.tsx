@@ -1,19 +1,16 @@
-import { FC, Fragment } from "react"
-import { useTranslation } from "react-i18next"
+import { FC, Fragment } from 'react'
+import { useTranslation } from 'react-i18next'
 
-import { Banners } from "../dashboard/banners"
-import { Shortcuts } from "./short-cuts"
+import { Banners } from '../dashboard/banners'
+import { Shortcuts } from './short-cuts'
 import {
-  CHANNEL_DESCRIPTION,
-  getStatusColor,
-  OPERATION_DESCRIPTION,
-  STATUS_DESCRIPTION,
-} from "./utils"
+    CHANNEL_DESCRIPTION, getStatusColor, OPERATION_DESCRIPTION, STATUS_DESCRIPTION
+} from './utils'
 
-import { getFundHistory } from "~/api/wallet"
-import { Icon, Text, XStack, YStack } from "~/components"
-import { getRecentDate } from "~/hooks/useLocale"
-import { formatCurrency } from "~/lib/utils"
+import { getFundHistory } from '~/api/wallet'
+import { Icon, Text, XStack, YStack } from '~/components'
+import { getRecentDate } from '~/hooks/useLocale'
+import { formatCurrency } from '~/lib/utils'
 
 export const ListItem: FC<{
   data: Awaited<ReturnType<typeof getFundHistory>>["list"][number]
@@ -72,7 +69,9 @@ export const ListItem: FC<{
             {formatCurrency(data.realAmount)}
           </Text>
           <Text col="$secondary">
-            {t(CHANNEL_DESCRIPTION[data.recordType] as any)}
+            {data.recordType < 3
+              ? data.channelName
+              : t(CHANNEL_DESCRIPTION[data.recordType] as any)}
           </Text>
         </YStack>
       </XStack>
