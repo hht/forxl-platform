@@ -70,6 +70,8 @@ export const getFundHistory = async (params: {
       wdAccount?: string
       feeAmount?: number
       channelName?: string
+      remark?: string
+      code: string
     }>,
     { currentPage: number; pageSize?: number }
   >("/pay/getUserDepositRecords", "POST", {
@@ -173,6 +175,9 @@ export const deposit = async (params: {
   amount: number
   type: 0 | 1 | 3 | 101 | 102
   paymentId?: number
+  userPayName?: string
+  userPayBank?: string
+  userPayAccount?: string
 }) => {
   switch (params.type) {
     case 0:
@@ -199,15 +204,29 @@ export const deposit = async (params: {
           code: string
           usdAmount: number
           paymentId?: number
+          userPayName?: string
+          userPayBank?: string
+          userPayAccount?: string
         }
       >("/pay/payByPayment", "POST", {
         code: params.code,
         usdAmount: params.amount,
         paymentId: params.paymentId,
+        userPayName: params.userPayName,
+        userPayAccount: params.userPayAccount,
+        userPayBank: params.userPayBank,
       }).then((res) => ({ ...res, payType: 3 as const }))
     default:
       return undefined
   }
+}
+
+export const getPendingPayment = async (code: string) => {
+  return await request<DepositResult, { code: string }>(
+    "/pay/queryOrderByPayment",
+    "POST",
+    { code }
+  )
 }
 
 export const withdraw = async (params: {

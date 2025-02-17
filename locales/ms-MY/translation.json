@@ -543,7 +543,8 @@
     "traderWithdraw": "Pengeluaran peniaga",
     "withdrawFee": "Potongan yuran pengeluaran",
     "withdrawReturn": "Bayaran balik pengeluaran pengguna",
-    "commissionFee": "Yuran Pembukaan"
+    "commissionFee": "Yuran Pembukaan",
+    "remark": "Catatan"
   },
   "tools": {
     "news": "Berita Pasaran",

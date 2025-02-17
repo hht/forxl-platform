@@ -14,12 +14,15 @@ export const ProfitCell: FC<{
     (state) => state.quotes[data.futuresCode!],
     shallow
   )
-  const profit = computeProfit({
-    ...data,
-    positionsProfit: data.pureProfit ?? data.positionsProfit,
-    tradingFee: 0,
-    overNightFee: 0,
-  })
+  const profit = computeProfit(
+    {
+      ...data,
+      positionsProfit: data.pureProfit ?? data.positionsProfit,
+      tradingFee: 0,
+      overNightFee: 0,
+    },
+    quotes
+  )
   return (
     <Row ai="baseline" gap="$xs">
       <AnimatedFlow

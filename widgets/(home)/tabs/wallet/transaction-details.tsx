@@ -1,4 +1,5 @@
 import { BottomSheetModal } from '@gorhom/bottom-sheet'
+import { router } from 'expo-router'
 import { FC, Fragment, ReactNode, useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
@@ -9,9 +10,13 @@ import {
     CHANNEL_DESCRIPTION, getStatusColor, OPERATION_DESCRIPTION, STATUS_DESCRIPTION
 } from './utils'
 
-import { getFundHistory } from '~/api/wallet'
-import { BottomSheet, copyToClipboard, Icon, Image, Row, Text, XStack, YStack } from '~/components'
+import { cancelDeposit, getFundHistory, getPendingPayment } from '~/api/wallet'
+import {
+    BottomSheet, Button, copyToClipboard, Icon, Image, Row, Text, toast, XStack, YStack
+} from '~/components'
 import { getDate } from '~/hooks/useLocale'
+import { useRequest } from '~/hooks/useRequest'
+import { useWalletStore } from '~/hooks/useStore'
 import { formatCurrency, formatDecimal } from '~/lib/utils'
 import colors, { toRGBA } from '~/theme/colors'
 
@@ -52,6 +57,9 @@ const FundDetail: FC<{
   data: Awaited<ReturnType<typeof getFundHistory>>["list"][number]
 }> = ({ data }) => {
   const { t } = useTranslation()
+  if (data.operationType === 9004) {
+    return <ListItem title={t("wallet.remark")} value={data.remark} />
+  }
   switch (data.recordType) {
     case 0:
     case 1:
@@ -122,7 +130,71 @@ const FundDetail: FC<{
   }
 }
 
-export const TransactionDetails: FC = () => {
+const FundAction: FC<{
+  data: Awaited<ReturnType<typeof getFundHistory>>["list"][number]
+  onSuccess: () => void
+}> = ({ data, onSuccess }) => {
+  const { t } = useTranslation()
+  const { run: cancel, loading: cancelling } = useRequest(cancelDeposit, {
+    manual: true,
+    onSuccess: () => {
+      toast.show(t("wallet.depositCancelled"))
+      onSuccess()
+    },
+  })
+  const { run, loading } = useRequest(getPendingPayment, {
+    manual: true,
+    onSuccess: (data) => {
+      if (data.payType === 3) {
+        useWalletStore.setState({
+          depositRequest: {
+            payAccount: data.userPayAccount,
+            payBank: data.userPayBank,
+            payName: data.userPayName,
+            amount: parseFloat(data.usdAmount),
+          },
+          depositResult: data,
+        })
+        onSuccess()
+        router.push(`/deposit/confirm`)
+      }
+    },
+  })
+  return data.operationType === 9001 &&
+    data.recordType === 3 &&
+    data.status === 6 ? (
+    <Row w="100%" gap="$md">
+      <Button
+        type="primary"
+        f={1}
+        className="w-36"
+        isLoading={loading}
+        onPress={() => {
+          run(data.code)
+        }}
+      >
+        {t("action.continue")}
+      </Button>
+      <Button
+        type="destructive"
+        f={1}
+        className="w-36"
+        isLoading={cancelling}
+        onPress={() =>
+          cancel({
+            orderNo: `${data.id}`,
+          })
+        }
+      >
+        {t("action.cancel")}
+      </Button>
+    </Row>
+  ) : null
+}
+
+export const TransactionDetails: FC<{ onSuccess: () => void }> = ({
+  onSuccess,
+}) => {
   const { t } = useTranslation()
   const { bottom } = useSafeAreaInsets()
   const { data, reloadKey } = useTransactionStore((state) => state, shallow)
@@ -198,6 +270,13 @@ export const TransactionDetails: FC = () => {
             value={getDate(data.addTime).format("MMM DD, YYYY HH:mm")}
           />
         </YStack>
+        <FundAction
+          data={data}
+          onSuccess={() => {
+            ref.current?.dismiss()
+            onSuccess()
+          }}
+        />
       </YStack>
     </BottomSheet>
   )

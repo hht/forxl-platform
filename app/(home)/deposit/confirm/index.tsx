@@ -1,30 +1,22 @@
-import { useUnmount } from "ahooks"
-import { router, Stack } from "expo-router"
-import { Fragment, useState } from "react"
-import { useTranslation } from "react-i18next"
-import { useSafeAreaInsets } from "react-native-safe-area-context"
+import { useUnmount } from 'ahooks'
+import { router, Stack } from 'expo-router'
+import { Fragment, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
-import { cancelDeposit, confirmDeposit } from "~/api/wallet"
+import { cancelDeposit, confirmDeposit } from '~/api/wallet'
 import {
-  Button,
-  Dialog,
-  Figure,
-  Popup,
-  ScrollView,
-  Text,
-  toast,
-  XStack,
-  YStack,
-} from "~/components"
-import { useRequest } from "~/hooks/useRequest"
-import { useWalletStore } from "~/hooks/useStore"
-import { formatDecimal, trimHTML } from "~/lib/utils"
-import colors from "~/theme/colors"
-import { DepositSteps } from "~/widgets/(home)/deposit/confirm/steps"
-import { DepositSummary } from "~/widgets/(home)/deposit/confirm/summary"
-import { AccountCard } from "~/widgets/shared/account-card"
-import { AttentionCard } from "~/widgets/shared/attention-card"
-import { InfoCard } from "~/widgets/shared/info-card"
+    Button, Dialog, Figure, Popup, ScrollView, Text, toast, XStack, YStack
+} from '~/components'
+import { useRequest } from '~/hooks/useRequest'
+import { useWalletStore } from '~/hooks/useStore'
+import { formatDecimal, trimHTML } from '~/lib/utils'
+import colors from '~/theme/colors'
+import { DepositSteps } from '~/widgets/(home)/deposit/confirm/steps'
+import { DepositSummary } from '~/widgets/(home)/deposit/confirm/summary'
+import { AccountCard } from '~/widgets/shared/account-card'
+import { AttentionCard } from '~/widgets/shared/attention-card'
+import { InfoCard } from '~/widgets/shared/info-card'
 
 export default function Page() {
   const { t } = useTranslation()

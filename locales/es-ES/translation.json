@@ -543,7 +543,8 @@
     "traderWithdraw": "Retiro del comerciante",
     "withdrawFee": "Deducción de la tarifa de retiro",
     "withdrawReturn": "Retirar Devolución",
-    "commissionFee": "Tarifa de comisión"
+    "commissionFee": "Tarifa de comisión",
+    "remark": "Observaciones"
   },
   "tools": {
     "news": "Noticias de Mercados",

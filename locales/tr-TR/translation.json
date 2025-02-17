@@ -543,7 +543,8 @@
     "traderWithdraw": "Tüccar para çekme",
     "withdrawFee": "Para çekme ücreti kesintisi",
     "withdrawReturn": "Kullanıcı çekme iadesi",
-    "commissionFee": "Açılış Ücreti"
+    "commissionFee": "Açılış Ücreti",
+    "remark": "Açıklama"
   },
   "tools": {
     "news": "Piyasa Haberleri",

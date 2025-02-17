@@ -236,10 +236,14 @@ export const getFutureHistories = async (params: {
   to?: number
 }) => {
   const to = params.to ?? dayjs().unix()
-  const from =
+  const from = Math.min(
     params.from ??
-    to -
-      200 * (_.isString(params.resolution) ? 24 * 60 : params.resolution) * 60
+      to -
+        200 *
+          (_.isString(params.resolution) ? 24 * 60 : params.resolution) *
+          60,
+    to - 24 * 60 * 60
+  )
   return await request<
     {
       c: number[] | null

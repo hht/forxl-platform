@@ -79,6 +79,9 @@ export default function Page() {
                 amount: depositRequest.amount ?? 0,
                 type: method?.payType ?? 0,
                 paymentId: method?.id,
+                userPayAccount: depositRequest.payAccount,
+                userPayBank: depositRequest.payBank,
+                userPayName: depositRequest.payName,
               })
             }}
           >

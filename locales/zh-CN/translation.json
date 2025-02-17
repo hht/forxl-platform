@@ -543,7 +543,8 @@
     "traderWithdraw": "操盘手提现",
     "withdrawFee": "取款手续费扣除",
     "withdrawReturn": "用户取款退回",
-    "commissionFee": "开仓手续费"
+    "commissionFee": "开仓手续费",
+    "remark": "备注"
   },
   "tools": {
     "news": "市场新闻",

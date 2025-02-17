@@ -32,7 +32,7 @@ export const AnimatedFlow = ({
   useDerivedValue(() => {
     if (previous.current !== value)
       scale.value = withSequence(
-        withSpring(1.05, {
+        withSpring(1.1, {
           damping: 5,
           stiffness: 200,
         }),
@@ -55,7 +55,7 @@ export const AnimatedFlow = ({
       fontWeight: bold ? "bold" : "normal",
       fontSize,
       lineHeight: fontSize * 1.2,
-      transform: [{ scale: scale.value }],
+      transform: [{ scaleY: scale.value }],
       fontVariant: ["tabular-nums"],
     }
   })

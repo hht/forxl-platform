@@ -1,28 +1,20 @@
-import { router } from "expo-router"
-import { AnimatePresence } from "moti"
-import { FC, Fragment } from "react"
+import { router } from 'expo-router'
+import { AnimatePresence } from 'moti'
+import { FC, Fragment } from 'react'
+import { useTranslation } from 'react-i18next'
+import { ActivityIndicator } from 'react-native'
 
-import { getPaymentMethods, getWithdrawalMethods } from "~/api/wallet"
-import {
-  Card,
-  Icon,
-  Image,
-  Moti,
-  Row,
-  Separator,
-  Text,
-  toast,
-  XStack,
-  YStack,
-} from "~/components"
-import { CACHE_KEY, useRequest } from "~/hooks/useRequest"
-import { useWalletStore } from "~/hooks/useStore"
-import { useVerification } from "~/hooks/useWallet"
-import { formatDecimal, t } from "~/lib/utils"
+import { getPaymentMethods, getPendingPayment, getWithdrawalMethods } from '~/api/wallet'
+import { Card, Icon, Image, Moti, Row, Separator, Text, toast, XStack, YStack } from '~/components'
+import { CACHE_KEY, useRequest } from '~/hooks/useRequest'
+import { useWalletStore } from '~/hooks/useStore'
+import { useVerification } from '~/hooks/useWallet'
+import { formatDecimal } from '~/lib/utils'
 
 export const PaymentMethodDescription: FC<{
   method: PaymentMethod
 }> = ({ method }) => {
+  const { t } = useTranslation()
   return (
     <Fragment>
       <Card.Item title={t("trade.commission")}>
@@ -56,6 +48,8 @@ export const PaymentMethodDescription: FC<{
 export const WithdrawMethodDescription: FC<{
   method: WithdrawMethod
 }> = ({ method }) => {
+  const { t } = useTranslation()
+
   return (
     <Fragment>
       <Card.Item title={t("trade.commission")}>
@@ -87,7 +81,45 @@ export const WithdrawMethodDescription: FC<{
 export const PaymentMethodCard: FC<{
   method: PaymentMethod
 }> = ({ method }) => {
+  const { t } = useTranslation()
+
   const { ga, kyc } = useVerification()
+  const { run, loading } = useRequest(
+    async (data: PaymentMethod) => {
+      if (data.status === "0") {
+        if (!ga && data.gaAuth) {
+          toast.show(t("message.gaRequired"))
+          return
+        }
+        if (!kyc && data.userAuth) {
+          toast.show(t("message.kycRequired"))
+          return
+        }
+      }
+      if (data.payType === 3) {
+        const resp = await getPendingPayment(data.code!)
+        if (resp) {
+          useWalletStore.setState({
+            depositResult: resp,
+            depositRequest: {
+              payBank: resp.payType === 3 ? resp.userPayBank : "",
+              payName: resp.payType === 3 ? resp.userPayName : "",
+              payAccount: resp.payType === 3 ? resp.userPayAccount : "",
+              amount: parseFloat(
+                `${resp.payType === 3 ? resp.usdAmount : resp.price}`
+              ),
+            },
+          })
+          router.push("/deposit/confirm")
+          return
+        }
+      }
+      router.push("/deposit/form")
+    },
+    {
+      manual: true,
+    }
+  )
   return (
     <Card
       gap="$md"
@@ -105,14 +137,16 @@ export const PaymentMethodCard: FC<{
         useWalletStore.setState({
           depositMethod: method,
         })
-        router.push("/deposit/form")
+        run(method)
       }}
     >
       <XStack ai="center" jc="space-between">
         <YStack gap="$sm">
-          <Text heading bold>
-            {method.name}
-          </Text>
+          <Row w="100%" jc="space-between">
+            <Text heading bold>
+              {method.name}
+            </Text>
+          </Row>
           {method.status === "0" ? (
             <XStack ai="center" gap="$sm">
               {method.userAuth ? <Icon name="creditCard" size={16} /> : null}
@@ -120,7 +154,13 @@ export const PaymentMethodCard: FC<{
             </XStack>
           ) : null}
         </YStack>
-        <Image source={{ uri: method.picUrl }} w={40} h={40} />
+        {loading ? (
+          <XStack w={40} h={40} ai="center" jc="center">
+            <ActivityIndicator size="small" />
+          </XStack>
+        ) : (
+          <Image source={{ uri: method.picUrl }} w={40} h={40} />
+        )}
       </XStack>
       <Separator />
       <PaymentMethodDescription method={method} />
@@ -132,7 +172,7 @@ export const WithdrawMethodCard: FC<{
   method: WithdrawMethod
 }> = ({ method }) => {
   const { ga, kyc } = useVerification()
-
+  const { t } = useTranslation()
   return (
     <Card
       gap="$md"

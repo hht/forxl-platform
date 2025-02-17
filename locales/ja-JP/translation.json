@@ -543,7 +543,8 @@
     "traderWithdraw": "Trader Withdraw",
     "withdrawFee": "Withdraw Fee Deduction",
     "withdrawReturn": "Withdraw Return",
-    "commissionFee": "Commission Fee"
+    "commissionFee": "Commission Fee",
+    "remark": "Remark"
   },
   "tools": {
     "news": "Markets News",

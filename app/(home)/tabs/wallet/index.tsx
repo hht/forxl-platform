@@ -104,7 +104,7 @@ export default function Page() {
           ListFooterComponent={<ListFooterComponent loading={loadingMore} />}
         ></FlatList>
       </YStack>
-      <TransactionDetails />
+      <TransactionDetails onSuccess={reload} />
     </Screen>
   )
 }
