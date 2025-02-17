@@ -1,12 +1,12 @@
-import { useTranslation } from "react-i18next"
-import { useSafeAreaInsets } from "react-native-safe-area-context"
+import { useTranslation } from 'react-i18next'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
-import { useProfitAndLossStore } from "./profit-loss"
+import { useProfitAndLossStore } from './profit-loss'
 
-import { updateOrder } from "~/api/trade"
-import { Button, toast, XStack } from "~/components"
-import { useRequest } from "~/hooks/useRequest"
-import { useOrderStore } from "~/hooks/useStore"
+import { updateOrder } from '~/api/trade'
+import { Button, toast, XStack } from '~/components'
+import { useRequest } from '~/hooks/useRequest'
+import { useOrderStore } from '~/hooks/useStore'
 
 export const OrderActions = () => {
   const { t } = useTranslation()
@@ -19,7 +19,6 @@ export const OrderActions = () => {
   })
   const currentPosition = useOrderStore((state) => state.currentPosition)
   const { stopLossPrice, stopProfitPrice } = useProfitAndLossStore()
-  console.log(stopLossPrice, stopProfitPrice, currentPosition)
   return (
     <XStack gap="$md" px="$md" pb={bottom + 16}>
       <Button
