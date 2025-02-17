@@ -30,8 +30,8 @@
     "share": "分享",
     "verify": "验证",
     "submitRequest": "提交请求",
-    "continueToPay": "Continue to Pay",
-    "cancelPayment": "Cancel Payment",
+    "continueToPay": "继续付款",
+    "cancelPayment": "取消订单",
     "enter": "进入控制面板",
     "home": "返回首页",
     "continue": "继续"
