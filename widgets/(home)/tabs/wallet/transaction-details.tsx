@@ -173,7 +173,7 @@ const FundAction: FC<{
           run(data.code)
         }}
       >
-        {t("action.continue")}
+        {t("action.continueToPay")}
       </Button>
       <Button
         type="destructive"
@@ -186,7 +186,7 @@ const FundAction: FC<{
           })
         }
       >
-        {t("action.cancel")}
+        {t("action.cancelPayment")}
       </Button>
     </Row>
   ) : null

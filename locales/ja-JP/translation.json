@@ -30,6 +30,8 @@
     "share": "Share",
     "verify": "Verify",
     "submitRequest": "Submit Request",
+    "continueToPay": "Continue to Pay",
+    "cancelPayment": "Cancel Payment",
     "enter": "Enter Dashboard",
     "home": "Go to Home",
     "continue": "Continue"
