@@ -183,11 +183,6 @@ export const exportClosedPositions = async ({
 
 export const proceedOrder = async (params: OrderParams) => {
   const response = await request("/order/userNewOrder", "POST", params)
-  if (params.byOrSell === 7 && useOrderStore.getState().activeIndex === 1) {
-    waitFor(500).then(() => getPendingPositions())
-  } else {
-    waitFor(500).then(() => getOpenPositions())
-  }
   return response
 }
 
@@ -196,7 +191,6 @@ export const cancelOrder = async (params: {
   cancelPrice: number
 }) => {
   const response = await request("/order/cancelPending", "POST", params)
-  waitFor(500).then(() => getPendingPositions())
   return response
 }
 
@@ -206,12 +200,6 @@ export const updateOrder = async (params: {
   stopProfitPrice: number
 }) => {
   const response = await request("/order/updateLimitPrice", "POST", params)
-  if (useOrderStore.getState().activeIndex === 1) {
-    waitFor(500).then(() => getPendingPositions())
-  }
-  if (useOrderStore.getState().activeIndex === 0) {
-    waitFor(500).then(() => getOpenPositions())
-  }
   return response
 }
 

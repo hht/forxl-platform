@@ -1,11 +1,13 @@
-import { useInterval } from "ahooks"
+import { clearCache, useInterval } from "ahooks"
 import _ from "lodash"
 import { useCallback, useEffect, useRef } from "react"
 import { createWithEqualityFn } from "zustand/traditional"
 
-import { useForxlStore, useQuotesStore } from "./useStore"
+import { CACHE_KEY } from "./useRequest"
+import { useForxlStore, useOrderStore, useQuotesStore } from "./useStore"
 
-import { getOpenPositions } from "~/api/trade"
+import { getOpenPositions, getPendingPositions } from "~/api/trade"
+import { uuid } from "~/lib/utils"
 
 export enum ReadyState {
   Connecting = 0,
@@ -23,7 +25,14 @@ type FutureMessage =
       type: "symbol"
       data: Quotes
     }
-  | { type: "watchPositionChange" }
+  | {
+      type: "watchPositionChange"
+      data: {
+        posId: number
+        futuresCode: string
+        state: number
+      }
+    }
 
 const WS_URL = "wss://ws.forxlmarkets.com/datafeed"
 
@@ -72,6 +81,15 @@ export const useWebSocket = () => {
           break
         case "watchPositionChange":
           getOpenPositions()
+          if (
+            message.data.state >= 7 &&
+            useOrderStore.getState().activeIndex === 1
+          ) {
+            getPendingPositions()
+          }
+          if (useOrderStore.getState().activeIndex === 2) {
+            useOrderStore.setState({ reloadKey: uuid() })
+          }
           break
         case "pong":
           lastMessageTimeRef.current = Date.now()

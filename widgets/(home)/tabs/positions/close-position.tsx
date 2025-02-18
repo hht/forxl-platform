@@ -10,18 +10,8 @@ import { BottomSheet, Button, Text, XStack, YStack } from "~/components"
 import { useRequest } from "~/hooks/useRequest"
 import { useOrderStore, useQuotesStore } from "~/hooks/useStore"
 import { subscribeQuotes } from "~/hooks/useWebsocket"
-import { uuid, waitFor } from "~/lib/utils"
 import { PriceCell } from "~/widgets/shared/price-cell"
 import { ProfitCell } from "~/widgets/shared/profit-cell"
-
-const updateOrderState = () => {
-  if (useOrderStore.getState().activeIndex === 0) {
-    waitFor(500).then(() => useOrderStore.setState({ reloadKey: uuid() }))
-  }
-  if (useOrderStore.getState().activeIndex === 1) {
-    router.back()
-  }
-}
 
 export const ClosePosition: FC<{ activeIndex: number }> = ({ activeIndex }) => {
   const { t } = useTranslation()
@@ -32,7 +22,7 @@ export const ClosePosition: FC<{ activeIndex: number }> = ({ activeIndex }) => {
     manual: true,
     onSuccess: () => {
       if (segments.some((it) => it.includes("order"))) {
-        updateOrderState()
+        router.back()
       }
     },
     onFinally: () => {
@@ -43,7 +33,7 @@ export const ClosePosition: FC<{ activeIndex: number }> = ({ activeIndex }) => {
     manual: true,
     onSuccess: () => {
       if (segments.some((it) => it.includes("order"))) {
-        updateOrderState()
+        router.back()
       }
     },
     onFinally: () => {
