@@ -73,10 +73,14 @@ export const OrderDetail = () => {
           {formatCurrency(currentPosition.securityDeposit ?? 0)}
         </ListItem>
         <ListItem label={t("trade.commission")}>
-          {formatCurrency(currentPosition.tradingFee ?? 0)}
+          {activeIndex === 1
+            ? "-"
+            : formatCurrency(currentPosition.tradingFee ?? 0)}
         </ListItem>
         <ListItem label={dict.swap}>
-          {formatCurrency(currentPosition.overNightFee ?? 0)}
+          {activeIndex === 1
+            ? "-"
+            : formatCurrency(currentPosition.overNightFee ?? 0)}
         </ListItem>
         <ListItem
           label={dict.openTime}
@@ -100,48 +104,56 @@ export const OrderDetail = () => {
             {currentPosition.futuresCode}
           </Text>
         </XStack>
-        <Row ai="baseline" gap="$xs">
-          <Text
-            heading
-            bold
-            col={
-              (currentPosition.pureProfit ?? currentPosition.priceProfit ?? 0) >
-              0
-                ? "$primary"
-                : (currentPosition.pureProfit ??
-                    currentPosition.priceProfit! < 0)
-                  ? "$destructive"
-                  : "$secondary"
-            }
-          >
-            {formatProfit(
-              currentPosition.pureProfit ?? currentPosition.priceProfit ?? 0
-            )}
+        {!currentPosition.cancelTime ? (
+          <Text heading bold col="$secondary">
+            -
           </Text>
-          <Text
-            fos={14}
-            lh={14}
-            bold
-            col={
-              (currentPosition.pureProfit ?? currentPosition.priceProfit ?? 0) >
-              0
-                ? "$primary"
-                : (currentPosition.pureProfit ?? currentPosition.priceProfit!) <
-                    0
-                  ? "$destructive"
-                  : "$secondary"
-            }
-          >
-            {formatDecimal(
-              ((currentPosition.pureProfit ??
-                currentPosition.priceProfit ??
-                0) /
-                (currentPosition.securityDeposit ?? 1)) *
-                100
-            )}
-            %
-          </Text>
-        </Row>
+        ) : (
+          <Row ai="baseline" gap="$xs">
+            <Text
+              heading
+              bold
+              col={
+                (currentPosition.pureProfit ??
+                  currentPosition.priceProfit ??
+                  0) > 0
+                  ? "$primary"
+                  : (currentPosition.pureProfit ??
+                      currentPosition.priceProfit! < 0)
+                    ? "$destructive"
+                    : "$secondary"
+              }
+            >
+              {formatProfit(
+                currentPosition.pureProfit ?? currentPosition.priceProfit ?? 0
+              )}
+            </Text>
+            <Text
+              fos={14}
+              lh={14}
+              bold
+              col={
+                (currentPosition.pureProfit ??
+                  currentPosition.priceProfit ??
+                  0) > 0
+                  ? "$primary"
+                  : (currentPosition.pureProfit ??
+                        currentPosition.priceProfit!) < 0
+                    ? "$destructive"
+                    : "$secondary"
+              }
+            >
+              {formatDecimal(
+                ((currentPosition.pureProfit ??
+                  currentPosition.priceProfit ??
+                  0) /
+                  (currentPosition.securityDeposit ?? 1)) *
+                  100
+              )}
+              %
+            </Text>
+          </Row>
+        )}
       </XStack>
       <XStack ai="center" jc="space-between" py="$md" bbc="$border" bbw={1}>
         <Text col="$secondary">{data?.futures?.futuresName}</Text>
@@ -172,10 +184,14 @@ export const OrderDetail = () => {
         {formatCurrency(currentPosition.securityDeposit ?? 0)}
       </ListItem>
       <ListItem label={t("trade.commission")}>
-        {formatCurrency(currentPosition.tradingFee ?? 0)}
+        {currentPosition.cancelTime
+          ? "-"
+          : formatCurrency(currentPosition.tradingFee ?? 0)}
       </ListItem>
       <ListItem label={dict.swap}>
-        {formatCurrency(currentPosition.overNightFee ?? 0)}
+        {currentPosition.cancelTime
+          ? "-"
+          : formatCurrency(currentPosition.overNightFee ?? 0)}
       </ListItem>
       <ListItem
         label={dict.openTime}

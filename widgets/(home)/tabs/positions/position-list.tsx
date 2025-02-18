@@ -65,6 +65,7 @@ const ListItem: FC<
 
 const EditableListItem: FC<{ data: Position }> = ({ data }) => {
   const { t } = useTranslation()
+  const activeIndex = useOrderStore((state) => state.activeIndex, shallow)
   return (
     <ListItem data={data}>
       <XStack
@@ -170,37 +171,43 @@ const ArchivedListItem: FC<{ data: Position; dateVisible?: boolean }> = ({
           </Text>
         </YStack>
         <YStack gap="$sm" f={1}>
-          <Row ai="baseline" gap="$xs">
-            <Text
-              bold
-              col={
-                data.pureProfit! > 0
-                  ? "$primary"
-                  : data.pureProfit! < 0
-                    ? "$destructive"
-                    : "$secondary"
-              }
-            >
-              {formatProfit(data.pureProfit ?? 0)}
+          {data.cancelTime ? (
+            <Text bold col="$secondary">
+              -
             </Text>
-            <Text
-              bold
-              fos={10}
-              lh={10}
-              col={
-                data.pureProfit! > 0
-                  ? "$primary"
-                  : data.pureProfit! < 0
-                    ? "$destructive"
-                    : "$secondary"
-              }
-            >
-              {formatDecimal(
-                ((data.pureProfit ?? 0) / (data.securityDeposit ?? 1)) * 100
-              )}
-              %
-            </Text>
-          </Row>
+          ) : (
+            <Row ai="baseline" gap="$xs">
+              <Text
+                bold
+                col={
+                  data.pureProfit! > 0
+                    ? "$primary"
+                    : data.pureProfit! < 0
+                      ? "$destructive"
+                      : "$secondary"
+                }
+              >
+                {formatProfit(data.pureProfit ?? 0)}
+              </Text>
+              <Text
+                bold
+                fos={10}
+                lh={10}
+                col={
+                  data.pureProfit! > 0
+                    ? "$primary"
+                    : data.pureProfit! < 0
+                      ? "$destructive"
+                      : "$secondary"
+                }
+              >
+                {formatDecimal(
+                  ((data.pureProfit ?? 0) / (data.securityDeposit ?? 1)) * 100
+                )}
+                %
+              </Text>
+            </Row>
+          )}
           <Text col="$secondary">{`${t(data.openSafe ? "trade.sell" : "trade.buy")} ${data.position} ${t("trade.lots", { amount: "" })}`}</Text>
         </YStack>
       </ListItem>
