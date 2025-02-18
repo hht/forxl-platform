@@ -1,24 +1,36 @@
-import { BottomSheetModal } from '@gorhom/bottom-sheet'
-import { router } from 'expo-router'
-import { FC, Fragment, ReactNode, useEffect, useRef } from 'react'
-import { useTranslation } from 'react-i18next'
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import { shallow } from 'zustand/shallow'
-import { createWithEqualityFn } from 'zustand/traditional'
+import { BottomSheetModal } from "@gorhom/bottom-sheet"
+import { router } from "expo-router"
+import { FC, Fragment, ReactNode, useEffect, useRef } from "react"
+import { useTranslation } from "react-i18next"
+import { useSafeAreaInsets } from "react-native-safe-area-context"
+import { shallow } from "zustand/shallow"
+import { createWithEqualityFn } from "zustand/traditional"
 
 import {
-    CHANNEL_DESCRIPTION, getStatusColor, OPERATION_DESCRIPTION, STATUS_DESCRIPTION
-} from './utils'
+  CHANNEL_DESCRIPTION,
+  getStatusColor,
+  OPERATION_DESCRIPTION,
+  STATUS_DESCRIPTION,
+} from "./utils"
 
-import { cancelDeposit, getFundHistory, getPendingPayment } from '~/api/wallet'
+import { cancelDeposit, getFundHistory, getPendingPayment } from "~/api/wallet"
 import {
-    BottomSheet, Button, copyToClipboard, Icon, Image, Row, Text, toast, XStack, YStack
-} from '~/components'
-import { getDate } from '~/hooks/useLocale'
-import { useRequest } from '~/hooks/useRequest'
-import { useWalletStore } from '~/hooks/useStore'
-import { formatCurrency, formatDecimal } from '~/lib/utils'
-import colors, { toRGBA } from '~/theme/colors'
+  BottomSheet,
+  Button,
+  copyToClipboard,
+  Icon,
+  Image,
+  Row,
+  Text,
+  toast,
+  XStack,
+  YStack,
+} from "~/components"
+import { getDate } from "~/hooks/useLocale"
+import { useRequest } from "~/hooks/useRequest"
+import { useWalletStore } from "~/hooks/useStore"
+import { formatCurrency, formatDecimal } from "~/lib/utils"
+import colors, { toRGBA } from "~/theme/colors"
 
 export const useTransactionStore = createWithEqualityFn<{
   data?: Awaited<ReturnType<typeof getFundHistory>>["list"][number]
@@ -57,7 +69,7 @@ const FundDetail: FC<{
   data: Awaited<ReturnType<typeof getFundHistory>>["list"][number]
 }> = ({ data }) => {
   const { t } = useTranslation()
-  if (data.operationType === 9004) {
+  if (data.operationType === 9004 || data.operationType === 9005) {
     return <ListItem title={t("wallet.remark")} value={data.remark} />
   }
   switch (data.recordType) {
