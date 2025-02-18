@@ -80,8 +80,13 @@ export const useWebSocket = () => {
           useQuotesStore.getState().updateQuotes(message.data)
           break
         case "watchPositionChange":
+          // 刷新持仓和钱包信息
           getOpenPositions()
-          useOrderStore.setState({ reloadKey: uuid() })
+          // 如果是平仓或者撤销，刷新历史订单
+          if (message.data.state > 0) {
+            useOrderStore.setState({ reloadKey: uuid() })
+          }
+          // 如果是挂单操作，刷新挂单
           if (message.data.state >= 7) {
             getPendingPositions()
           }
