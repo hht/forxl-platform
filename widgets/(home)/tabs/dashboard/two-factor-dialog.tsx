@@ -2,7 +2,8 @@ import { router } from "expo-router"
 import { FC, useState } from "react"
 import { useTranslation } from "react-i18next"
 
-import { Banners, CAROUSEL_WIDTH } from "./banners"
+import { CAROUSEL_WIDTH } from "./aspect-image"
+import { Banners } from "./banners"
 
 import { getAttestationFlag } from "~/api/account"
 import { getBanners } from "~/api/dashboard"
