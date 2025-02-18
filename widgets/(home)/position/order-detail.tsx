@@ -44,7 +44,7 @@ export const OrderDetail = () => {
               {t(currentPosition?.openSafe === 0 ? "trade.buy" : "trade.sell")}
             </Text>
             <Text heading bold>
-              {currentPosition.futuresCode}
+              {currentPosition.futuresShow}
             </Text>
           </XStack>
           <ProfitCell data={currentPosition} fontSize={17} bold />

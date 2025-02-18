@@ -91,7 +91,7 @@ const EditableListItem: FC<{ data: Position }> = ({ data }) => {
           router.push("/order")
         }}
       >
-        <Text bold>{data.futuresCode}</Text>
+        <Text bold>{data.futuresShow}</Text>
         <ProfitCell data={data} bold />
       </YStack>
       <YStack gap="$sm" f={1} ai="flex-start">
@@ -164,7 +164,7 @@ const ArchivedListItem: FC<{ data: Position; dateVisible?: boolean }> = ({
             router.push("/order")
           }}
         >
-          <Text bold>{data.futuresCode}</Text>
+          <Text bold>{data.futuresShow}</Text>
           <Text col="$secondary">
             {getDate(data.overTime).format("MMM DD, YYYY HH:mm")}
           </Text>
