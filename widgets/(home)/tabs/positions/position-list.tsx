@@ -23,7 +23,7 @@ import {
 } from "~/components"
 import { getDate, getRecentDate } from "~/hooks/useLocale"
 import { CACHE_KEY, useRequest } from "~/hooks/useRequest"
-import { useOrderStore } from "~/hooks/useStore"
+import { useOrderStore, useQuotesStore, useSymbolStore } from "~/hooks/useStore"
 import { subscribeQuotes } from "~/hooks/useWebsocket"
 import {
   dayjs,
@@ -75,7 +75,22 @@ const EditableListItem: FC<{ data: Position }> = ({ data }) => {
       >
         <Icon name="close" size={16} color={colors.secondary} />
       </XStack>
-      <YStack f={1} gap="$sm">
+      <YStack
+        f={1}
+        gap="$sm"
+        onPress={() => {
+          const price =
+            useQuotesStore.getState().quotes[data.futuresCode!]?.Bid ??
+            data.price
+          useQuotesStore.setState({
+            activeIndex: 1,
+            currentFuture: data as Future,
+            action: "sell",
+            order: { position: 0.01, price },
+          })
+          router.push("/order")
+        }}
+      >
         <Text bold>{data.futuresCode}</Text>
         <ProfitCell data={data} bold />
       </YStack>
@@ -134,7 +149,21 @@ const ArchivedListItem: FC<{ data: Position; dateVisible?: boolean }> = ({
         </YStack>
       ) : null}
       <ListItem data={data} h={64} gap={32}>
-        <YStack gap="$sm">
+        <YStack
+          gap="$sm"
+          onPress={() => {
+            const price =
+              useQuotesStore.getState().quotes[data.futuresCode!]?.Bid ??
+              data.price
+            useQuotesStore.setState({
+              activeIndex: 1,
+              currentFuture: data as Future,
+              action: "sell",
+              order: { position: 0.01, price },
+            })
+            router.push("/order")
+          }}
+        >
           <Text bold>{data.futuresCode}</Text>
           <Text col="$secondary">
             {getDate(data.overTime).format("MMM DD, YYYY HH:mm")}

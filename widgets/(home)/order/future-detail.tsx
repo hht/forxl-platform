@@ -66,6 +66,13 @@ export const FutureDetail = () => {
           data.futures?.futuresCode!,
           data.linkFuturesCode?.deposit,
         ])
+        useQuotesStore.setState({
+          currentFuture: {
+            ...useQuotesStore.getState().currentFuture,
+            isDeal: data.futures?.isDeal,
+            lastClosePrice: data?.lastClosePrice,
+          },
+        })
       },
       onError: (error) => {},
     }
