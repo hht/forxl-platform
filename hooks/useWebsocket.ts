@@ -81,14 +81,9 @@ export const useWebSocket = () => {
           break
         case "watchPositionChange":
           getOpenPositions()
-          if (
-            message.data.state >= 7 &&
-            useOrderStore.getState().activeIndex === 1
-          ) {
+          useOrderStore.setState({ reloadKey: uuid() })
+          if (message.data.state >= 7) {
             getPendingPositions()
-          }
-          if (useOrderStore.getState().activeIndex === 2) {
-            useOrderStore.setState({ reloadKey: uuid() })
           }
           break
         case "pong":

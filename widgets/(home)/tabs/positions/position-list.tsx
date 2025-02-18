@@ -23,7 +23,7 @@ import {
 } from "~/components"
 import { getDate, getRecentDate } from "~/hooks/useLocale"
 import { CACHE_KEY, useRequest } from "~/hooks/useRequest"
-import { useOrderStore, useQuotesStore, useSymbolStore } from "~/hooks/useStore"
+import { useOrderStore, useQuotesStore } from "~/hooks/useStore"
 import { subscribeQuotes } from "~/hooks/useWebsocket"
 import {
   dayjs,
@@ -65,7 +65,6 @@ const ListItem: FC<
 
 const EditableListItem: FC<{ data: Position }> = ({ data }) => {
   const { t } = useTranslation()
-  const activeIndex = useOrderStore((state) => state.activeIndex, shallow)
   return (
     <ListItem data={data}>
       <XStack
