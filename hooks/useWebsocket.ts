@@ -7,7 +7,7 @@ import { CACHE_KEY } from "./useRequest"
 import { useForxlStore, useOrderStore, useQuotesStore } from "./useStore"
 
 import { getOpenPositions, getPendingPositions } from "~/api/trade"
-import { uuid } from "~/lib/utils"
+import { uuid, waitFor } from "~/lib/utils"
 
 export enum ReadyState {
   Connecting = 0,
@@ -73,13 +73,14 @@ export const useWebSocket = () => {
       })
     }
 
-    websocketRef.current.onmessage = (m) => {
+    websocketRef.current.onmessage = async (m) => {
       const message = JSON.parse(m?.data ?? "{}") as FutureMessage
       switch (message?.type) {
         case "symbol":
           useQuotesStore.getState().updateQuotes(message.data)
           break
         case "watchPositionChange":
+          await waitFor(2000)
           // 刷新持仓和钱包信息
           getOpenPositions()
           // 如果是平仓或者撤销，刷新历史订单
