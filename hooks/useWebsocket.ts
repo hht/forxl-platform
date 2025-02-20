@@ -1,9 +1,8 @@
-import { clearCache, useInterval } from "ahooks"
+import { useInterval } from "ahooks"
 import _ from "lodash"
 import { useCallback, useEffect, useRef } from "react"
 import { createWithEqualityFn } from "zustand/traditional"
 
-import { CACHE_KEY } from "./useRequest"
 import {
   computeProfit,
   useForxlStore,
@@ -70,9 +69,6 @@ const computeWallet = (order?: Position) => {
       .pendingOrders?.filter((it) => it.id !== order.id),
   })
   useOrderStore.setState({ reloadKey: uuid() })
-  clearCache(
-    `${CACHE_KEY.ORDER_ANALYSIS}${useForxlStore.getState().account?.id}`
-  )
 }
 
 export const useWebSocket = () => {
