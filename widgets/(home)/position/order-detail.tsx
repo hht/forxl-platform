@@ -1,17 +1,17 @@
-import { Fragment } from "react"
-import { useTranslation } from "react-i18next"
-import { shallow } from "zustand/shallow"
+import { Fragment } from 'react'
+import { useTranslation } from 'react-i18next'
+import { shallow } from 'zustand/shallow'
 
-import { getFuture } from "~/api/trade"
-import { Icon, Row, Text, XStack } from "~/components"
-import { getDate } from "~/hooks/useLocale"
-import { useRequest } from "~/hooks/useRequest"
-import { useOrderStore } from "~/hooks/useStore"
-import { formatCurrency, formatDecimal, formatProfit } from "~/lib/utils"
-import colors from "~/theme/colors"
-import { ListItem } from "~/widgets/(home)/position/list-item"
-import { PriceCell } from "~/widgets/shared/price-cell"
-import { ProfitCell } from "~/widgets/shared/profit-cell"
+import { getFuture } from '~/api/trade'
+import { Icon, Row, Text, XStack } from '~/components'
+import { getDate } from '~/hooks/useLocale'
+import { useRequest } from '~/hooks/useRequest'
+import { useOrderStore } from '~/hooks/useStore'
+import { formatCurrency, formatDecimal, formatProfit } from '~/lib/utils'
+import colors from '~/theme/colors'
+import { ListItem } from '~/widgets/(home)/position/list-item'
+import { PriceCell } from '~/widgets/shared/price-cell'
+import { ProfitCell } from '~/widgets/shared/profit-cell'
 
 export const OrderDetail = () => {
   const { t } = useTranslation()
@@ -104,7 +104,7 @@ export const OrderDetail = () => {
             {currentPosition.futuresCode}
           </Text>
         </XStack>
-        {!currentPosition.cancelTime ? (
+        {currentPosition.cancelTime ? (
           <Text heading bold col="$secondary">
             -
           </Text>
