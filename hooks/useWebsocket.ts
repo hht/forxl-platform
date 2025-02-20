@@ -47,7 +47,7 @@ const useWebSocketStore = createWithEqualityFn<WebSocketState>((set) => ({
 
 const computeWallet = (order?: Position) => {
   if (!order) return
-  const profit = computeProfit(order)
+  const profit = Number(computeProfit(order).toFixed(2))
   useOrderStore.setState({
     wallet: {
       ...useOrderStore.getState().wallet,
