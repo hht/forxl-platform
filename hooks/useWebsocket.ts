@@ -44,7 +44,7 @@ const useWebSocketStore = createWithEqualityFn<WebSocketState>((set) => ({
   quotes: [],
 }))
 
-const computeWallet = (order?: Position) => {
+const computeWallet = async (order?: Position) => {
   if (!order) return
   const profit = Number(computeProfit(order).toFixed(2))
   useOrderStore.setState({
@@ -68,6 +68,7 @@ const computeWallet = (order?: Position) => {
       .getState()
       .pendingOrders?.filter((it) => it.id !== order.id),
   })
+  await waitFor(2000)
   useOrderStore.setState({ reloadKey: uuid() })
 }
 
@@ -113,12 +114,13 @@ export const useWebSocket = () => {
             posId: number
             state: number
           }
-          await waitFor(2000)
           switch (data.state) {
             case 0:
+              await waitFor(2000)
               getOpenPositions()
               break
             case 7:
+              await waitFor(2000)
               getPendingPositions()
               break
             case 8:
