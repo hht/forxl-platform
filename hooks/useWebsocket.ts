@@ -4,7 +4,12 @@ import { useCallback, useEffect, useRef } from "react"
 import { createWithEqualityFn } from "zustand/traditional"
 
 import { CACHE_KEY } from "./useRequest"
-import { useForxlStore, useOrderStore, useQuotesStore } from "./useStore"
+import {
+  computeProfit,
+  useForxlStore,
+  useOrderStore,
+  useQuotesStore,
+} from "./useStore"
 
 import { getOpenPositions, getPendingPositions } from "~/api/trade"
 import { uuid, waitFor } from "~/lib/utils"
@@ -27,11 +32,7 @@ type FutureMessage =
     }
   | {
       type: "watchPositionChange"
-      data: {
-        posId: number
-        futuresCode: string
-        state: number
-      }
+      data: string
     }
 
 const WS_URL = "wss://ws.forxlmarkets.com/datafeed"
@@ -43,6 +44,36 @@ type WebSocketState = {
 const useWebSocketStore = createWithEqualityFn<WebSocketState>((set) => ({
   quotes: [],
 }))
+
+const computeWallet = (order?: Position) => {
+  if (!order) return
+  const profit = computeProfit(order)
+  useOrderStore.setState({
+    wallet: {
+      ...useOrderStore.getState().wallet,
+      totalMoney:
+        Number(useOrderStore.getState().wallet?.totalMoney ?? 0) + profit,
+      available:
+        Number(useOrderStore.getState().wallet?.available ?? 0) + profit,
+      supMoney: Number(useOrderStore.getState().wallet?.supMoney!) + profit,
+      freezeMoney:
+        Number(useOrderStore.getState().wallet?.freezeMoney ?? 0) -
+        (order.securityDeposit ?? 0),
+      supFreezeMoney:
+        Number(useOrderStore.getState().wallet?.supFreezeMoney!) +
+        (order.securityDeposit ?? 0) +
+        profit,
+    },
+    orders: useOrderStore.getState().orders?.filter((it) => it.id !== order.id),
+    pendingOrders: useOrderStore
+      .getState()
+      .pendingOrders?.filter((it) => it.id !== order.id),
+  })
+  useOrderStore.setState({ reloadKey: uuid() })
+  clearCache(
+    `${CACHE_KEY.ORDER_ANALYSIS}${useForxlStore.getState().account?.id}`
+  )
+}
 
 export const useWebSocket = () => {
   const { quotes } = useWebSocketStore()
@@ -82,14 +113,36 @@ export const useWebSocket = () => {
         case "watchPositionChange":
           await waitFor(2000)
           // 刷新持仓和钱包信息
-          getOpenPositions()
-          // 如果是平仓或者撤销，刷新历史订单
-          if (message.data.state > 0) {
-            useOrderStore.setState({ reloadKey: uuid() })
+          const data = JSON.parse(message?.data ?? "{}") as {
+            posId: number
+            state: number
           }
-          // 如果是挂单操作，刷新挂单
-          if (message.data.state >= 7) {
-            getPendingPositions()
+          await waitFor(2000)
+          switch (data.state) {
+            case 0:
+              getOpenPositions()
+              break
+            case 7:
+              getPendingPositions()
+              break
+            case 8:
+              useOrderStore.setState({
+                pendingOrders: useOrderStore
+                  .getState()
+                  .pendingOrders?.filter((it) => it.id !== data.posId),
+              })
+              break
+            case 9:
+              const pendingOrder = useOrderStore
+                .getState()
+                .pendingOrders?.find((it) => it.id === data.posId)
+              computeWallet(pendingOrder)
+              break
+            default:
+              const order = useOrderStore
+                .getState()
+                .orders?.find((it) => it.id === data.posId)
+              computeWallet(order)
           }
           break
         case "pong":
