@@ -30,7 +30,7 @@ export const ClosePosition: FC<{ activeIndex: number }> = ({ activeIndex }) => {
         .pendingOrders?.filter((it) => it.id !== position?.id),
     })
     toast.show(t("message.closePositionSuccess"))
-    if (segments.some((it) => it.includes("order") || it.includes("position"))) {
+    if (segments.some((it) => ["order", "position"].includes(it))) {
       router.back()
     }
   }, [position?.id, segments, t])
