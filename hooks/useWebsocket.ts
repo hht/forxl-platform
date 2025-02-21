@@ -1,6 +1,7 @@
 import { useInterval } from "ahooks"
 import _ from "lodash"
 import { useCallback, useEffect, useRef } from "react"
+import { useTranslation } from "react-i18next"
 import { createWithEqualityFn } from "zustand/traditional"
 
 import {
@@ -11,6 +12,7 @@ import {
 } from "./useStore"
 
 import { getOpenPositions, getPendingPositions } from "~/api/trade"
+import { toast } from "~/components"
 import { uuid, waitFor } from "~/lib/utils"
 
 export enum ReadyState {
@@ -68,11 +70,10 @@ const computeWallet = async (order?: Position) => {
       .getState()
       .pendingOrders?.filter((it) => it.id !== order.id),
   })
-  await waitFor(2000)
-  useOrderStore.setState({ reloadKey: uuid() })
 }
 
 export const useWebSocket = () => {
+  const { t } = useTranslation()
   const { quotes } = useWebSocketStore()
   const websocketRef = useRef<WebSocket | null>(null)
   const lastMessageTimeRef = useRef<number>(Date.now())
@@ -118,9 +119,11 @@ export const useWebSocket = () => {
             case 0:
               await waitFor(2000)
               getOpenPositions()
+              toast.show(t("message.orderSuccess"))
               break
             case 7:
               await waitFor(2000)
+              toast.show(t("message.orderSuccess"))
               getPendingPositions()
               break
             case 8:
@@ -129,25 +132,33 @@ export const useWebSocket = () => {
                   .getState()
                   .pendingOrders?.filter((it) => it.id !== data.posId),
               })
+              toast.show(t("message.closePositionSuccess"))
               break
             case 9:
               const pendingOrder = useOrderStore
                 .getState()
                 .pendingOrders?.find((it) => it.id === data.posId)
+              toast.show(t("message.closePositionSuccess"))
               computeWallet(pendingOrder)
+              await waitFor(2000)
+              getOpenPositions()
+              useOrderStore.setState({ reloadKey: uuid() })
               break
             default:
               const order = useOrderStore
                 .getState()
                 .orders?.find((it) => it.id === data.posId)
               computeWallet(order)
+              toast.show(t("message.closePositionSuccess"))
+              await waitFor(2000)
+              useOrderStore.setState({ reloadKey: uuid() })
           }
           break
         case "pong":
           lastMessageTimeRef.current = Date.now()
       }
     }
-  }, [quotes, sendMessage])
+  }, [quotes, sendMessage, t])
 
   const disconnect = useCallback(() => {
     websocketRef?.current?.close()
