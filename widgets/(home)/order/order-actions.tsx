@@ -28,19 +28,78 @@ export const OrderActions: FC = () => {
       toast.show(t("message.orderSuccess"))
     },
   })
-  const { action, order, enablePending, disabled } = useQuotesStore(
+  const {
+    action,
+    order,
+    enablePending,
+    disabled,
+    enableCloseLoss,
+    enableCloseProfit,
+  } = useQuotesStore(
     (state) => ({
       action: state.action,
       order: state.order,
       enablePending: state.enablePending,
+      enableCloseLoss: state.enableCloseLoss,
+      enableCloseProfit: state.enableCloseProfit,
       disabled:
         !state.currentFuture?.isDeal ||
         !state.quotes[state.currentFuture?.futuresCode!],
     }),
     shallow
   )
+
   if (disabled) {
     return null
+  }
+  const checkOrderValid = () => {
+    const {
+      order,
+      currentFuture,
+      action,
+      enableCloseLoss,
+      enableCloseProfit,
+      enablePending,
+      quotes,
+    } = useQuotesStore.getState()
+
+    // 基础检查
+    if (
+      !currentFuture?.isDeal ||
+      !order?.position ||
+      (enablePending && !order?.price)
+    ) {
+      return false
+    }
+
+    const quoteData = quotes[currentFuture.futuresCode!]
+    if (!quoteData) {
+      return false
+    }
+
+    // 止盈检查
+    if (enableCloseProfit && order.stopProfitPrice) {
+      const orderPrice = useQuotesStore.getState().getOrderPrice(1)
+      if (
+        (action === "buy" && orderPrice > order.stopProfitPrice) ||
+        (action === "sell" && orderPrice < order.stopProfitPrice)
+      ) {
+        return false
+      }
+    }
+
+    // 止损检查
+    if (enableCloseLoss && order.stopLossPrice) {
+      const orderPrice = useQuotesStore.getState().getOrderPrice(-1)
+      if (
+        (action === "buy" && orderPrice < order.stopLossPrice) ||
+        (action === "sell" && orderPrice > order.stopLossPrice)
+      ) {
+        return false
+      }
+    }
+
+    return true
   }
   return (
     <YStack p="$md" pb={bottom + 16}>
@@ -54,7 +113,10 @@ export const OrderActions: FC = () => {
               : "destructive"
         }
         disabled={
-          loading || !order?.position || (enablePending && !order?.price)
+          loading ||
+          !checkOrderValid() ||
+          !order?.position ||
+          (enablePending && !order?.price)
         }
         onPress={() => {
           const {

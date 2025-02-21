@@ -6,6 +6,7 @@ import React, {
   Fragment,
   useCallback,
   useEffect,
+  useMemo,
   useRef,
   useState,
 } from "react"
@@ -349,16 +350,15 @@ const Decimal: FC<
   )
 }
 
-const Digit: FC<
-  Omit<InputProps, "onChange" | "value"> & {
-    value?: number
-    onChange: (v?: number) => void
-    step?: number
-    min?: number
-    max?: number
-    precision?: number
-  }
-> = ({
+interface DigitProps extends Omit<InputProps, "onChange" | "value"> {
+  value?: number
+  onChange: (v?: number) => void
+  step?: number
+  min?: number
+  max?: number
+  precision?: number
+}
+const Digit: FC<DigitProps> = ({
   value,
   min = 0,
   max = 999999999,
@@ -368,84 +368,117 @@ const Digit: FC<
   editable = true,
   ...props
 }) => {
-  const onSubmit = (value?: number) => {
-    if (_.isUndefined(value)) {
-      onChange(undefined)
-      return
-    }
+  // 1. 优化正则表达式
+  const patterns = useMemo(
+    () => ({
+      // 允许输入过程状态
+      input: new RegExp(`^\\d*\\.?\\d{0,${precision}}$|^\\d+\\.$`),
+      // 验证最终值
+      valid: new RegExp(`^\\d+(\\.\\d{0,${precision}})?$`),
+    }),
+    [precision]
+  )
 
-    if (value < min) {
-      toast.show(t("message.minReached"))
-      onChange(_.round(min, precision))
-      return
-    }
-    if (max && value > max) {
-      onChange(_.round(max, precision))
-      toast.show(t("message.maxReached"))
-      return
-    }
-    onChange(_.round(value, precision))
-  }
-  const regex = new RegExp(`^\\d*\\.?\\d{0,${precision}}$`)
+  // 2. 优化值格式化
+  const formatValue = useCallback(
+    (num?: number) => {
+      if (_.isUndefined(num)) return ""
+      return Number(num.toFixed(precision).toString()).toString()
+    },
+    [precision]
+  )
+
+  // 3. 优化值规范化
+  const normalizeValue = useCallback(
+    (value?: number) => {
+      if (_.isUndefined(value)) return undefined
+      const rounded = _.round(value, precision)
+      return _.clamp(rounded, min, max)
+    },
+    [min, max, precision]
+  )
+
+  // 4. 状态管理
+  const [displayValue, setDisplayValue] = useState(() => formatValue(value))
+
+  // 5. 优化值更新逻辑
+  const onValueChange = useCallback(
+    (newValue?: number, options?: { format?: boolean }) => {
+      const normalizedValue = normalizeValue(newValue)
+
+      if (!_.isUndefined(normalizedValue)) {
+        // 只在非编辑状态下格式化显示
+        setDisplayValue(
+          options?.format ? formatValue(normalizedValue) : String(newValue)
+        )
+
+        if (normalizedValue !== newValue) {
+          if (normalizedValue === max) {
+            setDisplayValue(formatValue(max))
+            toast.show(t("message.maxReached"))
+          } else if (normalizedValue === min) {
+            setDisplayValue(formatValue(min))
+            toast.show(t("message.minReached"))
+          }
+        }
+      } else {
+        setDisplayValue("")
+      }
+
+      onChange(normalizedValue)
+    },
+    [normalizeValue, formatValue, onChange, min, max]
+  )
 
   return (
     <XStack h={56} w="100%" boc="$border" br="$sm" bw={1} ai="center">
       <Button
         type="icon"
         disabled={!editable}
-        onPress={() => {
-          onSubmit((value ?? 0) - (step ?? 0))
-        }}
+        onPress={() => onValueChange((value ?? 0) - step, { format: true })}
       >
         <Icon name="minus" />
       </Button>
+
       <TextInput
+        {...props}
         placeholderTextColor="transparent"
         underlineColorAndroid={undefined}
         keyboardType="numeric"
-        value={`${!_.isUndefined(value ?? min) ? _.round(value ?? min ?? 0, precision) : ""}`}
-        onChangeText={(e) => {
-          if (!e) {
-            onSubmit(undefined)
+        value={displayValue}
+        onChangeText={(text) => {
+          if (!text) {
+            onValueChange(undefined)
             return
           }
-          // 验证输入格式
-          if (!regex.test(e)) {
-            return
-          }
-          if (max && parseFloat(e) > parseFloat(`${max}`)) {
-            onSubmit(parseFloat(`${max}`))
-            toast.show(t("message.maxReached"))
-            return
-          }
-          const v = parseFloat(e)
-          if (_.isNumber(v) && !_.isNaN(v)) {
-            onSubmit(v)
+
+          if (!patterns.input.test(text)) return
+
+          const numValue = parseFloat(text)
+          if (text.endsWith(".") || text.endsWith("0")) {
+            setDisplayValue(text)
+            if (!_.isNaN(numValue)) {
+              onChange(numValue)
+            }
+          } else {
+            onValueChange(numValue)
           }
         }}
         keyboardAppearance="dark"
-        style={[
-          styles.container,
-          styles.digit,
-          {
-            textAlign: "center",
-          },
-        ]}
-        {...props}
+        style={[styles.container, styles.digit, { textAlign: "center" }]}
+        editable={editable}
       />
+
       <Button
         type="icon"
         disabled={!editable}
-        onPress={() => {
-          onSubmit((value ?? 0) + (step ?? 0))
-        }}
+        onPress={() => onValueChange((value ?? 0) + step, { format: true })}
       >
         <Icon name="plus" />
       </Button>
     </XStack>
   )
 }
-
 export const Input = Object.assign(InputBase, {
   Password,
   OTP,

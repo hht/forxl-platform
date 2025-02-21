@@ -49,7 +49,7 @@ export const TradeVolume: FC<{ future?: FuturesDetail }> = ({ future }) => {
       </XStack>
       <Input.Digit
         value={order?.position}
-        min={future?.futuresParam?.minVolume}
+        min={0}
         max={future?.futuresParam?.maxVolume}
         step={0.01}
         editable={!disabled}
