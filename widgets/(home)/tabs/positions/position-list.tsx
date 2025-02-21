@@ -23,7 +23,7 @@ import {
 } from "~/components"
 import { getDate, getRecentDate } from "~/hooks/useLocale"
 import { CACHE_KEY, useRequest } from "~/hooks/useRequest"
-import { useOrderStore, useQuotesStore } from "~/hooks/useStore"
+import { useOrderStore, useQuotesStore, useSymbolStore } from "~/hooks/useStore"
 import { subscribeQuotes } from "~/hooks/useWebsocket"
 import {
   dayjs,
@@ -79,16 +79,16 @@ const EditableListItem: FC<{ data: Position }> = ({ data }) => {
         f={1}
         gap="$sm"
         onPress={() => {
-          const price =
-            useQuotesStore.getState().quotes[data.futuresCode!]?.Bid ??
-            data.price
           useQuotesStore.setState({
-            activeIndex: 1,
             currentFuture: data as Future,
-            action: "sell",
-            order: { position: 0.01, price },
           })
-          router.push("/order")
+          useSymbolStore.setState({
+            currentSymbol:
+              useSymbolStore.getState().currentSymbol?.symbol ===
+              data.futuresCode
+                ? undefined
+                : { symbol: data.futuresCode!, volatility: data.volatility! },
+          })
         }}
       >
         <Text bold>{data.futuresShow}</Text>

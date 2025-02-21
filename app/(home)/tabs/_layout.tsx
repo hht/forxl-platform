@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next"
 
 import { Icon } from "~/components"
 import colors from "~/theme/colors"
+import { FuturesChart } from "~/widgets/(home)/tabs/trade/futures-chart"
 
 const Routes = [
   { name: "home", href: "dashboard/index", icon: "home" },
@@ -44,6 +45,7 @@ export default function Layout() {
           />
         ))}
       </Tabs>
+      <FuturesChart />
     </Fragment>
   )
 }

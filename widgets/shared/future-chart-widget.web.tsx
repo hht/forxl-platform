@@ -11,6 +11,8 @@ import _ from "lodash"
 import React, { FC, useCallback, useEffect, useMemo, useRef } from "react"
 import { shallow } from "zustand/shallow"
 
+import ArrowLeft from "~/assets/images/icon/arrow-left.svg"
+import { Icon } from "~/components"
 import { useQuotesStore } from "~/hooks/useStore"
 
 const getFutureHistories = async (params: {
@@ -189,7 +191,7 @@ export const FutureChartWidget: FC<{
     return () => {
       chart.remove()
     }
-  }, [params.symbol, params.volatility, params.resolution, height])
+  }, [params.symbol, params.volatility, params.resolution, height, getDate])
 
   useEffect(() => {
     if (quotes && seriesRef.current && seriesRef.current.data().length) {

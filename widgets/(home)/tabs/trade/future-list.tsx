@@ -119,6 +119,9 @@ const ListItem: FC<{ data: Future }> = ({ data }) => {
       bbw={1}
       ai="center"
       onPress={() => {
+        useQuotesStore.setState({
+          currentFuture: data,
+        })
         useSymbolStore.setState({
           currentSymbol:
             currentSymbol?.symbol === data.futuresCode
