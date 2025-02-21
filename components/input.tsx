@@ -430,6 +430,15 @@ const Digit: FC<DigitProps> = ({
     [normalizeValue, formatValue, onChange, min, max]
   )
 
+  // 6. 当值变化时更新显示值
+  React.useEffect(() => {
+    if (
+      parseFloat(displayValue).toFixed(precision) === value?.toFixed(precision)
+    ) {
+      return
+    }
+    setDisplayValue(formatValue(value))
+  }, [value, displayValue, formatValue, precision])
   return (
     <XStack h={56} w="100%" boc="$border" br="$sm" bw={1} ai="center">
       <Button
