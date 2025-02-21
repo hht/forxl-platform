@@ -65,7 +65,7 @@ export const ClosePosition: FC<{ activeIndex: number }> = ({ activeIndex }) => {
     <BottomSheet
       ref={ref}
       index={0}
-      title={t("positions.close", { code: position?.futuresCode ?? "" })}
+      title={t("positions.close", { code: position?.futuresShow ?? "" })}
       onDismiss={() => {
         useOrderStore.setState({ willClosePosition: undefined })
       }}

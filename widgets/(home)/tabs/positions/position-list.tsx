@@ -1,41 +1,23 @@
-import { useIsFocused } from "@react-navigation/native"
-import { useInfiniteScroll } from "ahooks"
-import { router } from "expo-router"
-import { FC, Fragment, ReactNode } from "react"
-import { useTranslation } from "react-i18next"
-import { FlatList, Platform, RefreshControl } from "react-native"
-import { XStackProps } from "tamagui"
-import { shallow } from "zustand/shallow"
+import { useIsFocused } from '@react-navigation/native'
+import { useInfiniteScroll } from 'ahooks'
+import { router } from 'expo-router'
+import { FC, Fragment, ReactNode } from 'react'
+import { useTranslation } from 'react-i18next'
+import { FlatList, Platform, RefreshControl } from 'react-native'
+import { XStackProps } from 'tamagui'
+import { shallow } from 'zustand/shallow'
 
-import {
-  getClosedPositions,
-  getOpenPositions,
-  getPendingPositions,
-} from "~/api/trade"
-import {
-  AnimatedFlow,
-  Figure,
-  Icon,
-  Row,
-  Text,
-  XStack,
-  YStack,
-} from "~/components"
-import { getDate, getRecentDate } from "~/hooks/useLocale"
-import { CACHE_KEY, useRequest } from "~/hooks/useRequest"
-import { useOrderStore, useQuotesStore, useSymbolStore } from "~/hooks/useStore"
-import { subscribeQuotes } from "~/hooks/useWebsocket"
-import {
-  dayjs,
-  DEVICE_WIDTH,
-  formatDecimal,
-  formatProfit,
-  uuid,
-} from "~/lib/utils"
-import colors, { toRGBA } from "~/theme/colors"
-import { ListFooterComponent } from "~/widgets/shared/list"
-import { PriceCell } from "~/widgets/shared/price-cell"
-import { ProfitCell } from "~/widgets/shared/profit-cell"
+import { getClosedPositions, getOpenPositions, getPendingPositions } from '~/api/trade'
+import { AnimatedFlow, Figure, Icon, Row, Text, XStack, YStack } from '~/components'
+import { getDate, getRecentDate } from '~/hooks/useLocale'
+import { CACHE_KEY, useRequest } from '~/hooks/useRequest'
+import { useOrderStore, useQuotesStore, useSymbolStore } from '~/hooks/useStore'
+import { subscribeQuotes } from '~/hooks/useWebsocket'
+import { dayjs, DEVICE_WIDTH, formatDecimal, formatProfit, uuid } from '~/lib/utils'
+import colors, { toRGBA } from '~/theme/colors'
+import { ListFooterComponent } from '~/widgets/shared/list'
+import { PriceCell } from '~/widgets/shared/price-cell'
+import { ProfitCell } from '~/widgets/shared/profit-cell'
 
 const ListItem: FC<
   {
@@ -80,12 +62,12 @@ const EditableListItem: FC<{ data: Position }> = ({ data }) => {
         gap="$sm"
         onPress={() => {
           useQuotesStore.setState({
-            currentFuture: data as Future,
+            currentFuture: { ...useQuotesStore.getState().currentFuture, ...data } as Future,
           })
           useSymbolStore.setState({
             currentSymbol:
               useSymbolStore.getState().currentSymbol?.symbol ===
-              data.futuresCode
+                data.futuresCode
                 ? undefined
                 : { symbol: data.futuresCode!, volatility: data.volatility! },
           })
@@ -152,16 +134,16 @@ const ArchivedListItem: FC<{ data: Position; dateVisible?: boolean }> = ({
         <YStack
           gap="$sm"
           onPress={() => {
-            const price =
-              useQuotesStore.getState().quotes[data.futuresCode!]?.Bid ??
-              data.price
             useQuotesStore.setState({
-              activeIndex: 1,
-              currentFuture: data as Future,
-              action: "sell",
-              order: { position: 0.01, price },
+              currentFuture: { ...useQuotesStore.getState().currentFuture, ...data } as Future,
             })
-            router.push("/order")
+            useSymbolStore.setState({
+              currentSymbol:
+                useSymbolStore.getState().currentSymbol?.symbol ===
+                  data.futuresCode
+                  ? undefined
+                  : { symbol: data.futuresCode!, volatility: data.volatility! },
+            })
           }}
         >
           <Text bold>{data.futuresShow}</Text>
@@ -241,8 +223,8 @@ const ListEmptyComponent: FC<{
               type === "closed" && options
                 ? options === "customPeriod"
                   ? `${getDate(from).format(
-                      "MM/DD/YYYY"
-                    )} - ${getDate(to).format("MM/DD/YYYY")}`
+                    "MM/DD/YYYY"
+                  )} - ${getDate(to).format("MM/DD/YYYY")}`
                   : t(`positions.${options}`)
                 : t("positions.lastYear"),
           }
@@ -431,7 +413,7 @@ export const ClosedOrders = () => {
             dateVisible={
               index === 0 ||
               dayjs(item.overTime).format("YYYY-MM-DD") !==
-                dayjs(data?.list?.[index - 1]?.overTime).format("YYYY-MM-DD")
+              dayjs(data?.list?.[index - 1]?.overTime).format("YYYY-MM-DD")
             }
           />
         )}
