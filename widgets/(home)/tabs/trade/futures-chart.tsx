@@ -1,16 +1,16 @@
-import { useIsFocused } from "@react-navigation/native"
-import { router } from "expo-router"
-import { AnimatePresence } from "moti"
-import { FC, useEffect, useMemo, useState } from "react"
-import { useTranslation } from "react-i18next"
-import { StyleSheet } from "react-native"
-import { useSafeAreaInsets } from "react-native-safe-area-context"
-import { shallow } from "zustand/shallow"
+import { useIsFocused } from '@react-navigation/native'
+import { router } from 'expo-router'
+import { AnimatePresence } from 'moti'
+import { FC, useEffect, useMemo, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { StyleSheet } from 'react-native'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { shallow } from 'zustand/shallow'
 
-import { Icon, Moti, Text, XStack } from "~/components"
-import { useQuotesStore, useSymbolStore } from "~/hooks/useStore"
-import colors from "~/theme/colors"
-import { FutureChartWidget } from "~/widgets/shared/future-chart-widget"
+import { Icon, Moti, Text, XStack } from '~/components'
+import { useQuotesStore, useSymbolStore } from '~/hooks/useStore'
+import colors from '~/theme/colors'
+import { FutureChartWidget } from '~/widgets/shared/future-chart-widget'
 
 export const FuturesChart: FC = () => {
   const currentSymbol = useSymbolStore((state) => state.currentSymbol, shallow)
@@ -116,6 +116,33 @@ export const FuturesChart: FC = () => {
                 </Text>
               </XStack>
             ))}
+            <XStack f={1} />
+            <XStack
+              rotate="135deg"
+              hitSlop={16}
+              onPress={() => {
+                useSymbolStore.setState({ currentSymbol: undefined })
+                const data = useQuotesStore.getState().currentFuture
+                if (!data) {
+                  return
+                }
+                const diff =
+                  ((data.volatility ?? 0) * (data.clazzSpread ?? 0)) / 2
+
+                const price =
+                  (useQuotesStore.getState().quotes[data.futuresCode!]?.Bid ??
+                    data.sellPrice) - diff
+                useQuotesStore.setState({
+                  activeIndex: 1,
+                  currentFuture: data,
+                  action: "buy",
+                  order: { position: 0.01, price },
+                })
+                router.push("/order")
+              }}
+            >
+              <Icon name="arrowLeft" color={colors.primary} size={20} />
+            </XStack>
           </XStack>
           {currentSymbol && (
             <FutureChartWidget
@@ -125,35 +152,6 @@ export const FuturesChart: FC = () => {
               height={260}
             />
           )}
-          <XStack
-            pos="absolute"
-            r="$md"
-            b={bottom + 20}
-            rotate="135deg"
-            hitSlop={16}
-            onPress={() => {
-              useSymbolStore.setState({ currentSymbol: undefined })
-              const data = useQuotesStore.getState().currentFuture
-              if (!data) {
-                return
-              }
-              const diff =
-                ((data.volatility ?? 0) * (data.clazzSpread ?? 0)) / 2
-
-              const price =
-                (useQuotesStore.getState().quotes[data.futuresCode!]?.Bid ??
-                  data.sellPrice) - diff
-              useQuotesStore.setState({
-                activeIndex: 1,
-                currentFuture: data,
-                action: "buy",
-                order: { position: 0.01, price },
-              })
-              router.push("/order")
-            }}
-          >
-            <Icon name="arrowLeft" size={20} />
-          </XStack>
         </Moti>
       )}
     </AnimatePresence>

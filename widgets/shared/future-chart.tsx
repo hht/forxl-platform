@@ -1,22 +1,13 @@
 "use dom"
-import axios from "axios"
-import dayjs from "dayjs"
-import utc from "dayjs/plugin/utc"
-import {
-  ColorType,
-  createChart,
-  ISeriesApi,
-  UTCTimestamp,
-} from "lightweight-charts"
-import _ from "lodash"
-import React, { useCallback, useEffect, useRef, useState } from "react"
-import {
-  emit,
-  useNativeMessage,
-  webViewRender,
-} from "react-native-react-bridge/lib/web"
+import axios from 'axios'
+import dayjs from 'dayjs'
+import utc from 'dayjs/plugin/utc'
+import { ColorType, createChart, ISeriesApi, UTCTimestamp } from 'lightweight-charts'
+import _ from 'lodash'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
+import { emit, useNativeMessage, webViewRender } from 'react-native-react-bridge/lib/web'
 
-import "./webview.css"
+import './webview.css'
 
 dayjs.extend(utc)
 
@@ -88,11 +79,11 @@ const Root = () => {
   const chartContainerRef = useRef<HTMLDivElement>(null)
   const [params, setParams] = useState<
     | {
-        symbol: string
-        volatility: number
-        resolution: string | number
-        utcOffset: number
-      }
+      symbol: string
+      volatility: number
+      resolution: string | number
+      utcOffset: number
+    }
     | undefined
   >(undefined)
   const getDate = useCallback(
@@ -117,10 +108,10 @@ const Root = () => {
         if (
           current &&
           quotes.LastTime - (current.time as number) <
-            (_.isString(params?.resolution)
-              ? 24 * 60
-              : (params?.resolution ?? 1)) *
-              60
+          (_.isString(params?.resolution)
+            ? 24 * 60
+            : (params?.resolution ?? 1)) *
+          60
         ) {
           const previous = current as {
             time: number
@@ -292,7 +283,7 @@ const Root = () => {
       chart.remove()
       tooltipEl.remove()
     }
-  }, [params])
+  }, [params, getDate])
 
   return (
     <div
