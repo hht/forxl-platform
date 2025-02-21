@@ -1,41 +1,49 @@
-import { BottomSheetModal } from "@gorhom/bottom-sheet"
-import { router, useSegments } from "expo-router"
-import { FC, useEffect, useRef } from "react"
-import { useTranslation } from "react-i18next"
-import { useSafeAreaInsets } from "react-native-safe-area-context"
-import { shallow } from "zustand/shallow"
+import { BottomSheetModal } from '@gorhom/bottom-sheet'
+import { router, useSegments } from 'expo-router'
+import { FC, useCallback, useEffect, useRef } from 'react'
+import { useTranslation } from 'react-i18next'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { shallow } from 'zustand/shallow'
 
-import { cancelOrder, proceedOrder } from "~/api/trade"
-import { BottomSheet, Button, Text, XStack, YStack } from "~/components"
-import { useRequest } from "~/hooks/useRequest"
-import { useOrderStore, useQuotesStore } from "~/hooks/useStore"
-import { subscribeQuotes } from "~/hooks/useWebsocket"
-import { PriceCell } from "~/widgets/shared/price-cell"
-import { ProfitCell } from "~/widgets/shared/profit-cell"
+import { cancelOrder, proceedOrder } from '~/api/trade'
+import { BottomSheet, Button, Text, toast, XStack, YStack } from '~/components'
+import { useRequest } from '~/hooks/useRequest'
+import { useOrderStore, useQuotesStore } from '~/hooks/useStore'
+import { computeWallet, subscribeQuotes } from '~/hooks/useWebsocket'
+import { PriceCell } from '~/widgets/shared/price-cell'
+import { ProfitCell } from '~/widgets/shared/profit-cell'
 
 export const ClosePosition: FC<{ activeIndex: number }> = ({ activeIndex }) => {
   const { t } = useTranslation()
   const { bottom } = useSafeAreaInsets()
   const segments = useSegments()
   const position = useOrderStore((state) => state.willClosePosition, shallow)
+  const onPositionClosed = useCallback(() => {
+    const order = useOrderStore
+      .getState()
+      .orders?.find((it) => it.id === position?.id)
+    computeWallet(order)
+    useOrderStore.setState({
+      willClosePosition: undefined,
+      pendingOrders: useOrderStore
+        .getState()
+        .pendingOrders?.filter((it) => it.id !== position?.id),
+    })
+    toast.show(t("message.closePositionSuccess"))
+    if (segments.some((it) => it.includes("order") || it.includes("position"))) {
+      router.back()
+    }
+  }, [position?.id, segments, t])
   const { run, loading } = useRequest(proceedOrder, {
     manual: true,
-    onSuccess: () => {
-      if (segments.some((it) => it.includes("order"))) {
-        router.back()
-      }
-    },
+    onSuccess: onPositionClosed,
     onFinally: () => {
       ref.current?.dismiss()
     },
   })
   const { run: cancel, loading: cancelling } = useRequest(cancelOrder, {
     manual: true,
-    onSuccess: () => {
-      if (segments.some((it) => it.includes("order"))) {
-        router.back()
-      }
-    },
+    onSuccess: onPositionClosed,
     onFinally: () => {
       ref.current?.dismiss()
     },

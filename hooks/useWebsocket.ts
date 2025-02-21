@@ -1,19 +1,14 @@
-import { useInterval } from "ahooks"
-import _ from "lodash"
-import { useCallback, useEffect, useRef } from "react"
-import { useTranslation } from "react-i18next"
-import { createWithEqualityFn } from "zustand/traditional"
+import { useInterval } from 'ahooks'
+import _ from 'lodash'
+import { useCallback, useEffect, useRef } from 'react'
+import { useTranslation } from 'react-i18next'
+import { createWithEqualityFn } from 'zustand/traditional'
 
-import {
-  computeProfit,
-  useForxlStore,
-  useOrderStore,
-  useQuotesStore,
-} from "./useStore"
+import { computeProfit, useForxlStore, useOrderStore, useQuotesStore } from './useStore'
 
-import { getOpenPositions, getPendingPositions } from "~/api/trade"
-import { toast } from "~/components"
-import { uuid, waitFor } from "~/lib/utils"
+import { getOpenPositions, getPendingPositions } from '~/api/trade'
+import { toast } from '~/components'
+import { uuid, waitFor } from '~/lib/utils'
 
 export enum ReadyState {
   Connecting = 0,
@@ -24,17 +19,17 @@ export enum ReadyState {
 
 type FutureMessage =
   | {
-      type: "pong"
-      data: "1234"
-    }
+    type: "pong"
+    data: "1234"
+  }
   | {
-      type: "symbol"
-      data: Quotes
-    }
+    type: "symbol"
+    data: Quotes
+  }
   | {
-      type: "watchPositionChange"
-      data: string
-    }
+    type: "watchPositionChange"
+    data: string
+  }
 
 const WS_URL = "wss://ws.forxlmarkets.com/datafeed"
 
@@ -46,7 +41,7 @@ const useWebSocketStore = createWithEqualityFn<WebSocketState>((set) => ({
   quotes: [],
 }))
 
-const computeWallet = async (order?: Position) => {
+export const computeWallet = async (order?: Position) => {
   if (!order) return
   const profit = Number(computeProfit(order).toFixed(2))
   useOrderStore.setState({
@@ -84,7 +79,7 @@ export const useWebSocket = () => {
       }
       websocketRef.current?.send(JSON.stringify(message))
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    } catch (e) {}
+    } catch (e) { }
   }, [])
   const connect = useCallback(async () => {
     if (websocketRef.current) {
@@ -109,7 +104,6 @@ export const useWebSocket = () => {
           useQuotesStore.getState().updateQuotes(message.data)
           break
         case "watchPositionChange":
-          await waitFor(2000)
           // 刷新持仓和钱包信息
           const data = JSON.parse(message?.data ?? "{}") as {
             posId: number
@@ -117,13 +111,11 @@ export const useWebSocket = () => {
           }
           switch (data.state) {
             case 0:
-              await waitFor(2000)
+              await waitFor(800)
               getOpenPositions()
-              toast.show(t("message.orderSuccess"))
               break
             case 7:
-              await waitFor(2000)
-              toast.show(t("message.orderSuccess"))
+              await waitFor(800)
               getPendingPositions()
               break
             case 8:
@@ -132,15 +124,13 @@ export const useWebSocket = () => {
                   .getState()
                   .pendingOrders?.filter((it) => it.id !== data.posId),
               })
-              toast.show(t("message.closePositionSuccess"))
               break
             case 9:
               const pendingOrder = useOrderStore
                 .getState()
                 .pendingOrders?.find((it) => it.id === data.posId)
-              toast.show(t("message.closePositionSuccess"))
               computeWallet(pendingOrder)
-              await waitFor(2000)
+              await waitFor(800)
               getOpenPositions()
               useOrderStore.setState({ reloadKey: uuid() })
               break
@@ -149,8 +139,7 @@ export const useWebSocket = () => {
                 .getState()
                 .orders?.find((it) => it.id === data.posId)
               computeWallet(order)
-              toast.show(t("message.closePositionSuccess"))
-              await waitFor(2000)
+              await waitFor(800)
               useOrderStore.setState({ reloadKey: uuid() })
           }
           break
@@ -158,7 +147,7 @@ export const useWebSocket = () => {
           lastMessageTimeRef.current = Date.now()
       }
     }
-  }, [quotes, sendMessage, t])
+  }, [quotes, sendMessage])
 
   const disconnect = useCallback(() => {
     websocketRef?.current?.close()
