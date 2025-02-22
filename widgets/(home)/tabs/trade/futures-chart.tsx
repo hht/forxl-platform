@@ -121,9 +121,10 @@ export const FuturesChart: FC = () => {
               rotate="135deg"
               hitSlop={16}
               onPress={() => {
+                const currentSymbol = useSymbolStore.getState().currentSymbol
                 useSymbolStore.setState({ currentSymbol: undefined })
                 const data = useQuotesStore.getState().currentFuture
-                if (!data) {
+                if (!data || !currentSymbol) {
                   return
                 }
                 const diff =
@@ -135,7 +136,7 @@ export const FuturesChart: FC = () => {
                 useQuotesStore.setState({
                   activeIndex: 1,
                   currentFuture: data,
-                  action: "buy",
+                  action: currentSymbol.openSafe === 0 ? 'buy' : 'sell',
                   order: { position: 0.01, price },
                 })
                 router.push("/order")

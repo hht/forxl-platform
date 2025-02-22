@@ -186,6 +186,7 @@ export const useSymbolStore = createWithEqualityFn<{
   currentSymbol?: {
     symbol: string
     volatility: number
+    openSafe: number
   }
   mutationFuture?: {
     futuresId: number
@@ -237,47 +238,47 @@ export const useStatementStore = createWithEqualityFn<{
 
 export type DepositResult =
   | {
-      currency: string
-      exchangeRate: string
-      isNew: 0 | 1
-      orderNo: string
-      payAccount: string
-      payBank: string
-      payChannel: number
-      payName: string
-      recordId: string
-      transferAmount: string
-      trc20: null
-      usdAmount: string
-      userPayName: string
-      userPayAccount: string
-      userPayBank: string
-      payType: 3
-    }
+    currency: string
+    exchangeRate: string
+    isNew: 0 | 1
+    orderNo: string
+    payAccount: string
+    payBank: string
+    payChannel: number
+    payName: string
+    recordId: string
+    transferAmount: string
+    trc20: null
+    usdAmount: string
+    userPayName: string
+    userPayAccount: string
+    userPayBank: string
+    payType: 3
+  }
   | {
-      address: string
-      price: number
-      payType: 0
-      orderNo: string
-    }
+    address: string
+    price: number
+    payType: 0
+    orderNo: string
+  }
   | {
-      address: string
-      price: number
-      payType: 1
-      orderNo: string
-    }
+    address: string
+    price: number
+    payType: 1
+    orderNo: string
+  }
   | {
-      address: string
-      price: number
-      payType: 101
-      orderNo: string
-    }
+    address: string
+    price: number
+    payType: 101
+    orderNo: string
+  }
   | {
-      address: string
-      price: number
-      payType: 102
-      orderNo: string
-    }
+    address: string
+    price: number
+    payType: 102
+    orderNo: string
+  }
 
 const INITIAL = {
   depositResult: undefined,
@@ -366,8 +367,8 @@ export const computeProfit = (
       return (
         (profit /
           (futures.openSafe === 0 ? quotes.Bid - diff : quotes.Ask - diff)) *
-          multiplier *
-          position -
+        multiplier *
+        position -
         tradingFee -
         overNightFee
       )

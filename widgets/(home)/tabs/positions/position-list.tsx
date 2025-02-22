@@ -69,7 +69,7 @@ const EditableListItem: FC<{ data: Position, disableProfit?: boolean }> = ({ dat
               useSymbolStore.getState().currentSymbol?.symbol ===
                 data.futuresCode
                 ? undefined
-                : { symbol: data.futuresCode!, volatility: data.volatility! },
+                : { symbol: data.futuresCode!, volatility: data.volatility!, openSafe: data.openSafe! },
           })
         }}
       >
@@ -145,7 +145,7 @@ const ArchivedListItem: FC<{ data: Position; dateVisible?: boolean }> = ({
                 useSymbolStore.getState().currentSymbol?.symbol ===
                   data.futuresCode
                   ? undefined
-                  : { symbol: data.futuresCode!, volatility: data.volatility! },
+                  : { symbol: data.futuresCode!, volatility: data.volatility!, openSafe: data.openSafe! },
             })
           }}
         >
