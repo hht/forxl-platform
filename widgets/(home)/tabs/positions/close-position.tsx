@@ -83,12 +83,12 @@ export const ClosePosition: FC<{ activeIndex: number }> = ({ activeIndex }) => {
           </Text>
           {position ? <PriceCell data={position} /> : null}
         </XStack>
-        <XStack ai="center" jc="space-between" py={12}>
+        {<XStack ai="center" jc="space-between" py={12}>
           <Text caption col="$secondary">
             {t("trade.profitLoss")}
           </Text>
-          {position ? <ProfitCell data={position} /> : null}
-        </XStack>
+          {activeIndex === 0 && position ? <ProfitCell data={position} /> : <Text>--</Text>}
+        </XStack>}
         <Button
           mt="$md"
           isLoading={loading || cancelling}
