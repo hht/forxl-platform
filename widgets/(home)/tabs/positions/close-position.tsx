@@ -6,7 +6,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { shallow } from 'zustand/shallow'
 
 import { cancelOrder, proceedOrder } from '~/api/trade'
-import { BottomSheet, Button, Text, toast, XStack, YStack } from '~/components'
+import { BottomSheet, Button, Row, Text, toast, XStack, YStack } from '~/components'
 import { useRequest } from '~/hooks/useRequest'
 import { useOrderStore, useQuotesStore } from '~/hooks/useStore'
 import { computeWallet, subscribeQuotes } from '~/hooks/useWebsocket'
@@ -87,7 +87,7 @@ export const ClosePosition: FC<{ activeIndex: number }> = ({ activeIndex }) => {
           <Text caption col="$secondary">
             {t("trade.profitLoss")}
           </Text>
-          {activeIndex === 0 && position ? <ProfitCell data={position} /> : <Text>--</Text>}
+          {activeIndex === 0 && position ? <ProfitCell data={position} /> : <Row gap="$sm"><Text>-</Text><Text>-</Text></Row>}
         </XStack>}
         <Button
           mt="$md"

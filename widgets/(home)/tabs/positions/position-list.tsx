@@ -45,7 +45,7 @@ const ListItem: FC<
   )
 }
 
-const EditableListItem: FC<{ data: Position }> = ({ data }) => {
+const EditableListItem: FC<{ data: Position, disableProfit?: boolean }> = ({ data, disableProfit }) => {
   const { t } = useTranslation()
   return (
     <ListItem data={data}>
@@ -74,7 +74,10 @@ const EditableListItem: FC<{ data: Position }> = ({ data }) => {
         }}
       >
         <Text bold>{data.futuresShow}</Text>
-        <ProfitCell data={data} bold />
+        {disableProfit ? <Row gap="$sm">
+          <Text>-</Text>
+          <Text>-</Text>
+        </Row> : <ProfitCell data={data} bold />}
       </YStack>
       <YStack gap="$sm" f={1} ai="flex-start">
         <XStack ai="center" gap="$sm">
@@ -289,6 +292,10 @@ const ListEmptyComponent: FC<{
 const renderItem = ({ item }: { item: Position }) => (
   <EditableListItem data={item} />
 )
+
+const renderPendingItem = ({ item }: { item: Position }) => (
+  <EditableListItem disableProfit data={item} />
+)
 export const OpenOrders = () => {
   const data = useOrderStore((state) => state.orders, shallow)
   const { loading, refresh } = useRequest(getOpenPositions, {
@@ -337,7 +344,7 @@ export const PendingOrders = () => {
     <YStack f={1} w={DEVICE_WIDTH}>
       <FlatList
         data={data}
-        renderItem={renderItem}
+        renderItem={renderPendingItem}
         keyExtractor={keyExtractor}
         contentContainerStyle={{
           flexGrow: 1,

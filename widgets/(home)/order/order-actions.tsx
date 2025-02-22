@@ -15,7 +15,6 @@ export const OrderActions: FC = () => {
   const { loading, run } = useRequest(proceedOrder, {
     manual: true,
     onSuccess: () => {
-      useQuotesStore.setState({ order: { position: 0.01 } })
       toast.show(t("message.orderSuccess"))
     },
   })

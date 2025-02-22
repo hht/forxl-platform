@@ -47,7 +47,10 @@ export const OrderDetail = () => {
               {currentPosition.futuresShow}
             </Text>
           </XStack>
-          <ProfitCell data={currentPosition} fontSize={17} bold />
+          {activeIndex === 1 ? <Row gap="$sm">
+            <Text col="$secondary">-</Text>
+            <Text col="$secondary">-</Text>
+          </Row> : <ProfitCell data={currentPosition} fontSize={17} bold />}
         </XStack>
         <XStack ai="center" jc="space-between" py="$md" bbc="$border" bbw={1}>
           <Text col="$secondary">{data?.futures?.futuresName}</Text>
@@ -119,7 +122,7 @@ export const OrderDetail = () => {
                   0) > 0
                   ? "$primary"
                   : (currentPosition.pureProfit ??
-                      currentPosition.priceProfit! < 0)
+                    currentPosition.priceProfit! < 0)
                     ? "$destructive"
                     : "$secondary"
               }
@@ -138,7 +141,7 @@ export const OrderDetail = () => {
                   0) > 0
                   ? "$primary"
                   : (currentPosition.pureProfit ??
-                        currentPosition.priceProfit!) < 0
+                    currentPosition.priceProfit!) < 0
                     ? "$destructive"
                     : "$secondary"
               }
@@ -148,7 +151,7 @@ export const OrderDetail = () => {
                   currentPosition.priceProfit ??
                   0) /
                   (currentPosition.securityDeposit ?? 1)) *
-                  100
+                100
               )}
               %
             </Text>
@@ -202,17 +205,17 @@ export const OrderDetail = () => {
       <ListItem label={t("trade.closeAtLoss")}>
         {currentPosition.stopLossPrice
           ? formatCurrency(
-              currentPosition.stopLossPrice,
-              currentPosition.volatility
-            )
+            currentPosition.stopLossPrice,
+            currentPosition.volatility
+          )
           : "-"}
       </ListItem>
       <ListItem label={t("trade.closeAtProfit")}>
         {currentPosition.stopProfitPrice
           ? formatCurrency(
-              currentPosition.stopProfitPrice,
-              currentPosition.volatility
-            )
+            currentPosition.stopProfitPrice,
+            currentPosition.volatility
+          )
           : "-"}
       </ListItem>
       <ListItem label={dict.id}>{`${currentPosition.orderSn}`}</ListItem>
