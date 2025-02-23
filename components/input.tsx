@@ -164,7 +164,7 @@ const OTP = ({
   )
   const [focused, setFocused] = useState(false)
   const inputRef = useRef<TextInput>(null)
-  const cursorOpacity = useSharedValue(1)
+  const cursorOpacity = useSharedValue(0)
   const cursorStyle = useAnimatedStyle(() => ({
     opacity: cursorOpacity.value,
   }))
@@ -177,8 +177,8 @@ const OTP = ({
     if (focused) {
       cursorOpacity.value = withRepeat(
         withSequence(
-          withTiming(0, { duration: 500 }),
-          withTiming(1, { duration: 500 })
+          withTiming(1, { duration: 500 }),
+          withTiming(0, { duration: 500 })
         ),
         -1
       )
@@ -231,16 +231,16 @@ const OTP = ({
     }
   }, [disabled])
   useEffect(() => {
-    const showSubscription = Keyboard.addListener("keyboardDidShow", () => {
-      setFocused(true)
-    })
+    // const showSubscription = Keyboard.addListener("keyboardDidShow", () => {
+    //   setFocused(true)
+    // })
     const hideSubscription = Keyboard.addListener("keyboardDidHide", () => {
       setFocused(false)
       inputRef.current?.blur()
     })
 
     return () => {
-      showSubscription.remove()
+      // showSubscription.remove()
       hideSubscription.remove()
     }
   }, [setFocused])

@@ -1,18 +1,15 @@
-import { useUnmount } from "ahooks"
-import { router, Stack } from "expo-router"
-import { useMemo } from "react"
-import { useTranslation } from "react-i18next"
-import { z } from "zod"
-import { createWithEqualityFn } from "zustand/traditional"
+import { useUnmount } from 'ahooks'
+import { router, Stack } from 'expo-router'
+import { useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
+import { z } from 'zod'
+import { createWithEqualityFn } from 'zustand/traditional'
 
-import { sendPasswordChangeEmail } from "~/api/account"
-import { Button, Input, ScrollView, Text, YStack } from "~/components"
-import { useRequest } from "~/hooks/useRequest"
-import { dismissAll } from "~/lib/utils"
-import {
-  LiveSupport,
-  NativeStackNavigationOptions,
-} from "~/widgets/shared/header"
+import { sendPasswordChangeEmail } from '~/api/account'
+import { Button, Input, ScrollView, Text, YStack } from '~/components'
+import { useRequest } from '~/hooks/useRequest'
+import { dismissAll } from '~/lib/utils'
+import { LiveSupport, NativeStackNavigationOptions } from '~/widgets/shared/header'
 
 const ScreenOptions: NativeStackNavigationOptions = {
   title: "",
@@ -73,6 +70,8 @@ export default function Page() {
       <YStack gap="$lg" f={1}>
         <Input
           label={t("anon.email")}
+          keyboardType="email-address"
+          autoCapitalize='none'
           value={email}
           status={errors?.email ? "error" : "success"}
           onChangeText={(email) => useStore.setState({ email })}

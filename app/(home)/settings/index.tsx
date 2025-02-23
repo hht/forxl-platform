@@ -1,14 +1,14 @@
-import { BottomSheetModal } from "@gorhom/bottom-sheet"
-import { router, Stack } from "expo-router"
-import _ from "lodash"
-import { Fragment, useMemo, useRef } from "react"
-import { useTranslation } from "react-i18next"
-import { Platform } from "react-native"
+import { BottomSheetModal } from '@gorhom/bottom-sheet'
+import { router, Stack } from 'expo-router'
+import _ from 'lodash'
+import { Fragment, useMemo, useRef } from 'react'
+import { useTranslation } from 'react-i18next'
+import { Platform } from 'react-native'
 
-import { BottomSheet, ListItem, Picker, ScrollView, Text } from "~/components"
-import { useForxlStore, useWebViewStore } from "~/hooks/useStore"
-import { LANGUAGES, TIMEZONES } from "~/lib/constants"
-import { ClearCacheItem } from "~/widgets/(home)/settings/clear-cache"
+import { BottomSheet, ListItem, Picker, ScrollView, Text } from '~/components'
+import { useForxlStore, useWebViewStore } from '~/hooks/useStore'
+import { LANGUAGES, TIMEZONES } from '~/lib/constants'
+import { ClearCacheItem } from '~/widgets/(home)/settings/clear-cache'
 
 const TIMEZONE_LIST = _.uniqBy(
   TIMEZONES.map((it) => ({
@@ -20,7 +20,7 @@ const TIMEZONE_LIST = _.uniqBy(
 
 export default function Layout() {
   const { t } = useTranslation()
-  const { timezone, language } = useForxlStore((state) => state)
+  const { timezone, language, account } = useForxlStore((state) => state)
   const dict = t("settings", {
     returnObjects: true,
   })
@@ -38,6 +38,13 @@ export default function Layout() {
           addonAfter={<Text col="$primary">{utfOffset}</Text>}
           onPress={() => {
             timeSheetRef.current?.present()
+          }}
+        />
+        <ListItem
+          title={dict.email}
+          addonAfter={<Text col="$secondary">{account?.email}</Text>}
+          onPress={() => {
+            router.push("/settings/change-email")
           }}
         />
         <ListItem

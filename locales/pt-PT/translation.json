@@ -124,7 +124,9 @@
     "gaRequired": "Por favor, ative o Google Authenticator primeiro",
     "kycRequired": "Por favor, complete o KYC primeiro",
     "samePassword": "A nova senha não pode ser a mesma que a senha antiga",
-    "retry": "Please try after {{time}} seconds"
+    "retry": "Please try after {{time}} seconds",
+    "email": "You must enter a valid email address",
+    "countdown": "Resend in {{time}} seconds"
   },
   "home": {
     "news": "Notícias do Mercado",

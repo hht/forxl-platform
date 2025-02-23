@@ -124,7 +124,9 @@
     "gaRequired": "Sila aktifkan 2FA terlebih dahulu",
     "kycRequired": "Sila lengkapkan KYC terlebih dahulu",
     "samePassword": "Kata laluan baru tidak boleh sama dengan kata laluan lama",
-    "retry": "Please try after {{time}} seconds"
+    "retry": "Please try after {{time}} seconds",
+    "email": "You must enter a valid email address",
+    "countdown": "Resend in {{time}} seconds"
   },
   "home": {
     "news": "Berita Pasaran",

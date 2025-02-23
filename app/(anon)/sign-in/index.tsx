@@ -1,25 +1,14 @@
-import { useUnmount } from "ahooks"
-import { Link, Stack } from "expo-router"
-import { useMemo } from "react"
-import { useTranslation } from "react-i18next"
-import { z } from "zod"
-import { createWithEqualityFn } from "zustand/traditional"
+import { useUnmount } from 'ahooks'
+import { Link, Stack } from 'expo-router'
+import { useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
+import { z } from 'zod'
+import { createWithEqualityFn } from 'zustand/traditional'
 
-import { signIn } from "~/api/account"
-import {
-  Button,
-  Input,
-  Screen,
-  ScrollView,
-  Text,
-  XStack,
-  YStack,
-} from "~/components"
-import { useRequest } from "~/hooks/useRequest"
-import {
-  LiveSupport,
-  NativeStackNavigationOptions,
-} from "~/widgets/shared/header"
+import { signIn } from '~/api/account'
+import { Button, Input, ScrollView, Text, XStack, YStack } from '~/components'
+import { useRequest } from '~/hooks/useRequest'
+import { LiveSupport, NativeStackNavigationOptions } from '~/widgets/shared/header'
 
 const ScreenOptions: NativeStackNavigationOptions = {
   title: "",
@@ -92,6 +81,8 @@ export default function Page() {
         <Input
           label={t("anon.email")}
           value={email}
+          keyboardType="email-address"
+          autoCapitalize='none'
           status={errors?.email ? "error" : "success"}
           onChangeText={(email) => useStore.setState({ email })}
           message={errors?.email?.[0]}
