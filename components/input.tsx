@@ -1,38 +1,20 @@
-import { useBoolean } from "ahooks"
-import _ from "lodash"
-import { MotiText as AnimatedText, MotiView as AnimatedView } from "moti"
-import React, {
-  FC,
-  Fragment,
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react"
-import {
-  Keyboard,
-  Platform,
-  StyleSheet,
-  TextInput,
-  TextInputProps,
-} from "react-native"
+import { useBoolean } from 'ahooks'
+import _ from 'lodash'
+import { MotiText as AnimatedText, MotiView as AnimatedView } from 'moti'
+import React, { FC, Fragment, useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { Keyboard, Platform, StyleSheet, TextInput, TextInputProps } from 'react-native'
 import Animated, {
-  useAnimatedStyle,
-  useSharedValue,
-  withRepeat,
-  withSequence,
-  withTiming,
-} from "react-native-reanimated"
-import { XStack, YStack } from "tamagui"
+  useAnimatedStyle, useSharedValue, withRepeat, withSequence, withTiming
+} from 'react-native-reanimated'
+import { XStack, YStack } from 'tamagui'
 
-import { Button } from "./button"
-import { Icon } from "./icon"
-import { Text } from "./text"
-import { toast } from "./toast"
+import { Button } from './button'
+import { Icon } from './icon'
+import { Text } from './text'
+import { toast } from './toast'
 
-import { DEVICE_WIDTH, t } from "~/lib/utils"
-import colors from "~/theme/colors"
+import { DEVICE_WIDTH, t } from '~/lib/utils'
+import colors from '~/theme/colors'
 
 interface InputProps extends TextInputProps {
   addonAfter?: React.ReactNode
@@ -316,22 +298,23 @@ const Decimal: FC<
   return (
     <InputBase
       value={`${value ?? ""}`}
-      keyboardType="numeric"
+      keyboardType="decimal-pad"
       onChangeText={(e) => {
         if (!e || e === "") {
           onChange(undefined)
           return
         }
+        const value = e.replace(/,/g, '.')
         // 验证输入格式
-        if (!AMOUNT_REGEX.test(e)) {
+        if (!AMOUNT_REGEX.test(value)) {
           return
         }
-        if (max && parseFloat(e) > parseFloat(`${max}`)) {
+        if (max && parseFloat(value) > parseFloat(`${max}`)) {
           onChange(parseFloat(`${max}`))
           toast.show(t("message.maxReached"))
           return
         }
-        const v = parseFloat(e)
+        const v = parseFloat(value)
         if (_.isNumber(v) && !_.isNaN(v)) {
           onChange(v)
         }
@@ -453,19 +436,19 @@ const Digit: FC<DigitProps> = ({
         {...props}
         placeholderTextColor="transparent"
         underlineColorAndroid={undefined}
-        keyboardType="numeric"
+        keyboardType="decimal-pad"
         value={displayValue}
         onChangeText={(text) => {
           if (!text) {
             onValueChange(undefined)
             return
           }
+          const value = text.replace(/,/g, '.')
+          if (!patterns.input.test(value)) return
 
-          if (!patterns.input.test(text)) return
-
-          const numValue = parseFloat(text)
-          if (text.endsWith(".") || text.endsWith("0")) {
-            setDisplayValue(text)
+          const numValue = parseFloat(value)
+          if (value.endsWith(".") || value.endsWith("0")) {
+            setDisplayValue(value)
             if (!_.isNaN(numValue)) {
               onChange(numValue)
             }
