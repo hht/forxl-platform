@@ -1,13 +1,14 @@
 import { useUnmount } from 'ahooks'
-import { Link, Stack } from 'expo-router'
+import { Link, router, Stack } from 'expo-router'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { z } from 'zod'
 import { createWithEqualityFn } from 'zustand/traditional'
 
-import { signIn } from '~/api/account'
+import { getProfile, signIn } from '~/api/account'
 import { Button, Input, ScrollView, Text, XStack, YStack } from '~/components'
 import { useRequest } from '~/hooks/useRequest'
+import { useForxlStore } from '~/hooks/useStore'
 import { LiveSupport, NativeStackNavigationOptions } from '~/widgets/shared/header'
 
 const ScreenOptions: NativeStackNavigationOptions = {
@@ -40,14 +41,13 @@ export default function Page() {
   const scheme = useMemo(
     () =>
       z.object({
-        email: z.string(),
-        // email: z.string().email(matches.email),
-        password: z.string(),
-        // .min(8, matches.length)
-        // .max(12, matches.length)
-        // .regex(/[A-Za-z]/, matches.containsLetter)
-        // .regex(/[!@#$%^&*_\-]/, matches.containsSpecial)
-        // .regex(/[0-9]/, matches.containsNumber),
+        email: z.string().email(matches.email),
+        password: z.string()
+          .min(8, matches.length)
+          .max(12, matches.length)
+          .regex(/[A-Za-z]/, matches.containsLetter)
+          .regex(/[!@#$%^&*_\-]/, matches.containsSpecial)
+          .regex(/[0-9]/, matches.containsNumber),
       }),
     [matches]
   )
@@ -60,6 +60,14 @@ export default function Page() {
 
   const { run, loading } = useRequest(() => signIn({ email, password }), {
     manual: true,
+    onSuccess: async ({ user, userNumber, code }) => {
+      if (code === 1502) {
+        router.push(`/verify-email?email=${email}`)
+        return
+      }
+      useForxlStore.setState({ userNumber, account: user })
+      await getProfile()
+    }
   })
 
   useUnmount(() => {

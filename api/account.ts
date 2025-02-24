@@ -1,6 +1,6 @@
-import { request } from "~/hooks/useRequest"
-import { useForxlStore } from "~/hooks/useStore"
-import { i18n } from "~/lib/utils"
+import { request } from '~/hooks/useRequest'
+import { useForxlStore } from '~/hooks/useStore'
+import { i18n } from '~/lib/utils'
 
 type SignUpParams = {
   /**
@@ -25,14 +25,13 @@ type SignUpParams = {
  * 用户登录接口
  */
 export const signIn = async (params: { email: string; password: string }) => {
-  const { user, userNumber } = await request<
-    { pwdMatches?: boolean; user?: Account; userNumber?: string },
+  const { user, userNumber, code } = await request<
+    { pwdMatches?: boolean; user?: Account; userNumber?: string, code?: number },
     { user: { code: string; pwd: string } }
   >("/other/userLogin", "POST", {
     user: { code: params.email, pwd: params.password },
   })
-  useForxlStore.setState({ userNumber, account: user })
-  await getProfile()
+  return { user, userNumber, code }
 }
 
 /**

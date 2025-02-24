@@ -1,11 +1,11 @@
-import { useRequest as useRequestBase } from "ahooks"
-import { Options, Plugin, Service } from "ahooks/lib/useRequest/src/types"
-import axios from "axios"
+import { useRequest as useRequestBase } from 'ahooks'
+import { Options, Plugin, Service } from 'ahooks/lib/useRequest/src/types'
+import axios from 'axios'
 
-import { useForxlStore } from "./useStore"
+import { useForxlStore } from './useStore'
 
-import { toast } from "~/components"
-import { i18n } from "~/lib/utils"
+import { toast } from '~/components'
+import { i18n } from '~/lib/utils'
 
 export const CACHE_KEY = {
   USER: "/user/getUser",
@@ -32,10 +32,10 @@ export const BASE_URL = "https://api.forxlmarkets.com"
 
 type Response<T> =
   | {
-      code?: number
-      msg?: string
-      data?: T
-    }
+    code?: number
+    msg?: string
+    data?: T
+  }
   | T
 
 export const request = async <T, U>(
@@ -53,14 +53,14 @@ export const request = async <T, U>(
       },
       ...(method === "GET"
         ? {
-            params: {
-              ...body,
-              userNumber: useForxlStore.getState().userNumber,
-            },
-          }
+          params: {
+            ...body,
+            userNumber: useForxlStore.getState().userNumber,
+          },
+        }
         : {
-            data: { ...body, userNumber: useForxlStore.getState().userNumber },
-          }),
+          data: { ...body, userNumber: useForxlStore.getState().userNumber },
+        }),
     })
     .then((res) => res.data)
     .then((res) => {
@@ -68,6 +68,9 @@ export const request = async <T, U>(
         if (res.code === 502) {
           useForxlStore.setState({ userNumber: "" })
           throw new Error(res.msg)
+        }
+        if (res.code === 1502) {
+          return { ...res.data, code: 1502 } as T
         }
         if (res.code !== 100) {
           throw new Error(res.msg)
