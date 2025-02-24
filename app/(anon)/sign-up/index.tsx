@@ -1,10 +1,11 @@
-import { useUnmount } from 'ahooks'
+import { useDebounceFn, useUnmount } from 'ahooks'
 import { router, Stack } from 'expo-router'
 import { useMemo } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import { z } from 'zod'
 import { createWithEqualityFn } from 'zustand/traditional'
 
+import { validateInviteCode } from '~/api/account'
 import { Button, Input, ScrollView, Text, YStack } from '~/components'
 import { i18n } from '~/lib/utils'
 import { LiveSupport, NativeStackNavigationOptions } from '~/widgets/shared/header'
@@ -20,6 +21,7 @@ interface Store {
   password: string
   confirm: string
   inviteCode: string
+  validated?: boolean
 }
 
 const INITIAL = {
@@ -32,7 +34,7 @@ const INITIAL = {
 export const useStore = createWithEqualityFn<Store>()((set) => INITIAL)
 
 export default function Page() {
-  const { email, inviteCode } = useStore()
+  const { email, inviteCode, validated } = useStore()
   const { t } = useTranslation("translation")
   const matches = t("anon.matches", {
     returnObjects: true,
@@ -44,6 +46,21 @@ export default function Page() {
         inviteCode: z.string().min(6, matches.inviteCode),
       }),
     [matches]
+  )
+
+  const { run: validateCode } = useDebounceFn(
+    async (code?: string) => {
+      if (!code || code.length < 6) {
+        return
+      }
+      try {
+        const validated = await validateInviteCode(code)
+        useStore.setState({ validated })
+      } catch (error) {
+        useStore.setState({ validated: false })
+      }
+    },
+    { wait: 500 }
   )
 
   const { success, error } = scheme.safeParse({
@@ -80,9 +97,12 @@ export default function Page() {
         <Input
           label={t("anon.inviteCode")}
           value={inviteCode}
-          status={errors?.inviteCode ? "error" : "success"}
-          onChangeText={(inviteCode) => useStore.setState({ inviteCode })}
-          message={errors?.inviteCode?.[0]}
+          status={((!!errors?.inviteCode) || !validated) ? "error" : "success"}
+          onChangeText={(inviteCode) => {
+            useStore.setState({ inviteCode })
+            validateCode(inviteCode)
+          }}
+          message={errors?.inviteCode?.[0] ?? (validated ? undefined : t("anon.matches.inviteCode"))}
         />
       </YStack>
       <YStack gap="$md" ai="center" pb={32}>
@@ -113,7 +133,7 @@ export default function Page() {
         </Text>
         <Button
           w="100%"
-          disabled={!success}
+          disabled={!success || !validated}
           onPress={() => {
             router.push("/(anon)/create-password")
           }}

@@ -62,6 +62,15 @@ export const register = async (params: SignUpParams) => {
   })
 }
 
+
+export const validateInviteCode = async (code: string) => {
+  return await request<boolean, { inviteCode: string }>(
+    `/user/validInviteCode?inviteCode=${code}`,
+    "POST"
+  )
+}
+
+
 /**
  * 用户信息查询
  */

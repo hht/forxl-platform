@@ -1,17 +1,13 @@
-import * as Linking from "expo-linking"
-import { router, Stack, useLocalSearchParams } from "expo-router"
-import { useTranslation } from "react-i18next"
+import * as Linking from 'expo-linking'
+import { router, Stack, useLocalSearchParams } from 'expo-router'
+import { useTranslation } from 'react-i18next'
 
-import { Button, Figure, Screen, Text, toast, YStack } from "~/components"
-import { t } from "~/lib/utils"
-import {
-  BrandTitle,
-  NativeStackNavigationOptions,
-} from "~/widgets/shared/header"
+import { Button, Figure, Screen, Text, toast, YStack } from '~/components'
+import { t } from '~/lib/utils'
+import { BrandTitle, NativeStackNavigationOptions } from '~/widgets/shared/header'
 
 const ScreenOptions: NativeStackNavigationOptions = {
   headerTitle: () => <BrandTitle />,
-  headerLeft: () => null,
 }
 
 const openInbox = async (email: string) => {
