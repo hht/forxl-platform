@@ -169,7 +169,7 @@ export default function Page() {
                         <Row w="100%" gap="$sm" fw="wrap">
                             <Text col="$secondary">{t("settings.changeEmailStepFour")}</Text>
                             <GetCodeButton
-                                email={email}
+                                email={code}
                                 type={3}
                                 disabled={!code || !verified || !success}
                             ></GetCodeButton>
