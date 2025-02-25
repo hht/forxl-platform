@@ -1,13 +1,9 @@
-import {
-  router,
-  useNavigationContainerRef,
-  useRootNavigationState,
-} from "expo-router"
-import { useEffect } from "react"
+import { router, useNavigationContainerRef, useRootNavigationState } from 'expo-router'
+import { useEffect } from 'react'
 
-import { useLocaleCalendar } from "~/hooks/useLocale"
-import { useForxlStore } from "~/hooks/useStore"
-import { dismissAll } from "~/lib/utils"
+import { useLocaleCalendar } from '~/hooks/useLocale'
+import { useForxlStore } from '~/hooks/useStore'
+import { dismissAll } from '~/lib/utils'
 
 export const AccountDetector = () => {
   const userNumber = useForxlStore((state) => state.userNumber)
@@ -21,7 +17,8 @@ export const AccountDetector = () => {
         router.replace("/tabs/dashboard")
         return
       }
-      if (rootNavigation.current?.getCurrentRoute()?.name !== "index") {
+      console.log(rootNavigation.current?.getCurrentRoute()?.name)
+      if (!["index", 'sign-in/index'].includes(rootNavigation.current?.getCurrentRoute()?.name ?? '')) {
         dismissAll()
         router.replace("/")
       }
