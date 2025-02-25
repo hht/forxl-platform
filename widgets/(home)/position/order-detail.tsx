@@ -87,7 +87,7 @@ export const OrderDetail = () => {
         </ListItem>
         <ListItem
           label={dict.openTime}
-        >{`${getDate(currentPosition.createTime).format("MMM DD, YYYY HH:mm")}`}</ListItem>
+        >{`${getDate(currentPosition.createTime).format("MMM DD, YYYY HH:mm:ss")}`}</ListItem>
         <ListItem label={dict.id}>{`${currentPosition.orderSn}`}</ListItem>
       </Fragment>
     )
@@ -198,10 +198,10 @@ export const OrderDetail = () => {
       </ListItem>
       <ListItem
         label={dict.openTime}
-      >{`${getDate(currentPosition.createTime).format("MMM DD, YYYY HH:mm")}`}</ListItem>
+      >{`${getDate(currentPosition.createTime).format("MMM DD, YYYY HH:mm:ss")}`}</ListItem>
       <ListItem
         label={dict.closeTime}
-      >{`${getDate(currentPosition.overTime).format("MMM DD, YYYY HH:mm")}`}</ListItem>
+      >{`${getDate(currentPosition.overTime).format("MMM DD, YYYY HH:mm:ss")}`}</ListItem>
       <ListItem label={t("trade.closeAtLoss")}>
         {currentPosition.stopLossPrice
           ? formatCurrency(

@@ -151,7 +151,7 @@ const ArchivedListItem: FC<{ data: Position; dateVisible?: boolean }> = ({
         >
           <Text bold>{data.futuresShow}</Text>
           <Text col="$secondary">
-            {getDate(data.overTime).format("MMM DD, YYYY HH:mm")}
+            {getDate(data.overTime).format("MMM DD, YYYY HH:mm:ss")}
           </Text>
         </YStack>
         <YStack gap="$sm" f={1}>

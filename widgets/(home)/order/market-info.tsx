@@ -1,14 +1,14 @@
-import { FC, Fragment, useMemo } from "react"
-import { useTranslation } from "react-i18next"
-import { useSafeAreaInsets } from "react-native-safe-area-context"
-import { XStackProps } from "tamagui"
-import { shallow } from "zustand/shallow"
+import { FC, Fragment, useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { XStackProps } from 'tamagui'
+import { shallow } from 'zustand/shallow'
 
-import { AnimatedFlow, Button, Icon, Text, XStack, YStack } from "~/components"
-import { getDate } from "~/hooks/useLocale"
-import { useQuotesStore } from "~/hooks/useStore"
-import { formatDecimal } from "~/lib/utils"
-import colors, { toRGBA } from "~/theme/colors"
+import { AnimatedFlow, Button, Icon, Text, XStack, YStack } from '~/components'
+import { getDate } from '~/hooks/useLocale'
+import { useQuotesStore } from '~/hooks/useStore'
+import { formatDecimal } from '~/lib/utils'
+import colors, { toRGBA } from '~/theme/colors'
 
 const FutureInfo: FC<{ onPress?: () => void }> = ({ onPress }) => {
   const { t } = useTranslation()
@@ -123,7 +123,7 @@ export const MarketInfo: FC<
           <Icon name="moon" size={12}></Icon>
           <Text caption col="$secondary">
             {t("trade.openOn", {
-              date: getDate(openTime).format("YYYY/MM/DD HH:mm"),
+              date: getDate(openTime).format("YYYY/MM/DD HH:mm:ss"),
             })}
           </Text>
         </XStack>

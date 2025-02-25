@@ -1,14 +1,14 @@
-import _ from "lodash"
-import { FC, useState } from "react"
-import { useTranslation } from "react-i18next"
-import { YStack } from "tamagui"
+import _ from 'lodash'
+import { FC, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { YStack } from 'tamagui'
 
-import { OPERATION_DESCRIPTION } from "../tabs/wallet/utils"
+import { OPERATION_DESCRIPTION } from '../tabs/wallet/utils'
 
-import { getWalletStatement } from "~/api/wallet"
-import { Card, Icon, Justified, Text, XStack } from "~/components"
-import { getDate } from "~/hooks/useLocale"
-import { formatCurrency } from "~/lib/utils"
+import { getWalletStatement } from '~/api/wallet'
+import { Card, Icon, Justified, Text, XStack } from '~/components'
+import { getDate } from '~/hooks/useLocale'
+import { formatCurrency } from '~/lib/utils'
 
 export const StatementItem: FC<{
   data: Awaited<ReturnType<typeof getWalletStatement>>["list"][number]
@@ -25,7 +25,7 @@ export const StatementItem: FC<{
       </Justified>
       <Justified>
         <Text caption col="$secondary">
-          {getDate(data.time).format("MMM DD, YYYY HH:mm")}
+          {getDate(data.time).format("MMM DD, YYYY HH:mm:ss")}
         </Text>
         <XStack
           rotate={visible ? "270deg" : "90deg"}
