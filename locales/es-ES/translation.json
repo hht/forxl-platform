@@ -207,7 +207,7 @@
     "volume": "Volumen",
     "closePositionPrompt": "¿Cerrar posición de {{position}}?",
     "lot": "Lote",
-    "profitLoss": "P&L (ganancia más pérdida)",
+    "profitLoss": "P&L (ganancia/pérdida)",
     "openPositionEmptyTitle": "No tienes posiciones abiertas",
     "openPositionEmptyDesc": "Abre nuevas posiciones en la pestaña Comercio o en el chat del instrumento",
     "pendingPositionEmptyTitle": "No tienes posiciones pendientes",

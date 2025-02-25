@@ -207,7 +207,7 @@
     "volume": "Isipadu",
     "closePositionPrompt": "Tutup Posisi {{position}}?",
     "lot": "Lot",
-    "profitLoss": "P&L (keuntungan plus kerugian)",
+    "profitLoss": "P&L (keuntungan/kerugian)",
     "openPositionEmptyTitle": "Anda tiada posisi terbuka",
     "openPositionEmptyDesc": "Buka posisi baru dalam tab Dagangan atau dalam sembang instrumen",
     "pendingPositionEmptyTitle": "Anda tiada posisi tertunda",

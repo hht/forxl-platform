@@ -207,7 +207,7 @@
     "volume": "Volume",
     "closePositionPrompt": "Close {{position}} Position?",
     "lot": "Lot",
-    "profitLoss": "P&L (profit plus loss)",
+    "profitLoss": "P&L (profit/loss)",
     "openPositionEmptyTitle": "You have no open positions",
     "openPositionEmptyDesc": "Open new positions in the Trade tab or in the instrument chat",
     "pendingPositionEmptyTitle": "You have no pending positions",

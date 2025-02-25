@@ -207,7 +207,7 @@
     "volume": "Hacim",
     "closePositionPrompt": "{{position}} Pozisyonunu Kapat?",
     "lot": "Lot",
-    "profitLoss": "P&L (kar artı zarar)",
+    "profitLoss": "P&L (kar/zarar)",
     "openPositionEmptyTitle": "Açık pozisyonunuz yok",
     "openPositionEmptyDesc": "Yeni pozisyonlar açmak için Ticaret sekmesini veya enstrüman sohbetini kullanın",
     "pendingPositionEmptyTitle": "Bekleyen pozisyonunuz yok",
