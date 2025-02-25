@@ -366,6 +366,17 @@ export const PendingOrders = () => {
   )
 }
 
+const FilterRange: FC = () => {
+  const { t } = useTranslation()
+  const { from, to, options } = useOrderStore(state => state, shallow)
+  if (!options) {
+    return null
+  }
+  return <Row>{options !== 'customPeriod' ? <Text bold>{t(`positions.${options}`)}</Text> :
+    <Text bold>{getDate(from).format("MMM DD,YY")} - {getDate(to).format("MMM DD,YY")}</Text>
+  }</Row>
+}
+
 const ListHeaderComponent: FC<{ isEmpty?: boolean }> = ({ isEmpty }) => {
   const profit = useOrderStore((state) => state.totalProfit ?? 0, shallow)
   if (isEmpty) return null
@@ -379,7 +390,10 @@ const ListHeaderComponent: FC<{ isEmpty?: boolean }> = ({ isEmpty }) => {
         py={12}
         bc="$card/60"
         jc="center"
+        ai="center"
+        gap="$sm"
       >
+        <FilterRange />
         <AnimatedFlow value={profit} addonsBefore="$" bold></AnimatedFlow>
       </XStack>
     </XStack>
