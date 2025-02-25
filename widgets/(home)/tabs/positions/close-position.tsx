@@ -87,7 +87,7 @@ export const ClosePosition: FC<{ activeIndex: number }> = ({ activeIndex }) => {
           <Text caption col="$secondary">
             {t("trade.profitLoss")}
           </Text>
-          {activeIndex === 0 && position ? <ProfitCell data={position} /> : <Row gap="$sm"><Text>-</Text><Text>-</Text></Row>}
+          {activeIndex === 0 && position ? <ProfitCell data={position} /> : <YStack><Text>-</Text><Text>-</Text></YStack>}
         </XStack>}
         <Button
           mt="$md"

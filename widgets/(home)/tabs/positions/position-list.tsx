@@ -75,8 +75,8 @@ const EditableListItem: FC<{ data: Position, disableProfit?: boolean }> = ({ dat
       >
         <Text bold>{data.futuresShow}</Text>
         {disableProfit ? <Row gap="$sm">
-          <Text>-</Text>
-          <Text>-</Text>
+          <Text col="$secondary">-</Text>
+          <Text col="$secondary">-</Text>
         </Row> : <ProfitCell data={data} bold />}
       </YStack>
       <YStack gap="$sm" f={1} ai="flex-start">

@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { shallow } from 'zustand/shallow'
 
 import { getFuture } from '~/api/trade'
-import { Icon, Row, Text, XStack } from '~/components'
+import { Icon, Row, Text, XStack, YStack } from '~/components'
 import { getDate } from '~/hooks/useLocale'
 import { useRequest } from '~/hooks/useRequest'
 import { useOrderStore } from '~/hooks/useStore'
@@ -47,10 +47,10 @@ export const OrderDetail = () => {
               {currentPosition.futuresShow}
             </Text>
           </XStack>
-          {activeIndex === 1 ? <Row gap="$sm">
+          {activeIndex === 1 ? <YStack>
             <Text col="$secondary">-</Text>
             <Text col="$secondary">-</Text>
-          </Row> : <ProfitCell data={currentPosition} fontSize={17} bold />}
+          </YStack> : <ProfitCell horizontal={false} data={currentPosition} fontSize={17} bold />}
         </XStack>
         <XStack ai="center" jc="space-between" py="$md" bbc="$border" bbw={1}>
           <Text col="$secondary">{data?.futures?.futuresName}</Text>
@@ -112,7 +112,7 @@ export const OrderDetail = () => {
             -
           </Text>
         ) : (
-          <Row ai="baseline" gap="$xs">
+          <YStack ai="flex-end" gap="$xs">
             <Text
               heading
               bold
@@ -155,7 +155,7 @@ export const OrderDetail = () => {
               )}
               %
             </Text>
-          </Row>
+          </YStack>
         )}
       </XStack>
       <XStack ai="center" jc="space-between" py="$md" bbc="$border" bbw={1}>
