@@ -17,8 +17,7 @@ export const AccountDetector = () => {
         router.replace("/tabs/dashboard")
         return
       }
-      console.log(rootNavigation.current?.getCurrentRoute()?.name)
-      if (!["index", 'sign-in/index'].includes(rootNavigation.current?.getCurrentRoute()?.name ?? '')) {
+      if (!["index", 'auth/sign-in/index'].includes(rootNavigation.current?.getCurrentRoute()?.name ?? '')) {
         dismissAll()
         router.replace("/")
       }

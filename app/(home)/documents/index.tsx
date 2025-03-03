@@ -1,9 +1,9 @@
-import { router, Stack } from "expo-router"
-import { useTranslation } from "react-i18next"
-import { Platform } from "react-native"
+import { router, Stack } from 'expo-router'
+import { useTranslation } from 'react-i18next'
+import { Platform } from 'react-native'
 
-import { ListItem, ScrollView, YStack } from "~/components"
-import { useWebViewStore } from "~/hooks/useStore"
+import { ListItem, ScrollView, YStack } from '~/components'
+import { useWebViewStore } from '~/hooks/useStore'
 
 const LINKS = [
   "product-disclosure-statement",
@@ -28,7 +28,7 @@ export default function Layout() {
             title={it}
             key={index}
             onPress={() => {
-              const uri = `https://www.forxlmarkets.com/#/help/documents/${LINKS[index]}?language=${i18n.language}`
+              const uri = `https://www.forxlmarkets.com/help/documents/${LINKS[index]}?language=${i18n.language}`
               if (Platform.OS === "web") {
                 window.open(uri, "_blank")
                 return

@@ -1,17 +1,10 @@
-import { router, Stack } from "expo-router"
-import { useTranslation } from "react-i18next"
-import { Platform } from "react-native"
+import { router, Stack } from 'expo-router'
+import { useTranslation } from 'react-i18next'
+import { Platform } from 'react-native'
 
-import {
-  Figure,
-  ListItem,
-  ScrollView,
-  Text,
-  XStack,
-  YStack,
-} from "~/components"
-import { useForxlStore, useWebViewStore } from "~/hooks/useStore"
-import { TAWK_TO } from "~/lib/constants"
+import { Figure, ListItem, ScrollView, Text, XStack, YStack } from '~/components'
+import { useForxlStore, useWebViewStore } from '~/hooks/useStore'
+import { TAWK_TO } from '~/lib/constants'
 
 export default function Layout() {
   const { t } = useTranslation()
@@ -40,7 +33,7 @@ export default function Layout() {
             onPress={() => {
               switch (index) {
                 case 2:
-                  const uri = `https://www.forxlmarkets.com/#/help/faq?language=${useForxlStore.getState().language}`
+                  const uri = `https://www.forxlmarkets.com/help/faq?language=${useForxlStore.getState().language}`
                   if (Platform.OS === "web") {
                     window.open(uri, "_blank")
                     return

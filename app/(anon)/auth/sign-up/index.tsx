@@ -112,7 +112,7 @@ export default function Page() {
             components={{
               1: (
                 <WebLink
-                  href={`https://www.forxlmarkets.com/#/help/documents/terms-and-conditions?language=${i18n.language}`}
+                  href={`https://www.forxlmarkets.com/help/documents/terms-and-conditions?language=${i18n.language}`}
                   col="$primary"
                   fos={11}
                   lh={14}
@@ -121,7 +121,7 @@ export default function Page() {
               ),
               2: (
                 <WebLink
-                  href={`https://www.forxlmarkets.com/#/help/documents/privacy-policy?language=${i18n.language}`}
+                  href={`https://www.forxlmarkets.com/help/documents/privacy-policy?language=${i18n.language}`}
                   col="$primary"
                   fos={11}
                   lh={14}

@@ -62,7 +62,7 @@ export default function Layout() {
         <ListItem
           title={dict.about}
           onPress={() => {
-            const uri = `https://www.forxlmarkets.com/#/help/about?language=${useForxlStore.getState().language}`
+            const uri = `https://www.forxlmarkets.com/help/about?language=${useForxlStore.getState().language}`
             if (Platform.OS === "web") {
               window.open(uri, "_blank")
               return

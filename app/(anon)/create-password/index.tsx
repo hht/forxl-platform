@@ -1,20 +1,17 @@
-import { router, Stack } from "expo-router"
-import { useMemo } from "react"
-import { useTranslation } from "react-i18next"
-import { useSafeAreaInsets } from "react-native-safe-area-context"
-import { z } from "zod"
+import { router, Stack } from 'expo-router'
+import { useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { z } from 'zod'
 
-import { useStore } from "../sign-up"
+import { useStore } from '../auth/sign-up'
 
-import { register } from "~/api/account"
-import { Button, Input, ScrollView, Text, YStack } from "~/components"
-import { useRequest } from "~/hooks/useRequest"
-import { dismissAll, i18n } from "~/lib/utils"
-import {
-  LiveSupport,
-  NativeStackNavigationOptions,
-} from "~/widgets/shared/header"
-import { PasswordValidator } from "~/widgets/shared/password-validator"
+import { register } from '~/api/account'
+import { Button, Input, ScrollView, Text, YStack } from '~/components'
+import { useRequest } from '~/hooks/useRequest'
+import { dismissAll, i18n } from '~/lib/utils'
+import { LiveSupport, NativeStackNavigationOptions } from '~/widgets/shared/header'
+import { PasswordValidator } from '~/widgets/shared/password-validator'
 
 const ScreenOptions: NativeStackNavigationOptions = {
   title: "",

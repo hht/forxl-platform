@@ -1,21 +1,18 @@
-import { useUnmount } from "ahooks"
-import { router, Stack } from "expo-router"
-import { useMemo } from "react"
-import { useTranslation } from "react-i18next"
-import { useSafeAreaInsets } from "react-native-safe-area-context"
-import { z } from "zod"
-import { createWithEqualityFn } from "zustand/traditional"
+import { useUnmount } from 'ahooks'
+import { router, Stack } from 'expo-router'
+import { useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { z } from 'zod'
+import { createWithEqualityFn } from 'zustand/traditional'
 
-import { changePassword } from "~/api/account"
-import { Button, Input, ScrollView, Text, toast, YStack } from "~/components"
-import { useRequest } from "~/hooks/useRequest"
-import { useForxlStore } from "~/hooks/useStore"
-import { dismissAll } from "~/lib/utils"
-import {
-  LiveSupport,
-  NativeStackNavigationOptions,
-} from "~/widgets/shared/header"
-import { PasswordValidator } from "~/widgets/shared/password-validator"
+import { changePassword } from '~/api/account'
+import { Button, Input, ScrollView, Text, toast, YStack } from '~/components'
+import { useRequest } from '~/hooks/useRequest'
+import { useForxlStore } from '~/hooks/useStore'
+import { dismissAll } from '~/lib/utils'
+import { LiveSupport, NativeStackNavigationOptions } from '~/widgets/shared/header'
+import { PasswordValidator } from '~/widgets/shared/password-validator'
 
 const ScreenOptions: NativeStackNavigationOptions = {
   title: "",
@@ -70,7 +67,7 @@ export default function Page() {
     onSuccess: () => {
       toast.show(t("settings.passwordChangedSuccessful"))
       dismissAll()
-      router.replace("/(anon)/sign-in")
+      router.replace("/(anon)/auth/sign-in")
       useForxlStore.setState({ userNumber: undefined })
     },
   })

@@ -1,51 +1,23 @@
-import * as Linking from "expo-linking"
-import { router } from "expo-router"
-import _ from "lodash"
-import { AnimatePresence } from "moti"
-import { Fragment, useState } from "react"
-import { useTranslation } from "react-i18next"
-import { ActivityIndicator } from "react-native"
-import { shallow } from "zustand/shallow"
+import * as Linking from 'expo-linking'
+import { router } from 'expo-router'
+import _ from 'lodash'
+import { AnimatePresence } from 'moti'
+import { Fragment, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { ActivityIndicator } from 'react-native'
+import { shallow } from 'zustand/shallow'
 
-import { LEVELS } from "./utils"
+import { LEVELS } from './utils'
 
+import { getPartnerConfig, getPartnerInfo, getReferralList } from '~/api/partner'
 import {
-  getPartnerConfig,
-  getPartnerInfo,
-  getReferralList,
-} from "~/api/partner"
-import {
-  Button,
-  Card,
-  copyToClipboard,
-  Dialog,
-  Figure,
-  Icon,
-  Justified,
-  Moti,
-  Popup,
-  Row,
-  ScrollView,
-  Statistics,
-  Text,
-  XStack,
-  YStack,
-} from "~/components"
-import { formatDate } from "~/hooks/useLocale"
-import { CACHE_KEY, useRequest } from "~/hooks/useRequest"
-import {
-  useForxlStore,
-  usePartnerStore,
-  usePromptStore,
-  useStatementStore,
-} from "~/hooks/useStore"
-import {
-  dayjs,
-  DEVICE_WIDTH,
-  formatCurrency,
-  formatDecimal,
-  uuid,
-} from "~/lib/utils"
+  Button, Card, copyToClipboard, Dialog, Figure, Icon, Justified, Moti, Popup, Row, ScrollView,
+  Statistics, Text, XStack, YStack
+} from '~/components'
+import { formatDate } from '~/hooks/useLocale'
+import { CACHE_KEY, useRequest } from '~/hooks/useRequest'
+import { useForxlStore, usePartnerStore, usePromptStore, useStatementStore } from '~/hooks/useStore'
+import { dayjs, DEVICE_WIDTH, formatCurrency, formatDecimal, uuid } from '~/lib/utils'
 
 const maskEmail = (email?: string) => {
   if (!email) return ""
@@ -119,7 +91,7 @@ export const AccountInfo = () => {
                       hitSlop={10}
                       onPress={() =>
                         Linking.openURL(
-                          "https://www.forxlmarkets.com/#/partnership/become-a-partner"
+                          "https://www.forxlmarkets.com/partnership/become-a-partner"
                         )
                       }
                     >
@@ -144,7 +116,7 @@ export const AccountInfo = () => {
                     h={24}
                     onPress={() => {
                       copyToClipboard(
-                        `https://www.forxlmarkets.com/#/?code=${account?.inviteCode}`
+                        `https://www.forxlmarkets.com/?code=${account?.inviteCode}`
                       )
                     }}
                   >

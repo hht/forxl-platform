@@ -1,13 +1,11 @@
-import { router } from "expo-router"
-import { Stack } from "expo-router/stack"
-import { useTranslation } from "react-i18next"
+import { router } from 'expo-router'
+import { Stack } from 'expo-router/stack'
+import { useTranslation } from 'react-i18next'
 
-import { Button, Figure, Screen, Text, YStack } from "~/components"
+import { Button, Figure, Screen, Text, YStack } from '~/components'
 import {
-  DefaultScreenOptions,
-  LiveSupport,
-  NativeStackNavigationOptions,
-} from "~/widgets/shared/header"
+  DefaultScreenOptions, LiveSupport, NativeStackNavigationOptions
+} from '~/widgets/shared/header'
 
 const ScreenOption: NativeStackNavigationOptions = {
   ...DefaultScreenOptions,
@@ -33,7 +31,7 @@ export default function Page() {
       <YStack gap="$md" pb="$md">
         <Button
           onPress={() => {
-            router.push("/(anon)/sign-in")
+            router.push("/auth/sign-in")
           }}
         >
           {t("anon.login")}
@@ -41,7 +39,7 @@ export default function Page() {
         <Button
           type="accent"
           onPress={() => {
-            router.push("/(anon)/sign-up")
+            router.push("/auth/sign-up")
           }}
         >
           {t("anon.signUp")}

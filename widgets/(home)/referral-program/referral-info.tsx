@@ -1,38 +1,26 @@
-import { router } from "expo-router"
-import * as Sharing from "expo-sharing"
-import { Fragment } from "react"
-import { Trans, useTranslation } from "react-i18next"
+import { router } from 'expo-router'
+import * as Sharing from 'expo-sharing'
+import { Fragment } from 'react'
+import { Trans, useTranslation } from 'react-i18next'
 
-import { getBonusInfo, getPartnerInfo } from "~/api/partner"
+import { getBonusInfo, getPartnerInfo } from '~/api/partner'
 import {
-  Button,
-  Card,
-  copyToClipboard,
-  Figure,
-  Statistics,
-  Text,
-  toast,
-  XStack,
-  YStack,
-} from "~/components"
-import { useRequest } from "~/hooks/useRequest"
-import {
-  useForxlStore,
-  usePartnerStore,
-  useStatementStore,
-} from "~/hooks/useStore"
-import { formatCurrency, t } from "~/lib/utils"
+  Button, Card, copyToClipboard, Figure, Statistics, Text, toast, XStack, YStack
+} from '~/components'
+import { useRequest } from '~/hooks/useRequest'
+import { useForxlStore, usePartnerStore, useStatementStore } from '~/hooks/useStore'
+import { formatCurrency, t } from '~/lib/utils'
 
 const share = async () => {
   if (!(await Sharing.isAvailableAsync())) {
     copyToClipboard(
-      `https://www.forxlmarkets.com/#/?code=${useForxlStore.getState().account?.inviteCode}`
+      `https://www.forxlmarkets.com/?code=${useForxlStore.getState().account?.inviteCode}`
     )
     toast.show(t("message.copiedSuccess"))
     return
   } else {
     await Sharing.shareAsync(
-      `https://www.forxlmarkets.com/#/?code=${useForxlStore.getState().account?.inviteCode}`,
+      `https://www.forxlmarkets.com/?code=${useForxlStore.getState().account?.inviteCode}`,
       {
         dialogTitle: t("anon.title"),
       }
