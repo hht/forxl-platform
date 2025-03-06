@@ -180,4 +180,28 @@ else
     echo "警告: constants.ts 文件不存在: $CONSTANTS_PATH"
 fi
 
+# 复制图标资源
+echo "正在复制图标资源..."
+
+# 复制 Android 图标资源
+ANDROID_ICON_SOURCE="../icons/android"
+ANDROID_RES_PATH="../android/app/src/main/res"
+if [ -d "$ANDROID_ICON_SOURCE" ]; then
+    # 复制 mipmap 资源
+    for dir in "$ANDROID_ICON_SOURCE"/mipmap-*; do
+        if [ -d "$dir" ]; then
+            base_name=$(basename "$dir")
+            mkdir -p "$ANDROID_RES_PATH/$base_name"
+            cp -r "$dir/"* "$ANDROID_RES_PATH/$base_name/"
+        fi
+    done
+    
+    
+    echo "已更新 Android 应用图标"
+else
+    echo "警告: Android 图标源目录不存在: $ANDROID_ICON_SOURCE"
+fi
+
+echo "图标资源更新完成！"
+
 echo "配置更新完成！"

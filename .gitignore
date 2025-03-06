@@ -37,3 +37,4 @@ yarn-error.*
 
 # svgo
 svgo/
+icons/
