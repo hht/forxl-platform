@@ -47,7 +47,7 @@ export default function Page() {
       manual: true,
       onSuccess: () => {
         dismissAll()
-        router.push("/(anon)/verify-email")
+        router.push(`/(anon)/verify-email?email=${email}`)
       },
     }
   )
