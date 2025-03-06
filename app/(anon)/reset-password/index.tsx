@@ -1,18 +1,15 @@
-import { Stack, useLocalSearchParams } from "expo-router"
-import { useMemo } from "react"
-import { useTranslation } from "react-i18next"
-import { z } from "zod"
-import { createWithEqualityFn } from "zustand/traditional"
+import { router, Stack, useLocalSearchParams } from 'expo-router'
+import { useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
+import { z } from 'zod'
+import { createWithEqualityFn } from 'zustand/traditional'
 
-import { resetPassword } from "~/api/account"
-import { Button, Input, ScrollView, Text, YStack } from "~/components"
-import { useRequest } from "~/hooks/useRequest"
-import { dismissAll } from "~/lib/utils"
-import {
-  LiveSupport,
-  NativeStackNavigationOptions,
-} from "~/widgets/shared/header"
-import { PasswordValidator } from "~/widgets/shared/password-validator"
+import { resetPassword } from '~/api/account'
+import { Button, Input, ScrollView, Text, YStack } from '~/components'
+import { useRequest } from '~/hooks/useRequest'
+import { dismissAll } from '~/lib/utils'
+import { LiveSupport, NativeStackNavigationOptions } from '~/widgets/shared/header'
+import { PasswordValidator } from '~/widgets/shared/password-validator'
 
 const ScreenOptions: NativeStackNavigationOptions = {
   title: "",
@@ -69,7 +66,10 @@ export default function Page() {
     },
     {
       manual: true,
-      onSuccess: dismissAll,
+      onSuccess: () => {
+        dismissAll()
+        router.push("/auth/sign-in")
+      },
     }
   )
 
