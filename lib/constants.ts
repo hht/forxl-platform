@@ -21,6 +21,9 @@ export type LocaleProps = {
   timezone: string
 }
 
+export const APP_URL = "https://forxlmarkets.com"
+export const BASE_URL = "https://api.forxlmarkets.com"
+export const WS_URL = "wss://ws.forxlmarkets.com/datafeed"
 export const TAWK_TO = "https://tawk.to/chat/6790da9c825083258e09206f/1ii6tbtqd"
 
 export const LOCALES: LocaleProps[] = [

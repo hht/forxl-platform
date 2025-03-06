@@ -1,19 +1,15 @@
 "use dom"
-import axios from "axios"
-import dayjs from "dayjs"
-import {
-  ColorType,
-  createChart,
-  ISeriesApi,
-  UTCTimestamp,
-} from "lightweight-charts"
-import _ from "lodash"
-import React, { FC, useCallback, useEffect, useMemo, useRef } from "react"
-import { shallow } from "zustand/shallow"
+import axios from 'axios'
+import dayjs from 'dayjs'
+import { ColorType, createChart, ISeriesApi, UTCTimestamp } from 'lightweight-charts'
+import _ from 'lodash'
+import React, { FC, useCallback, useEffect, useMemo, useRef } from 'react'
+import { shallow } from 'zustand/shallow'
 
-import ArrowLeft from "~/assets/images/icon/arrow-left.svg"
-import { Icon } from "~/components"
-import { useQuotesStore } from "~/hooks/useStore"
+import ArrowLeft from '~/assets/images/icon/arrow-left.svg'
+import { Icon } from '~/components'
+import { useQuotesStore } from '~/hooks/useStore'
+import { BASE_URL } from '~/lib/constants'
 
 const getFutureHistories = async (params: {
   symbol: string
@@ -26,7 +22,7 @@ const getFutureHistories = async (params: {
     200 * (_.isString(params.resolution) ? 24 * 60 : params.resolution) * 60
   return await axios
     .request({
-      url: `https://api.forxlmarkets.com/global/history`,
+      url: `${BASE_URL}/global/history`,
       method: "GET",
       params: {
         symbol: params.symbol,
@@ -201,7 +197,7 @@ export const FutureChartWidget: FC<{
       if (
         current &&
         quotes.LastTime - (current.time as number) <
-          (_.isString(resolution) ? 24 * 60 : (resolution ?? 1)) * 60
+        (_.isString(resolution) ? 24 * 60 : (resolution ?? 1)) * 60
       ) {
         const previous = current as {
           time: number

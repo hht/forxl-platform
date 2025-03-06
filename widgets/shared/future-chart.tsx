@@ -9,6 +9,8 @@ import { emit, useNativeMessage, webViewRender } from 'react-native-react-bridge
 
 import './webview.css'
 
+import { BASE_URL } from '~/lib/constants'
+
 dayjs.extend(utc)
 
 const getFutureHistories = async (params: {
@@ -31,7 +33,7 @@ const getFutureHistories = async (params: {
   })
   return await axios
     .request({
-      url: `https://api.forxlmarkets.com/global/history`,
+      url: `${BASE_URL}/global/history`,
       method: "GET",
       params: {
         symbol: params.symbol,

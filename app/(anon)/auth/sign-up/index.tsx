@@ -7,6 +7,7 @@ import { createWithEqualityFn } from 'zustand/traditional'
 
 import { validateInviteCode } from '~/api/account'
 import { Button, Input, ScrollView, Text, YStack } from '~/components'
+import { APP_URL } from '~/lib/constants'
 import { i18n } from '~/lib/utils'
 import { LiveSupport, NativeStackNavigationOptions } from '~/widgets/shared/header'
 import { WebLink } from '~/widgets/shared/link'
@@ -112,7 +113,7 @@ export default function Page() {
             components={{
               1: (
                 <WebLink
-                  href={`https://www.forxlmarkets.com/help/documents/terms-and-conditions?language=${i18n.language}`}
+                  href={`${APP_URL}/help/documents/terms-and-conditions?language=${i18n.language}`}
                   col="$primary"
                   fos={11}
                   lh={14}
@@ -121,7 +122,7 @@ export default function Page() {
               ),
               2: (
                 <WebLink
-                  href={`https://www.forxlmarkets.com/help/documents/privacy-policy?language=${i18n.language}`}
+                  href={`${APP_URL}/help/documents/privacy-policy?language=${i18n.language}`}
                   col="$primary"
                   fos={11}
                   lh={14}

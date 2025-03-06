@@ -3,8 +3,9 @@ import * as ImagePicker from 'expo-image-picker'
 import { Platform } from 'react-native'
 
 import { toast } from '~/components'
-import { BASE_URL, request } from '~/hooks/useRequest'
+import { request } from '~/hooks/useRequest'
 import { DepositResult, useForxlStore } from '~/hooks/useStore'
+import { BASE_URL } from '~/lib/constants'
 import { i18n, t, toInfinite } from '~/lib/utils'
 
 export const getPaymentMethods = async () => {

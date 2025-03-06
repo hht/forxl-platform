@@ -8,6 +8,7 @@ import { computeProfit, useForxlStore, useOrderStore, useQuotesStore } from './u
 
 import { getOpenPositions, getPendingPositions } from '~/api/trade'
 import { toast } from '~/components'
+import { WS_URL } from '~/lib/constants'
 import { uuid, waitFor } from '~/lib/utils'
 
 export enum ReadyState {
@@ -31,7 +32,6 @@ type FutureMessage =
     data: string
   }
 
-const WS_URL = "wss://ws.forxlmarkets.com/datafeed"
 
 type WebSocketState = {
   quotes: string[]

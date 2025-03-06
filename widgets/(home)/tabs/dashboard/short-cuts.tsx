@@ -9,6 +9,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 import { BottomSheet, Card, Icon, IconType, Text, XStack } from '~/components'
 import { useForxlStore, useKYCStore } from '~/hooks/useStore'
+import { APP_URL } from '~/lib/constants'
 import { uuid, waitFor } from '~/lib/utils'
 import colors from '~/theme/colors'
 
@@ -56,7 +57,7 @@ const SHORTCUT_ROUTES: {
   9: {
     icon: "website",
     onPress: () => {
-      Linking.openURL("https://www.forxlmarkets.com/")
+      Linking.openURL(APP_URL)
     },
   },
   10: {

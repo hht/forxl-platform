@@ -11,12 +11,13 @@ import { LEVELS } from './utils'
 
 import { getPartnerConfig, getPartnerInfo, getReferralList } from '~/api/partner'
 import {
-  Button, Card, copyToClipboard, Dialog, Figure, Icon, Justified, Moti, Popup, Row, ScrollView,
-  Statistics, Text, XStack, YStack
+    Button, Card, copyToClipboard, Dialog, Figure, Icon, Justified, Moti, Popup, Row, ScrollView,
+    Statistics, Text, XStack, YStack
 } from '~/components'
 import { formatDate } from '~/hooks/useLocale'
 import { CACHE_KEY, useRequest } from '~/hooks/useRequest'
 import { useForxlStore, usePartnerStore, usePromptStore, useStatementStore } from '~/hooks/useStore'
+import { APP_URL } from '~/lib/constants'
 import { dayjs, DEVICE_WIDTH, formatCurrency, formatDecimal, uuid } from '~/lib/utils'
 
 const maskEmail = (email?: string) => {
@@ -91,7 +92,7 @@ export const AccountInfo = () => {
                       hitSlop={10}
                       onPress={() =>
                         Linking.openURL(
-                          "https://www.forxlmarkets.com/partnership/become-a-partner"
+                          `${APP_URL}/partnership/become-a-partner`
                         )
                       }
                     >
@@ -116,7 +117,7 @@ export const AccountInfo = () => {
                     h={24}
                     onPress={() => {
                       copyToClipboard(
-                        `https://www.forxlmarkets.com/?code=${account?.inviteCode}`
+                        `${APP_URL}/?code=${account?.inviteCode}`
                       )
                     }}
                   >

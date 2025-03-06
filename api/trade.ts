@@ -1,9 +1,10 @@
-import axios from "axios"
-import _ from "lodash"
+import axios from 'axios'
+import _ from 'lodash'
 
-import { BASE_URL, request } from "~/hooks/useRequest"
-import { useForxlStore, useOrderStore, useQuotesStore } from "~/hooks/useStore"
-import { dayjs, i18n, toInfinite, waitFor } from "~/lib/utils"
+import { request } from '~/hooks/useRequest'
+import { useForxlStore, useOrderStore, useQuotesStore } from '~/hooks/useStore'
+import { BASE_URL } from '~/lib/constants'
+import { dayjs, i18n, toInfinite } from '~/lib/utils'
 
 export const getFutures = async (params: GetFuturesParams) => {
   return await request<PaginationResponse<Future>, GetFuturesParams>(
@@ -114,8 +115,8 @@ export const getClosedPositions = async ({
 }) => {
   return await request<
     | (PaginationResponse<Position> & {
-        contratprofits: string
-      })
+      contratprofits: string
+    })
     | null,
     {
       currentPage: number
@@ -226,10 +227,10 @@ export const getFutureHistories = async (params: {
   const to = params.to ?? dayjs().unix()
   const from = Math.min(
     params.from ??
-      to -
-        200 *
-          (_.isString(params.resolution) ? 24 * 60 : params.resolution) *
-          60,
+    to -
+    200 *
+    (_.isString(params.resolution) ? 24 * 60 : params.resolution) *
+    60,
     to - 24 * 60 * 60
   )
   return await request<

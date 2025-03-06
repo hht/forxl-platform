@@ -7,7 +7,7 @@ import { Platform } from 'react-native'
 
 import { BottomSheet, ListItem, Picker, ScrollView, Text } from '~/components'
 import { useForxlStore, useWebViewStore } from '~/hooks/useStore'
-import { LANGUAGES, TIMEZONES } from '~/lib/constants'
+import { APP_URL, LANGUAGES, TIMEZONES } from '~/lib/constants'
 import { ClearCacheItem } from '~/widgets/(home)/settings/clear-cache'
 
 const TIMEZONE_LIST = _.uniqBy(
@@ -62,7 +62,7 @@ export default function Layout() {
         <ListItem
           title={dict.about}
           onPress={() => {
-            const uri = `https://www.forxlmarkets.com/help/about?language=${useForxlStore.getState().language}`
+            const uri = `${APP_URL}/help/about?language=${useForxlStore.getState().language}`
             if (Platform.OS === "web") {
               window.open(uri, "_blank")
               return

@@ -5,6 +5,7 @@ import axios from 'axios'
 import { useForxlStore } from './useStore'
 
 import { toast } from '~/components'
+import { BASE_URL } from '~/lib/constants'
 import { i18n } from '~/lib/utils'
 
 export const CACHE_KEY = {
@@ -27,8 +28,6 @@ export const CACHE_KEY = {
   BANNERS: "/banner/v3/list",
 }
 
-// @ts-ignore next-line
-export const BASE_URL = "https://api.forxlmarkets.com"
 
 type Response<T> =
   | {
