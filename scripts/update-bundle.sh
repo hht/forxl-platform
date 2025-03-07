@@ -135,7 +135,7 @@ if [ -f "$PBXPROJ_PATH" ]; then
     sed -i '' "s/INFOPLIST_KEY_CFBundleDisplayName = \"${OLD_NAME}\";/INFOPLIST_KEY_CFBundleDisplayName = \"${NAME}\";/g" "$PBXPROJ_PATH"
     
     # 更新 productName
-    sed -i '' "s/productName = forxl;/productName = zunkets;/g" "$PBXPROJ_PATH"
+    sed -i '' "s/productName = ${OLD_APP_SCHEME};/productName = ${APP_SCHEME};/g" "$PBXPROJ_PATH"
     
     echo "已更新 iOS bundle identifier 和应用名称"
 else
