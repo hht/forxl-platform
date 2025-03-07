@@ -51,7 +51,8 @@
       "requestHeaders": {
         "expo-runtime-version": "1.0.0",
         "expo-channel-name": "production"
-      }
+      },
+      "enabled": false
     }
   }
 }
