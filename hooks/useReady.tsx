@@ -24,11 +24,11 @@ export const useReady = () => {
   })
   const checkUpdates = useCallback(async () => {
     try {
-      const update = await Updates.checkForUpdateAsync()
-      if (update.isAvailable) {
-        await Updates.fetchUpdateAsync()
-        await Updates.reloadAsync()
-      }
+      // const update = await Updates.checkForUpdateAsync()
+      // if (update.isAvailable) {
+      //   await Updates.fetchUpdateAsync()
+      //   await Updates.reloadAsync()
+      // }
     } catch (error) {
       // console.log("Error checking updates:", error)
     }
