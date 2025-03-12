@@ -1,27 +1,36 @@
 // components/Portal.tsx
-import { AnimatePresence, MotiView } from "moti"
-import { createContext, useEffect, useState } from "react"
-import { StyleSheet } from "react-native"
-import { YStack } from "tamagui"
+import { AnimatePresence, MotiView } from 'moti'
+import { createContext, useEffect, useState } from 'react'
+import { StyleSheet } from 'react-native'
+import { YStack } from 'tamagui'
 
 export const PortalContext = createContext<{
-  mount: (children: React.ReactNode) => void
+  mount: (children: React.ReactNode, closeOnTouchOutside?: boolean, onClose?: () => void) => void
   unmount: () => void
 }>({
-  mount: () => {},
-  unmount: () => {},
+  mount: () => { },
+  unmount: () => { },
 })
 
 export const PortalProvider = ({ children }: { children: React.ReactNode }) => {
   const [portal, setPortal] = useState<React.ReactNode>(null)
   const [visible, setVisible] = useState(false)
+  const [closeConfig, setCloseConfig] = useState<{
+    closeOnTouchOutside: boolean
+    onClose?: () => void
+  }>({ closeOnTouchOutside: false })
+
   useEffect(() => {
     setVisible(!!portal)
   }, [portal])
+
   return (
     <PortalContext.Provider
       value={{
-        mount: (children) => setPortal(children),
+        mount: (children, closeOnTouchOutside = false, onClose) => {
+          setPortal(children)
+          setCloseConfig({ closeOnTouchOutside, onClose })
+        },
         unmount: () => setVisible(false),
       }}
     >
@@ -29,6 +38,11 @@ export const PortalProvider = ({ children }: { children: React.ReactNode }) => {
       <YStack
         style={[styles.container, { backgroundColor: "transparent" }]}
         pointerEvents={visible ? "auto" : "none"}
+      // onPress={() => {
+      // if (closeConfig.closeOnTouchOutside && closeConfig.onClose) {
+      //   closeConfig.onClose()
+      // }
+      // }}
       >
         <AnimatePresence onExitComplete={() => setPortal(null)}>
           {visible && (
@@ -43,7 +57,18 @@ export const PortalProvider = ({ children }: { children: React.ReactNode }) => {
                   pointerEvents: visible ? "auto" : "box-only",
                 },
               ]}
-            />
+
+            >
+              <YStack w="100%" f={1} style={
+                {
+                  pointerEvents: visible ? "auto" : "box-only"
+                }
+              } onPress={() => {
+                if (closeConfig.closeOnTouchOutside && closeConfig.onClose) {
+                  closeConfig.onClose()
+                }
+              }} />
+            </MotiView>
           )}
         </AnimatePresence>
         <AnimatePresence>{visible && portal}</AnimatePresence>

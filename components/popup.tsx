@@ -1,15 +1,8 @@
-import { MotiView } from "moti"
-import {
-  ReactNode,
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useRef,
-} from "react"
-import { BackHandler, Platform, StyleSheet, ViewStyle } from "react-native"
+import { MotiView } from 'moti'
+import { ReactNode, useCallback, useContext, useEffect, useMemo, useRef } from 'react'
+import { BackHandler, Platform, StyleSheet, ViewStyle } from 'react-native'
 
-import { PortalContext } from "./portal"
+import { PortalContext } from './portal'
 
 interface PopupProps {
   visible: boolean
@@ -68,11 +61,11 @@ export const Popup = ({
 
   useEffect(() => {
     if (visible && !hasMounted.current) {
-      mount(animatedContent)
+      mount(animatedContent, closeOnTouchOutside, onClose)
     } else {
       unmount()
     }
-  }, [visible, mount, animatedContent, unmount])
+  }, [visible, mount, animatedContent, unmount, closeOnTouchOutside, onClose])
 
   return null
 }

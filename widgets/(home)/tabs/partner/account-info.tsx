@@ -2,10 +2,11 @@ import * as Linking from 'expo-linking'
 import { router } from 'expo-router'
 import _ from 'lodash'
 import { AnimatePresence } from 'moti'
-import { Fragment, useCallback, useState } from 'react'
+import { Fragment, useCallback, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ActivityIndicator, FlatList } from 'react-native'
 import { shallow } from 'zustand/shallow'
+import { createWithEqualityFn } from 'zustand/traditional'
 
 import { LEVELS } from './utils'
 
@@ -16,7 +17,6 @@ import {
   Button, Card, copyToClipboard, Dialog, Figure, Icon, Justified, Moti, Popup, Row, Statistics,
   Text, XStack, YStack
 } from '~/components'
-import { formatDate } from '~/hooks/useLocale'
 import { CACHE_KEY, useRequest } from '~/hooks/useRequest'
 import { useForxlStore, usePartnerStore, usePromptStore, useStatementStore } from '~/hooks/useStore'
 import { APP_URL } from '~/lib/constants'
@@ -41,7 +41,6 @@ const maskEmail = (email?: string) => {
 }
 
 const keyExtractor = (item: ReferralList[number]) => `${item.userId}`
-
 const ListEmptyComponent = () => {
   return <YStack
     gap={12}
@@ -54,22 +53,40 @@ const ListEmptyComponent = () => {
   </YStack>
 }
 
+const useStore = createWithEqualityFn<{
+  users: number[]
+  currentIndex: number
+  visible: boolean
+  referral?: ReferralList
+}>(set => ({
+  users: [],
+  currentIndex: 0,
+  visible: false,
+  referral: undefined,
+}))
+
 export const AccountInfo = () => {
   const { account } = useForxlStore()
   const { t } = useTranslation()
   const dict = t("partner", {
     returnObjects: true,
   })
+  const ref = useRef<FlatList>(null)
   const currentLevel = usePartnerStore((state) => state.partnerLevel, shallow)
-  const [users, setUsers] = useState<number[]>([])
-  const [currentIndex, setCurrentIndex] = useState(0)
-  const [visible, setVisible] = useState(false)
+  const { users, currentIndex, visible, referral } = useStore()
   const userId = _.last(users)
-  const { data: referral, loading: refreshing } = useRequest(() => {
+  const { loading: refreshing } = useRequest(() => {
     return getReferralListByUser(userId)
   }, {
     refreshDeps: [userId],
     cacheKey: `${CACHE_KEY.REFERRALS}/${userId}`,
+    onSuccess: (data) => {
+      useStore.setState({ referral: data, currentIndex: 0 })
+      ref.current?.scrollToIndex({
+        index: 0,
+        animated: false,
+      })
+    }
   })
   const { loading, data } = useRequest(getPartnerInfo, {
     cacheKey: CACHE_KEY.PARTNER,
@@ -201,7 +218,7 @@ export const AccountInfo = () => {
                     <Text heading bold>
                       {`${data?.activeDirectNum ?? 0}/${data?.allDirectNum ?? 0}`}
                     </Text>
-                    <XStack hitSlop={10} onPress={() => setVisible(true)}>
+                    <XStack hitSlop={10} onPress={() => useStore.setState({ visible: true })}>
                       <Icon name="info" size={16} />
                     </XStack>
                   </Row>
@@ -264,7 +281,9 @@ export const AccountInfo = () => {
           </Moti>
         )}
       </AnimatePresence>
-      <Popup visible={visible} onClose={() => setVisible(false)}>
+      <Popup visible={visible} onClose={() => {
+        useStore.setState({ visible: false, users: [], currentIndex: 0 })
+      }} closeOnTouchOutside>
         <Dialog py="$md" px="$md" w={DEVICE_WIDTH - 32}>
           <Text heading>{`${userId ?? dict.mine}${dict.partnerList}`}</Text>
           <FlatList
@@ -275,11 +294,12 @@ export const AccountInfo = () => {
               marginHorizontal: -16,
             }}
             pagingEnabled
-            centerContent
+            ref={ref}
+            // centerContent
             showsHorizontalScrollIndicator={false}
             onMomentumScrollEnd={(event) => {
-              setCurrentIndex(
-                event.nativeEvent.contentOffset.x / (DEVICE_WIDTH - 32)
+              useStore.setState(
+                { currentIndex: event.nativeEvent.contentOffset.x / (DEVICE_WIDTH - 32) }
               )
             }}
             ListEmptyComponent={ListEmptyComponent}
@@ -291,16 +311,18 @@ export const AccountInfo = () => {
             <Button size="$md" f={1} type="accent" onPress={() => {
               const current = users.filter((it) => it !== userId)
               if (users.length) {
-                setUsers(current)
+                useStore.setState({ users: current })
               } else {
-                setVisible(false)
+                useStore.setState({ visible: false })
               }
             }}>
               {t("action.back")}
             </Button>
             {referral?.[currentIndex]?.teamSize ? (
               <Button size="$md" f={1} type="primary" onPress={() => {
-                setUsers([...users, referral?.[currentIndex]?.userId!])
+                useStore.setState({
+                  users: [...users, referral?.[currentIndex]?.userId!]
+                })
               }}>
                 {t("action.view")}
               </Button>
