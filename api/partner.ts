@@ -48,6 +48,7 @@ export const getPartnerConfig = async () => {
         market: number
         offlineCount: number
         ratio: number
+        minExpected: number
       }[]
     },
     undefined

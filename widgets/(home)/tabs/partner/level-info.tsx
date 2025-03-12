@@ -1,11 +1,11 @@
-import { Fragment } from "react"
-import { useTranslation } from "react-i18next"
+import { Fragment } from 'react'
+import { useTranslation } from 'react-i18next'
 
-import { format, LEVEL_COLORS } from "./utils"
+import { format, LEVEL_COLORS } from './utils'
 
-import { Card, Icon, Justified, Row, Text, XStack } from "~/components"
-import { usePartnerStore, usePromptStore } from "~/hooks/useStore"
-import { uuid } from "~/lib/utils"
+import { Card, Icon, Justified, Row, Text, XStack } from '~/components'
+import { usePartnerStore, usePromptStore } from '~/hooks/useStore'
+import { uuid } from '~/lib/utils'
 
 export const LevelInfo = () => {
   const { t } = useTranslation()
@@ -44,7 +44,7 @@ export const LevelInfo = () => {
           </Row>
           <Text>
             {t("partner.perLotMoney", {
-              money: format(currentConfig?.market ?? 0),
+              money: format(currentConfig?.ratio ?? 0),
             })}
           </Text>
         </Justified>
@@ -52,7 +52,7 @@ export const LevelInfo = () => {
           <Text col="$secondary">{t("partner.minBonus")}</Text>
           <Text>
             {t("partner.perDayMoney", {
-              money: format(currentConfig?.funds ?? 0),
+              money: format(currentConfig?.minExpected ?? 0),
             })}
           </Text>
         </Justified>

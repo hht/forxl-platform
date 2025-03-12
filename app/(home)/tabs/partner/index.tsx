@@ -1,29 +1,18 @@
-import { Stack } from "expo-router"
-import _ from "lodash"
-import { AnimatePresence } from "moti"
-import { useEffect, useRef } from "react"
-import { useTranslation } from "react-i18next"
+import { Stack } from 'expo-router'
+import { AnimatePresence } from 'moti'
+import { useRef } from 'react'
+import { useTranslation } from 'react-i18next'
 
+import { Figure, Moti, Screen, ScrollView, Text, XStack, YStack } from '~/components'
+import { usePartnerStore } from '~/hooks/useStore'
+import { AccountInfo } from '~/widgets/(home)/tabs/partner/account-info'
+import { LevelCard } from '~/widgets/(home)/tabs/partner/level-card'
+import { LevelInfo } from '~/widgets/(home)/tabs/partner/level-info'
+import { format, Level } from '~/widgets/(home)/tabs/partner/utils'
 import {
-  Figure,
-  Moti,
-  Screen,
-  ScrollView,
-  Text,
-  XStack,
-  YStack,
-} from "~/components"
-import { usePartnerStore } from "~/hooks/useStore"
-import { AccountInfo } from "~/widgets/(home)/tabs/partner/account-info"
-import { LevelCard } from "~/widgets/(home)/tabs/partner/level-card"
-import { LevelInfo } from "~/widgets/(home)/tabs/partner/level-info"
-import { format, Level } from "~/widgets/(home)/tabs/partner/utils"
-import {
-  BrandTitle,
-  DefaultScreenOptions,
-  NativeStackNavigationOptions,
-} from "~/widgets/shared/header"
-import { Gradient } from "~/widgets/shared/shape"
+  BrandTitle, DefaultScreenOptions, NativeStackNavigationOptions
+} from '~/widgets/shared/header'
+import { Gradient } from '~/widgets/shared/shape'
 
 const ScreenOptions: NativeStackNavigationOptions = {
   ...DefaultScreenOptions,

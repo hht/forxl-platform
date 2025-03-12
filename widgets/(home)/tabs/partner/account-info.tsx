@@ -255,7 +255,7 @@ export const AccountInfo = () => {
                 <Statistics label={dict.updated} ai="flex-end">
                   <Text>
                     {data?.lastUpdateTime
-                      ? formatDate(data?.lastUpdateTime)
+                      ? dayjs(data?.lastUpdateTime).format("MMM DD, YYYY HH:mm:ss")
                       : ""}
                   </Text>
                 </Statistics>
