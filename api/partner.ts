@@ -1,6 +1,7 @@
-import _ from "lodash"
+import _ from 'lodash'
 
-import { request } from "~/hooks/useRequest"
+import { request } from '~/hooks/useRequest'
+import { useForxlStore } from '~/hooks/useStore'
 
 export const getPartnerInfo = async () => {
   return await request<
@@ -69,22 +70,36 @@ export const getBonusInfo = async () => {
   >("/bonus/info", "POST").then((res) => res.data)
 }
 
+export type ReferralList = {
+  certificationName?: string
+  email?: string
+  invested?: number
+  level?: number
+  registrationDate?: number
+  teamSize?: number
+  teamVolume?: number
+  userId?: number
+  pid?: number
+}[]
+
 export const getReferralList = async () => {
   return await request<
     {
-      data: {
-        certificationName?: string
-        email?: string
-        invested?: number
-        level?: number
-        registrationDate?: number
-        teamSize?: number
-        teamVolume?: number
-        userId?: number
-      }[]
+      data: ReferralList
     },
     undefined
   >("/partner/offlineList", "POST").then((res) =>
+    _.orderBy(res.data, ["level", "teamSize"], ["desc", "desc"])
+  )
+}
+
+export const getReferralListByUser = async (userId?: number) => {
+  return await request<
+    {
+      data: ReferralList
+    },
+    { pid?: number }
+  >("/partner/offlineListByUserId", "POST", { pid: userId ?? useForxlStore.getState().account?.id }).then((res) =>
     _.orderBy(res.data, ["level", "teamSize"], ["desc", "desc"])
   )
 }

@@ -2,17 +2,19 @@ import * as Linking from 'expo-linking'
 import { router } from 'expo-router'
 import _ from 'lodash'
 import { AnimatePresence } from 'moti'
-import { Fragment, useState } from 'react'
+import { Fragment, useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { ActivityIndicator } from 'react-native'
+import { ActivityIndicator, FlatList } from 'react-native'
 import { shallow } from 'zustand/shallow'
 
 import { LEVELS } from './utils'
 
-import { getPartnerConfig, getPartnerInfo, getReferralList } from '~/api/partner'
 import {
-    Button, Card, copyToClipboard, Dialog, Figure, Icon, Justified, Moti, Popup, Row, ScrollView,
-    Statistics, Text, XStack, YStack
+  getPartnerConfig, getPartnerInfo, getReferralListByUser, ReferralList
+} from '~/api/partner'
+import {
+  Button, Card, copyToClipboard, Dialog, Figure, Icon, Justified, Moti, Popup, Row, Statistics,
+  Text, XStack, YStack
 } from '~/components'
 import { formatDate } from '~/hooks/useLocale'
 import { CACHE_KEY, useRequest } from '~/hooks/useRequest'
@@ -38,6 +40,20 @@ const maskEmail = (email?: string) => {
   return `${visiblePart}${maskedPart}@${domain}`
 }
 
+const keyExtractor = (item: ReferralList[number]) => `${item.userId}`
+
+const ListEmptyComponent = () => {
+  return <YStack
+    gap={12}
+    w={DEVICE_WIDTH - 32}
+    px="$md"
+    ai="center"
+    jc="center"
+  >
+    <ActivityIndicator />
+  </YStack>
+}
+
 export const AccountInfo = () => {
   const { account } = useForxlStore()
   const { t } = useTranslation()
@@ -45,9 +61,16 @@ export const AccountInfo = () => {
     returnObjects: true,
   })
   const currentLevel = usePartnerStore((state) => state.partnerLevel, shallow)
+  const [users, setUsers] = useState<number[]>([])
   const [currentIndex, setCurrentIndex] = useState(0)
   const [visible, setVisible] = useState(false)
-  const { data: referral } = useRequest(getReferralList)
+  const userId = _.last(users)
+  const { data: referral, loading: refreshing } = useRequest(() => {
+    return getReferralListByUser(userId)
+  }, {
+    refreshDeps: [userId],
+    cacheKey: `${CACHE_KEY.REFERRALS}/${userId}`,
+  })
   const { loading, data } = useRequest(getPartnerInfo, {
     cacheKey: CACHE_KEY.PARTNER,
     onSuccess: (data) => {
@@ -64,6 +87,77 @@ export const AccountInfo = () => {
       })
     },
   })
+  const renderItem = useCallback(
+    ({ item }: { item: ReferralList[number] }) => {
+      return (<YStack
+        gap={12}
+        w={DEVICE_WIDTH - 32}
+        px="$md"
+        key={item.userId}
+      >
+        <Justified>
+          <XStack
+            gap="$xs"
+            ai="center"
+            hitSlop={10}
+            onPress={() => {
+              usePromptStore.setState({
+                title: "",
+                desc: t("partner.directAccountsDesc"),
+                reloadKey: uuid(),
+              })
+            }}
+          >
+            <Text col="$secondary">{t("partner.accountId")}</Text>
+            <Icon name="info" size={12} />
+          </XStack>
+          <Text>{item.userId}</Text>
+        </Justified>
+        <Justified>
+          <Text col="$secondary">{t("partner.accountLevel")}</Text>
+          <XStack gap="$xs">
+            <Figure
+              name={LEVELS[item.level!]}
+              width={20}
+              height={20}
+            />
+            <Text>{dict.children[item.level!]}</Text>
+          </XStack>
+        </Justified>
+        <Justified gap="$md" ai="flex-start">
+          <Text col="$secondary">{dict.accountEmail}</Text>
+          <Text f={1} ta="right" numberOfLines={1}>
+            {maskEmail(item.email)}
+          </Text>
+        </Justified>
+        <Justified>
+          <Text col="$secondary">{dict.CertificationName}</Text>
+          <Text>{item.certificationName || "-"}</Text>
+        </Justified>
+        <Justified>
+          <Text col="$secondary">{t("partner.fundsInvested")}</Text>
+          <Text>{formatCurrency(`${item.invested}`)}</Text>
+        </Justified>
+        <Justified>
+          <Text col="$secondary">{dict.size}</Text>
+          <Text>
+            {t("partner.personCount", { count: item.teamSize })}
+          </Text>
+        </Justified>
+        <Justified>
+          <Text col="$secondary">{dict.volume}</Text>
+          <Text>{formatCurrency(item.teamVolume ?? 0)}</Text>
+        </Justified>
+        <Justified>
+          <Text col="$secondary">{t("partner.registerDate")}</Text>
+          <Text>
+            {dayjs(item.registrationDate).format("MMM DD, YYYY")}
+          </Text>
+        </Justified>
+      </YStack>)
+    }, [t, dict])
+
+
   if (loading) {
     return (
       <YStack f={1} ai="center" jc="center">
@@ -172,12 +266,14 @@ export const AccountInfo = () => {
       </AnimatePresence>
       <Popup visible={visible} onClose={() => setVisible(false)}>
         <Dialog py="$md" px="$md" w={DEVICE_WIDTH - 32}>
-          <Text heading>{dict.partnerList}</Text>
-          <ScrollView
+          <Text heading>{`${userId ?? dict.mine}${dict.partnerList}`}</Text>
+          <FlatList
             horizontal
-            w={DEVICE_WIDTH - 32}
-            h={230}
-            mx={-16}
+            style={{
+              width: DEVICE_WIDTH - 32,
+              height: 230,
+              marginHorizontal: -16,
+            }}
             pagingEnabled
             centerContent
             showsHorizontalScrollIndicator={false}
@@ -186,85 +282,31 @@ export const AccountInfo = () => {
                 event.nativeEvent.contentOffset.x / (DEVICE_WIDTH - 32)
               )
             }}
-          >
-            {referral?.length ? (
-              referral?.map((item) => (
-                <YStack
-                  gap={12}
-                  w={DEVICE_WIDTH - 32}
-                  px="$md"
-                  key={item.userId}
-                >
-                  <Justified>
-                    <XStack
-                      gap="$xs"
-                      ai="center"
-                      hitSlop={10}
-                      onPress={() => {
-                        usePromptStore.setState({
-                          title: "",
-                          desc: t("partner.directAccountsDesc"),
-                          reloadKey: uuid(),
-                        })
-                      }}
-                    >
-                      <Text col="$secondary">{t("partner.accountId")}</Text>
-                      <Icon name="info" size={12} />
-                    </XStack>
-                    <Text>{item.userId}</Text>
-                  </Justified>
-                  <Justified>
-                    <Text col="$secondary">{t("partner.accountLevel")}</Text>
-                    <XStack gap="$xs">
-                      <Figure
-                        name={LEVELS[item.level!]}
-                        width={20}
-                        height={20}
-                      />
-                      <Text>{dict.children[item.level!]}</Text>
-                    </XStack>
-                  </Justified>
-                  <Justified gap="$md" ai="flex-start">
-                    <Text col="$secondary">{dict.accountEmail}</Text>
-                    <Text f={1} ta="right" numberOfLines={1}>
-                      {maskEmail(item.email)}
-                    </Text>
-                  </Justified>
-                  <Justified>
-                    <Text col="$secondary">{dict.CertificationName}</Text>
-                    <Text>{item.certificationName || "-"}</Text>
-                  </Justified>
-                  <Justified>
-                    <Text col="$secondary">{t("partner.fundsInvested")}</Text>
-                    <Text>{formatCurrency(`${item.invested}`)}</Text>
-                  </Justified>
-                  <Justified>
-                    <Text col="$secondary">{dict.size}</Text>
-                    <Text>
-                      {t("partner.personCount", { count: item.teamSize })}
-                    </Text>
-                  </Justified>
-                  <Justified>
-                    <Text col="$secondary">{dict.volume}</Text>
-                    <Text>{formatCurrency(item.teamVolume ?? 0)}</Text>
-                  </Justified>
-                  <Justified>
-                    <Text col="$secondary">{t("partner.registerDate")}</Text>
-                    <Text>
-                      {dayjs(item.registrationDate).format("MMM DD, YYYY")}
-                    </Text>
-                  </Justified>
-                </YStack>
-              ))
-            ) : (
-              <YStack h="100%" w={DEVICE_WIDTH - 32} ai="center" jc="center">
-                <Figure name="empty" width={120} height={120} />
-              </YStack>
-            )}
-          </ScrollView>
-          <Button size="$md" type="accent" onPress={() => setVisible(false)}>
-            {t("action.close")}
-          </Button>
+            ListEmptyComponent={ListEmptyComponent}
+            data={refreshing ? [] : referral}
+            keyExtractor={keyExtractor}
+            renderItem={renderItem}
+          />
+          <XStack gap="$md">
+            <Button size="$md" f={1} type="accent" onPress={() => {
+              const current = users.filter((it) => it !== userId)
+              if (users.length) {
+                setUsers(current)
+              } else {
+                setVisible(false)
+              }
+            }}>
+              {t("action.back")}
+            </Button>
+            {referral?.[currentIndex]?.teamSize ? (
+              <Button size="$md" f={1} type="primary" onPress={() => {
+                setUsers([...users, referral?.[currentIndex]?.userId!])
+              }}>
+                {t("action.view")}
+              </Button>
+            ) : null}
+          </XStack>
+
         </Dialog>
         <XStack w="100%" ai="center" jc="center" pt={12} gap="$xs">
           {referral?.map((it, index) => (

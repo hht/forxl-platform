@@ -34,7 +34,9 @@
     "cancelPayment": "Batalkan Pembayaran",
     "enter": "Entrar no Dashboard",
     "home": "Ir para Início",
-    "continue": "Continuar"
+    "continue": "Continuar",
+    "back": "Voltar",
+    "view": "Visualizar"
   },
   "anon": {
     "title": "Forxl Markets",
@@ -592,6 +594,7 @@
   },
   "partner": {
     "level": "Seu Nível",
+    "mine": "Meus ",
     "children": [
       "Bronze",
       "Prata",

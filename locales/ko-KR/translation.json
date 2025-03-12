@@ -34,7 +34,9 @@
     "cancelPayment": "Cancel Payment",
     "enter": "Enter Dashboard",
     "home": "Go to Home",
-    "continue": "Continue"
+    "continue": "Continue",
+    "back": "Back",
+    "view": "View"
   },
   "anon": {
     "title": "Forxl Markets",
@@ -592,6 +594,7 @@
   },
   "partner": {
     "level": "Your Level",
+    "mine": "My",
     "children": [
       "Bronze",
       "Silver",

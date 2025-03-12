@@ -26,6 +26,7 @@ export const CACHE_KEY = {
   TRADE_MESSAGES: "/message/v2/pageData",
   SYSTEM_MESSAGES: "/message/v2/systemPageData",
   BANNERS: "/banner/v3/list",
+  REFERRALS: "/user/getReferral",
 }
 
 

@@ -34,7 +34,9 @@
     "cancelPayment": "取消订单",
     "enter": "进入控制面板",
     "home": "返回首页",
-    "continue": "继续"
+    "continue": "继续",
+    "back": "返回",
+    "view": "查看"
   },
   "anon": {
     "title": "Forxl Markets",
@@ -593,6 +595,7 @@
 
   "partner": {
     "level": "您的级别",
+    "mine": "我的",
     "children": [
       "铜",
       "银",

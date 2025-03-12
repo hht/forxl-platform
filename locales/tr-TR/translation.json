@@ -34,7 +34,9 @@
     "cancelPayment": "Ödemeyi İptal Et",
     "enter": "Gösterge Paneline Gir",
     "home": "Ana Sayfaya Git",
-    "continue": "Devam Et"
+    "continue": "Devam Et",
+    "back": "Geri",
+    "view": "Görüntüle"
   },
   "anon": {
     "title": "Forxl Markets",
@@ -592,6 +594,7 @@
   },
   "partner": {
     "level": "Sizin Seviyeniz",
+    "mine": "Benim ",
     "children": [
       "Bronz",
       "Gümüş",

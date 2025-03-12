@@ -34,7 +34,9 @@
     "cancelPayment": "Batalkan Pembayaran",
     "enter": "Masuk ke Papan Pemuka",
     "home": "Pergi ke Halaman Utama",
-    "continue": "Teruskan"
+    "continue": "Teruskan",
+    "back": "Kembali",
+    "view": "Lihat"
   },
   "anon": {
     "title": "Pasaran Forxl",
@@ -592,6 +594,7 @@
   },
   "partner": {
     "level": "Tahap Anda",
+    "mine": "Saya ",
     "children": [
       "Gangsa",
       "Perak",
