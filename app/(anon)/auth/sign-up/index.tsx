@@ -147,7 +147,11 @@ export default function Page() {
           value={verifyCode}
           autoCapitalize="none"
           status={errors?.verifyCode ? "error" : "success"}
-          onChangeText={(verifyCode) => useStore.setState({ verifyCode })}
+          onChangeText={(verifyCode) => {
+            if ((verifyCode.length) <= 6) {
+              useStore.setState({ verifyCode })
+            }
+          }}
           message={errors?.verifyCode?.[0]}
           addonAfter={<GetCodeButton email={email} disabled={!!errors?.email} />}
         />
