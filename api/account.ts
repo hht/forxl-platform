@@ -60,7 +60,7 @@ export const register = async (params: SignUpParams) => {
       "POST"
     )
   }
-  await request<string, SignUpParams>("/notice/sendVerificationEmail", "POST", {
+  await request<string, SignUpParams>("/other/register/signUp", "POST", {
     ...params,
     language: i18n.language,
   })
