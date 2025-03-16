@@ -18,6 +18,7 @@ export default {
   border: toRGBA("#30363A", 0.4),
   text: "#ffffff",
   secondary: "#919FA6",
+  "secondary/50": toRGBA("#919FA6", 0.5),
   tertiary: "#545D61",
   muted: "#212426",
 }
