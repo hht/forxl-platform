@@ -116,7 +116,7 @@ export default function Page() {
           <Text col="$secondary" bold>
             {t("anon.noAccount")}
           </Text>
-          <Link href="/(anon)/sign-up" replace asChild>
+          <Link href="/(anon)/auth/sign-up" replace asChild>
             <Text col="$primary" bold textDecorationLine="underline">
               {t("anon.signUp")}
             </Text>

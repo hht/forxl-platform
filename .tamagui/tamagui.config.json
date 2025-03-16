@@ -27567,6 +27567,7 @@
         "border": "rgba(48,54,58,0.4)",
         "text": "#ffffff",
         "secondary": "#919FA6",
+        "secondary/50": "rgba(145,159,166,0.5)",
         "tertiary": "#545D61",
         "muted": "#212426",
         "id": "dark"
@@ -27806,6 +27807,7 @@
         "border": "rgba(48,54,58,0.4)",
         "text": "#ffffff",
         "secondary": "#919FA6",
+        "secondary/50": "rgba(145,159,166,0.5)",
         "tertiary": "#545D61",
         "muted": "#212426",
         "id": "light"
@@ -29533,6 +29535,13 @@
           "key": "$secondary",
           "name": "c-secondary",
           "val": "#919FA6",
+          "variable": ""
+        },
+        "secondary/50": {
+          "isVar": true,
+          "key": "$secondary/50",
+          "name": "c-secondary5047",
+          "val": "rgba(145,159,166,0.5)",
           "variable": ""
         },
         "tertiary": {
@@ -32130,6 +32139,13 @@
         "key": "$secondary",
         "name": "c-secondary",
         "val": "#919FA6",
+        "variable": ""
+      },
+      "$color.secondary/50": {
+        "isVar": true,
+        "key": "$secondary/50",
+        "name": "c-secondary5047",
+        "val": "rgba(145,159,166,0.5)",
         "variable": ""
       },
       "$color.tertiary": {

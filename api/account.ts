@@ -1,3 +1,5 @@
+import { router } from 'expo-router'
+
 import { request } from '~/hooks/useRequest'
 import { useForxlStore } from '~/hooks/useStore'
 import { i18n } from '~/lib/utils'
@@ -63,6 +65,16 @@ export const register = async (params: SignUpParams) => {
   await request<string, SignUpParams>("/other/register/signUp", "POST", {
     ...params,
     language: i18n.language,
+  })
+  await signIn({ email: params.email, password: params.password }).then(async ({
+    user, userNumber, code
+  }) => {
+    if (code === 1502) {
+      router.push(`/verify-email?email=${params.email}`)
+      return
+    }
+    useForxlStore.setState({ userNumber, account: user })
+    await getProfile()
   })
 }
 
