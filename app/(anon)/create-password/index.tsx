@@ -20,7 +20,7 @@ const ScreenOptions: NativeStackNavigationOptions = {
 
 export default function Page() {
   const { bottom } = useSafeAreaInsets()
-  const { email, inviteCode, password, confirm } = useStore()
+  const { email, inviteCode, password, confirm, verifyCode } = useStore()
   const { t } = useTranslation("translation")
   const matches = t("anon.matches", {
     returnObjects: true,
@@ -50,13 +50,13 @@ export default function Page() {
 
   const { run, loading } = useRequest(
     () => {
-      return register({ email, inviteCode, password, language: i18n.language })
+      return register({ email, inviteCode, password, language: i18n.language, verifyCode })
     },
     {
       manual: true,
       onSuccess: () => {
         dismissAll()
-        router.push(`/(anon)/verify-email?email=${email}`)
+        router.push(`/(anon)/auth/sign-in`)
       },
     }
   )

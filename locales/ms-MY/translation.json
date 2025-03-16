@@ -62,7 +62,9 @@
     "resetPassword": "Tetapkan Semula Kata Laluan Anda",
     "resetPasswordDescription": "Menetapkan Semula Kata Laluan anda untuk memulakan",
     "sendEmail": "Hantar Email",
+    "code": "Verification Code",
     "matches": {
+      "code": "Verification Code must be 6 digits",
       "confirm": "Dua kata laluan tidak konsisten",
       "containsLetter": "Mengandungi 1 huruf (A-Z dan a-z)",
       "containsNumber": "Mengandungi nombor (0-9)",

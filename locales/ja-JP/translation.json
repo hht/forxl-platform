@@ -62,7 +62,9 @@
     "resetPassword": "Reset Your Password",
     "resetPasswordDescription": "Resetting your Password to get started",
     "sendEmail": "Send Email",
+    "code": "Verification Code",
     "matches": {
+      "code": "Verification Code must be 6 digits",
       "confirm": "Two passwords are inconsistent",
       "containsLetter": "Contain 1 letter (A-Z and a-z)",
       "containsNumber": "Contain a numbers (0-9)",

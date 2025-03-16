@@ -1,14 +1,17 @@
 import { useDebounceFn, useUnmount } from 'ahooks'
 import { router, Stack } from 'expo-router'
-import { useMemo } from 'react'
+import { round } from 'lodash'
+import { FC, useMemo } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import { z } from 'zod'
 import { createWithEqualityFn } from 'zustand/traditional'
 
-import { validateInviteCode } from '~/api/account'
-import { Button, Input, ScrollView, Text, YStack } from '~/components'
+import { sendRegisterCode, validateInviteCode } from '~/api/account'
+import { Button, Input, ScrollView, Text, toast, XStack, YStack } from '~/components'
+import { useCountDown } from '~/hooks/useCountdown'
+import { useRequest } from '~/hooks/useRequest'
 import { APP_URL } from '~/lib/constants'
-import { i18n } from '~/lib/utils'
+import { i18n, t } from '~/lib/utils'
 import { LiveSupport, NativeStackNavigationOptions } from '~/widgets/shared/header'
 import { WebLink } from '~/widgets/shared/link'
 
@@ -23,6 +26,7 @@ interface Store {
   confirm: string
   inviteCode: string
   validated?: boolean
+  verifyCode: string
 }
 
 const INITIAL = {
@@ -30,12 +34,53 @@ const INITIAL = {
   password: "",
   confirm: "",
   inviteCode: "",
+  verifyCode: ""
 }
 
 export const useStore = createWithEqualityFn<Store>()((set) => INITIAL)
 
+
+const GetCodeButton: FC<{
+  email?: string
+  disabled: boolean
+}> = ({ email, disabled }) => {
+  const { countdown, setDate } = useCountDown()
+  const { run: getCode, loading: sending } = useRequest(sendRegisterCode, {
+    manual: true,
+    onSuccess: (__, [{ }]) => {
+      setDate(Date.now() + 60 * 1000)
+      toast.show(
+        t("settings.emailVerificationCodeDesc", {
+          email,
+        })
+      )
+    },
+    onError: (error) => {
+      setDate(Date.now() + 60 * 1000)
+    }
+  })
+  return countdown !== 0 ? (
+    <XStack h="100%" px="$md" ai="center" jc="center">
+      <Text col="$primary">{round(countdown / 1000)}</Text>
+    </XStack>
+  ) : (
+    <Button
+      h="100%"
+      px="$md"
+      isLoading={sending}
+      type="link"
+      disabled={disabled || sending || !email}
+      onPress={() => {
+        getCode(email!)
+      }}
+    >
+      {t("settings.getVerificationCode")}
+    </Button>
+  )
+}
+
 export default function Page() {
-  const { email, inviteCode, validated } = useStore()
+  const { email, inviteCode, validated, verifyCode } = useStore()
   const { t } = useTranslation("translation")
   const matches = t("anon.matches", {
     returnObjects: true,
@@ -44,6 +89,7 @@ export default function Page() {
     () =>
       z.object({
         email: z.string().email(matches.email),
+        verifyCode: z.string().regex(/^\d{6}$/, matches.code),
         inviteCode: z.string().min(6, matches.inviteCode),
       }),
     [matches]
@@ -67,6 +113,7 @@ export default function Page() {
   const { success, error } = scheme.safeParse({
     email,
     inviteCode,
+    verifyCode
   })
   const errors = error?.formErrors?.fieldErrors
 
@@ -94,6 +141,15 @@ export default function Page() {
           status={errors?.email ? "error" : "success"}
           onChangeText={(email) => useStore.setState({ email })}
           message={errors?.email?.[0]}
+        />
+        <Input
+          label={t("anon.code")}
+          value={verifyCode}
+          autoCapitalize="none"
+          status={errors?.verifyCode ? "error" : "success"}
+          onChangeText={(verifyCode) => useStore.setState({ verifyCode })}
+          message={errors?.verifyCode?.[0]}
+          addonAfter={<GetCodeButton email={email} disabled={!!errors?.email} />}
         />
         <Input
           label={t("anon.inviteCode")}

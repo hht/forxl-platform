@@ -19,6 +19,10 @@ type SignUpParams = {
    * 密码
    */
   password: string
+  /**
+ * 验证码
+ */
+  verifyCode: string
 }
 
 /**
@@ -266,4 +270,15 @@ export const getRealNameInfo = async () => {
     },
     undefined
   >("/userRealName/getByUserId", "POST")
+}
+
+
+
+/**
+ * 发送注册验证码
+ */
+export const sendRegisterCode = async (email: string) => {
+  return await request("/other/register/sendVerifyCode", "POST", {
+    email,
+  })
 }

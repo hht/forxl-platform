@@ -62,7 +62,9 @@
     "resetPassword": "Restablecer Contraseña",
     "resetPasswordDescription": "Restablece tu contraseña para comenzar",
     "sendEmail": "Enviar Correo",
+    "code": "Código de Verificación",
     "matches": {
+      "code": "Verification Code must be 6 digits",
       "confirm": "Las dos contraseñas no coinciden",
       "containsLetter": "Debe contener 1 letra (A-Z y a-z)",
       "containsNumber": "Debe contener un número (0-9)",

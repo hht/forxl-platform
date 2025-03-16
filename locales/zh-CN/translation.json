@@ -62,7 +62,9 @@
     "resetPassword": "重置密码",
     "resetPasswordDescription": "重置您的密码以开始",
     "sendEmail": "发送邮件",
+    "code": "验证码",
     "matches": {
+      "code": "Verification Code must be 6 digits",
       "confirm": "两次密码不一致",
       "containsLetter": "包含1个字母 (A-Z 和 a-z)",
       "containsNumber": "包含数字 (0-9)",
