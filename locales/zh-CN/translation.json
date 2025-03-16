@@ -130,7 +130,8 @@
     "samePassword": "新密码不能与旧密码相同",
     "retry": "Please try after {{time}} seconds",
     "email": "You must enter a valid email address",
-    "countdown": "Resend in {{time}} seconds"
+    "countdown": "Resend in {{time}} seconds",
+    "registeredSuccess": "恭喜您，注册成功"
   },
   "home": {
     "news": "市场新闻",

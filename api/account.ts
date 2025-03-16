@@ -1,5 +1,6 @@
 import { router } from 'expo-router'
 
+import { toast } from '~/components'
 import { request } from '~/hooks/useRequest'
 import { useForxlStore } from '~/hooks/useStore'
 import { i18n } from '~/lib/utils'
@@ -66,6 +67,7 @@ export const register = async (params: SignUpParams) => {
     ...params,
     language: i18n.language,
   })
+  toast.show(i18n.t("message.registeredSuccess"))
   await signIn({ email: params.email, password: params.password }).then(async ({
     user, userNumber, code
   }) => {
