@@ -62,9 +62,9 @@
     "resetPassword": "Şifrenizi Sıfırlayın",
     "resetPasswordDescription": "Başlamak için Şifrenizi Sıfırlıyorsunuz",
     "sendEmail": "Email Gönder",
-    "code": "Verification Code",
+    "code": "Doğrulama Kodu",
     "matches": {
-      "code": "Verification Code must be 6 digits",
+      "code": "Doğrulama Kodu 6 haneli olmalıdır",
       "confirm": "İki şifre tutarsız",
       "containsLetter": "1 harf içermeli (A-Z ve a-z)",
       "containsNumber": "1 sayı içermeli (0-9)",

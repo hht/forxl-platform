@@ -62,9 +62,9 @@
     "resetPassword": "Redefinir Sua Senha",
     "resetPasswordDescription": "Redefinindo sua Senha para começar",
     "sendEmail": "Enviar Email",
-    "code": "Verification Code",
+    "code": "Código de Verificação",
     "matches": {
-      "code": "Verification Code must be 6 digits",
+      "code": "VO código de verificação deve ter 6 dígitos",
       "confirm": "As duas senhas são inconsistentes",
       "containsLetter": "Contém 1 letra (A-Z e a-z)",
       "containsNumber": "Contém um número (0-9)",

@@ -64,7 +64,7 @@
     "sendEmail": "发送邮件",
     "code": "验证码",
     "matches": {
-      "code": "Verification Code must be 6 digits",
+      "code": "验证码必须是6位数字",
       "confirm": "两次密码不一致",
       "containsLetter": "包含1个字母 (A-Z 和 a-z)",
       "containsNumber": "包含数字 (0-9)",
