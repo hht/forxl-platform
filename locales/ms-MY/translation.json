@@ -128,9 +128,10 @@
     "gaRequired": "Sila aktifkan 2FA terlebih dahulu",
     "kycRequired": "Sila lengkapkan KYC terlebih dahulu",
     "samePassword": "Kata laluan baru tidak boleh sama dengan kata laluan lama",
-    "retry": "Please try after {{time}} seconds",
-    "email": "You must enter a valid email address",
-    "countdown": "Resend in {{time}} seconds"
+    "retry": "Sila cuba selepas {{time}} saat",
+    "email": "Anda mesti memasukkan alamat e-mel yang sah",
+    "countdown": "Hantar semula dalam {{time}} saat",
+    "registeredSuccess": "Tahniah, pendaftaran anda berjaya."
   },
   "home": {
     "news": "Berita Pasaran",
@@ -420,12 +421,12 @@
     "localAmount": "Jumlah dalam mata wang tempatan",
     "rejectedRational": "Rasional Ditolak",
     "paymentAddress": "Alamat Pembayaran",
-    "pending": "Pending review",
-    "passed": "Passed",
-    "rejected": "Rejected",
-    "failed": "Failed",
-    "returned": "Returned",
-    "successful": "Successful",
+    "pending": "Semakan belum selesai",
+    "passed": "lulus",
+    "rejected": "ditolak",
+    "failed": "gagal",
+    "returned": "Dipulangkan",
+    "successful": "Berjaya",
     "cardPendingPayment": "Pembayaran tertunda (Kad)",
     "usdtPendingPayment": "Pembayaran tertunda (USDT)",
     "thirdPartyPendingPayment": "Pembayaran tertunda (Pihak Ketiga)",
@@ -768,10 +769,10 @@
     "process": "Dalam Proses",
     "passVerification": "Lulus pengesahan penuh",
     "passVerificationDesc": "Untuk akses kepada deposit dan pengeluaran tanpa had, transaksi kad bank, dan dagangan kripto.",
-    "confirmDeleteTitle": "Are you sure you want to delete your account?",
-    "confirmDeleteDesc": "If you delete your FORXL account, your personal information, account assets, financial records, and transaction data will be permanently deleted.Once deleted, this data cannot be recovered.Please confirm once again if you want to delete your account.",
-    "confirmDeletePrompt": "*Please enter 'DELETE' in the input box below:",
-    "confirmDeleteAction": "Confirm Delete"
+    "confirmDeleteTitle": "Adakah anda pasti mahu memadamkan akaun anda?",
+    "confirmDeleteDesc": "Jika anda memadamkan akaun FORXL anda, maklumat peribadi anda, aset akaun, rekod kewangan dan data transaksi akan dipadamkan secara kekal. Setelah dipadamkan, data ini tidak boleh dipulihkan. Sila sahkan sekali lagi jika anda ingin memadamkan akaun anda.",
+    "confirmDeletePrompt": "*Sila masukkan 'DELETE' dalam kotak input di bawah:",
+    "confirmDeleteAction": "Sahkan Padam"
   },
   "settings": {
     "title": "Tetapan",

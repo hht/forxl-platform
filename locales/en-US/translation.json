@@ -130,7 +130,8 @@
     "samePassword": "The new password cannot be the same as the old password",
     "retry": "Please try after {{time}} seconds",
     "email": "You must enter a valid email address",
-    "countdown": "Resend in {{time}} seconds"
+    "countdown": "Resend in {{time}} seconds",
+    "registeredSuccess": "Congratulations, your registration is successful"
   },
   "home": {
     "news": "Market News",

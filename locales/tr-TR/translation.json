@@ -128,9 +128,10 @@
     "gaRequired": "Lütfen önce Google doğrulamasını tamamlayın",
     "kycRequired": "Lütfen önce gerçek ad doğrulamasını tamamlayın.",
     "samePassword": "Yeni şifre eski şifreyle aynı olamaz",
-    "retry": "Please try after {{time}} seconds",
-    "email": "You must enter a valid email address",
-    "countdown": "Resend in {{time}} seconds"
+    "retry": "Lütfen {{time}} saniye sonra deneyin",
+    "email": "Geçerli bir e-posta adresi girmelisiniz",
+    "countdown": "{{time}} saniye içinde tekrar gönder",
+    "registeredSuccess": "Tebrikler, kaydınız başarılı oldu"
   },
   "home": {
     "news": "Piyasa Haberleri",
@@ -420,12 +421,12 @@
     "localAmount": "Yerel Para Biriminde Miktar",
     "rejectedRational": "Reddedilme Nedeni",
     "paymentAddress": "Ödeme Adresi",
-    "pending": "Pending review",
-    "passed": "Passed",
-    "rejected": "Rejected",
-    "failed": "Failed",
-    "returned": "Returned",
-    "successful": "Successful",
+    "pending": "İnceleme bekleniyor",
+    "passed": "Geçti",
+    "rejected": "Reddedilmiş",
+    "failed": "Arızalı",
+    "returned": "Geri döndü",
+    "successful": "Başarılı",
     "cardPendingPayment": "Bekleyen Ödeme (Kart)",
     "usdtPendingPayment": "Bekleyen Ödeme (USDT)",
     "thirdPartyPendingPayment": "Bekleyen Ödeme (Üçüncü Parti)",
@@ -768,10 +769,10 @@
     "passVerificationDesc": "Sınırsız depozito ve çekim, banka kartı işlemleri ve kripto ticareti için erişim sağlamak.",
     "final": "Final",
     "process": "Devam Ediyor",
-    "confirmDeleteTitle": "Are you sure you want to delete your account?",
-    "confirmDeleteDesc": "If you delete your FORXL account, your personal information, account assets, financial records, and transaction data will be permanently deleted.Once deleted, this data cannot be recovered.Please confirm once again if you want to delete your account.",
-    "confirmDeletePrompt": "*Please enter 'DELETE' in the input box below:",
-    "confirmDeleteAction": "Confirm Delete"
+    "confirmDeleteTitle": "Hesabınızı silmek istediğinizden emin misiniz?",
+    "confirmDeleteDesc": "FORXL hesabınızı silerseniz, kişisel bilgileriniz, hesap varlıklarınız, finansal kayıtlarınız ve işlem verileriniz kalıcı olarak silinir. Bu veriler silindikten sonra kurtarılamaz. Hesabınızı silmek istiyorsanız lütfen bir kez daha onaylayın.",
+    "confirmDeletePrompt": "*Lütfen aşağıdaki giriş kutusuna 'DELETE' yazın:",
+    "confirmDeleteAction": "Silmeyi Onayla"
   },
   "settings": {
     "title": "Ayarlar",

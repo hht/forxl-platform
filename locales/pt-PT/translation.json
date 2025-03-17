@@ -128,9 +128,10 @@
     "gaRequired": "Por favor, ative o Google Authenticator primeiro",
     "kycRequired": "Por favor, complete o KYC primeiro",
     "samePassword": "A nova senha não pode ser a mesma que a senha antiga",
-    "retry": "Please try after {{time}} seconds",
-    "email": "You must enter a valid email address",
-    "countdown": "Resend in {{time}} seconds"
+    "retry": "Por favor, tente depois de {{time}} segundos",
+    "email": "Você deve inserir um endereço de e-mail válido",
+    "countdown": "Reenviar em {{time}} segundos",
+    "registeredSuccess": "Parabéns, seu registro foi realizado com sucesso."
   },
   "home": {
     "news": "Notícias do Mercado",
@@ -420,12 +421,12 @@
     "localAmount": "Quantidade em moeda local",
     "rejectedRational": "Justificativa da Rejeição",
     "paymentAddress": "Endereço de Pagamento",
-    "pending": "Pending review",
-    "passed": "Passed",
-    "rejected": "Rejected",
-    "failed": "Failed",
-    "returned": "Returned",
-    "successful": "Successful",
+    "pending": "Revisão pendente",
+    "passed": "Aprovado",
+    "rejected": "Rejeitado",
+    "failed": "Fracassado",
+    "returned": "Retornado",
+    "successful": "Bem-sucedido",
     "cardPendingPayment": "Pagamento pendente (Cartão)",
     "usdtPendingPayment": "Pagamento pendente (USDT)",
     "thirdPartyPendingPayment": "Pagamento pendente (Terceiros)",
@@ -768,10 +769,10 @@
     "process": "Em Andamento",
     "passVerification": "Passar na verificação completa",
     "passVerificationDesc": "Para acessar depósitos e retiradas ilimitados, transações com cartão bancário e negociação de criptomoedas.",
-    "confirmDeleteTitle": "Are you sure you want to delete your account?",
-    "confirmDeleteDesc": "If you delete your FORXL account, your personal information, account assets, financial records, and transaction data will be permanently deleted.Once deleted, this data cannot be recovered.Please confirm once again if you want to delete your account.",
-    "confirmDeletePrompt": "*Please enter 'DELETE' in the input box below:",
-    "confirmDeleteAction": "Confirm Delete"
+    "confirmDeleteTitle": "Tem certeza de que deseja excluir sua conta?",
+    "confirmDeleteDesc": "Se você excluir sua conta FORXL, suas informações pessoais, ativos da conta, registros financeiros e dados de transações serão excluídos permanentemente. Uma vez excluídos, esses dados não poderão ser recuperados. Confirme novamente se deseja excluir sua conta.",
+    "confirmDeletePrompt": "*Por favor, digite 'DELETE' na caixa de entrada abaixo:",
+    "confirmDeleteAction": "Confirmar Excluir"
   },
   "settings": {
     "title": "Configurações",

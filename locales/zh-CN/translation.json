@@ -128,9 +128,9 @@
     "gaRequired": "请先完成 Google 验证",
     "kycRequired": "请先完成实名认证.",
     "samePassword": "新密码不能与旧密码相同",
-    "retry": "Please try after {{time}} seconds",
-    "email": "You must enter a valid email address",
-    "countdown": "Resend in {{time}} seconds",
+    "retry": "请于 {{time}} 秒后重试",
+    "email": "您必须输入有效的电子邮件地址",
+    "countdown": "{{time}} 秒后重新发送",
     "registeredSuccess": "恭喜您，注册成功"
   },
   "home": {
@@ -421,12 +421,12 @@
     "localAmount": "本地货币金额",
     "rejectedRational": "拒绝理由",
     "paymentAddress": "支付地址",
-    "pending": "Pending review",
-    "passed": "Passed",
-    "rejected": "Rejected",
-    "failed": "Failed",
-    "returned": "Returned",
-    "successful": "Successful",
+    "pending": "等待审核",
+    "passed": "已通过",
+    "rejected": "已拒绝",
+    "failed": "失败",
+    "returned": "已返回",
+    "successful": "成功",
     "cardPendingPayment": "待付款（卡）",
     "usdtPendingPayment": "待付款（USDT）",
     "thirdPartyPendingPayment": "待付款（第三方）",
@@ -595,7 +595,6 @@
     "closePosition": "关闭持仓",
     "clear": "清除筛选"
   },
-
   "partner": {
     "level": "您的级别",
     "mine": "我的",
@@ -712,7 +711,12 @@
   "support": {
     "header": "全天候客户支持",
     "desc": "我们的代理每天24小时，全年365天通过电子邮件、聊天和电话提供服务。",
-    "children": ["支持中心", "support@forxlmarkets.com", "常见问题", "实时支持"]
+    "children": [
+      "支持中心",
+    "support@forxlmarkets.com",
+     "常见问题", 
+     "实时支持"
+    ]
   },
   "security": {
     "title": "安全",
@@ -736,7 +740,11 @@
     "twoFactorStepTwo": "使用应用扫描二维码或复制粘贴密钥",
     "twoFactorStepThree": "输入应用中的 6 位认证码。",
     "twoFactorStepAdditional": "输入应用中的前一个认证码。",
-    "children": ["重置密码", "双因素认证", "账户停用"],
+    "children": [
+      "重置密码",
+      "双因素认证", 
+      "账户停用"
+    ],
     "uncertified": "上传文件并证明您的身份。",
     "uncertifiedDesc": [
       "实时交易",
@@ -761,10 +769,10 @@
     "process": "进行中",
     "passVerification": "通过完全验证",
     "passVerificationDesc": "用于无限制的存款和提款，银行卡交易和加密货币交易。",
-    "confirmDeleteTitle": "Are you sure you want to delete your account?",
-    "confirmDeleteDesc": "If you delete your FORXL account, your personal information, account assets, financial records, and transaction data will be permanently deleted.Once deleted, this data cannot be recovered.Please confirm once again if you want to delete your account.",
-    "confirmDeletePrompt": "*Please enter 'DELETE' in the input box below:",
-    "confirmDeleteAction": "Confirm Delete"
+    "confirmDeleteTitle": "您确定要删除您的帐户吗？",
+    "confirmDeleteDesc": "如果您删除FORXL账户，您的个人信息、账户资产、财务记录和交易数据将被永久删除。一旦删除，这些数据将无法恢复。如需删除账户，请再次确认。",
+    "confirmDeletePrompt": "*请在下面的输入框中输入‘DELETE’：",
+    "confirmDeleteAction": "确认删除"
   },
   "settings": {
     "title": "设置",
