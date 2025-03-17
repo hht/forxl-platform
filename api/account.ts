@@ -55,7 +55,7 @@ export const register = async (params: SignUpParams) => {
     }
   )
   if (registered) {
-    throw new Error("TODO")
+    throw new Error(i18n.t("message.registered"))
   }
   if (params.inviteCode) {
     await request<boolean, { inviteCode: string }>(
