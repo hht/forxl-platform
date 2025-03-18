@@ -1,17 +1,17 @@
-import dayjs from "dayjs"
-import * as Clipboard from "expo-clipboard"
-import { router, Stack } from "expo-router"
-import { useMemo } from "react"
-import { useTranslation } from "react-i18next"
-import { useSafeAreaInsets } from "react-native-safe-area-context"
-import { z } from "zod"
-import { shallow } from "zustand/shallow"
+import dayjs from 'dayjs'
+import * as Clipboard from 'expo-clipboard'
+import { router, Stack } from 'expo-router'
+import { useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { z } from 'zod'
+import { shallow } from 'zustand/shallow'
 
-import { sendEmailCode, withdraw } from "~/api/wallet"
-import { Button, Input, Text, toast, YStack } from "~/components"
-import { useRequest } from "~/hooks/useRequest"
-import { useForxlStore, useWalletStore } from "~/hooks/useStore"
-import { InputSuffix } from "~/widgets/shared/input-suffix"
+import { sendEmailCode, withdraw } from '~/api/wallet'
+import { Button, Input, ScrollView, Text, toast, YStack } from '~/components'
+import { useRequest } from '~/hooks/useRequest'
+import { useForxlStore, useWalletStore } from '~/hooks/useStore'
+import { InputSuffix } from '~/widgets/shared/input-suffix'
 
 export default function Page() {
   const { t } = useTranslation()
@@ -51,7 +51,7 @@ export default function Page() {
   })
 
   return (
-    <YStack f={1} p="$md" gap={24} pb={bottom + 16}>
+    <ScrollView f={1} p="$md" gap={24} pb={bottom + 16} contentContainerStyle={{ flexGrow: 1 }}>
       <Stack.Screen options={{ title: t("wallet.securityVerification") }} />
       <YStack gap={12}>
         <Text>
@@ -131,6 +131,6 @@ export default function Page() {
       >
         {t("wallet.confirmWithdraw")}
       </Button>
-    </YStack>
+    </ScrollView>
   )
 }
