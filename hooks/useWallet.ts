@@ -1,14 +1,14 @@
-import { useInterval } from "ahooks"
-import _ from "lodash"
-import { useEffect } from "react"
-import { shallow } from "zustand/shallow"
+import { useInterval } from 'ahooks'
+import _ from 'lodash'
+import { useEffect } from 'react'
+import { shallow } from 'zustand/shallow'
 
-import { CACHE_KEY, useRequest } from "./useRequest"
-import { computeProfit, useOrderStore, useStatisticsStore } from "./useStore"
-import { subscribeQuotes, useWebSocket } from "./useWebsocket"
+import { CACHE_KEY, useRequest } from './useRequest'
+import { computeProfit, useOrderStore, useStatisticsStore } from './useStore'
+import { subscribeQuotes, useWebSocket } from './useWebsocket'
 
-import { getAttestationFlag, getProfile } from "~/api/account"
-import { getOpenPositions } from "~/api/trade"
+import { getAttestationFlag, getProfile } from '~/api/account'
+import { getOpenPositions } from '~/api/trade'
 
 export const useWallet = () => {
   useWebSocket()
@@ -46,10 +46,10 @@ export const useWallet = () => {
       2
     )
 
-    // const available = _.round(
-    //   wallet?.available ? Number(wallet.available) + diff : 0,
-    //   2
-    // )
+    const available = _.round(
+      wallet?.available ? Number(wallet.available) + diff : 0,
+      2
+    )
 
     const freezeMoney = _.round(
       wallet?.freezeMoney ? Number(wallet.freezeMoney) : 0,
@@ -62,10 +62,11 @@ export const useWallet = () => {
     )
     useStatisticsStore.setState({
       totalMoney,
-      available: wallet?.supMoney ?? 0,
+      available,
       freezeMoney,
       supFreezeMoney,
       profit,
+      supMoney: wallet?.supMoney ?? 0,
     })
     return
   }, 500)

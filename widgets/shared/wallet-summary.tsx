@@ -1,28 +1,20 @@
-import { BottomSheetModal } from "@gorhom/bottom-sheet"
-import { useIsFocused } from "@react-navigation/native"
-import { router } from "expo-router"
-import { AnimatePresence, useAnimationState } from "moti"
-import { FC, Fragment, useEffect, useRef, useState } from "react"
-import { useTranslation } from "react-i18next"
-import { useSafeAreaInsets } from "react-native-safe-area-context"
-import { shallow } from "zustand/shallow"
+import { BottomSheetModal } from '@gorhom/bottom-sheet'
+import { useIsFocused } from '@react-navigation/native'
+import { router } from 'expo-router'
+import { AnimatePresence, useAnimationState } from 'moti'
+import { FC, Fragment, useEffect, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { shallow } from 'zustand/shallow'
 
-import { Notifier } from "./header"
+import { Notifier } from './header'
 
 import {
-  AnimatedFlow,
-  BottomSheet,
-  Button,
-  Icon,
-  Moti,
-  Separator,
-  Text,
-  XStack,
-  YStack,
-} from "~/components"
-import { usePromptStore, useStatisticsStore } from "~/hooks/useStore"
-import { formatCurrency, uuid } from "~/lib/utils"
-import colors, { toRGBA } from "~/theme/colors"
+  AnimatedFlow, BottomSheet, Button, Icon, Moti, Separator, Text, XStack, YStack
+} from '~/components'
+import { usePromptStore, useStatisticsStore } from '~/hooks/useStore'
+import { formatCurrency, uuid } from '~/lib/utils'
+import colors, { toRGBA } from '~/theme/colors'
 
 const ListItem: FC<{ label: string; value: number; onPress: () => void }> = ({
   label,
@@ -54,7 +46,7 @@ const AnimatedDescription: FC<{ current: string }> = ({ current }) => {
   const it = useStatisticsStore((state) => {
     switch (current) {
       case "balance":
-        return state.available
+        return state.supMoney
       case "equity":
         return state.totalMoney
       case "margin":
@@ -79,13 +71,13 @@ const Summary: FC<{
   onChange: (v: { title: string; desc: string[]; reloadKey: string }) => void
 }> = ({ onChange }) => {
   const { t } = useTranslation()
-  const { available, totalMoney, freezeMoney, supFreezeMoney } =
+  const { supMoney, totalMoney, freezeMoney, supFreezeMoney } =
     useStatisticsStore((state) => state, shallow)
   return (
     <XStack fd="row" h="100%" w="100%" ai="center">
       <ListItem
         label={t("wallet.balance")}
-        value={available}
+        value={supMoney}
         onPress={() => {
           onChange({
             title: t("wallet.balance"),

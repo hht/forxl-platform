@@ -169,6 +169,7 @@ export const useStatisticsStore = createWithEqualityFn<{
   available: number
   freezeMoney: number
   supFreezeMoney: number
+  supMoney: number
   profit: number
   expended: boolean
 }>()((set) => ({
@@ -177,6 +178,7 @@ export const useStatisticsStore = createWithEqualityFn<{
   freezeMoney: 0,
   supFreezeMoney: 0,
   profit: 0,
+  supMoney: 0,
   expended: true,
 }))
 

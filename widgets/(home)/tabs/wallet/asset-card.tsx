@@ -1,22 +1,14 @@
-import { BottomSheetModal } from "@gorhom/bottom-sheet"
-import { FC, Fragment, useRef } from "react"
-import { useTranslation } from "react-i18next"
-import { ScrollView } from "react-native-gesture-handler"
-import { useSafeAreaInsets } from "react-native-safe-area-context"
-import { shallow } from "zustand/shallow"
+import { BottomSheetModal } from '@gorhom/bottom-sheet'
+import { FC, Fragment, useRef } from 'react'
+import { useTranslation } from 'react-i18next'
+import { ScrollView } from 'react-native-gesture-handler'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { shallow } from 'zustand/shallow'
 
-import {
-  AnimatedFlow,
-  BottomSheet,
-  Card,
-  Icon,
-  Text,
-  XStack,
-  YStack,
-} from "~/components"
-import { useStatisticsStore } from "~/hooks/useStore"
-import { DEVICE_HEIGHT } from "~/lib/utils"
-import colors from "~/theme/colors"
+import { AnimatedFlow, BottomSheet, Card, Icon, Text, XStack, YStack } from '~/components'
+import { useStatisticsStore } from '~/hooks/useStore'
+import { DEVICE_HEIGHT } from '~/lib/utils'
+import colors from '~/theme/colors'
 
 export const AssetCard: FC = () => {
   const { t } = useTranslation()
@@ -24,9 +16,9 @@ export const AssetCard: FC = () => {
   const dict = t("wallet.assetDesc", {
     returnObjects: true,
   })
-  const { available, totalMoney, supFreezeMoney } = useStatisticsStore(
+  const { supMoney, totalMoney, supFreezeMoney } = useStatisticsStore(
     (state) => ({
-      available: state?.available,
+      supMoney: state?.supMoney,
       totalMoney: state?.totalMoney,
       supFreezeMoney: state?.supFreezeMoney,
     }),
@@ -55,7 +47,7 @@ export const AssetCard: FC = () => {
             <AnimatedFlow
               color={colors.text}
               addonsBefore="$"
-              value={available}
+              value={supMoney}
             />
           </XStack>
           <XStack ai="center" jc="space-between">

@@ -8,7 +8,7 @@ import { useStatisticsStore } from '~/hooks/useStore'
 import { formatDecimal } from '~/lib/utils'
 
 export const AssetCard: FC = () => {
-  const available = useStatisticsStore((state) => state.available, shallow)
+  const supMoney = useStatisticsStore((state) => state.supMoney, shallow)
   const { t } = useTranslation()
   return (
     <Card fd="row" ai="center">
@@ -16,7 +16,7 @@ export const AssetCard: FC = () => {
         <Text>{t("wallet.title")}</Text>
         <XStack ai="baseline" gap="$xs">
           <Text col="$primary" head mr="$xs" bold>
-            {formatDecimal(available ?? 0)}
+            {formatDecimal(supMoney ?? 0)}
           </Text>
           <Text>USD</Text>
         </XStack>
