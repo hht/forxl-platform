@@ -46,7 +46,6 @@ export default function Page() {
           .min(8, matches.length)
           .max(12, matches.length)
           .regex(/[A-Za-z]/, matches.containsLetter)
-          .regex(/[!@#$%^&*_\-]/, matches.containsSpecial)
           .regex(/[0-9]/, matches.containsNumber),
       }),
     [matches]
