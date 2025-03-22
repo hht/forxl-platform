@@ -160,6 +160,9 @@ export default function Page() {
           value={inviteCode}
           status={((!!errors?.inviteCode) || !validated) ? "error" : "success"}
           onChangeText={(inviteCode) => {
+            if (inviteCode.length > 8) {
+              return
+            }
             useStore.setState({ inviteCode })
             validateCode(inviteCode)
           }}
