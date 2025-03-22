@@ -85,7 +85,7 @@ export default function Page() {
           }
         ></Input>
       </YStack>
-      <YStack f={1} gap={12}>
+      {withdrawMethod?.gaAuth ? <YStack f={1} gap={12}>
         <Text>{t("security.googleAuthCodeDesc")}</Text>
         <Input
           label={t("wallet.verificationCode")}
@@ -113,14 +113,14 @@ export default function Page() {
             </InputSuffix>
           }
         ></Input>
-      </YStack>
+      </YStack> : null}
       <Button
         disabled={loading || !success}
         onPress={() => {
           run({
             wdAccount: withdrawRequest?.wdAccount!,
             emailCode: withdrawRequest?.emailCode!,
-            gaCode: withdrawRequest?.gaCode!,
+            gaCode: withdrawMethod?.gaAuth ? withdrawRequest?.gaCode : undefined,
             money: withdrawRequest?.money!,
             recordType: withdrawMethod?.channelType!,
             channelCode: withdrawMethod?.channelCode!,

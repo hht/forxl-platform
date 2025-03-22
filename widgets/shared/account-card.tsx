@@ -1,24 +1,22 @@
-import { FC } from "react"
-import { useTranslation } from "react-i18next"
+import { FC } from 'react'
+import { useTranslation } from 'react-i18next'
 
-import { getAssets } from "~/api/wallet"
-import { Card, Icon, Text, YStack } from "~/components"
-import { CACHE_KEY, useRequest } from "~/hooks/useRequest"
-import { formatCurrency } from "~/lib/utils"
+import { Card, Icon, Text, YStack } from '~/components'
+import { useForxlStore, useStatisticsStore } from '~/hooks/useStore'
+import { formatCurrency } from '~/lib/utils'
 
 export const AccountCard: FC = () => {
   const { t } = useTranslation()
-  const { data } = useRequest(getAssets, {
-    cacheKey: CACHE_KEY.ASSETS,
-  })
+  const { available } = useStatisticsStore()
+  const userId = useForxlStore(state => state.account?.id)
   return (
     <Card ai="center" fd="row" gap={12}>
       <Icon name="dollar" size={48} />
       <YStack gap="$sm">
         <Text heading bold>
-          {formatCurrency(data?.userWalletDetail.fundsAccount.available ?? 0)}
+          {formatCurrency(available)}
         </Text>
-        <Text col="$secondary">{`${t("wallet.account")} ${data?.userWalletDetail.fundsAccount.userId}`}</Text>
+        <Text col="$secondary">{`${t("wallet.account")} ${userId ?? ''}`}</Text>
       </YStack>
     </Card>
   )

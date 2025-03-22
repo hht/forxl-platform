@@ -90,14 +90,14 @@ export default function Page() {
       z.object({
         email: z.string().email(matches.email),
         verifyCode: z.string().regex(/^\d{6}$/, matches.code),
-        inviteCode: z.string().min(6, matches.inviteCode),
+        inviteCode: z.string().regex(/^[A-Za-z0-9]{8}$/, matches.inviteCode),
       }),
     [matches]
   )
 
   const { run: validateCode } = useDebounceFn(
     async (code?: string) => {
-      if (!code || code.length < 6) {
+      if (!code || !/^[A-Za-z0-9]{8}$/.test(code)) {
         return
       }
       try {

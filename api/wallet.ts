@@ -238,7 +238,7 @@ export const withdraw = async (params: {
   timestamp: number
   wdAccount: string
   emailCode: string
-  gaCode: string
+  gaCode?: string
 }) => {
   return await request("/pay/applyWithdrawMoney", "POST", params)
 }
