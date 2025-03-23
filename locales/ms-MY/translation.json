@@ -457,8 +457,8 @@
     "youWillGet": "Anda akan mendapat",
     "systemRecharge": "Caj Semula Sistem",
     "sendStatementSuccessful": "Penyata akaun anda telah dihantar ke e-mel anda, sila semak。",
-    "adminDeduction": "Potongan pentadbir",
-    "adminDeposit": "Caj semula pentadbir",
+    "adminDeduction": "Potongan",
+    "adminDeposit": "tambah nilai",
     "agentCommissionFee": "Komisen Yuran Agensi",
     "bonus": "Bonus",
     "bonusDeduction": "Potongan bonus",
@@ -616,7 +616,7 @@
         "Dalam situasi di mana seorang ahli upline dan ahli downline berada di tahap yang sama, ahli upline akan menerima 10% daripada pendapatan bonus ahli downline. Jika terdapat beberapa ahli di tahap yang sama, bonus penyesuaian tahap hanya diberikan sekali."
       ]
     },
-    "directAccountsDesc": "Pengguna dengan dana akaun melebihi $100 dianggap sebagai pengguna aktif. Walau bagaimanapun, anda masih boleh memperoleh bonus rujukan daripada dagangan yang dibuat oleh akaun dengan dana kurang daripada $100.",
+    "directAccountsDesc": "Pengguna dengan dana akaun melebihi $50 dianggap sebagai pengguna aktif. Walau bagaimanapun, anda masih boleh memperoleh bonus rujukan daripada dagangan yang dibuat oleh akaun dengan dana kurang daripada $50.",
     "earnBonuses": "Dapatkan Bonus",
     "size": "Saiz Pasukan",
     "volume": "Isipadu Pasukan",
