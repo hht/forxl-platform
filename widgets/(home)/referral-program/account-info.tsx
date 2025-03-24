@@ -39,7 +39,7 @@ export const AccountInfo = () => {
                 {dict.activeUser}
               </Text>
               <Text ta="center" lh={18} col="$secondary">
-                {t("referral.activeUserDesc", { amount: 100 })}
+                {t("referral.activeUserDesc", { amount: 50 })}
               </Text>
             </YStack>
           </StatisticsInfo>
