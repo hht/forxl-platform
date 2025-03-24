@@ -276,8 +276,8 @@
     "closingProfit": "Closing Profit",
     "closingLoss": "Closing Loss",
     "addressFormatError": "Address format error",
-    "addressPrompt": "Copy the address of your USDT (TRC20) wallet or scan user QRcode to Deposit",
-    "addressPromptDesc": "Use the copied address during the transfer from your personal USDT (TRC20) wallet to your USDT (TRC20) wallet. This is your permanent address. You can save this address to use it next time you make a deposit.",
+    "addressPrompt": "Copy the address of your {{name}} wallet or scan user QRcode to Deposit",
+    "addressPromptDesc": "Use the copied address during the transfer from your personal {{name}} wallet to your {{name}} wallet. This is your permanent address. You can save this address to use it next time you make a deposit.",
     "balance": "Balance",
     "balanceDesc": [
       "Balance is the calculated total of all completed transactions on a trading account, including deposits and withdrawals. It can be the amount of funds you have before opening orders, or after you have closed all open orders; the balance does not change while orders are open."

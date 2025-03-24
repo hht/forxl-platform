@@ -277,8 +277,8 @@
     "closingProfit": "平仓利润",
     "closingLoss": "平仓亏损",
     "addressFormatError": "地址格式错误",
-    "addressPrompt": "复制您的 USDT (TRC20) 钱包地址或扫描用户二维码进行存款",
-    "addressPromptDesc": "在从您的个人 USDT (TRC20) 钱包转账到您的 USDT (TRC20) 钱包期间使用复制的地址。这是您的永久地址。您可以保存此地址，以便下次存款时使用。",
+    "addressPrompt": "复制您的 {{name}} 钱包地址或扫描用户二维码进行存款",
+    "addressPromptDesc": "在从您的个人 {{name}} 钱包转账到您的 {{name}} 钱包期间使用复制的地址。这是您的永久地址。您可以保存此地址，以便下次存款时使用。",
     "balance": "余额",
     "balanceDesc": [
       "余额是交易账户上所有完成的交易的计算总额，包括存款和取款。它可以是您在开仓前拥有的资金数量，或在您关闭所有未平仓订单后拥有的资金；余额在订单开启期间不会变化。"
@@ -711,12 +711,7 @@
   "support": {
     "header": "全天候客户支持",
     "desc": "我们的代理每天24小时，全年365天通过电子邮件、聊天和电话提供服务。",
-    "children": [
-      "支持中心",
-    "support@forxlmarkets.com",
-     "常见问题", 
-     "实时支持"
-    ]
+    "children": ["支持中心", "support@forxlmarkets.com", "常见问题", "实时支持"]
   },
   "security": {
     "title": "安全",
@@ -740,11 +735,7 @@
     "twoFactorStepTwo": "使用应用扫描二维码或复制粘贴密钥",
     "twoFactorStepThree": "输入应用中的 6 位认证码。",
     "twoFactorStepAdditional": "输入应用中的前一个认证码。",
-    "children": [
-      "重置密码",
-      "双因素认证", 
-      "账户停用"
-    ],
+    "children": ["重置密码", "双因素认证", "账户停用"],
     "uncertified": "上传文件并证明您的身份。",
     "uncertifiedDesc": [
       "实时交易",

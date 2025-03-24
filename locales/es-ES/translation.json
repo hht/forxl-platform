@@ -277,8 +277,8 @@
     "closingProfit": "Ganancia al Cerrar",
     "closingLoss": "Pérdida al Cerrar",
     "addressFormatError": "Error en el formato de la dirección",
-    "addressPrompt": "Copia la dirección de tu cartera USDT (TRC20) o escanea el código QR del usuario para depositar",
-    "addressPromptDesc": "Usa la dirección copiada durante la transferencia desde tu cartera personal USDT (TRC20) a tu cartera USDT (TRC20). Esta es tu dirección permanente. Puedes guardar esta dirección para usarla la próxima vez que realices un depósito.",
+    "addressPrompt": "Copia la dirección de tu cartera {{name}} o escanea el código QR del usuario para depositar",
+    "addressPromptDesc": "Usa la dirección copiada durante la transferencia desde tu cartera personal {{name}} a tu cartera {{name}}. Esta es tu dirección permanente. Puedes guardar esta dirección para usarla la próxima vez que realices un depósito.",
     "balance": "Saldo",
     "balanceDesc": [
       "El saldo es el total calculado de todas las transacciones completadas en una cuenta de comercio, incluidos depósitos y retiros. Puede ser la cantidad de fondos que tienes antes de abrir órdenes, o después de haber cerrado todas las órdenes abiertas; el saldo no cambia mientras las órdenes están abiertas."

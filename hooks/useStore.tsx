@@ -4,7 +4,7 @@ import { produce } from 'immer'
 import { createJSONStorage, persist } from 'zustand/middleware'
 import { createWithEqualityFn } from 'zustand/traditional'
 
-import { getPartnerConfig } from '~/api/partner'
+import { getBonusConfig, getPartnerConfig } from '~/api/partner'
 import { getFutureCategories } from '~/api/trade'
 import { dayjs, i18n } from '~/lib/utils'
 
@@ -209,6 +209,7 @@ export const usePartnerStore = createWithEqualityFn<{
   partnerLevel: number
   currentLevel: number
   config?: Awaited<ReturnType<typeof getPartnerConfig>>
+  bonus?: Awaited<ReturnType<typeof getBonusConfig>>
 }>((set) => ({
   activeIndex: 0,
   partnerLevel: 0,

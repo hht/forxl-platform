@@ -277,8 +277,8 @@
     "closingProfit": "Kapanış Karı",
     "closingLoss": "Kapanış Zararı",
     "addressFormatError": "Adres format hatası",
-    "addressPrompt": "USDT (TRC20) cüzdan adresinizi kopyalayın veya Deposit için kullanıcı QR kodunu tarayın",
-    "addressPromptDesc": "Kişisel USDT (TRC20) cüzdanınızdan USDT (TRC20) cüzdanınıza transfer sırasında kopyalanan adresi kullanın. Bu kalıcı adresinizdir. Bu adresi bir sonraki depozito yapışınızda tekrar kullanmak için kaydedebilirsiniz.",
+    "addressPrompt": "{{name}} cüzdan adresinizi kopyalayın veya Deposit için kullanıcı QR kodunu tarayın",
+    "addressPromptDesc": "Kişisel {{name}} cüzdanınızdan {{name}} cüzdanınıza transfer sırasında kopyalanan adresi kullanın. Bu kalıcı adresinizdir. Bu adresi bir sonraki depozito yapışınızda tekrar kullanmak için kaydedebilirsiniz.",
     "balance": "Bakiye",
     "balanceDesc": [
       "Bakiye, depozitolar ve çekimler dahil olmak üzere bir ticaret hesabındaki tamamlanmış tüm işlemlerin hesaplanan toplamıdır. Emir açmadan önce sahip olduğunuz fon miktarı veya tüm açık emirleri kapattıktan sonra olabilir; bakiye, emirler açıkken değişmez."

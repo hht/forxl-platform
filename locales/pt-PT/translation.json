@@ -277,8 +277,8 @@
     "closingProfit": "Lucro ao Fechar",
     "closingLoss": "Perda ao Fechar",
     "addressFormatError": "Erro no formato do endereço",
-    "addressPrompt": "Copie o endereço da sua carteira USDT (TRC20) ou escaneie o código QR do usuário para Depositar",
-    "addressPromptDesc": "Use o endereço copiado durante a transferência da sua carteira pessoal USDT (TRC20) para sua carteira USDT (TRC20). Este é o seu endereço permanente. Você pode salvar este endereço para usá-lo na próxima vez que fizer um depósito.",
+    "addressPrompt": "Copie o endereço da sua carteira {{name}} ou escaneie o código QR do usuário para Depositar",
+    "addressPromptDesc": "Use o endereço copiado durante a transferência da sua carteira pessoal {{name}} para sua carteira {{name}}. Este é o seu endereço permanente. Você pode salvar este endereço para usá-lo na próxima vez que fizer um depósito.",
     "balance": "Saldo",
     "balanceDesc": [
       "O saldo é o total calculado de todas as transações concluídas em uma conta de negociação, incluindo depósitos e retiradas. Pode ser a quantidade de fundos que você tem antes de abrir ordens, ou depois de ter fechado todas as ordens abertas; o saldo não muda enquanto as ordens estão abertas."

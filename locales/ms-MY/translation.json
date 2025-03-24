@@ -277,8 +277,8 @@
     "closingProfit": "Keuntungan Penutupan",
     "closingLoss": "Kerugian Penutupan",
     "addressFormatError": "Ralat format alamat",
-    "addressPrompt": "Salin alamat dompet USDT (TRC20) anda atau imbas kod QR pengguna untuk Deposit",
-    "addressPromptDesc": "Gunakan alamat yang disalin semasa pemindahan dari dompet USDT (TRC20) peribadi anda ke dompet USDT (TRC20) anda. Ini adalah alamat kekal anda. Anda boleh menyimpan alamat ini untuk menggunakannya semula pada masa akan datang anda membuat deposit.",
+    "addressPrompt": "Salin alamat dompet {{name}} anda atau imbas kod QR pengguna untuk Deposit",
+    "addressPromptDesc": "Gunakan alamat yang disalin semasa pemindahan dari dompet {{name}} peribadi anda ke dompet {{name}} anda. Ini adalah alamat kekal anda. Anda boleh menyimpan alamat ini untuk menggunakannya semula pada masa akan datang anda membuat deposit.",
     "balance": "Imbangan",
     "balanceDesc": [
       "Imbangan adalah jumlah yang dikira dari semua transaksi yang selesai di akaun dagangan, termasuk deposit dan pengeluaran. Ia boleh menjadi jumlah dana yang anda miliki sebelum membuka pesanan, atau selepas anda telah menutup semua pesanan terbuka; imbangan tidak berubah semasa pesanan terbuka."

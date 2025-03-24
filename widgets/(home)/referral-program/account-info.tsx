@@ -1,17 +1,10 @@
-import { Fragment } from "react"
-import { Trans, useTranslation } from "react-i18next"
+import { Fragment } from 'react'
+import { Trans, useTranslation } from 'react-i18next'
 
-import {
-  Icon,
-  IconType,
-  StatisticsInfo,
-  Text,
-  XStack,
-  YStack,
-} from "~/components"
-import { usePartnerStore } from "~/hooks/useStore"
-import { formatDecimal } from "~/lib/utils"
-import colors from "~/theme/colors"
+import { Icon, IconType, StatisticsInfo, Text, XStack, YStack } from '~/components'
+import { usePartnerStore } from '~/hooks/useStore'
+import { formatDecimal } from '~/lib/utils'
+import colors from '~/theme/colors'
 
 const LEVEL_ICON: IconType[] = ["user", "pair", "group"]
 
@@ -20,8 +13,8 @@ export const AccountInfo = () => {
   const dict = t("referral", {
     returnObjects: true,
   })
-  const { partnerConfig } = usePartnerStore((state) => ({
-    partnerConfig: state.config?.find((it) => it.level === state.partnerLevel),
+  const { bonus } = usePartnerStore((state) => ({
+    bonus: state.bonus
   }))
   return (
     <Fragment>
@@ -31,7 +24,7 @@ export const AccountInfo = () => {
           <Text col="$secondary">
             <Trans
               i18nKey="referral.requirementsDesc"
-              values={{ amount: formatDecimal(partnerConfig?.funds ?? 0) }}
+              values={{ amount: formatDecimal(bonus?.minSourceAmount1 ?? 0) }}
               components={{
                 1: <Text col="$primary" />,
               }}

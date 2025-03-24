@@ -1,21 +1,14 @@
-import { Stack } from "expo-router"
-import { useTranslation } from "react-i18next"
-import { useSafeAreaInsets } from "react-native-safe-area-context"
+import { Stack } from 'expo-router'
+import { useTranslation } from 'react-i18next'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
-import { getBonusConfig, getPartnerConfig } from "~/api/partner"
-import {
-  Figure,
-  IconType,
-  ScrollView,
-  Text,
-  XStack,
-  YStack,
-} from "~/components"
-import { useRequest } from "~/hooks/useRequest"
-import { usePartnerStore } from "~/hooks/useStore"
-import { DEVICE_WIDTH, formatDecimal } from "~/lib/utils"
-import { AccountInfo } from "~/widgets/(home)/referral-program/account-info"
-import { ReferralInfo } from "~/widgets/(home)/referral-program/referral-info"
+import { getBonusConfig, getPartnerConfig } from '~/api/partner'
+import { Figure, IconType, ScrollView, Text, XStack, YStack } from '~/components'
+import { useRequest } from '~/hooks/useRequest'
+import { usePartnerStore } from '~/hooks/useStore'
+import { DEVICE_WIDTH, formatDecimal } from '~/lib/utils'
+import { AccountInfo } from '~/widgets/(home)/referral-program/account-info'
+import { ReferralInfo } from '~/widgets/(home)/referral-program/referral-info'
 
 const LEVEL_ICON: IconType[] = ["user", "pair", "group"]
 
@@ -26,7 +19,13 @@ export default function Layout() {
     returnObjects: true,
   })
 
-  const { data: bonus } = useRequest(getBonusConfig)
+  const { data: bonus } = useRequest(getBonusConfig, {
+    onSuccess: (data) => {
+      usePartnerStore.setState({
+        bonus: data,
+      })
+    },
+  })
   useRequest(getPartnerConfig, {
     onSuccess: (data) => {
       usePartnerStore.setState({
@@ -62,10 +61,10 @@ export default function Layout() {
                 {t("referral.benefits.perLot", {
                   amount: formatDecimal(
                     bonus?.[
-                      `generation${index + 1}` as
-                        | "generation1"
-                        | "generation2"
-                        | "generation3"
+                    `generation${index + 1}` as
+                    | "generation1"
+                    | "generation2"
+                    | "generation3"
                     ] ?? 0
                   ),
                 })}
