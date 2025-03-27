@@ -158,8 +158,8 @@
     }
   },
   "trade": {
-    "sell": "卖",
-    "buy": "买",
+    "sell": "SELL",
+    "buy": "BUY",
     "popular": "热门",
     "forex": "外汇",
     "crypto": "加密货币",
@@ -188,7 +188,7 @@
     "price": "价格",
     "profit": "利润",
     "lastSeen": "最近搜索",
-    "commission": "佣金",
+    "commission": "手续费",
     "operation": "操作",
     "searchSymbol": "搜索符号",
     "categories": "分类",

@@ -158,8 +158,8 @@
     }
   },
   "trade": {
-    "sell": "Sat",
-    "buy": "Al",
+    "sell": "SELL",
+    "buy": "BUY",
     "popular": "Popüler",
     "forex": "Forex",
     "crypto": "Kripto",

@@ -158,8 +158,8 @@
     }
   },
   "trade": {
-    "sell": "Jual",
-    "buy": "Beli",
+    "sell": "SELL",
+    "buy": "BUY",
     "popular": "Popular",
     "forex": "Forex",
     "crypto": "Kripto",
