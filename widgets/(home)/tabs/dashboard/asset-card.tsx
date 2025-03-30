@@ -11,7 +11,7 @@ export const AssetCard: FC = () => {
   const supMoney = useStatisticsStore((state) => state.supMoney, shallow)
   const { t } = useTranslation()
   return (
-    <Card fd="row" ai="center">
+    <Card fd="row" ai="center" mb="$md">
       <YStack gap="$sm" f={1}>
         <Text>{t("wallet.title")}</Text>
         <XStack ai="baseline" gap="$xs">

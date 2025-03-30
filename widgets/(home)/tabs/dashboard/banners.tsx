@@ -9,11 +9,14 @@ import { AspectImage, CAROUSEL_WIDTH } from './aspect-image'
 import { getBanners } from '~/api/dashboard'
 import { Icon, ScrollView, XStack } from '~/components'
 import { CACHE_KEY, useRequest } from '~/hooks/useRequest'
+import { useForxlStore } from '~/hooks/useStore'
 import colors from '~/theme/colors'
 
 export const Banners: FC<{ position: number }> = ({ position }) => {
+  const lang = useForxlStore(state => state.language)
   const { data } = useRequest(() => getBanners(position), {
-    cacheKey: `${CACHE_KEY.BANNERS}.${position}`,
+    cacheKey: `${CACHE_KEY.BANNERS}.${position}.${lang}`,
+    refreshDeps: [lang]
   })
   const ref = useRef<ScrollView>(null)
   const [currentIndex, setCurrentIndex] = useState(0)
@@ -86,7 +89,7 @@ export const Banners: FC<{ position: number }> = ({ position }) => {
     return null
   }
   return (
-    <XStack w={CAROUSEL_WIDTH} br="$sm" ov="hidden" mt="$md">
+    <XStack w={CAROUSEL_WIDTH} br="$sm" ov="hidden">
       <ScrollView
         ref={ref}
         horizontal
