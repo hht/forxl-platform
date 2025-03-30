@@ -1,14 +1,15 @@
-import * as Linking from "expo-linking"
-import _ from "lodash"
-import { FC, useCallback, useEffect, useMemo, useRef, useState } from "react"
-import { NativeScrollEvent, NativeSyntheticEvent } from "react-native"
+import * as Linking from 'expo-linking'
+import { router } from 'expo-router'
+import _ from 'lodash'
+import { FC, useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { NativeScrollEvent, NativeSyntheticEvent } from 'react-native'
 
-import { AspectImage, CAROUSEL_WIDTH } from "./aspect-image"
+import { AspectImage, CAROUSEL_WIDTH } from './aspect-image'
 
-import { getBanners } from "~/api/dashboard"
-import { Icon, ScrollView, XStack } from "~/components"
-import { CACHE_KEY, useRequest } from "~/hooks/useRequest"
-import colors from "~/theme/colors"
+import { getBanners } from '~/api/dashboard'
+import { Icon, ScrollView, XStack } from '~/components'
+import { CACHE_KEY, useRequest } from '~/hooks/useRequest'
+import colors from '~/theme/colors'
 
 export const Banners: FC<{ position: number }> = ({ position }) => {
   const { data } = useRequest(() => getBanners(position), {
@@ -102,6 +103,10 @@ export const Banners: FC<{ position: number }> = ({ position }) => {
             key={index}
             uri={banner.img}
             onPress={() => {
+              if (banner.jumpApp === 7) {
+                router.push('/referral-program')
+                return
+              }
               if (!banner.jumpUrl) {
                 return
               }
