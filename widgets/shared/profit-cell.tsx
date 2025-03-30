@@ -5,7 +5,7 @@ import { AnimatedFlow, Row, YStack } from '~/components'
 import { computeProfit, useQuotesStore } from '~/hooks/useStore'
 
 const ProfitWidget: FC<{ horizontal: boolean, children: ReactNode }> = ({ horizontal, children }) => {
-  return horizontal ? <Row ai="baseline" gap="$sx">{children}</Row> : <YStack ai="flex-end" gap="$xs">{children}</YStack>
+  return horizontal ? <Row ai="baseline" gap="$xs">{children}</Row> : <YStack ai="flex-end" gap="$xs">{children}</YStack>
 }
 
 export const ProfitCell: FC<{
@@ -38,7 +38,7 @@ export const ProfitCell: FC<{
       ></AnimatedFlow>
       <AnimatedFlow
         value={(profit / (data.securityDeposit ?? 1)) * 100}
-        fontSize={fontSize * 0.8}
+        fontSize={fontSize}
         addonsBefore=""
         addonsAfter="%"
         bold={bold}
