@@ -132,8 +132,7 @@ export const OrderDetail = () => {
               )}
             </Text>
             <Text
-              fos={14}
-              lh={14}
+              heading
               bold
               col={
                 (currentPosition.pureProfit ??

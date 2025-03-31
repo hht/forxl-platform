@@ -175,8 +175,6 @@ const ArchivedListItem: FC<{ data: Position; dateVisible?: boolean }> = ({
               </Text>
               <Text
                 bold
-                fos={10}
-                lh={10}
                 col={
                   data.pureProfit! > 0
                     ? "$primary"
