@@ -75,15 +75,15 @@ export const request = async <T, U>(
         if (res.code !== 100) {
           throw new Error(res.msg)
         } else {
-          // console.log("🚀", url)
-          // console.log("👜", JSON.stringify(body))
-          // console.log("✅", JSON.stringify(res))
+          console.log("🚀", url)
+          console.log("👜", JSON.stringify(body))
+          console.log("✅", JSON.stringify(res))
           return res.data as T
         }
       }
-      // console.log("🚀", url)
-      // console.log("👜", JSON.stringify(body))
-      // console.log("✅", JSON.stringify(res))
+      console.log("🚀", url)
+      console.log("👜", JSON.stringify(body))
+      console.log("✅", JSON.stringify(res))
       return res as T
     })
     .catch((error) => {

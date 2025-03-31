@@ -271,10 +271,10 @@ export type DepositResult =
     orderNo: string
   }
   | {
-    address: string
-    price: number
+    order_no: string,  //订单号（不用处理）
+    order_data: string,  //跳转地址（需跳转到该地址，建议新开标签页）
+    mer_order_no: string
     payType: 101
-    orderNo: string
   }
   | {
     address: string

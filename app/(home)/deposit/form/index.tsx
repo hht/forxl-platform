@@ -1,4 +1,5 @@
 import { useUnmount } from 'ahooks'
+import * as Linking from 'expo-linking'
 import { router, Stack } from 'expo-router'
 import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -23,12 +24,17 @@ export default function Page() {
   const { run, loading } = useRequest(deposit, {
     manual: true,
     onSuccess: (data) => {
+      useWalletStore.setState({
+        depositResult: data as DepositResult,
+      })
       if (data) {
-        useWalletStore.setState({
-          depositResult: data as DepositResult,
-        })
         if (data.payType === 3) {
           router.push("/deposit/confirm")
+          return
+        }
+        if (data.payType === 101) {
+          Linking.openURL(data.order_data as string)
+          router.back()
         }
       }
     },
@@ -65,9 +71,9 @@ export default function Page() {
             disabled={
               loading ||
               (depositRequest.amount ?? 0) <
-                (method?.incomeMoneyMin ?? -Infinity) ||
+              (method?.incomeMoneyMin ?? -Infinity) ||
               (depositRequest.amount ?? 0) >
-                (method?.incomeMoneyMax ?? Infinity) ||
+              (method?.incomeMoneyMax ?? Infinity) ||
               (method?.payType === 3 &&
                 (!depositRequest.payBank ||
                   !depositRequest.payName ||
@@ -82,6 +88,32 @@ export default function Page() {
                 userPayAccount: depositRequest.payAccount,
                 userPayBank: depositRequest.payBank,
                 userPayName: depositRequest.payName,
+              })
+            }}
+          >
+            {t("wallet.deposit")}
+          </Button>
+        ) : method?.payType === 101 ? (
+          <Button
+            isLoading={loading}
+            disabled={
+              loading ||
+              (depositRequest.amount ?? 0) <
+              (method?.incomeMoneyMin ?? -Infinity) ||
+              (depositRequest.amount ?? 0) >
+              (method?.incomeMoneyMax ?? Infinity)
+            }
+            onPress={() => {
+              run({
+                code: method?.code!,
+                amount: depositRequest.amount ?? 0,
+                type: method?.payType ?? 0,
+                paymentId: method?.id,
+                userPayAccount: depositRequest.payAccount,
+                userPayBank: depositRequest.payBank,
+                userPayName: depositRequest.payName,
+                payChannel: method.payChannel,
+                currency: method.currency
               })
             }}
           >

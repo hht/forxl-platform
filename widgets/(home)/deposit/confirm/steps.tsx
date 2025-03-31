@@ -1,23 +1,16 @@
-import { FC } from "react"
-import { useTranslation } from "react-i18next"
-import QRCode from "react-native-qrcode-skia"
+import { FC } from 'react'
+import { useTranslation } from 'react-i18next'
+import QRCode from 'react-native-qrcode-skia'
 
-import { UploadCard } from "./upload-card"
+import { UploadCard } from './upload-card'
 
 import {
-  Card,
-  Copyable,
-  copyToClipboard,
-  Separator,
-  Stepper,
-  Text,
-  XStack,
-  YStack,
-} from "~/components"
-import { useWalletStore } from "~/hooks/useStore"
-import { formatDecimal } from "~/lib/utils"
-import colors, { toRGBA } from "~/theme/colors"
-import { PaymentMethodDescription } from "~/widgets/shared/payment-methods"
+  Card, Copyable, copyToClipboard, Separator, Stepper, Text, XStack, YStack
+} from '~/components'
+import { useWalletStore } from '~/hooks/useStore'
+import { formatDecimal } from '~/lib/utils'
+import colors, { toRGBA } from '~/theme/colors'
+import { PaymentMethodDescription } from '~/widgets/shared/payment-methods'
 
 export const DepositSteps: FC = () => {
   const { t } = useTranslation()
@@ -54,55 +47,58 @@ export const DepositSteps: FC = () => {
       </Stepper>
     )
   }
-  return (
-    <Card ai="center" jc="center" gap={12}>
-      <XStack p="$md" br="$sm" bc="white">
-        <QRCode
-          value={depositResult?.address ?? ""}
-          style={{
-            backgroundColor: "white",
-            borderRadius: 16,
-            padding: 16,
-          }}
-          size={128}
-          shapeOptions={{
-            shape: "circle",
-            eyePatternShape: "rounded",
-            eyePatternGap: 0,
-            gap: 0,
-          }}
-        ></QRCode>
-      </XStack>
-      <XStack gap={12} ai="center">
-        <Text f={1} bold>
-          {depositResult?.address}
-        </Text>
-        <XStack
-          h={24}
-          ai="center"
-          jc="center"
-          bc={toRGBA(colors.primary, 0.1)}
-          px="$sm"
-          br={12}
-          hitSlop={16}
-          onPress={() => {
-            copyToClipboard(depositResult?.address ?? "")
-          }}
-        >
-          <Text col="$primary" bold lh={24}>
-            {t("action.copy")}
-          </Text>
+  if (depositResult?.payType === 0 || depositResult?.payType === 1) {
+    return (
+      <Card ai="center" jc="center" gap={12}>
+        <XStack p="$md" br="$sm" bc="white">
+          <QRCode
+            value={depositResult?.address ?? ""}
+            style={{
+              backgroundColor: "white",
+              borderRadius: 16,
+              padding: 16,
+            }}
+            size={128}
+            shapeOptions={{
+              shape: "circle",
+              eyePatternShape: "rounded",
+              eyePatternGap: 0,
+              gap: 0,
+            }}
+          ></QRCode>
         </XStack>
-      </XStack>
-      <Separator />
-      {depositMethod ? (
-        <YStack w="100%">
-          <PaymentMethodDescription method={depositMethod} />
-          {depositMethod.remark3 ? (
-            <Card.Item title={depositMethod.remark3}>{""}</Card.Item>
-          ) : null}
-        </YStack>
-      ) : null}
-    </Card>
-  )
+        <XStack gap={12} ai="center">
+          <Text f={1} bold>
+            {depositResult?.address}
+          </Text>
+          <XStack
+            h={24}
+            ai="center"
+            jc="center"
+            bc={toRGBA(colors.primary, 0.1)}
+            px="$sm"
+            br={12}
+            hitSlop={16}
+            onPress={() => {
+              copyToClipboard(depositResult?.address ?? "")
+            }}
+          >
+            <Text col="$primary" bold lh={24}>
+              {t("action.copy")}
+            </Text>
+          </XStack>
+        </XStack>
+        <Separator />
+        {depositMethod ? (
+          <YStack w="100%">
+            <PaymentMethodDescription method={depositMethod} />
+            {depositMethod.remark3 ? (
+              <Card.Item title={depositMethod.remark3}>{""}</Card.Item>
+            ) : null}
+          </YStack>
+        ) : null}
+      </Card>
+    )
+  }
+  return null
 }

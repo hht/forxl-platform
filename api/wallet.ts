@@ -179,7 +179,9 @@ export const deposit = async (params: {
   userPayName?: string
   userPayBank?: string
   userPayAccount?: string
-}) => {
+  payChannel?: number
+  currency?: string
+}): Promise<DepositResult | undefined> => {
   switch (params.type) {
     case 0:
     case 102:
@@ -189,7 +191,22 @@ export const deposit = async (params: {
       >("/pay/payToken", "POST", {
         istype: params.code,
         price: params.amount,
-      }).then((res) => ({ ...res.url, payType: 0 as const }))
+      }).then((res) => ({ ...res.url, payType: 0 } as DepositResult))
+    case 101:
+      return await request<DepositResult, {
+        payChannel?: number,  //取支付通道的payChannel字段
+        usdAmount: number, //这里要先输入金额
+        currency?: string,  //取支付通道的currency字段
+        code: string,  //取支付通道的code字段
+        paymentId?: number, //取支付通道的id
+      }>("/pay/v2/payByEpay", "POST", {
+        payChannel: params.payChannel,
+        usdAmount: params.amount,
+        currency: params.currency,
+        code: params.code,
+        paymentId: params.paymentId,
+      })
+        .then((res) => ({ ...res, payType: 101 } as DepositResult))
     case 1:
       return await request<
         { url: DepositResult },
@@ -197,7 +214,7 @@ export const deposit = async (params: {
       >("/pay/payBepToken", "POST", {
         istype: params.code,
         price: params.amount,
-      }).then((res) => ({ ...res.url, payType: 1 as const }))
+      }).then((res) => ({ ...res.url, payType: 1 } as DepositResult))
     case 3:
       return await request<
         DepositResult,
@@ -216,7 +233,7 @@ export const deposit = async (params: {
         userPayName: params.userPayName,
         userPayAccount: params.userPayAccount,
         userPayBank: params.userPayBank,
-      }).then((res) => ({ ...res, payType: 3 as const }))
+      }).then((res) => ({ ...res, payType: 3 } as DepositResult))
     default:
       return undefined
   }
