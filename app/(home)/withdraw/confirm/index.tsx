@@ -1,6 +1,7 @@
 import dayjs from 'dayjs'
 import * as Clipboard from 'expo-clipboard'
 import { router, Stack } from 'expo-router'
+import { round } from 'lodash'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
@@ -9,6 +10,7 @@ import { shallow } from 'zustand/shallow'
 
 import { sendEmailCode, withdraw } from '~/api/wallet'
 import { Button, Input, ScrollView, Text, toast, YStack } from '~/components'
+import { useCountDown } from '~/hooks/useCountdown'
 import { useRequest } from '~/hooks/useRequest'
 import { useForxlStore, useWalletStore } from '~/hooks/useStore'
 import { InputSuffix } from '~/widgets/shared/input-suffix'
@@ -16,7 +18,7 @@ import { InputSuffix } from '~/widgets/shared/input-suffix'
 export default function Page() {
   const { t } = useTranslation()
   const email = useForxlStore((state) => state.account?.email, shallow)
-
+  const { countdown, setDate } = useCountDown()
   const { withdrawRequest, withdrawMethod } = useWalletStore()
   const { bottom } = useSafeAreaInsets()
 
@@ -76,11 +78,16 @@ export default function Page() {
           addonAfter={
             <InputSuffix
               col="$primary"
+              disabled={!!countdown}
               onPress={() => {
-                sendEmailCode()
+                sendEmailCode().finally(() => {
+                  setDate(Date.now() + 60 * 1000)
+                })
               }}
             >
-              {t("settings.getVerificationCode")}
+              {countdown ? t("message.countdown", {
+                time: round(countdown / 1000)
+              }) : t("settings.getVerificationCode")}
             </InputSuffix>
           }
         ></Input>
