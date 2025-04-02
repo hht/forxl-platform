@@ -6,7 +6,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 import { cancelDeposit, confirmDeposit } from '~/api/wallet'
 import {
-    Button, Dialog, Figure, Popup, ScrollView, Text, toast, XStack, YStack
+  Button, Dialog, Figure, Popup, ScrollView, Text, toast, XStack, YStack
 } from '~/components'
 import { useRequest } from '~/hooks/useRequest'
 import { useWalletStore } from '~/hooks/useStore'
@@ -136,7 +136,7 @@ export default function Page() {
             >
               {t("wallet.thinkAgain")}
             </Button>
-            <Button
+            {depositResult?.payType === 101 ? null : <Button
               f={1}
               size="$md"
               onPress={() => {
@@ -149,7 +149,7 @@ export default function Page() {
               }}
             >
               {t("action.submit")}
-            </Button>
+            </Button>}
           </XStack>
         </Dialog>
       </Popup>

@@ -88,6 +88,7 @@ export default function Page() {
                 userPayAccount: depositRequest.payAccount,
                 userPayBank: depositRequest.payBank,
                 userPayName: depositRequest.payName,
+                payApiUrl: method?.payApiUrl,
               })
             }}
           >
@@ -113,7 +114,8 @@ export default function Page() {
                 userPayBank: depositRequest.payBank,
                 userPayName: depositRequest.payName,
                 payChannel: method.payChannel,
-                currency: method.currency
+                currency: method.currency,
+                payApiUrl: method?.payApiUrl,
               })
             }}
           >

@@ -181,6 +181,7 @@ export const deposit = async (params: {
   userPayAccount?: string
   payChannel?: number
   currency?: string
+  payApiUrl?: string
 }): Promise<DepositResult | undefined> => {
   switch (params.type) {
     case 0:
@@ -199,7 +200,7 @@ export const deposit = async (params: {
         currency?: string,  //取支付通道的currency字段
         code: string,  //取支付通道的code字段
         paymentId?: number, //取支付通道的id
-      }>("/pay/v2/payByEpay", "POST", {
+      }>(params.payApiUrl ?? "/pay/v2/payByEpay", "POST", {
         payChannel: params.payChannel,
         usdAmount: params.amount,
         currency: params.currency,
