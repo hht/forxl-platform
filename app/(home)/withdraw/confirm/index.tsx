@@ -28,7 +28,7 @@ export default function Page() {
         gaCode: z
           .string()
           .regex(/^\d{6}$/, t("message.verificationCodePrompt"))
-          .length(6, t("message.verificationCodePrompt")),
+          .length(6, t("message.verificationCodePrompt")).optional(),
 
         emailCode: z
           .string()

@@ -2,7 +2,6 @@ import { useMount } from 'ahooks'
 import { useFonts } from 'expo-font'
 import * as Localization from 'expo-localization'
 import * as SplashScreen from 'expo-splash-screen'
-import * as Updates from 'expo-updates'
 import { useCallback, useState } from 'react'
 import { initReactI18next } from 'react-i18next'
 import { configureReanimatedLogger, ReanimatedLogLevel } from 'react-native-reanimated'
@@ -22,17 +21,6 @@ export const useReady = () => {
     Inter: require("@tamagui/font-inter/otf/Inter-Medium.otf"),
     InterBold: require("@tamagui/font-inter/otf/Inter-Bold.otf"),
   })
-  const checkUpdates = useCallback(async () => {
-    try {
-      // const update = await Updates.checkForUpdateAsync()
-      // if (update.isAvailable) {
-      //   await Updates.fetchUpdateAsync()
-      //   await Updates.reloadAsync()
-      // }
-    } catch (error) {
-      // console.log("Error checking updates:", error)
-    }
-  }, [])
   const initI18Next = useCallback(async () => {
     const locale = Localization.getLocales()[0].languageCode
     await i18n.use(initReactI18next).init({
@@ -46,7 +34,7 @@ export const useReady = () => {
     })
   }, [])
   useMount(() => {
-    Promise.all([checkUpdates(), initI18Next()]).then(() => {
+    initI18Next().then(() => {
       setReady(true)
       SplashScreen.hideAsync()
     })
