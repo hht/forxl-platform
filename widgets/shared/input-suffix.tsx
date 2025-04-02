@@ -1,9 +1,9 @@
-import { FC } from "react"
-import { TextProps, XStack } from "tamagui"
+import { FC } from 'react'
+import { TextProps, XStack } from 'tamagui'
 
-import { Text } from "~/components"
+import { Text } from '~/components'
 
-export const InputSuffix: FC<TextProps> = ({ children, onPress, ...rest }) => (
+export const InputSuffix: FC<TextProps> = ({ children, disabled, onPress, ...rest }) => (
   <XStack
     pl="$md"
     h="100%"
@@ -11,6 +11,7 @@ export const InputSuffix: FC<TextProps> = ({ children, onPress, ...rest }) => (
     jc="center"
     blc="$border"
     blw={1}
+    disabled={disabled}
     onPress={onPress}
   >
     <Text {...rest}>{children}</Text>
