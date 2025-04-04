@@ -2,20 +2,21 @@ import { useIsFocused } from '@react-navigation/native'
 import { useInfiniteScroll } from 'ahooks'
 import dayjs from 'dayjs'
 import { Stack } from 'expo-router'
-import { FC, Fragment } from 'react'
+import { FC, Fragment, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ActivityIndicator, FlatList, Platform } from 'react-native'
 
 import { getNews } from '~/api/dashboard'
 import { Screen, Text, XStack } from '~/components'
+import { uuid } from '~/lib/utils'
 import colors from '~/theme/colors'
 import { AssetCard } from '~/widgets/(home)/tabs/dashboard/asset-card'
 import {
-    ListEmptyComponent, ListHeaderComponent, ListItem
+  ListEmptyComponent, ListHeaderComponent, ListItem
 } from '~/widgets/(home)/tabs/dashboard/list'
 import {
-    BrandTitle, BreadCrumb, CustomerService, DefaultScreenOptions, NativeStackNavigationOptions,
-    Notifier
+  BrandTitle, BreadCrumb, CustomerService, DefaultScreenOptions, NativeStackNavigationOptions,
+  Notifier
 } from '~/widgets/shared/header'
 import { Gradient } from '~/widgets/shared/shape'
 
@@ -77,8 +78,9 @@ const ListFooterComponent: FC<{ loading: boolean; isEmpty?: boolean }> = ({
 
 export default function Page() {
   const isFocused = useIsFocused()
+  const [key, setKey] = useState(uuid())
   const { i18n } = useTranslation()
-  const { data, loadMore, loadingMore } = useInfiniteScroll<{
+  const { data, loadMore, loading, loadingMore, reload } = useInfiniteScroll<{
     list: Awaited<ReturnType<typeof getNews>>["list"]
     nextId?: number
   }>(
@@ -94,6 +96,7 @@ export default function Page() {
     {
       reloadDeps: [i18n.language],
       isNoMore: (d) => d?.nextId === undefined,
+
     }
   )
 
@@ -104,6 +107,11 @@ export default function Page() {
       <AssetCard />
       <FlatList
         data={data?.list}
+        onRefresh={() => {
+          reload()
+          setKey(uuid())
+        }}
+        refreshing={loading}
         renderItem={({
           item,
           index,
@@ -118,7 +126,7 @@ export default function Page() {
               dateVisible={
                 index === 0 ||
                 dayjs(item.date).format("YYYY-MM-DD") !==
-                  dayjs(data?.list?.[index - 1]?.date).format("YYYY-MM-DD")
+                dayjs(data?.list?.[index - 1]?.date).format("YYYY-MM-DD")
               }
             />
           )
@@ -126,7 +134,7 @@ export default function Page() {
         keyExtractor={(item) => `${item.id}`}
         onEndReached={loadMore}
         showsVerticalScrollIndicator={false}
-        ListHeaderComponent={ListHeaderComponent}
+        ListHeaderComponent={() => <ListHeaderComponent key={key} />}
         ListEmptyComponent={ListEmptyComponent}
         ListFooterComponent={
           <ListFooterComponent
