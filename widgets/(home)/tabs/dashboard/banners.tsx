@@ -9,7 +9,8 @@ import { AspectImage, CAROUSEL_WIDTH } from './aspect-image'
 import { getBanners } from '~/api/dashboard'
 import { Icon, ScrollView, XStack } from '~/components'
 import { CACHE_KEY, useRequest } from '~/hooks/useRequest'
-import { useForxlStore } from '~/hooks/useStore'
+import { useForxlStore, useKYCStore } from '~/hooks/useStore'
+import { uuid } from '~/lib/utils'
 import colors from '~/theme/colors'
 
 export const Banners: FC<{ position: number }> = ({ position }) => {
@@ -108,6 +109,14 @@ export const Banners: FC<{ position: number }> = ({ position }) => {
             onPress={() => {
               if (banner.jumpApp === 7) {
                 router.push('/referral-program')
+                return
+              }
+              if (banner.jumpApp === 9) {
+                useKYCStore.setState({ refreshKey: uuid() })
+                return
+              }
+              if (banner.jumpApp === 10) {
+                router.push('/tabs/partner')
                 return
               }
               if (!banner.jumpUrl) {
