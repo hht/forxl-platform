@@ -158,8 +158,8 @@
     }
   },
   "trade": {
-    "sell": "SELL",
-    "buy": "BUY",
+    "sell": "Sell",
+    "buy": "Buy",
     "popular": "热门",
     "forex": "外汇",
     "crypto": "加密货币",
