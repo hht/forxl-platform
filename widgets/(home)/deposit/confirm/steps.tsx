@@ -5,7 +5,7 @@ import QRCode from 'react-native-qrcode-skia'
 import { UploadCard } from './upload-card'
 
 import {
-  Card, Copyable, copyToClipboard, Separator, Stepper, Text, XStack, YStack
+    Card, Copyable, copyToClipboard, Separator, Stepper, Text, XStack, YStack
 } from '~/components'
 import { useWalletStore } from '~/hooks/useStore'
 import { formatDecimal } from '~/lib/utils'
@@ -29,14 +29,21 @@ export const DepositSteps: FC = () => {
               {t("wallet.paymentInformation")}
             </Text>
             <Card.Item title={t("wallet.fullName")}>
-              <Copyable>{depositResult?.payName}</Copyable>
+              <XStack f={1} jc="flex-end" >
+                <Copyable>{depositResult?.payName}</Copyable>
+              </XStack>
             </Card.Item>
             <Card.Item title={t("wallet.depositBank")}>
-              <Copyable>{depositResult?.payBank}</Copyable>
+              <XStack f={1} jc="flex-end" >
+                <Copyable>{depositResult?.payBank}</Copyable>
+              </XStack>
             </Card.Item>
-            <Card.Item title={t("wallet.sellerBankCard")}>
-              <Copyable>{depositResult?.payAccount}</Copyable>
-            </Card.Item>
+            <YStack gap="$sm" py="sm">
+              <Text col="$secondary">{t("wallet.sellerBankCard")}</Text>
+              <XStack jc="flex-end">
+                <Copyable>{depositResult?.payAccount}</Copyable>
+              </XStack>
+            </YStack>
           </Card>
         </YStack>
         <YStack gap="$md">
