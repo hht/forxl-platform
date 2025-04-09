@@ -158,6 +158,7 @@ export const Button = forwardRef(
           px={0}
           py={0}
           hitSlop={10}
+          key={disabled ? "disabled" : "enabled"}
           ref={ref}
           color={rest.color ?? styles.color}
           o={disabled || isLoading ? 0.6 : 1}
@@ -188,6 +189,7 @@ export const Button = forwardRef(
         br={6}
         ref={ref}
         color="$background"
+        key={disabled ? "disabled" : "enabled"}
         {...styles}
         o={disabled || isLoading ? 0.5 : 1}
         height={getHeight(size)}
