@@ -283,8 +283,7 @@ export const upload = async () => {
   }
   const result = await ImagePicker.launchImageLibraryAsync({
     mediaTypes: ["images"],
-    allowsEditing: true,
-    aspect: [4, 3],
+    allowsEditing: false,
     quality: 0,
   })
 

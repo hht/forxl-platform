@@ -275,12 +275,14 @@ export type DepositResult =
     order_data: string,  //跳转地址（需跳转到该地址，建议新开标签页）
     mer_order_no: string
     payType: 101
+    price?: number
   }
   | {
     address: string
     price: number
     payType: 102
     orderNo: string
+
   }
 
 const INITIAL = {
