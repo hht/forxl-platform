@@ -25,6 +25,7 @@ export const useReady = () => {
     const locale = Localization.getLocales()[0].languageCode
     await i18n.use(initReactI18next).init({
       debug: false,
+      fallbackLng: "en",
       resources: resources,
       lng: useForxlStore.getState().language ?? locale ?? "en",
       defaultNS: "translation",
