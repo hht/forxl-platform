@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import QRCode from 'react-native-qrcode-skia'
 
+import { QRCode } from './qrcode'
 import { UploadCard } from './upload-card'
 
 import {
@@ -58,21 +58,7 @@ export const DepositSteps: FC = () => {
     return (
       <Card ai="center" jc="center" gap={12}>
         <XStack p="$md" br="$sm" bc="white">
-          <QRCode
-            value={depositResult?.address ?? ""}
-            style={{
-              backgroundColor: "white",
-              borderRadius: 16,
-              padding: 16,
-            }}
-            size={128}
-            shapeOptions={{
-              shape: "circle",
-              eyePatternShape: "rounded",
-              eyePatternGap: 0,
-              gap: 0,
-            }}
-          ></QRCode>
+          <QRCode value={depositResult.address ?? ''} />
         </XStack>
         <XStack gap={12} ai="center">
           <Text f={1} bold>
