@@ -284,7 +284,7 @@ export const upload = async () => {
   const result = await ImagePicker.launchImageLibraryAsync({
     mediaTypes: ["images"],
     allowsEditing: false,
-    quality: 0,
+    quality: 1,
   })
 
   if (!result.canceled && result.assets && result.assets.length > 0) {
