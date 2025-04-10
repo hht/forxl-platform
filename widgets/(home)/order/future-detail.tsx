@@ -1,37 +1,30 @@
-import { useMount, useRequest, useUnmount } from "ahooks"
-import { router } from "expo-router"
-import { AnimatePresence } from "moti"
-import { useEffect, useMemo, useRef, useState } from "react"
-import { useTranslation } from "react-i18next"
-import { ActivityIndicator } from "react-native"
-import { shallow } from "zustand/shallow"
+import { useMount, useRequest, useUnmount } from 'ahooks'
+import { router } from 'expo-router'
+import { AnimatePresence } from 'moti'
+import { useMemo, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { ActivityIndicator } from 'react-native'
+import Animated from 'react-native-reanimated'
+import { shallow } from 'zustand/shallow'
 
-import { Action, CurrentPrice } from "./current-price"
-import { FutureInfo } from "./future-info"
-import { OrderActions } from "./order-actions"
-import { PendingCard } from "./pending"
-import { QuotesInfo } from "./quotes-info"
-import { StopLossCard } from "./stop-loss"
-import { StopProfitCard } from "./stop-profit"
-import { ToggleFavorite } from "./toggle-favorite"
-import { TradeVolume } from "./volume"
+import { getFuture } from '~/api/trade'
+import { Card, Icon, Moti, ScrollView, Tabs, Text, XStack, YStack } from '~/components'
+import { CACHE_KEY } from '~/hooks/useRequest'
+import { useQuotesStore } from '~/hooks/useStore'
+import { useTabs } from '~/hooks/useTabs'
+import { subscribeQuotes } from '~/hooks/useWebsocket'
+import { DEVICE_WIDTH } from '~/lib/utils'
+import colors from '~/theme/colors'
 
-import { getFuture } from "~/api/trade"
-import {
-  Card,
-  Icon,
-  Moti,
-  ScrollView,
-  Tabs,
-  Text,
-  XStack,
-  YStack,
-} from "~/components"
-import { CACHE_KEY } from "~/hooks/useRequest"
-import { useQuotesStore } from "~/hooks/useStore"
-import { subscribeQuotes } from "~/hooks/useWebsocket"
-import { DEVICE_WIDTH } from "~/lib/utils"
-import colors from "~/theme/colors"
+import { Action, CurrentPrice } from './current-price'
+import { FutureInfo } from './future-info'
+import { OrderActions } from './order-actions'
+import { PendingCard } from './pending'
+import { QuotesInfo } from './quotes-info'
+import { StopLossCard } from './stop-loss'
+import { StopProfitCard } from './stop-profit'
+import { ToggleFavorite } from './toggle-favorite'
+import { TradeVolume } from './volume'
 
 export const FutureDetail = () => {
   const { t } = useTranslation()
@@ -74,7 +67,7 @@ export const FutureDetail = () => {
           },
         })
       },
-      onError: (error) => {},
+      onError: (error) => { },
     }
   )
 
@@ -96,7 +89,6 @@ export const FutureDetail = () => {
     }),
     [future, order, action]
   )
-  const ref = useRef<ScrollView>(null)
   useUnmount(() => {
     useQuotesStore.setState({
       activeIndex: 0,
@@ -107,9 +99,7 @@ export const FutureDetail = () => {
       order: { position: 0.01 },
     })
   })
-  useEffect(() => {
-    ref.current?.scrollTo({ x: activeIndex * DEVICE_WIDTH, animated: true })
-  }, [activeIndex])
+  const { animatedStyle } = useTabs(activeIndex)
   if (!future)
     return (
       <YStack f={1} ai="center" jc="center">
@@ -126,6 +116,7 @@ export const FutureDetail = () => {
       bc="$card/60"
       boc="$border"
       bw={1}
+      ov="hidden"
       pt="$md"
       mt="$md"
     >
@@ -161,21 +152,7 @@ export const FutureDetail = () => {
             from={{ opacity: 0, translateY: 10 }}
             animate={{ opacity: 1, translateY: 0 }}
           >
-            <ScrollView
-              ref={ref}
-              f={1}
-              horizontal
-              w={DEVICE_WIDTH}
-              showsHorizontalScrollIndicator={false}
-              pagingEnabled
-              scrollEnabled={false}
-              onLayout={() => {
-                ref.current?.scrollTo({
-                  x: activeIndex * DEVICE_WIDTH,
-                  animated: false,
-                })
-              }}
-            >
+            <Animated.View style={[{ flex: 1, flexDirection: 'row', width: DEVICE_WIDTH * 3 }, animatedStyle]}>
               <ScrollView
                 f={1}
                 w={DEVICE_WIDTH}
@@ -226,7 +203,7 @@ export const FutureDetail = () => {
                   }}
                 />
               </ScrollView>
-            </ScrollView>
+            </Animated.View>
           </Moti>
         )}
       </AnimatePresence>

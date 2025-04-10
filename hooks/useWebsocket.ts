@@ -4,12 +4,11 @@ import { useCallback, useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { createWithEqualityFn } from 'zustand/traditional'
 
-import { computeProfit, useForxlStore, useOrderStore, useQuotesStore } from './useStore'
-
 import { getOpenPositions, getPendingPositions } from '~/api/trade'
-import { toast } from '~/components'
 import { WS_URL } from '~/lib/constants'
 import { uuid, waitFor } from '~/lib/utils'
+
+import { computeProfit, useForxlStore, useOrderStore, useQuotesStore } from './useStore'
 
 export enum ReadyState {
   Connecting = 0,
@@ -68,7 +67,6 @@ export const computeWallet = async (order?: Position) => {
 }
 
 export const useWebSocket = () => {
-  const { t } = useTranslation()
   const { quotes } = useWebSocketStore()
   const websocketRef = useRef<WebSocket | null>(null)
   const lastMessageTimeRef = useRef<number>(Date.now())

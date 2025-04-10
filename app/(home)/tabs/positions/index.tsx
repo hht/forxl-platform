@@ -1,20 +1,20 @@
-import { useUnmount } from "ahooks"
-import { Fragment, useEffect, useRef } from "react"
-import { useTranslation } from "react-i18next"
-import { shallow } from "zustand/shallow"
+import { useUnmount } from 'ahooks'
+import { Fragment } from 'react'
+import { useTranslation } from 'react-i18next'
+import Animated from 'react-native-reanimated'
+import { shallow } from 'zustand/shallow'
 
-import { ScrollView, Tabs, Text, XStack, YStack } from "~/components"
-import { useOrderStore } from "~/hooks/useStore"
-import { DEVICE_WIDTH } from "~/lib/utils"
-import { ClosePosition } from "~/widgets/(home)/tabs/positions/close-position"
-import { OrderFilter } from "~/widgets/(home)/tabs/positions/order-filter"
+import { Tabs, Text, XStack, YStack } from '~/components'
+import { useOrderStore } from '~/hooks/useStore'
+import { useTabs } from '~/hooks/useTabs'
+import { DEVICE_WIDTH } from '~/lib/utils'
+import { ClosePosition } from '~/widgets/(home)/tabs/positions/close-position'
+import { OrderFilter } from '~/widgets/(home)/tabs/positions/order-filter'
 import {
-  ClosedOrders,
-  OpenOrders,
-  PendingOrders,
-} from "~/widgets/(home)/tabs/positions/position-list"
-import { Linear } from "~/widgets/shared/shape"
-import { WalletStatistics } from "~/widgets/shared/wallet-summary"
+  ClosedOrders, OpenOrders, PendingOrders
+} from '~/widgets/(home)/tabs/positions/position-list'
+import { Linear } from '~/widgets/shared/shape'
+import { WalletStatistics } from '~/widgets/shared/wallet-summary'
 
 export default function Page() {
   const { t } = useTranslation()
@@ -34,23 +34,17 @@ export default function Page() {
   const dict = t("positions", {
     returnObjects: true,
   })
-  const ref = useRef<ScrollView>(null)
-  useEffect(() => {
-    ref.current?.scrollTo({
-      x: activeIndex * DEVICE_WIDTH,
-      y: 0,
-      animated: true,
-    })
-  }, [activeIndex])
+
   useUnmount(() => {
     useOrderStore.setState({ activeIndex: 0 })
   })
+  const { animatedStyle } = useTabs(activeIndex)
   return (
     <Fragment>
       <YStack f={1}>
         <Linear />
         <WalletStatistics />
-        <YStack f={1}>
+        <YStack f={1} w={DEVICE_WIDTH}>
           <XStack p="$md" ai="center" jc="space-between">
             <Text subject bold>
               {dict.title}
@@ -70,18 +64,11 @@ export default function Page() {
               }
             ></Tabs>
           </XStack>
-          <ScrollView
-            ref={ref}
-            horizontal
-            f={1}
-            showsHorizontalScrollIndicator={false}
-            pagingEnabled
-            scrollEnabled={false}
-          >
+          <Animated.View style={[{ flex: 1, flexDirection: 'row', width: DEVICE_WIDTH * 3 }, animatedStyle]}>
             <OpenOrders />
             <PendingOrders />
             <ClosedOrders />
-          </ScrollView>
+          </Animated.View>
         </YStack>
       </YStack>
       <ClosePosition activeIndex={activeIndex} />
