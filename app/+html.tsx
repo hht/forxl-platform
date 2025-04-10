@@ -1,4 +1,4 @@
-import { ScrollViewStyleReset } from "expo-router/html"
+import { ScrollViewStyleReset } from 'expo-router/html'
 
 // This file is web-only and used to configure the root HTML for every
 // web page during static rendering.
@@ -51,6 +51,10 @@ select:-webkit-autofill {
   -webkit-box-shadow: 0 0 0 1000px hsl(var(--background)) inset !important;
   box-shadow: 0 0 0 1000px hsl(var(--background)) inset !important;
   -webkit-text-fill-color: hsl(var(--foreground)) !important;
+}
+
+*{
+  overscroll-behavior: none;
 }
 
 input[type="number"] {

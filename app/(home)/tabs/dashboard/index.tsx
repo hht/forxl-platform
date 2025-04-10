@@ -4,10 +4,10 @@ import dayjs from 'dayjs'
 import { Stack } from 'expo-router'
 import { FC, Fragment, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { ActivityIndicator, FlatList, Platform } from 'react-native'
+import { ActivityIndicator, Platform } from 'react-native'
 
 import { getNews } from '~/api/dashboard'
-import { Screen, Text, XStack } from '~/components'
+import { FlatList, Screen, Text, XStack } from '~/components'
 import { uuid } from '~/lib/utils'
 import colors from '~/theme/colors'
 import { AssetCard } from '~/widgets/(home)/tabs/dashboard/asset-card'
@@ -80,7 +80,7 @@ export default function Page() {
   const isFocused = useIsFocused()
   const [key, setKey] = useState(uuid())
   const { i18n } = useTranslation()
-  const { data, loadMore, loading, loadingMore, reload } = useInfiniteScroll<{
+  const { data, loadMore, loading, loadingMore } = useInfiniteScroll<{
     list: Awaited<ReturnType<typeof getNews>>["list"]
     nextId?: number
   }>(
@@ -94,7 +94,7 @@ export default function Page() {
       })
     },
     {
-      reloadDeps: [i18n.language],
+      reloadDeps: [i18n.language, key],
       isNoMore: (d) => d?.nextId === undefined,
 
     }
@@ -108,7 +108,6 @@ export default function Page() {
       <FlatList
         data={data?.list}
         onRefresh={() => {
-          reload()
           setKey(uuid())
         }}
         refreshing={loading}
@@ -142,7 +141,7 @@ export default function Page() {
             loading={loadingMore}
           />
         }
-      ></FlatList>
+      />
     </Screen>
   )
 }

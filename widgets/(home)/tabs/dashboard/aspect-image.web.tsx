@@ -1,6 +1,6 @@
-import { FC } from "react"
-import { Dimensions } from "react-native"
-import { XStack } from "tamagui"
+import { FC } from 'react'
+import { Dimensions } from 'react-native'
+import { XStack } from 'tamagui'
 
 export const CAROUSEL_WIDTH = Dimensions.get("window").width - 32
 
@@ -14,7 +14,7 @@ export const AspectImage: FC<{ uri?: string; onPress: () => void }> = ({
       <img
         style={{
           width: CAROUSEL_WIDTH,
-          aspectRatio: "auto",
+          aspectRatio: 16 / 7,
         }}
         src={uri}
         {...rest}

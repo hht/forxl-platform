@@ -1,25 +1,16 @@
-import { useIsFocused } from "@react-navigation/native"
-import { clearCache, useInfiniteScroll } from "ahooks"
-import dayjs from "dayjs"
-import { Stack, useLocalSearchParams } from "expo-router"
-import { useTranslation } from "react-i18next"
-import {
-  ActivityIndicator,
-  FlatList,
-  Platform,
-  RefreshControl,
-} from "react-native"
+import { useIsFocused } from '@react-navigation/native'
+import { clearCache, useInfiniteScroll } from 'ahooks'
+import dayjs from 'dayjs'
+import { Stack, useLocalSearchParams } from 'expo-router'
+import { useTranslation } from 'react-i18next'
+import { ActivityIndicator, Platform, RefreshControl } from 'react-native'
 
-import {
-  getNotifications,
-  readAllNotifications,
-  readNotification,
-} from "~/api/notifications"
-import { Screen, Text, XStack } from "~/components"
-import { CACHE_KEY, useRequest } from "~/hooks/useRequest"
-import colors from "~/theme/colors"
-import { ListItem } from "~/widgets/(home)/notifications/list"
-import { ListEmptyComponent, ListFooterComponent } from "~/widgets/shared/list"
+import { getNotifications, readAllNotifications, readNotification } from '~/api/notifications'
+import { FlatList, Screen, Text, XStack } from '~/components'
+import { CACHE_KEY, useRequest } from '~/hooks/useRequest'
+import colors from '~/theme/colors'
+import { ListItem } from '~/widgets/(home)/notifications/list'
+import { ListEmptyComponent, ListFooterComponent } from '~/widgets/shared/list'
 
 export default function Page() {
   const { t, i18n } = useTranslation()
@@ -91,6 +82,7 @@ export default function Page() {
         data={data?.list}
         showsVerticalScrollIndicator={false}
         refreshing={loading}
+        onRefresh={reload}
         refreshControl={
           <RefreshControl
             colors={[colors.secondary]}
@@ -99,7 +91,6 @@ export default function Page() {
             onRefresh={reload}
           />
         }
-        onRefresh={reload}
         keyExtractor={(item) => item.id!.toString()}
         contentContainerStyle={{
           flexGrow: 1,

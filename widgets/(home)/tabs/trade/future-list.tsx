@@ -6,8 +6,6 @@ import { useTranslation } from 'react-i18next'
 import { FlatList, Platform, RefreshControl } from 'react-native'
 import { shallow } from 'zustand/shallow'
 
-import { FutureCategories } from './categories'
-
 import { getFutures } from '~/api/trade'
 import { AnimatedFlow, Icon, Text, XStack, YStack } from '~/components'
 import { useForxlStore, useQuotesStore, useSymbolStore } from '~/hooks/useStore'
@@ -15,6 +13,8 @@ import { subscribeQuotes } from '~/hooks/useWebsocket'
 import { DEVICE_WIDTH } from '~/lib/utils'
 import colors from '~/theme/colors'
 import { ListEmptyComponent, ListFooterComponent } from '~/widgets/shared/list'
+
+import { FutureCategories } from './categories'
 
 const Momentum: FC<{
   data?: Future
@@ -340,6 +340,7 @@ export const FutureList = () => {
           contentContainerStyle={{
             flexGrow: 1,
           }}
+          onRefresh={reload}
           refreshing={loading}
           refreshControl={
             <RefreshControl

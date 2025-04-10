@@ -3,12 +3,12 @@ import { useInfiniteScroll } from 'ahooks'
 import { router } from 'expo-router'
 import { FC, Fragment, ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
-import { FlatList, Platform, RefreshControl } from 'react-native'
+import { Platform, RefreshControl } from 'react-native'
 import { XStackProps } from 'tamagui'
 import { shallow } from 'zustand/shallow'
 
 import { getClosedPositions, getOpenPositions, getPendingPositions } from '~/api/trade'
-import { AnimatedFlow, Figure, Icon, Row, Text, XStack, YStack } from '~/components'
+import { AnimatedFlow, Figure, FlatList, Icon, Row, Text, XStack, YStack } from '~/components'
 import { getDate, getRecentDate } from '~/hooks/useLocale'
 import { CACHE_KEY, useRequest } from '~/hooks/useRequest'
 import { useOrderStore, useQuotesStore, useSymbolStore } from '~/hooks/useStore'
@@ -313,6 +313,7 @@ export const OpenOrders = () => {
           flexGrow: 1,
         }}
         refreshing={loading}
+        onRefresh={refresh}
         refreshControl={
           <RefreshControl
             colors={[colors.secondary]}
@@ -348,6 +349,7 @@ export const PendingOrders = () => {
           flexGrow: 1,
         }}
         refreshing={loading}
+        onRefresh={refresh}
         refreshControl={
           <RefreshControl
             colors={[colors.secondary]}

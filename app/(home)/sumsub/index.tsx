@@ -2,7 +2,6 @@ import SumSubWebSdk from '@sumsub/websdk-react'
 import { router, Stack } from 'expo-router'
 import { Fragment } from 'react'
 import { useTranslation } from 'react-i18next'
-import { ActivityIndicator } from 'react-native'
 
 import { getProfile, getSumSubToken } from '~/api/account'
 import { toast, YStack } from '~/components'
@@ -11,7 +10,7 @@ import { i18n, waitFor } from '~/lib/utils'
 
 export default function Page() {
   const { t } = useTranslation()
-  const { loading, data } = useRequest(getSumSubToken)
+  const { data } = useRequest(getSumSubToken)
 
   return (
     <Fragment>

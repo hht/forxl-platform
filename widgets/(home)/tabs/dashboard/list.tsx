@@ -1,17 +1,17 @@
-import dayjs from "dayjs"
-import { router } from "expo-router"
-import { Fragment } from "react"
-import { useTranslation } from "react-i18next"
+import dayjs from 'dayjs'
+import { router } from 'expo-router'
+import { FC, Fragment } from 'react'
+import { useTranslation } from 'react-i18next'
 
-import { Banners } from "./banners"
-import { Shortcuts } from "./short-cuts"
+import { getNews } from '~/api/dashboard'
+import { Figure, Icon, Image, Text, XStack, YStack } from '~/components'
+import { getDate } from '~/hooks/useLocale'
+import { useWebViewStore } from '~/hooks/useStore'
+import { trimHTML } from '~/lib/utils'
+import colors, { toRGBA } from '~/theme/colors'
 
-import { getNews } from "~/api/dashboard"
-import { Figure, Icon, Image, Text, XStack, YStack } from "~/components"
-import { getDate } from "~/hooks/useLocale"
-import { useWebViewStore } from "~/hooks/useStore"
-import { trimHTML } from "~/lib/utils"
-import colors, { toRGBA } from "~/theme/colors"
+import { Banners } from './banners'
+import { Shortcuts } from './short-cuts'
 
 export const ListItem = ({
   item,
@@ -111,7 +111,7 @@ export const ListItem = ({
   )
 }
 
-export const ListHeaderComponent = () => (
+export const ListHeaderComponent: FC = () => (
   <YStack gap="$md">
     <Banners position={0} />
     <Shortcuts />

@@ -3,21 +3,21 @@ import { useInfiniteScroll } from 'ahooks'
 import dayjs from 'dayjs'
 import { Stack } from 'expo-router'
 import { useEffect } from 'react'
-import { FlatList, Platform, RefreshControl } from 'react-native'
+import { Platform, RefreshControl } from 'react-native'
 
 import { getFundHistory } from '~/api/wallet'
-import { Screen, YStack } from '~/components'
+import { FlatList, Screen, YStack } from '~/components'
 import { uuid } from '~/lib/utils'
 import colors from '~/theme/colors'
 import { AssetCard } from '~/widgets/(home)/tabs/wallet/asset-card'
 import {
-    ListEmptyComponent, ListHeaderComponent, ListItem
+  ListEmptyComponent, ListHeaderComponent, ListItem
 } from '~/widgets/(home)/tabs/wallet/list'
 import {
-    TransactionDetails, useTransactionStore
+  TransactionDetails, useTransactionStore
 } from '~/widgets/(home)/tabs/wallet/transaction-details'
 import {
-    BrandTitle, DefaultScreenOptions, NativeStackNavigationOptions
+  BrandTitle, DefaultScreenOptions, NativeStackNavigationOptions
 } from '~/widgets/shared/header'
 import { ListFooterComponent } from '~/widgets/shared/list'
 import { Gradient } from '~/widgets/shared/shape'
@@ -80,7 +80,7 @@ export default function Page() {
               dateVisible={
                 index === 0 ||
                 dayjs(item.addTime).format("YYYY-MM-DD") !==
-                  dayjs(data?.list?.[index - 1]?.addTime).format("YYYY-MM-DD")
+                dayjs(data?.list?.[index - 1]?.addTime).format("YYYY-MM-DD")
               }
             />
           )}
