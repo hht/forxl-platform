@@ -60,7 +60,7 @@ export default function Page() {
           {t("wallet.emailVerificationCodeDesc", {
             email: email
               ?.split("@")
-              .map((n, i) => (i === 0 ? n.replace(/(?<=^.{1})./g, "*") : n))
+              .map((n, i) => (i === 0 ? n.charAt(0) + n.slice(1).replace(/./g, "*") : n))
               .join("@"),
           })}
         </Text>
