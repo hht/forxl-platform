@@ -3,8 +3,7 @@ import {
     ActivityIndicator, FlatList as RNList, FlatListProps, GestureResponderEvent
 } from 'react-native'
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated'
-
-import { XStack } from '~/components'
+import { XStack } from 'tamagui'
 
 export const FlatList: FC<FlatListProps<any>> = ({ onRefresh, ...rest }) => {
     const touchStartY = useSharedValue(0)
