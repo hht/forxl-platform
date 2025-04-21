@@ -1,9 +1,4 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="343" height="576" fill="none" viewBox="0 0 343 576">
-  <g fill-opacity=".02" clip-path="url(#a)">
-    <circle cx="320.5" cy="3.5" r="192.5" fill="url(#b)"/>
-    <circle cx="320.5" cy="3.5" r="156.5" fill="url(#c)"/>
-    <circle cx="320.5" cy="3.5" r="113.5" fill="url(#d)"/>
-  </g>
   <defs>
     <linearGradient id="b" x1="320.5" x2="320.5" y1="-189" y2="196" gradientUnits="userSpaceOnUse">
       <stop stop-color="#10F48A"/>
@@ -21,4 +16,10 @@
       <path fill="#fff" d="M0 0h343v576H0z"/>
     </clipPath>
   </defs>
+  <g fill-opacity=".02" clip-path="url(#a)">
+    <circle cx="320.5" cy="3.5" r="192.5" fill="url(#b)"/>
+    <circle cx="320.5" cy="3.5" r="156.5" fill="url(#c)"/>
+    <circle cx="320.5" cy="3.5" r="113.5" fill="url(#d)"/>
+  </g>
+  
 </svg>

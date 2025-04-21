@@ -1,11 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16">
-  <g stroke="#919FA6" stroke-linecap="round" stroke-linejoin="round" clip-path="url(#a)">
-    <path d="M2 4.667a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v6.666a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2z"/>
-    <path d="M4.667 6.667a1.333 1.333 0 1 0 2.666 0 1.333 1.333 0 0 0-2.666 0M10 5.333h1.333M10 8h1.333M4.667 10.667h6.666"/>
-  </g>
-  <defs>
+   <defs>
     <clipPath id="a">
       <path fill="#fff" d="M0 0h16v16H0z"/>
     </clipPath>
   </defs>
+  <g stroke="#919FA6" stroke-linecap="round" stroke-linejoin="round" clip-path="url(#a)">
+    <path d="M2 4.667a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v6.666a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2z"/>
+    <path d="M4.667 6.667a1.333 1.333 0 1 0 2.666 0 1.333 1.333 0 0 0-2.666 0M10 5.333h1.333M10 8h1.333M4.667 10.667h6.666"/>
+  </g>
+ 
 </svg>

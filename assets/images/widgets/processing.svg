@@ -1,4 +1,13 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="96" height="90" fill="none" viewBox="0 0 96 90">
+  <defs>
+    <linearGradient id="a" x1="45" x2="45" y1="1" y2="89" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#fff"/>
+      <stop offset="1" stop-color="#EAF7F8"/>
+    </linearGradient>
+    <clipPath id="b">
+      <path fill="#fff" d="M32.125 33.313h22v22h-22z"/>
+    </clipPath>
+  </defs>
   <circle cx="51" cy="45" r="44.344" fill="#BABABA" stroke="currentColor" stroke-width=".688"/>
   <path fill="#DEDEDE" d="M87.726 20.768a44 44 0 1 0-73.452 48.464l21.793-14.38a17.89 17.89 0 0 1 29.866-19.705z"/>
   <circle cx="45" cy="45" r="44" fill="url(#a)"/>
@@ -10,13 +19,5 @@
   <g clip-path="url(#b)">
     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.125" d="m36.708 44.313 4.584 4.583 9.166-9.167"/>
   </g>
-  <defs>
-    <linearGradient id="a" x1="45" x2="45" y1="1" y2="89" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#fff"/>
-      <stop offset="1" stop-color="#EAF7F8"/>
-    </linearGradient>
-    <clipPath id="b">
-      <path fill="#fff" d="M32.125 33.313h22v22h-22z"/>
-    </clipPath>
-  </defs>
+  
 </svg>
