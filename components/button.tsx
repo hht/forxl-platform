@@ -189,7 +189,7 @@ export const Button = forwardRef(
         br={6}
         ref={ref}
         color="$background"
-        key={disabled ? "disabled" : "enabled"}
+        key={isLoading ? "loading" : disabled ? "disabled" : "enabled"}
         {...styles}
         o={disabled || isLoading ? 0.5 : 1}
         height={getHeight(size)}
