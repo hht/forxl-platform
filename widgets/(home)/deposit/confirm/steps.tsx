@@ -1,16 +1,16 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { QRCode } from './qrcode'
-import { UploadCard } from './upload-card'
-
 import {
-    Card, Copyable, copyToClipboard, Separator, Stepper, Text, XStack, YStack
+  Card, Copyable, copyToClipboard, Separator, Stepper, Text, XStack, YStack
 } from '~/components'
 import { useWalletStore } from '~/hooks/useStore'
 import { formatDecimal } from '~/lib/utils'
 import colors, { toRGBA } from '~/theme/colors'
 import { PaymentMethodDescription } from '~/widgets/shared/payment-methods'
+
+import { QRCode } from './qrcode'
+import { UploadCard } from './upload-card'
 
 export const DepositSteps: FC = () => {
   const { t } = useTranslation()
@@ -33,11 +33,12 @@ export const DepositSteps: FC = () => {
                 <Copyable>{depositResult?.payName}</Copyable>
               </XStack>
             </Card.Item>
-            <Card.Item title={t("wallet.depositBank")}>
-              <XStack f={1} jc="flex-end" >
+            <YStack gap="$sm" py="sm" my="$sm">
+              <Text col="$secondary">{t("wallet.depositBank")}</Text>
+              <XStack jc="flex-end">
                 <Copyable>{depositResult?.payBank}</Copyable>
               </XStack>
-            </Card.Item>
+            </YStack>
             <YStack gap="$sm" py="sm">
               <Text col="$secondary">{t("wallet.sellerBankCard")}</Text>
               <XStack jc="flex-end">
