@@ -1,10 +1,10 @@
-import dayjs from "dayjs"
-import { useEffect } from "react"
+import dayjs from 'dayjs'
+import { useEffect } from 'react'
 
-import { useRequest } from "./useRequest"
-import { useCandlestickStore, useQuotesStore } from "./useStore"
+import { getFutureHistories } from '~/api/trade'
 
-import { getFutureHistories } from "~/api/trade"
+import { useRequest } from './useRequest'
+import { useCandlestickStore, useQuotesStore } from './useStore'
 
 export const useCandlestick = (futuresCode?: string) => {
   useRequest(
@@ -34,7 +34,10 @@ export const useCandlestick = (futuresCode?: string) => {
         }
 
         // 获取最新时间戳
-        const latestTime = Math.max(...res.map((item) => item.time))
+        const latestTime = res.reduce((max, item) =>
+          item.time > max ? item.time : max,
+          0
+        )
 
         // 计算时间边界
         const currentMinuteFiveStart = Math.floor(latestTime / 300) * 300
