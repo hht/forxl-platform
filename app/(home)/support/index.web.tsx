@@ -1,0 +1,63 @@
+import { router, Stack } from 'expo-router'
+import { useTranslation } from 'react-i18next'
+import { Platform } from 'react-native'
+
+import SupportBanner from '~/assets/images/widgets/support-banner.png'
+import { Image, ListItem, ScrollView, Text, XStack, YStack } from '~/components'
+import { useForxlStore, useWebViewStore } from '~/hooks/useStore'
+import { APP_URL, TAWK_TO } from '~/lib/constants'
+
+export default function Layout() {
+    const { t } = useTranslation()
+    const dict = t("support", {
+        returnObjects: true,
+    })
+    return (
+        <ScrollView f={1} p="$md" showsVerticalScrollIndicator={false}>
+            <Stack.Screen options={{ title: t("profile.support") }} />
+            <XStack ai="center" jc="center" p="$md">
+                <Image source={SupportBanner} w={200} h={154} />
+            </XStack>
+            <YStack p="$md" gap="$md" ai="center" jc="center">
+                <Text subject bold>
+                    {dict.header}
+                </Text>
+                <Text col="$secondary" ta="center">
+                    {dict.desc}
+                </Text>
+            </YStack>
+            <YStack>
+                {dict.children.map((item, index) => (
+                    <ListItem
+                        key={index}
+                        title={item}
+                        onPress={() => {
+                            switch (index) {
+                                case 2:
+                                    const uri = `${APP_URL}/help/faq?language=${useForxlStore.getState().language}`
+                                    if (Platform.OS === "web") {
+                                        window.open(uri, "_blank")
+                                        return
+                                    }
+                                    useWebViewStore.setState({
+                                        uri,
+                                        title: item,
+                                    })
+                                    router.push("/web-view")
+                                    return
+                                case 3:
+                                    useWebViewStore.setState({
+                                        uri: TAWK_TO,
+                                        title: t("anon.liveSupport"),
+                                    })
+                                    router.push("/web-view")
+                                    return
+                                default:
+                            }
+                        }}
+                    />
+                ))}
+            </YStack>
+        </ScrollView>
+    )
+}
