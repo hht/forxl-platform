@@ -8,8 +8,6 @@ import { ActivityIndicator, FlatList } from 'react-native'
 import { shallow } from 'zustand/shallow'
 import { createWithEqualityFn } from 'zustand/traditional'
 
-import { LEVELS } from './utils'
-
 import {
   getPartnerConfig, getPartnerInfo, getReferralListByUser, ReferralList
 } from '~/api/partner'
@@ -21,6 +19,8 @@ import { CACHE_KEY, useRequest } from '~/hooks/useRequest'
 import { useForxlStore, usePartnerStore, usePromptStore, useStatementStore } from '~/hooks/useStore'
 import { APP_URL } from '~/lib/constants'
 import { dayjs, DEVICE_WIDTH, formatCurrency, formatDecimal, uuid } from '~/lib/utils'
+
+import { LEVELS } from './utils'
 
 const maskEmail = (email?: string) => {
   if (!email) return ""
@@ -42,14 +42,17 @@ const maskEmail = (email?: string) => {
 
 const keyExtractor = (item: ReferralList[number]) => `${item.userId}`
 const ListEmptyComponent = () => {
+  const { t } = useTranslation()
   return <YStack
     gap={12}
     w={DEVICE_WIDTH - 32}
     px="$md"
+    h="100%"
     ai="center"
     jc="center"
   >
-    <ActivityIndicator />
+    <Figure name="empty" width={90} height={90} />
+    <Text col="$tertiary">{t("message.empty")}</Text>
   </YStack>
 }
 
@@ -82,10 +85,13 @@ export const AccountInfo = () => {
     cacheKey: `${CACHE_KEY.REFERRALS}/${userId}`,
     onSuccess: (data) => {
       useStore.setState({ referral: data, currentIndex: 0 })
-      ref.current?.scrollToIndex({
-        index: 0,
-        animated: false,
-      })
+      try {
+        ref.current?.scrollToIndex({
+          index: 0,
+          animated: false,
+        })
+      } catch (e) { }
+
     }
   })
   const { loading, data } = useRequest(getPartnerInfo, {
@@ -173,7 +179,6 @@ export const AccountInfo = () => {
         </Justified>
       </YStack>)
     }, [t, dict])
-
 
   if (loading) {
     return (
