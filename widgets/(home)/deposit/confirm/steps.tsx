@@ -61,8 +61,11 @@ export const DepositSteps: FC = () => {
         <XStack p="$md" br="$sm" bc="white">
           <QRCode value={depositResult.address ?? ''} />
         </XStack>
-        <XStack gap={12} ai="center">
-          <Text f={1} bold>
+        <XStack gap={12} ai="center" maxWidth="100%">
+          <Text bold f={1} ta="center" style={{
+            wordBreak: 'break-all',
+            overflowWrap: 'break-word'
+          }}>
             {depositResult?.address}
           </Text>
           <XStack
