@@ -1,16 +1,16 @@
-import { useIsFocused } from "@react-navigation/native"
-import { NativeStackNavigationOptions } from "@react-navigation/native-stack"
-import { router } from "expo-router"
-import { FC, useEffect } from "react"
-import { useTranslation } from "react-i18next"
-import { Platform } from "react-native"
+import { useIsFocused } from '@react-navigation/native'
+import { NativeStackNavigationOptions } from '@react-navigation/native-stack'
+import { router } from 'expo-router'
+import { FC, useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
+import { Platform } from 'react-native'
 
-import { getNewMessageCount } from "~/api/notifications"
-import { Figure, Icon, IconType, Text, XStack } from "~/components"
-import { CACHE_KEY, useRequest } from "~/hooks/useRequest"
-import { useWebViewStore } from "~/hooks/useStore"
-import { TAWK_TO } from "~/lib/constants"
-import colors from "~/theme/colors"
+import { getNewMessageCount } from '~/api/notifications'
+import { Icon, IconType, Image, Text, XStack } from '~/components'
+import { CACHE_KEY, useRequest } from '~/hooks/useRequest'
+import { useWebViewStore } from '~/hooks/useStore'
+import { TAWK_TO } from '~/lib/constants'
+import colors from '~/theme/colors'
 
 export const HeaderLeft: FC<{ onPress?: () => void }> = ({ onPress }) => {
   return (
@@ -29,7 +29,7 @@ export const BrandTitle: FC = () => {
   const { t } = useTranslation()
   return (
     <XStack ai="center" jc="center" gap="$sm">
-      <Figure name="logo" width={24} height={24} />
+      <Image source={require("~/assets/images/widgets/logo.png")} width={24} height={24} />
       <Text title bold>
         {t("anon.title")}
       </Text>
