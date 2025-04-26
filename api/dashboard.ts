@@ -37,3 +37,14 @@ export const getNews = async (params: {
       }
     })
 }
+
+
+export const getOtherConfig = async (key = '2FA_popup_switch') => {
+  return request<{ value: string }, { key: string }>(
+    `/other/configGet`,
+    "POST",
+    { key }
+  ).then((res) => {
+    return res.value
+  })
+}

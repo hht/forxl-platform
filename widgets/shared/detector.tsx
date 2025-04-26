@@ -12,12 +12,12 @@ export const AccountDetector = () => {
   useEffect(() => {
     if (!navigationState?.key || !rootNavigation.current) return
     requestAnimationFrame(() => {
-      if (userNumber) {
+      if (userNumber && (rootNavigation.current?.getCurrentRoute()?.name === 'index' || rootNavigation.current?.getCurrentRoute()?.name.startsWith('auth'))) {
         dismissAll()
         router.replace("/tabs/dashboard")
         return
       }
-      if (!["index", 'auth/sign-in/index'].includes(rootNavigation.current?.getCurrentRoute()?.name ?? '')) {
+      if (!userNumber && !["index", 'auth/sign-in/index'].includes(rootNavigation.current?.getCurrentRoute()?.name ?? '')) {
         dismissAll()
         router.replace("/")
       }

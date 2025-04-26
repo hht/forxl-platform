@@ -1,27 +1,18 @@
-import { router } from "expo-router"
-import { FC, useState } from "react"
-import { useTranslation } from "react-i18next"
+import { router } from 'expo-router'
+import { FC, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
-import { CAROUSEL_WIDTH } from "./aspect-image"
-import { Banners } from "./banners"
+import { getAttestationFlag } from '~/api/account'
+import { getBanners, getOtherConfig } from '~/api/dashboard'
+import { Button, Dialog, Figure, Icon, Popup, Text, XStack, YStack } from '~/components'
+import { PortalProvider } from '~/components/portal'
+import { CACHE_KEY, useRequest } from '~/hooks/useRequest'
+import { useForxlStore } from '~/hooks/useStore'
+import { dayjs, waitFor } from '~/lib/utils'
+import colors, { toRGBA } from '~/theme/colors'
 
-import { getAttestationFlag } from "~/api/account"
-import { getBanners } from "~/api/dashboard"
-import {
-  Button,
-  Dialog,
-  Figure,
-  Icon,
-  Popup,
-  Text,
-  XStack,
-  YStack,
-} from "~/components"
-import { PortalProvider } from "~/components/portal"
-import { CACHE_KEY, useRequest } from "~/hooks/useRequest"
-import { useForxlStore } from "~/hooks/useStore"
-import { dayjs, waitFor } from "~/lib/utils"
-import colors, { toRGBA } from "~/theme/colors"
+import { CAROUSEL_WIDTH } from './aspect-image'
+import { Banners } from './banners'
 
 export const TwoFactorNotifier: FC = () => {
   const { t } = useTranslation()
@@ -57,9 +48,17 @@ export const TwoFactorNotifier: FC = () => {
         },
       })
       if (!data?.ga) {
-        toggleVisible(true)
+        run()
       }
     },
+  })
+  const { run } = useRequest(getOtherConfig, {
+    manual: true,
+    onSuccess: (data) => {
+      if (String(data) === "1") {
+        toggleVisible(true)
+      }
+    }
   })
   return (
     <PortalProvider>
