@@ -6,6 +6,7 @@
 	<array>
 		<string>applinks:www.forxlmarkets.com</string>
 		<string>applinks:forxlmarkets.com</string>
+		<string>applinks:app.forxlmarkets.com</string>
 	</array>
 </dict>
 </plist>

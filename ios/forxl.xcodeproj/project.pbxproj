@@ -360,7 +360,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = JK42BA9P28;
+				DEVELOPMENT_TEAM = SAWH8GZXPU;
 				ENABLE_BITCODE = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -407,7 +407,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = JK42BA9P28;
+				DEVELOPMENT_TEAM = SAWH8GZXPU;
 				INFOPLIST_FILE = forxl/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "FORXL MARKETS";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.finance";
