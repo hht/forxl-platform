@@ -1,17 +1,17 @@
-import { useUnmount } from "ahooks"
-import { router, Stack } from "expo-router"
-import { useTranslation } from "react-i18next"
-import { useSafeAreaInsets } from "react-native-safe-area-context"
+import { useUnmount } from 'ahooks'
+import { router, Stack } from 'expo-router'
+import { useTranslation } from 'react-i18next'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
-import { getAssets } from "~/api/wallet"
-import { Button, Input, ScrollView, YStack } from "~/components"
-import { CACHE_KEY, useRequest } from "~/hooks/useRequest"
-import { useWalletStore } from "~/hooks/useStore"
-import { WithdrawSummary } from "~/widgets/(home)/withdraw/form/summary"
-import { WithdrawMethod } from "~/widgets/(home)/withdraw/form/withdraw-method"
-import { AccountCard } from "~/widgets/shared/account-card"
-import { AttentionCard } from "~/widgets/shared/attention-card"
-import { InputSuffix } from "~/widgets/shared/input-suffix"
+import { getAssets } from '~/api/wallet'
+import { Button, Input, ScrollView, YStack } from '~/components'
+import { CACHE_KEY, useRequest } from '~/hooks/useRequest'
+import { useWalletStore } from '~/hooks/useStore'
+import { WithdrawSummary } from '~/widgets/(home)/withdraw/form/summary'
+import { WithdrawMethod } from '~/widgets/(home)/withdraw/form/withdraw-method'
+import { AccountCard } from '~/widgets/shared/account-card'
+import { AttentionCard } from '~/widgets/shared/attention-card'
+import { InputSuffix } from '~/widgets/shared/input-suffix'
 
 export default function Page() {
   const { t } = useTranslation()
@@ -50,8 +50,8 @@ export default function Page() {
           min={parseFloat(method.minAmount)}
           max={parseFloat(
             method.maxAmount ??
-              assets?.userWalletDetail.fundsAccount.available ??
-              "0"
+            assets?.userWalletDetail.fundsAccount.available ??
+            "0"
           )}
           disableValidation
           addonAfter={<InputSuffix>USDT</InputSuffix>}
@@ -67,10 +67,10 @@ export default function Page() {
             !new RegExp(method.validationRegex).test(
               withdrawRequest.wdAccount
             ) ||
-            (withdrawRequest.money ?? 0) <
-              parseFloat(method?.minAmount ?? "-Infinity") ||
-            (withdrawRequest.money ?? 0) >
-              parseFloat(method?.maxAmount ?? "Infinity") ||
+            parseFloat(withdrawRequest.money ?? '0') <
+            parseFloat(method?.minAmount ?? "-Infinity") ||
+            parseFloat(withdrawRequest.money ?? '0') >
+            parseFloat(method?.maxAmount ?? "Infinity") ||
             !withdrawRequest.money
           }
           onPress={() => {

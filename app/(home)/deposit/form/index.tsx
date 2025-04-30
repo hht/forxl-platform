@@ -70,9 +70,9 @@ export default function Page() {
             isLoading={loading}
             disabled={
               loading ||
-              (depositRequest.amount ?? 0) <
+              parseFloat(depositRequest.amount ?? '0') <
               (method?.incomeMoneyMin ?? -Infinity) ||
-              (depositRequest.amount ?? 0) >
+              parseFloat(depositRequest.amount ?? '0') >
               (method?.incomeMoneyMax ?? Infinity) ||
               (method?.payType === 3 &&
                 (!depositRequest.payBank ||
@@ -82,7 +82,7 @@ export default function Page() {
             onPress={() => {
               run({
                 code: method?.code!,
-                amount: depositRequest.amount ?? 0,
+                amount: parseFloat(depositRequest.amount ?? '0'),
                 type: method?.payType ?? 0,
                 paymentId: method?.id,
                 userPayAccount: depositRequest.payAccount,
@@ -99,15 +99,15 @@ export default function Page() {
             isLoading={loading}
             disabled={
               loading ||
-              (depositRequest.amount ?? 0) <
+              parseFloat(depositRequest.amount ?? '0') <
               (method?.incomeMoneyMin ?? -Infinity) ||
-              (depositRequest.amount ?? 0) >
+              parseFloat(depositRequest.amount ?? '0') >
               (method?.incomeMoneyMax ?? Infinity)
             }
             onPress={() => {
               run({
                 code: method?.code!,
-                amount: depositRequest.amount ?? 0,
+                amount: parseFloat(depositRequest.amount ?? '0'),
                 type: method?.payType ?? 0,
                 paymentId: method?.id,
                 userPayAccount: depositRequest.payAccount,

@@ -6,10 +6,6 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { shallow } from 'zustand/shallow'
 import { createWithEqualityFn } from 'zustand/traditional'
 
-import {
-  CHANNEL_DESCRIPTION, getStatusColor, OPERATION_DESCRIPTION, STATUS_DESCRIPTION
-} from './utils'
-
 import { cancelDeposit, getFundHistory, getPendingPayment } from '~/api/wallet'
 import {
   BottomSheet, Button, copyToClipboard, Icon, Image, Row, Text, toast, XStack, YStack
@@ -19,6 +15,10 @@ import { useRequest } from '~/hooks/useRequest'
 import { useWalletStore } from '~/hooks/useStore'
 import { formatCurrency, formatDecimal } from '~/lib/utils'
 import colors, { toRGBA } from '~/theme/colors'
+
+import {
+  CHANNEL_DESCRIPTION, getStatusColor, OPERATION_DESCRIPTION, STATUS_DESCRIPTION
+} from './utils'
 
 export const useTransactionStore = createWithEqualityFn<{
   data?: Awaited<ReturnType<typeof getFundHistory>>["list"][number]
@@ -151,7 +151,7 @@ const FundAction: FC<{
             payAccount: data.userPayAccount,
             payBank: data.userPayBank,
             payName: data.userPayName,
-            amount: parseFloat(data.usdAmount),
+            amount: data.usdAmount,
           },
           depositResult: data,
         })

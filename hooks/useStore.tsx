@@ -305,7 +305,7 @@ export const useWalletStore = createWithEqualityFn<{
   withdrawMethod?: WithdrawMethod
   withdrawRequest: {
     wdAccount: string
-    money?: number
+    money?: string
     gaCode?: string
     emailCode?: string
     recordType?: number
@@ -316,7 +316,7 @@ export const useWalletStore = createWithEqualityFn<{
     payBank: string
     payName: string
     payAccount: string
-    amount?: number
+    amount?: string
   }
   depositResult?: DepositResult
   clean: () => void

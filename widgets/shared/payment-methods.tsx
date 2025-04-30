@@ -105,9 +105,8 @@ export const PaymentMethodCard: FC<{
               payBank: resp.payType === 3 ? resp.userPayBank : "",
               payName: resp.payType === 3 ? resp.userPayName : "",
               payAccount: resp.payType === 3 ? resp.userPayAccount : "",
-              amount: parseFloat(
-                `${resp.payType === 3 ? resp.usdAmount : resp.price}`
-              ),
+              amount: `${resp.payType === 3 ? resp.usdAmount : resp.price}`
+              ,
             },
           })
           router.push("/deposit/confirm")

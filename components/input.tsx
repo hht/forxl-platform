@@ -8,13 +8,13 @@ import Animated, {
 } from 'react-native-reanimated'
 import { XStack, YStack } from 'tamagui'
 
+import { DEVICE_WIDTH, t } from '~/lib/utils'
+import colors from '~/theme/colors'
+
 import { Button } from './button'
 import { Icon } from './icon'
 import { Text } from './text'
 import { toast } from './toast'
-
-import { DEVICE_WIDTH, t } from '~/lib/utils'
-import colors from '~/theme/colors'
 
 interface InputProps extends TextInputProps {
   addonAfter?: React.ReactNode
@@ -289,15 +289,15 @@ const AMOUNT_REGEX = /^\d*\.?\d{0,2}$/
 
 const Decimal: FC<
   Omit<InputProps, "onChange" | "value"> & {
-    value?: number
-    onChange: (v?: number) => void
+    value?: string
+    onChange: (v?: string) => void
     max?: number
     min?: number
   }
 > = ({ value, onChange, min, max, ...props }) => {
   return (
     <InputBase
-      value={`${value ?? ""}`}
+      value={value ?? ''}
       keyboardType="decimal-pad"
       onChangeText={(e) => {
         if (!e || e === "") {
@@ -310,20 +310,20 @@ const Decimal: FC<
           return
         }
         if (max && parseFloat(value) > parseFloat(`${max}`)) {
-          onChange(parseFloat(`${max}`))
+          onChange(`${max}`)
           toast.show(t("message.maxReached"))
           return
         }
         const v = parseFloat(value)
         if (_.isNumber(v) && !_.isNaN(v)) {
-          onChange(v)
+          onChange(value)
         }
       }}
       onBlur={() => {
         if (!value) {
           return
         }
-        if (min && value < min) {
+        if (min && parseFloat(value) < min) {
           toast.show(t("message.minReached"))
           return
         }

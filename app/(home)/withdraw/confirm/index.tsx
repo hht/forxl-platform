@@ -128,7 +128,7 @@ export default function Page() {
             wdAccount: withdrawRequest?.wdAccount!,
             emailCode: withdrawRequest?.emailCode!,
             gaCode: withdrawMethod?.gaAuth ? withdrawRequest?.gaCode : undefined,
-            money: withdrawRequest?.money!,
+            money: parseFloat(withdrawRequest?.money ?? '0'),
             recordType: withdrawMethod?.channelType!,
             channelCode: withdrawMethod?.channelCode!,
             spId: `${withdrawMethod?.id}`,

@@ -1,4 +1,3 @@
-import { floor } from 'lodash'
 import { FC, Fragment } from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -20,7 +19,7 @@ export const DepositSummary: FC = () => {
             <Text subject>
               {formatCurrency(
                 depositRequest?.amount
-                  ? depositRequest.amount * (1 - (method.fee ?? 0))
+                  ? parseFloat(depositRequest.amount ?? '0') * (1 - (method.fee ?? 0))
                   : 0
               )}
             </Text>
