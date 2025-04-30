@@ -4,11 +4,11 @@ import { Href, router } from 'expo-router'
 import _ from 'lodash'
 import { FC, Fragment, useMemo, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Dimensions } from 'react-native'
+import { Dimensions, Platform } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 import { BottomSheet, Card, Icon, IconType, Text, XStack } from '~/components'
-import { useForxlStore, useKYCStore } from '~/hooks/useStore'
+import { useKYCStore } from '~/hooks/useStore'
 import { APP_URL } from '~/lib/constants'
 import { uuid, waitFor } from '~/lib/utils'
 import colors from '~/theme/colors'
@@ -93,37 +93,39 @@ export const Shortcuts: FC = () => {
     <Fragment>
       <XStack gap="$md" w="100%" fw="wrap">
         {items.map((item) => (
-          <Card
-            p={0}
-            w={SHORTCUT_SIZE}
-            h={SHORTCUT_SIZE}
-            key={item.index}
-            onPress={async () => {
-              if (SHORTCUT_ROUTES[item.index].onPress) {
-                SHORTCUT_ROUTES[item.index].onPress?.()
-                return
-              }
-              if (SHORTCUT_ROUTES[item.index].href) {
-                router.push(SHORTCUT_ROUTES[item.index].href!)
-                return
-              }
-              if (SHORTCUT_ROUTES[item.index].icon === "more") {
-                bottomSheetRef.current?.present()
-                return
-              }
-            }}
-            ai="center"
-            jc="center"
-          >
-            <Icon
-              name={SHORTCUT_ROUTES[item.index].icon}
-              color={colors.primary}
-              size={32}
-            />
-            <Text col="$secondary" caption>
-              {item.title}
-            </Text>
-          </Card>
+          <Fragment key={item.index}>
+            {SHORTCUT_ROUTES[item.index].href || SHORTCUT_ROUTES[item.index].onPress || Platform.OS !== 'android' ? <Card
+              p={0}
+              w={SHORTCUT_SIZE}
+              h={SHORTCUT_SIZE}
+              key={item.index}
+              onPress={async () => {
+                if (SHORTCUT_ROUTES[item.index].onPress) {
+                  SHORTCUT_ROUTES[item.index].onPress?.()
+                  return
+                }
+                if (SHORTCUT_ROUTES[item.index].href) {
+                  router.push(SHORTCUT_ROUTES[item.index].href!)
+                  return
+                }
+                if (SHORTCUT_ROUTES[item.index].icon === "more") {
+                  bottomSheetRef.current?.present()
+                  return
+                }
+              }}
+              ai="center"
+              jc="center"
+            >
+              <Icon
+                name={SHORTCUT_ROUTES[item.index].icon}
+                color={colors.primary}
+                size={32}
+              />
+              <Text col="$secondary" caption>
+                {item.title}
+              </Text>
+            </Card> : null}
+          </Fragment>
         ))}
       </XStack>
       <BottomSheet
@@ -133,35 +135,37 @@ export const Shortcuts: FC = () => {
       >
         <XStack gap="$md" w="100%" fw="wrap" px="$md" pb={insets.bottom + 16}>
           {_.times(12).map((item, index) => (
-            <Card
-              p={0}
-              key={index}
-              w={SHORTCUT_SIZE}
-              h={SHORTCUT_SIZE}
-              onPress={async () => {
-                bottomSheetRef.current?.dismiss()
-                await waitFor(200)
-                if (SHORTCUT_ROUTES[index].onPress) {
-                  SHORTCUT_ROUTES[index].onPress?.()
-                  return
-                }
-                if (SHORTCUT_ROUTES[index].href) {
-                  router.push(SHORTCUT_ROUTES[index].href!)
-                  return
-                }
-              }}
-              ai="center"
-              jc="center"
-            >
-              <Icon
-                name={SHORTCUT_ROUTES[index].icon}
-                size={32}
-                color={colors.primary}
-              />
-              <Text col="$secondary" caption>
-                {shortcuts.children[index]}
-              </Text>
-            </Card>
+            <Fragment key={index}>
+              {SHORTCUT_ROUTES[index].href || SHORTCUT_ROUTES[index].onPress || Platform.OS !== 'android' ? <Card
+                p={0}
+                key={index}
+                w={SHORTCUT_SIZE}
+                h={SHORTCUT_SIZE}
+                onPress={async () => {
+                  bottomSheetRef.current?.dismiss()
+                  await waitFor(200)
+                  if (SHORTCUT_ROUTES[index].onPress) {
+                    SHORTCUT_ROUTES[index].onPress?.()
+                    return
+                  }
+                  if (SHORTCUT_ROUTES[index].href) {
+                    router.push(SHORTCUT_ROUTES[index].href!)
+                    return
+                  }
+                }}
+                ai="center"
+                jc="center"
+              >
+                <Icon
+                  name={SHORTCUT_ROUTES[index].icon}
+                  size={32}
+                  color={colors.primary}
+                />
+                <Text col="$secondary" caption>
+                  {shortcuts.children[index]}
+                </Text>
+              </Card> : null}
+            </Fragment>
           ))}
         </XStack>
       </BottomSheet>
