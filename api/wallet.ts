@@ -292,10 +292,10 @@ export const upload = async () => {
 
   if (!result.canceled && result.assets && result.assets.length > 0) {
     const file = result.assets[0]
-
     const formData = new FormData()
+    console.log("file", file)
     formData.append("user", "test")
-    formData.append("file", {
+    formData.append("file", Platform.OS === 'web' ? file.file : {
       uri: !file.uri.startsWith("file") ? `file://${file.uri}` : file.uri,
       name: file.fileName || "photo.jpg",
       type:
