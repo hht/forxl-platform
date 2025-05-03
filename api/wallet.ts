@@ -146,11 +146,13 @@ export const getWalletStatement = async (params: {
       stateCategory: number
       time: string
       language: string
+      timeZone: number
     }
   >("/walletRecord/queryPage", "POST", {
     ...params,
     pageSize: params.pageSize ?? 10,
     language: i18n.language,
+    timeZone: useForxlStore.getState().timezone / 60,
   })
     .then((res) => ({
       resultList: res.list,
@@ -168,6 +170,7 @@ export const sendStatement = async (params: {
   return request("/walletRecord/sendBill", "POST", {
     ...params,
     method: "email",
+    timeZone: useForxlStore.getState().timezone / 60,
   })
 }
 
@@ -320,8 +323,11 @@ export const sendEmailCode = async () => {
 }
 
 export const getWalletRecordDate = async () => {
-  return await request<Record<string, string[]>, undefined>(
+  return await request<Record<string, string[]>, { timeZone: number }>(
     "/walletRecord/queryRecordDate",
-    "POST"
+    "POST",
+    {
+      timeZone: useForxlStore.getState().timezone / 60,
+    }
   )
 }
