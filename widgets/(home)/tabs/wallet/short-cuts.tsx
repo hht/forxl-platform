@@ -1,9 +1,10 @@
-import { Href, router } from "expo-router"
-import { FC, useMemo } from "react"
-import { useTranslation } from "react-i18next"
+import { Href, router } from 'expo-router'
+import { FC, useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
+import { Platform } from 'react-native'
 
-import { Card, Icon, IconType, Text, YStack } from "~/components"
-import colors from "~/theme/colors"
+import { Card, Icon, IconType, Text, YStack } from '~/components'
+import colors from '~/theme/colors'
 
 const SHORTCUT_ROUTES: { [key: number]: { icon: IconType; href?: Href } } = {
   0: {
@@ -38,7 +39,7 @@ export const Shortcuts: FC = () => {
   )
   return (
     <Card gap={13} w="100%" fd="row" px={0}>
-      {items.map((item) => (
+      {items.filter(it => !(Platform.OS === 'android' && it.index === 3)).map((item) => (
         <YStack
           f={1}
           key={item.index}
