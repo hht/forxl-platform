@@ -4,11 +4,11 @@ import { Href, router } from 'expo-router'
 import _ from 'lodash'
 import { FC, Fragment, useMemo, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Dimensions, Platform } from 'react-native'
+import { Dimensions } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 import { BottomSheet, Card, Icon, IconType, Text, XStack } from '~/components'
-import { useKYCStore } from '~/hooks/useStore'
+import { useForxlStore, useKYCStore } from '~/hooks/useStore'
 import { APP_URL } from '~/lib/constants'
 import { uuid, waitFor } from '~/lib/utils'
 import colors from '~/theme/colors'
@@ -93,7 +93,7 @@ export const Shortcuts: FC = () => {
     <Fragment>
       <XStack gap="$md" w="100%" fw="wrap">
         {items.map((item) => (
-          (Platform.OS === 'android' && SHORTCUT_ROUTES[item.index].icon === 'card') ? null : <Card
+          <Card
             p={0}
             w={SHORTCUT_SIZE}
             h={SHORTCUT_SIZE}
@@ -133,7 +133,7 @@ export const Shortcuts: FC = () => {
       >
         <XStack gap="$md" w="100%" fw="wrap" px="$md" pb={insets.bottom + 16}>
           {_.times(12).map((item, index) => (
-            (Platform.OS === 'android' && SHORTCUT_ROUTES[index].icon === 'card') ? null : <Card
+            <Card
               p={0}
               key={index}
               w={SHORTCUT_SIZE}
