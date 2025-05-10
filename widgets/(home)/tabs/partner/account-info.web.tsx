@@ -298,9 +298,9 @@ export const AccountInfo = () => {
                         ref={ref}
                         // centerContent
                         showsHorizontalScrollIndicator={false}
-                        onMomentumScrollEnd={(event) => {
+                        onScroll={(event) => {
                             useStore.setState(
-                                { currentIndex: event.nativeEvent.contentOffset.x / (DEVICE_WIDTH - 32) }
+                                { currentIndex: Math.round(event.nativeEvent.contentOffset.x / (DEVICE_WIDTH - 32)) }
                             )
                         }}
                         ListEmptyComponent={ListEmptyComponent}
