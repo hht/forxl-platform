@@ -1,8 +1,9 @@
 import { useUnmount } from 'ahooks'
 import * as Linking from 'expo-linking'
 import { router, Stack } from 'expo-router'
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
+import { Platform } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 import { deposit } from '~/api/wallet'
@@ -16,6 +17,7 @@ import { AccountCard } from '~/widgets/shared/account-card'
 export default function Page() {
   const { t } = useTranslation()
   const { bottom } = useSafeAreaInsets()
+  const windowRef = useRef<Window | null>(null)
   const {
     depositMethod: method,
     depositRequest,
@@ -33,7 +35,11 @@ export default function Page() {
           return
         }
         if (data.payType === 101) {
-          Linking.openURL(data.order_data as string)
+          if (Platform.OS === 'web' && windowRef.current) {
+            windowRef.current.window.location.href = data.order_data as string
+          } else {
+            Linking.openURL(data.order_data as string)
+          }
           router.back()
         }
       }
@@ -105,6 +111,12 @@ export default function Page() {
               (method?.incomeMoneyMax ?? Infinity)
             }
             onPress={() => {
+              if (Platform.OS === 'web') {
+                windowRef.current = window.open(
+                  'about:blank',
+                  '_blank'
+                )
+              }
               run({
                 code: method?.code!,
                 amount: parseFloat(depositRequest.amount ?? '0'),
