@@ -4,6 +4,7 @@ import { useEffect } from 'react'
 import { validateInviteCode } from '~/api/account'
 import { useStore } from '~/app/(anon)/auth/sign-up'
 import { useLocaleCalendar } from '~/hooks/useLocale'
+import { useMessaging } from '~/hooks/useMessaging'
 import { useForxlStore } from '~/hooks/useStore'
 import { dismissAll } from '~/lib/utils'
 
@@ -64,5 +65,6 @@ export const AccountDetector = () => {
 }
 export const LocaleDetector = () => {
   useLocaleCalendar()
+  useMessaging()
   return null
 }

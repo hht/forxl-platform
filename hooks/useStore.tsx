@@ -16,6 +16,7 @@ interface Store {
   histories?: Future[]
   realName?: Certification
   popAt: { [key: string]: string }
+  fcmToken?: string
 }
 
 export const useForxlStore = createWithEqualityFn<Store>()(

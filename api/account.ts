@@ -1,4 +1,5 @@
 import { router } from 'expo-router'
+import { Platform } from 'react-native'
 
 import { toast } from '~/components'
 import { request } from '~/hooks/useRequest'
@@ -294,5 +295,19 @@ export const getRealNameInfo = async () => {
 export const sendRegisterCode = async (email: string) => {
   return await request("/other/register/sendVerifyCode", "POST", {
     email,
+  })
+}
+
+/**
+ * 发送FCM令牌
+ */
+export const sendFCMToken = async () => {
+  if (!useForxlStore.getState().fcmToken) {
+    return
+  }
+  return await request("/user/updateFCMToken", "POST", {
+    device: Platform.OS === 'ios' ? 2 : 1,
+    token: useForxlStore.getState().fcmToken,
+    lang: i18n.resolvedLanguage ?? i18n.language,
   })
 }
