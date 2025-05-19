@@ -1,5 +1,5 @@
 import notifee from '@notifee/react-native'
-import messaging from '@react-native-firebase/messaging'
+import messaging, { FirebaseMessagingTypes } from '@react-native-firebase/messaging'
 import { useEffect } from 'react'
 import { PermissionsAndroid, Platform } from 'react-native'
 
@@ -19,6 +19,10 @@ export const getFCMToken = async () => {
     if (Platform.OS === 'android') {
         PermissionsAndroid.request(
             PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS)
+        await notifee.createChannel({
+            id: 'default',
+            name: 'Default Channel',
+        })
     }
     const enabled = await requestNotificationPermission()
     if (!enabled) {
@@ -31,6 +35,34 @@ export const getFCMToken = async () => {
     }
 }
 
+const onMessage = async (remoteMessage: FirebaseMessagingTypes.RemoteMessage) => {
+    await notifee.requestPermission()
+    await notifee.displayNotification({
+        id: remoteMessage.messageId,
+        title: remoteMessage.notification?.title,
+        body: remoteMessage.notification?.body,
+        data: remoteMessage.data,
+        android: {
+            channelId: 'default',
+            sound: 'default',
+        },
+    }).catch(err => {
+        console.log('Error displaying notification: ', err)
+    })
+
+}
+
+// @ts-ignore
+globalThis.RNFB_SILENCE_MODULAR_DEPRECATION_WARNINGS = true
+
+// @ts-ignore
+globalThis.RNFB_MODULAR_DEPRECATION_STRICT_MODE = true
+
+messaging().setBackgroundMessageHandler(async (message) => {
+
+})
+
+
 export const useMessaging = () => {
     const { userNumber, fcmToken, language } = useForxlStore()
     useEffect(() => {
@@ -38,26 +70,7 @@ export const useMessaging = () => {
             return
         }
         getFCMToken()
-        const unsubscribe = messaging().onMessage(async remoteMessage => {
-            await notifee.requestPermission()
-            const channelId = await notifee.createChannel({
-                id: 'default',
-                name: 'Default Channel',
-            })
-            await notifee.displayNotification({
-                id: remoteMessage.messageId,
-                title: remoteMessage.notification?.title,
-                body: remoteMessage.notification?.body,
-                data: remoteMessage.data,
-                android: {
-                    channelId,
-                    sound: 'default',
-                },
-            }).catch(err => {
-
-            })
-        })
-
+        const unsubscribe = messaging().onMessage(onMessage)
         return unsubscribe
     }, [])
 
