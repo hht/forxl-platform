@@ -2,11 +2,11 @@ import { useRequest as useRequestBase } from 'ahooks'
 import { Options, Plugin, Service } from 'ahooks/lib/useRequest/src/types'
 import axios from 'axios'
 
-import { useForxlStore } from './useStore'
-
 import { toast } from '~/components'
 import { BASE_URL } from '~/lib/constants'
 import { i18n } from '~/lib/utils'
+
+import { useForxlStore } from './useStore'
 
 export const CACHE_KEY = {
   USER: "/user/getUser",
@@ -48,7 +48,6 @@ export const request = async <T, U>(
       url: url.startsWith("http") ? url : `${BASE_URL}${url}`,
       method,
       headers: {
-        "Access-Control-Allow-Origin": "*",
         language: i18n.resolvedLanguage,
       },
       ...(method === "GET"

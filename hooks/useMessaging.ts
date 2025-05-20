@@ -1,4 +1,4 @@
-import notifee from '@notifee/react-native'
+import notifee, { AndroidStyle } from '@notifee/react-native'
 import messaging, { FirebaseMessagingTypes } from '@react-native-firebase/messaging'
 import { useEffect } from 'react'
 import { PermissionsAndroid, Platform } from 'react-native'
@@ -30,12 +30,14 @@ export const getFCMToken = async () => {
     }
     await messaging().registerDeviceForRemoteMessages()
     const token = await messaging().getToken()
+    console.log('FCM Token: ', token)
     if (token && useForxlStore.getState().fcmToken !== token) {
         useForxlStore.setState({ fcmToken: token })
     }
 }
 
 const onMessage = async (remoteMessage: FirebaseMessagingTypes.RemoteMessage) => {
+    console.log(JSON.stringify(remoteMessage))
     await notifee.requestPermission()
     await notifee.displayNotification({
         id: remoteMessage.messageId,
@@ -45,6 +47,7 @@ const onMessage = async (remoteMessage: FirebaseMessagingTypes.RemoteMessage) =>
         android: {
             channelId: 'default',
             sound: 'default',
+            largeIcon: remoteMessage.notification?.android?.smallIcon,
         },
     }).catch(err => {
         console.log('Error displaying notification: ', err)
