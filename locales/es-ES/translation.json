@@ -458,7 +458,7 @@
     "systemRecharge": "Recarga del sistema",
     "sendStatementSuccessful": "Tu estado de cuenta ha sido enviado a tu correo electrónico. Por favor, revísalo.",
     "adminDeduction": "Deducciones",
-    "adminDeposit": "completar", 
+    "adminDeposit": "completar",
     "agentCommissionFee": "Tarifa de comisión del agente",
     "bonus": "Primo",
     "bonusDeduction": "Deducción de bonificación",
@@ -616,7 +616,7 @@
         "En situaciones donde un miembro ascendente y un miembro descendente están en el mismo nivel, el miembro ascendente recibirá el 10% de las ganancias de bonos del miembro descendente. Si hay varios miembros en el mismo nivel, el bono de coincidencia de nivel solo se otorga una vez."
       ]
     },
-    "directAccountsDesc": "Los usuarios con fondos en la cuenta que exceden $50 se consideran usuarios activos. Sin embargo, aún puedes ganar bonos de referencia por las operaciones realizadas por cuentas con menos de $50 en fondos.",
+    "directAccountsDesc": "Los usuarios con fondos en la cuenta que exceden ${{amount}} se consideran usuarios activos. Sin embargo, aún puedes ganar bonos de referencia por las operaciones realizadas por cuentas con menos de ${{amount}} en fondos.",
     "earnBonuses": "Gana Bonos",
     "size": "Tamaño del Equipo",
     "volume": "Volumen del Equipo",

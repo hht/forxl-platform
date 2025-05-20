@@ -9,7 +9,7 @@ import { shallow } from 'zustand/shallow'
 import { createWithEqualityFn } from 'zustand/traditional'
 
 import {
-  getPartnerConfig, getPartnerInfo, getReferralListByUser, ReferralList
+  getBonusConfig, getPartnerConfig, getPartnerInfo, getReferralListByUser, ReferralList
 } from '~/api/partner'
 import {
   Button, Card, copyToClipboard, Dialog, Figure, Icon, Justified, Moti, Popup, Row, Statistics,
@@ -103,6 +103,7 @@ export const AccountInfo = () => {
       })
     },
   })
+  const { data: bonusConfig } = useRequest(getBonusConfig)
   useRequest(getPartnerConfig, {
     onSuccess: (data) => {
       usePartnerStore.setState({
@@ -126,7 +127,9 @@ export const AccountInfo = () => {
             onPress={() => {
               usePromptStore.setState({
                 title: "",
-                desc: t("partner.directAccountsDesc"),
+                desc: t("partner.directAccountsDesc", {
+                  amount: bonusConfig?.minSourceAmount2
+                }),
                 reloadKey: uuid(),
               })
             }}

@@ -616,7 +616,7 @@
         "In situations where an upline member and a downline member are at the same level, the upline member will receive 10% of the downline member's bonus earnings. If multiple members are at the same level, the level matching bonus is only awarded once."
       ]
     },
-    "directAccountsDesc": "Users with account funds exceeding $50 are referred to as active users. However, you can still earn referral bonuses from trades made by accounts with less than $50 in funds.",
+    "directAccountsDesc": "Users with account funds exceeding ${{amount}} are referred to as active users. However, you can still earn referral bonuses from trades made by accounts with less than ${{amount}} in funds.",
     "earnBonuses": "Earn Bonuses",
     "size": "Team Size",
     "volume": "Team Volume",

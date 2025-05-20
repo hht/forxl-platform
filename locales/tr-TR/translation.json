@@ -616,7 +616,7 @@
         "Bir üst hat üyesi ve bir alt hat üyesinin aynı seviyede olduğu durumlarda, üst hat üyesi alt hat üyesinin bonus kazançlarının %10'unu alır. Birden fazla üye aynı seviyedeyse, seviye eşleştirme bonusu yalnızca bir kez verilir."
       ]
     },
-    "directAccountsDesc": "Hesap fonları $50'ü aşan kullanıcılar aktif kullanıcılar olarak kabul edilir. Ancak, $50'ün altında fonu olan hesapların yaptığı işlemlerden referans bonusu kazanmaya devam edebilirsiniz.",
+    "directAccountsDesc": "Hesap fonları ${{amount}}'ü aşan kullanıcılar aktif kullanıcılar olarak kabul edilir. Ancak, ${{amount}}'ün altında fonu olan hesapların yaptığı işlemlerden referans bonusu kazanmaya devam edebilirsiniz.",
     "earnBonuses": "Bonus Kazanın",
     "size": "Ekip Büyüklüğü",
     "volume": "Ekip Hacmi",

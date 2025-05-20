@@ -58,7 +58,7 @@ export const getPartnerConfig = async () => {
 export const getBonusConfig = async () => {
   return await request<
     {
-      data: { generation1: number; generation2: number; generation3: number, minSourceAmount1: number }
+      data: { generation1: number; generation2: number; generation3: number, minSourceAmount1: number, minSourceAmount2: number }
     },
     undefined
   >("/bonus/referralBonusParams", "POST").then((res) => res.data)

@@ -616,7 +616,7 @@
         "Em situações onde um membro superior e um membro inferior estão no mesmo nível, o membro superior receberá 10% dos ganhos de bônus do membro inferior. Se vários membros estiverem no mesmo nível, o bônus de correspondência de nível só é concedido uma vez."
       ]
     },
-    "directAccountsDesc": "Usuários com fundos na conta superiores a $50 são considerados usuários ativos. No entanto, você ainda pode ganhar bônus de referência pelas negociações feitas por contas com menos de $50 em fundos.",
+    "directAccountsDesc": "Usuários com fundos na conta superiores a ${{amount}} são considerados usuários ativos. No entanto, você ainda pode ganhar bônus de referência pelas negociações feitas por contas com menos de ${{amount}} em fundos.",
     "earnBonuses": "Ganhe Bônus",
     "size": "Tamanho da Equipe",
     "volume": "Volume da Equipe",
