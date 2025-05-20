@@ -45,7 +45,8 @@ const onMessage = async (remoteMessage: FirebaseMessagingTypes.RemoteMessage) =>
         android: {
             channelId: 'default',
             sound: 'default',
-            largeIcon: remoteMessage.notification?.android?.smallIcon,
+            largeIcon: remoteMessage.notification?.android?.smallIcon ?? 'notification_icon',
+            color: remoteMessage.notification?.android?.color,
         },
     }).catch(err => {
         console.log('Error displaying notification: ', err)
