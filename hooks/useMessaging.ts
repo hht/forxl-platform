@@ -30,14 +30,12 @@ export const getFCMToken = async () => {
     }
     await messaging().registerDeviceForRemoteMessages()
     const token = await messaging().getToken()
-    console.log('FCM Token: ', token)
     if (token && useForxlStore.getState().fcmToken !== token) {
         useForxlStore.setState({ fcmToken: token })
     }
 }
 
 const onMessage = async (remoteMessage: FirebaseMessagingTypes.RemoteMessage) => {
-    console.log(JSON.stringify(remoteMessage))
     await notifee.requestPermission()
     await notifee.displayNotification({
         id: remoteMessage.messageId,
