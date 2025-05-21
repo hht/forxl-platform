@@ -1,6 +1,7 @@
-import { useRequest as useRequestBase } from 'ahooks'
+import { useRequest as useRequestBase, useUnmount } from 'ahooks'
 import { Options, Plugin, Service } from 'ahooks/lib/useRequest/src/types'
 import axios from 'axios'
+import React from 'react'
 
 import { toast } from '~/components'
 import { BASE_URL } from '~/lib/constants'
@@ -41,12 +42,14 @@ type Response<T> =
 export const request = async <T, U>(
   url: string,
   method: string,
-  body: U = {} as U
+  body: U = {} as U,
+  signal?: AbortSignal
 ): Promise<T> => {
   return await axios
     .request<T, { data: Response<T> }>({
       url: url.startsWith("http") ? url : `${BASE_URL}${url}`,
       method,
+      signal,
       headers: {
         language: i18n.resolvedLanguage,
       },
@@ -95,17 +98,48 @@ export const request = async <T, U>(
 
 export const useRequest = <TData, TParams extends any[]>(
   service: Service<TData, TParams>,
-  options?: Options<TData, TParams>,
+  options?: Options<TData, TParams> & {
+    autoAbort?: boolean
+  },
   plugins?: Plugin<TData, TParams>[]
-) =>
-  useRequestBase(
-    service,
+) => {
+  const abortController = React.useRef<AbortController | null>(null)
+
+  useUnmount(() => {
+    if (options?.autoAbort) {
+      abortController.current?.abort()
+    }
+  })
+
+  const wrappedService: Service<TData, TParams> = async (...args: TParams) => {
+    abortController.current?.abort()
+    abortController.current = new AbortController()
+
+    // abortController.current.signal.addEventListener('abort', () => {
+    //   console.log('请求已被取消 - Signal aborted')
+    // })
+
+    if (typeof service === 'function') {
+      if (service.name === 'request') {
+        const serviceFunc = service as any
+        return serviceFunc(...args, abortController.current.signal)
+      }
+      return service(...args)
+    }
+    return service
+  }
+
+  return useRequestBase(
+    wrappedService,
     {
       onError: (error) => {
-        console.log("发生错误：", error)
+        if (error.name === 'AbortError') {
+          return
+        }
         toast.show(error.message ?? error)
       },
       ...options,
     },
     plugins
   )
+}
