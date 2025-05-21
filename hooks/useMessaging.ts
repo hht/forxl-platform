@@ -1,4 +1,4 @@
-import notifee, { AndroidStyle } from '@notifee/react-native'
+import notifee from '@notifee/react-native'
 import messaging, { FirebaseMessagingTypes } from '@react-native-firebase/messaging'
 import { useEffect } from 'react'
 import { PermissionsAndroid, Platform } from 'react-native'
@@ -45,8 +45,7 @@ const onMessage = async (remoteMessage: FirebaseMessagingTypes.RemoteMessage) =>
         android: {
             channelId: 'default',
             sound: 'default',
-            largeIcon: remoteMessage.notification?.android?.smallIcon ?? 'notification_icon',
-            color: remoteMessage.notification?.android?.color,
+            smallIcon: "notification_icon",
         },
     }).catch(err => {
         console.log('Error displaying notification: ', err)
