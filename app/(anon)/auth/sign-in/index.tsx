@@ -9,7 +9,6 @@ import { getProfile, signIn } from '~/api/account'
 import { Button, Input, ScrollView, Text, XStack, YStack } from '~/components'
 import { useRequest } from '~/hooks/useRequest'
 import { useForxlStore } from '~/hooks/useStore'
-import { waitFor } from '~/lib/utils'
 import { LiveSupport, NativeStackNavigationOptions } from '~/widgets/shared/header'
 
 const ScreenOptions: NativeStackNavigationOptions = {
@@ -59,7 +58,6 @@ export default function Page() {
   const errors = error?.formErrors?.fieldErrors
 
   const { run, loading } = useRequest(async () => {
-    await waitFor(10000)
     return await signIn({ email, password })
   }, {
     manual: true,
